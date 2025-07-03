@@ -34,6 +34,7 @@ namespace ERP_NEW.BLL.Services
         private IRepository<EmployeesDetails> employeesDetails;
         private IRepository<AgreementsType> agreementType;
         private IRepository<Agreements> agreements;
+        private IRepository<AgreementsScan> agreementsScan;
         private IRepository<AgreementTypeDocuments> agreementTypeDocuments;
         private IRepository<AgreementOrder> agreementOrder;
         private IRepository<AgreementOrderJournal> agreementOrderJournal;
@@ -49,6 +50,7 @@ namespace ERP_NEW.BLL.Services
             Database = uow;
 
             agreements = Database.GetRepository<Agreements>();
+            agreementsScan = Database.GetRepository<AgreementsScan>();
             agreementJournal = Database.GetRepository<AgreementJournal>();
             agreementType = Database.GetRepository<AgreementsType>();
             agreementDocuments = Database.GetRepository<AgreementDocuments>();
@@ -79,6 +81,8 @@ namespace ERP_NEW.BLL.Services
                  cfg.CreateMap<AgreementTypeDocumentsDTO, AgreementTypeDocuments>();
                  cfg.CreateMap<Agreements, AgreementsDTO>();
                  cfg.CreateMap<AgreementsDTO, Agreements>();
+                 cfg.CreateMap<AgreementsScan, AgreementsScanDTO>();
+                 cfg.CreateMap<AgreementsScanDTO, AgreementsScan>();
                  cfg.CreateMap<AgreementsType, AgreementsTypeDTO>();
                  cfg.CreateMap<AgreementsTypeDTO, AgreementsType>();
                  cfg.CreateMap<AgreementJournal, AgreementJournalDTO>();
@@ -127,10 +131,14 @@ namespace ERP_NEW.BLL.Services
                           join c in contractorTypes.GetAll() on u.ContractorTypeId equals c.TypeId into ct
                           from c in ct.DefaultIfEmpty()
                           where (allData == 1
-                                    ? u.Name != null
+                                    ? (u.Name != null && u.Active == true)
                                     : allData == 2
-                                        ? !(u.Name.StartsWith("Дог"))
-                                        : (u.Name.StartsWith("Дог")))
+                                        ? (!(u.Name.StartsWith("Дог")) && u.Active == true)
+                                        : allData == 3
+                                            ? u.Name != null
+                                            : allData == 4
+                                                ? !(u.Name.StartsWith("Дог"))
+                                                : (u.Name.StartsWith("Дог")))
                           orderby u.Name
                           select new ContractorsDTO
                           {
@@ -143,7 +151,15 @@ namespace ERP_NEW.BLL.Services
                               OwnType = u.OwnType,
                               ContractorTypeId = u.ContractorTypeId,
                               ProductCategoryId = u.ProductCategoryId,
-                              TypeName = c.TypeName
+                              TypeName = c.TypeName,
+                              Active = u.Active,
+                              //AgreementDate = u.AgreementDate,
+                              //AgreementNumber = u.AgreementNumber,
+                              //ChangeDate = u.ChangeDate,
+                              //ParentId = u.ParentId,
+                              //RegistrationDate = u.RegistrationDate,
+                              //UserId = u.UserId,
+                              //AutoAgreement = u.AutoAgreement
                           });
 
             return result.ToList();
@@ -265,6 +281,11 @@ namespace ERP_NEW.BLL.Services
             return result.ToList();
         }
 
+        public IEnumerable<AgreementOrderDTO> GetAgreementOrder()
+        {
+            return mapper.Map<IEnumerable<AgreementOrder>, List<AgreementOrderDTO>>(agreementOrder.GetAll());
+        }
+
         public IEnumerable<AgreementJournalDTO> GetAgreementJournal(DateTime beginDate, DateTime endDate)
         {
             FbParameter[] Parameters =
@@ -291,6 +312,8 @@ namespace ERP_NEW.BLL.Services
                           from usr in usrr.DefaultIfEmpty()
                           join emd in employeesDetails.GetAll() on usr.EmployeeId equals emd.EmployeeID into emdd
                           from emd in emdd.DefaultIfEmpty()
+                          join agr in agreements.GetAll() on ad.AgreementId equals agr.Id into agrr
+                          from agr in agrr.DefaultIfEmpty()
                           where ad.AgreementId == agrementId
                           
                           select new AgreementDocumentsDTO
@@ -302,8 +325,10 @@ namespace ERP_NEW.BLL.Services
                               NameDocument = ad.NameDocument,
                               AgreementTypeDocumentsName = atd.TypeDocuments,
                               DateCreateFile =ad.DateCreateFile,
+                              Scan = ad.Scan,
                               ResponsiblePersonId = ad.ResponsiblePersonId,
-                              ResponsiblePerson = emd.LastName +" "+ emd.FirstName + " "+ emd.MiddleName                             
+                              ResponsiblePerson = emd.LastName +" "+ emd.FirstName + " "+ emd.MiddleName,
+                               RealAgreementId = agr.AgreementsIdFromContractor                             
                           });
 
             return result.ToList();
@@ -327,7 +352,7 @@ namespace ERP_NEW.BLL.Services
         {
             return mapper.Map<IEnumerable<AgreementsType>, List<AgreementsTypeDTO>>(agreementType.GetAll());
         }
-
+         
         public IEnumerable<CurrencyDTO> GetAgreementsCurrency()
         {
             return mapper.Map<IEnumerable<Currency>, List<CurrencyDTO>>(agreementCurrency.GetAll());
@@ -346,8 +371,11 @@ namespace ERP_NEW.BLL.Services
         public string GetAgreementOrderLastNumber(DateTime date)
         {
 
+            //var agreementOrderCurrentyear = mapper.Map<IEnumerable<AgreementOrder>, List<AgreementOrderDTO>>(agreementOrder.GetAll()).OrderByDescending(x => Decimal.
+            //     Parse(x.AgreementOrderNumber.Replace('/', ','))).FirstOrDefault(x => x.AgreementOrderDate.Value.Year == date.Year);
+          
             var agreementOrderCurrentyear = mapper.Map<IEnumerable<AgreementOrder>, List<AgreementOrderDTO>>(agreementOrder.GetAll()).OrderByDescending(x => Decimal.
-                Parse(x.AgreementOrderNumber.Replace('/', ','))).FirstOrDefault(x => x.AgreementOrderDate.Value.Year == date.Year);
+                 Parse(x.AgreementOrderNumber.Replace('/', ','))).FirstOrDefault(x => x.AgreementOrderDate.Value.Year == date.Year && x.Id != 196 && x.Id !=195);
 
             if (agreementOrderCurrentyear != null)
             {
@@ -410,7 +438,7 @@ namespace ERP_NEW.BLL.Services
                 contractors.Delete(contractors.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -440,7 +468,7 @@ namespace ERP_NEW.BLL.Services
                 productCategories.Delete(productCategories.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -470,7 +498,7 @@ namespace ERP_NEW.BLL.Services
                 contractorContactAddress.Delete(contractorContactAddress.GetAll().FirstOrDefault(c => c.Id == contactAddres.Id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -483,7 +511,7 @@ namespace ERP_NEW.BLL.Services
                 contractorContactAddress.Delete(contractorContactAddress.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -500,7 +528,7 @@ namespace ERP_NEW.BLL.Services
                 var createrecord = contactPersons.Create(mapper.Map<ContactPersons>(contactPerson));
                 return (int)createrecord.Id;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return -1;
             }
@@ -522,7 +550,7 @@ namespace ERP_NEW.BLL.Services
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -551,7 +579,7 @@ namespace ERP_NEW.BLL.Services
                 contactPersonAddress.Delete(contactPersonAddress.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -571,7 +599,7 @@ namespace ERP_NEW.BLL.Services
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -600,7 +628,7 @@ namespace ERP_NEW.BLL.Services
                 agreementDocuments.Delete(agreementDocuments.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -629,7 +657,7 @@ namespace ERP_NEW.BLL.Services
                 agreementTypeDocuments.Delete(agreementTypeDocuments.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -658,7 +686,7 @@ namespace ERP_NEW.BLL.Services
                 agreementType.Delete(agreementType.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -687,12 +715,42 @@ namespace ERP_NEW.BLL.Services
                 agreements.Delete(agreements.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
         }
-        
+
+        #endregion
+
+        #region AgreementsScan CRUD method`s
+
+        public long CreateAgreementsScan(AgreementsScanDTO dtomodel)
+        {
+            var record = agreementsScan.Create(mapper.Map<AgreementsScan>(dtomodel));
+            return record.Id;
+        }
+
+        public void UpdateAgreementsScan(AgreementsScanDTO dtomodel)
+        {
+            var entity = agreementsScan.GetAll().SingleOrDefault(c => c.Id == dtomodel.Id);
+            agreementsScan.Update(mapper.Map<AgreementsScanDTO, AgreementsScan>(dtomodel, entity));
+        }
+
+        public bool RemoveCertificateById(long id)
+        {
+            try
+            {
+                var delEntity = agreementsScan.GetAll().SingleOrDefault(c => c.Id == id);
+                agreementsScan.Delete(delEntity);
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region AgreementOrder CRUD method's
@@ -716,7 +774,7 @@ namespace ERP_NEW.BLL.Services
                 agreementOrder.Delete(agreementOrder.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -745,7 +803,7 @@ namespace ERP_NEW.BLL.Services
                 agreementOrderPurpose.Delete(agreementOrderPurpose.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -774,7 +832,7 @@ namespace ERP_NEW.BLL.Services
                 agreementOrderScan.Delete(agreementOrderScan.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

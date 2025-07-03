@@ -41,16 +41,19 @@ using DevExpress.LookAndFeel;
 using System.Diagnostics;
 using System.Deployment.Application;
 using Microsoft.Win32;
+using ERP_NEW.DAL.EF;
 
 namespace ERP_NEW.GUI
 {
     public partial class MainTabFm : DevExpress.XtraEditors.XtraForm
     {
         private IUserService userService;
+        private ILogService logService;
         private UserDetailsDTO userInfo;
+
         private IEnumerable<UserTasksDTO> userAccess;
 
-        public MainTabFm()
+        public MainTabFm(int accountNumber = 0)
         {
            
             InitializeComponent();
@@ -69,6 +72,8 @@ namespace ERP_NEW.GUI
             Microsoft.Win32.SystemEvents.SessionEnded += new Microsoft.Win32.SessionEndedEventHandler(SystemEvents_SessionEnded);
 
             userService = Program.kernel.Get<IUserService>();
+            logService = Program.kernel.Get<ILogService>();
+            Properties.Settings.Default.BdConnectOnline = logService.CheckDatabase();
             documentManager.MdiParent = this;
             documentManager.View = new TabbedView();
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -80,13 +85,17 @@ namespace ERP_NEW.GUI
             Version myVersion = new Version();
 
             if (ApplicationDeployment.IsNetworkDeployed)
-            myVersion = ApplicationDeployment.CurrentDeployment.CurrentVersion;
-
+                myVersion = ApplicationDeployment.CurrentDeployment.CurrentVersion;
             programVersionLbl.Text += myVersion.ToString();
+            //programVersionLbl.Text += myVersion.ToString() + "\nMode:" + Utils.isDebugging();
+
+
+           
             //programVersionLbl.Text += (FileVersionInfo.GetVersionInfo(Assembly.GetCallingAssembly().Location).ProductVersion).ToString();
             //programVersionLbl.Text += Application.ProductVersion.ToString();
 
-            if (!CheckAccess())
+            
+           if (!CheckAccess(accountNumber))
                 return;
 
             userInfo = UserService.AuthorizatedUser;
@@ -98,9 +107,6 @@ namespace ERP_NEW.GUI
             
             UserAccessMenu();
             UserOnline();
-
-
-           
         }
 
 
@@ -121,72 +127,96 @@ namespace ERP_NEW.GUI
 
         private void UserOnline()
         {
-            userService.UserUpdateState(userInfo.UserId, true);
+            if(userInfo.UserId>0)
+                userService.UserUpdateState(userInfo.UserId, true);
         }
 
         private void UserOffline()
         {
-            userService.UserUpdateState(userInfo.UserId, false);
+            if (userInfo.UserId > 0)
+                userService.UserUpdateState(userInfo.UserId, false);
         }
 
         private byte[] PhotoSource(UserDetailsDTO source)
         {
-            if (source.UserPhoto == null || source.UserPhoto.Length == 0)
+            if (source != null)
             {
-                MemoryStream ms = new MemoryStream();
-                Image.FromFile("Images/happy-face.png").Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                source.UserPhoto = ms.ToArray();
+                if (source.UserPhoto == null || source.UserPhoto.Length == 0)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    Image.FromFile("Images/happy-face.png").Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    source.UserPhoto = ms.ToArray();
+                }
+                return source.UserPhoto;
             }
-            return source.UserPhoto;
+            else
+            {
+
+                MemoryStream ms = new MemoryStream();
+                Image.FromFile("Images/happy-face.png").Save(ms, System.Drawing.Imaging.ImageFormat.Png);    
+                return ms.ToArray();
+            }
+            
         }
 
         private void UserAccessMenu()
         {
             userAccess = UserService.AuthorizatedUserAccess;
-            var category = menuNavPane.Buttons.Select(s => s.Element.Name).ToList();
-            for (int i = 0; i < category.Count; i++)
+            if (userAccess != null)
             {
-                var categoryMenu = userAccess.Where(s => s.TaskName == category[i]).ToList();
-                bool availableCategory = (categoryMenu.Count > 0 ? true : false);    
-
-                if (availableCategory == true)  // пункт меню(категория 1 уровень) доступен
+                var category = menuNavPane.Buttons.Select(s => s.Element.Name).ToList();
+                for (int i = 0; i < category.Count; i++)
                 {
-                    menuNavPane.Buttons[i].Element.Visible = true;
-                    var item = ((TileNavCategory)menuNavPane.Buttons[i]).Items.Select(s => s.Name).ToList();
-                    for (int j = 0; j < item.Count; j++)
+                    var categoryMenu = userAccess.Where(s => s.TaskName == category[i]).ToList();
+                    bool availableCategory = (categoryMenu.Count > 0 ? true : false);
+
+                    if (availableCategory == true)  // пункт меню(категория 1 уровень) доступен
                     {
-                        var itemMenu = userAccess.Where(s => s.TaskName == item[j]).ToList();
-                        bool availableItem = (itemMenu.Count > 0 ? true : false);
-
-                        if (availableItem == true) // пункт меню (2 уровень) доступен
+                        menuNavPane.Buttons[i].Element.Visible = true;
+                        var item = ((TileNavCategory)menuNavPane.Buttons[i]).Items.Select(s => s.Name).ToList();
+                        for (int j = 0; j < item.Count; j++)
                         {
-                            ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].Tile.Enabled = true;
-                            var subItem = ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].SubItems.Select(s => s.Name).ToList();
-                            for (int k = 0; k < subItem.Count; k++)
+                            var itemMenu = userAccess.Where(s => s.TaskName == item[j]).ToList();
+                            bool availableItem = (itemMenu.Count > 0 ? true : false);
+
+                            if (availableItem == true) // пункт меню (2 уровень) доступен
                             {
-                                var subItemMenu = userAccess.Where(s => s.TaskName == subItem[k]).ToList();
-                                bool availableSubItem = (subItemMenu.Count > 0 ? true : false);
+                                ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].Tile.Enabled = true;
+                                var subItem = ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].SubItems.Select(s => s.Name).ToList();
+                                for (int k = 0; k < subItem.Count; k++)
+                                {
+                                    var subItemMenu = userAccess.Where(s => s.TaskName == subItem[k]).ToList();
+                                    bool availableSubItem = (subItemMenu.Count > 0 ? true : false);
 
-                                if (availableSubItem == true) // пункт подменю (3 уровень) доступен
-                                    ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].SubItems[k].Tile.Enabled = true;
-                                else
-                                    ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].SubItems[k].Tile.Enabled = false;
+                                    if (availableSubItem == true) // пункт подменю (3 уровень) доступен
+                                        ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].SubItems[k].Tile.Enabled = true;
+                                    else
+                                        ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].SubItems[k].Tile.Enabled = false;
+                                }
                             }
+                            else
+                                ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].Tile.Enabled = false;
                         }
-                        else
-                            ((TileNavCategory)menuNavPane.Buttons[i]).Items[j].Tile.Enabled = false;
                     }
+                    else
+                        menuNavPane.Buttons[i].Element.Visible = false;
                 }
-               else
-                    menuNavPane.Buttons[i].Element.Visible = false;
-            }
 
-            if(userAccess.Count() == 0 || userAccess.First().RoleName == "Администратор")
+                if (userAccess.Count() == 0 || userAccess.First().RoleName == "Администратор")
+                {
+                    toolsBtn.Enabled = true;
+                    toolsBtn.Visible = true;
+                    godModBtn.Enabled = true;
+                    godModBtn.Visible = true;
+                }
+            }
+            else
             {
-                toolsBtn.Enabled = true;
-                toolsBtn.Visible = true;
-                godModBtn.Enabled = true;
-                godModBtn.Visible = true;
+                var category = menuNavPane.Buttons.Select(s => s.Element.Name).ToList();
+                for (int i = 0; i < category.Count; i++)
+                {
+                    menuNavPane.Buttons[i].Element.Visible = false;
+                }
             }
         }
 
@@ -209,10 +239,11 @@ namespace ERP_NEW.GUI
             switch (e.Element.Name)
             {
                 case "certificateItem":
-                    ReceiptCertificatesFm receiptCertificatesFm = new ReceiptCertificatesFm(userTasksDTO);
-                    receiptCertificatesFm.Text = "Сертифікати та паспорти";
-                    receiptCertificatesFm.MdiParent = this;
-                    receiptCertificatesFm.Show();
+                    //ReceiptCertificatesFm receiptCertificatesFm = new ReceiptCertificatesFm(userTasksDTO);
+                    //receiptCertificatesFm.Text = "Сертифікати та паспорти";
+                    //receiptCertificatesFm.MdiParent = this;
+                    //receiptCertificatesFm.Show();
+                    MessageBox.Show("Форма більше не підттримується");
                     break;
                 case "expenditureOrdersItem":
                     ExpenditureByOrdersFm expenditureByOrdersFm = new ExpenditureByOrdersFm();
@@ -245,10 +276,18 @@ namespace ERP_NEW.GUI
                     deliveryStoreRemainsFm.Show();
                     break;
                 case "employeesInfoItem":
-                    EmployeesInfoFm employeesInfoFm = new EmployeesInfoFm(userTasksDTO);
-                    employeesInfoFm.Text = "Співробітники";
-                    employeesInfoFm.MdiParent = this;
-                    employeesInfoFm.Show();
+                    if (!Properties.Settings.Default.UserUsedSimpleEmployeeForm)
+                    {
+                        EmployeesInfoFm employeesInfoFm = new EmployeesInfoFm(userTasksDTO);
+                        employeesInfoFm.Text = "Співробітники";
+                        employeesInfoFm.MdiParent = this;
+                        employeesInfoFm.Show();
+                    }else{
+                        EmployeesMiniFm employeesminiFm = new EmployeesMiniFm(userTasksDTO);
+                        employeesminiFm.Text = "Співробітники";
+                        employeesminiFm.MdiParent = this;
+                        employeesminiFm.Show();
+                    }
                     break;
                 case "contractorsItem":
                     ContractorsFm contractorsFm = new ContractorsFm(userTasksDTO);
@@ -485,14 +524,28 @@ namespace ERP_NEW.GUI
                     businessCardFm.MdiParent = this;
                     businessCardFm.Show();
                     break;
-               case "cashBookItem":
-                    CashBookFm cashBookFm = new CashBookFm(userTasksDTO);
-                    cashBookFm.Text = "Касова книга";
+               case "cashBookBusinessTripsSubItem":
+                    CashBookFm cashBookFm = new CashBookFm(userTasksDTO, new CashBooksDTO()
+                    {
+                        Id = 1,
+                        CashBookName = "Каса"
+                    });
+                    cashBookFm.Text = "Касова книга (відрядження)";
                     cashBookFm.MdiParent = this;
                     cashBookFm.Show();
                     break;
+                case "cashBookCookShopSubItem":
+                    CashBookFm cashBookCookShopFm = new CashBookFm(userTasksDTO, new CashBooksDTO()
+                    {
+                        Id = 2,
+                        CashBookName = "Їдальня"
+                    });
+                    cashBookCookShopFm.Text = "Касова книга (їдальня)";
+                    cashBookCookShopFm.MdiParent = this;
+                    cashBookCookShopFm.Show();
+                    break;
 
-               case "cashBookSubItem":
+                case "cashBookSubItem":
                     BasisJournalFm basisJournalFm = new BasisJournalFm(userTasksDTO);
                     basisJournalFm.Text = "Журнал підстав";
                     basisJournalFm.MdiParent = this;
@@ -728,6 +781,12 @@ namespace ERP_NEW.GUI
                     logFm.Show();
 
                     break;
+                case "accountingTransferItem":
+                    AccountingTransferFm accountingTransferFm = new AccountingTransferFm(userTasksDTO);
+                    accountingTransferFm.Text = "Грошові операції";
+                    accountingTransferFm.MdiParent = this;
+                    accountingTransferFm.Show();
+                    break;
 
 
 
@@ -739,24 +798,54 @@ namespace ERP_NEW.GUI
             menuNavPane.HideDropDownWindow();
         }
            
-        private bool CheckAccess()
+        private bool CheckAccess(int accountNumber = 0)
         {
-            int num = GetActiveDirectoryUser();
             
+            int num = accountNumber;
+            //num = GetActiveDirectoryUser();
+
+            if (accountNumber == 0)
+            {
+                num = GetActiveDirectoryUser();
+            }
+
+
             switch (num)
             {
                 case -1:
-                    
-                    Load += (s, e) => Close();
-                    return false;
+
+                    userService = Program.kernel.Get<IUserService>();
+
+                    SplashScreenManager.ShowForm(typeof(StartScreenFm));
+                    SplashScreenManager.Default.SendCommand(StartScreenFm.SplashScreenCommand.SetLabel, "Авторизація користувача...");
+                    Thread.Sleep(200);
+
+                    if (userService.TryAuthorize(num))
+                    {
+                        //добавить трай-кач
+                        SplashScreenManager.Default.SendCommand(StartScreenFm.SplashScreenCommand.SetLabel, "Користувач успішно авторизований \n(" + UserService.AuthorizatedUser.Fio + ")");
+                        Thread.Sleep(200);
+                        SplashScreenManager.Default.SendCommand(StartScreenFm.SplashScreenCommand.SetLabel, "Налаштування прав доступу...");
+                        Thread.Sleep(200);
+                        SplashScreenManager.CloseForm();
+                        return true;
+                    }
+                    else
+                    {
+                        SplashScreenManager.Default.SendCommand(StartScreenFm.SplashScreenCommand.SetLabel, "Користувача не знадйено в базі \n(" + UserService.AuthorizatedUser.Fio + ")");
+                        Thread.Sleep(200);
+                        SplashScreenManager.CloseForm();
+                        return true;
+                    }
+                    return true;
                 case 0:
                     MessageBox.Show("Інформація про користувача відсутня на сервері підприємства. \nЗверніться у відділ АСУВ", "Авторизація користувача", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    
+
                     Load += (s, e) => Close();
                     return false;
                 default:
                     userService = Program.kernel.Get<IUserService>();
-             
+
                     SplashScreenManager.ShowForm(typeof(StartScreenFm));
                     SplashScreenManager.Default.SendCommand(StartScreenFm.SplashScreenCommand.SetLabel, "Авторизація користувача...");
                     Thread.Sleep(200);
@@ -774,25 +863,32 @@ namespace ERP_NEW.GUI
                     else
                     {
                         SplashScreenManager.CloseForm();
-                        MessageBox.Show("Вам не дозволено працювати в системі. \nЗверніться у відділ АСУВ. \nВаш ідентифікатор "+ num, "Авторизація користувача", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Вам не дозволено працювати в системі. \nЗверніться у відділ АСУВ. \nВаш ідентифікатор " + num, "Авторизація користувача", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         Load += (s, e) => Close();
                         return false;
                     }
             }
+
         }
    
         private int GetActiveDirectoryUser()
         {
-            var currentDomain = ADUser.CurrentDC(); 
-            
+            // если нужно отключить систему авторизации через табельный номер подвязанный к домену
+            // указываем табельный номер который нужно вернуть
+
+            //return 690;
+            //return 1000;
+            //return 457;
+            var currentDomain = ADUser.CurrentDC();
+
             if (currentDomain != null)
             {
                 var searchString = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
                 //Для тестирования чужой учетки на машине разработчика используем строку ниже, верхнюю нужно закоментить!!!
                 //var searchString = "TVAGONM\\{учетка_пользователя}";
-                //var searchString = "TVAGONM\\zaycev";
+                //var searchString = "dc1.tvm.loc\\lagno";
                 var member = searchString.Split('\\');
                 var ulogin = member[1];
                 var uDomen = member[0];
@@ -821,17 +917,24 @@ namespace ERP_NEW.GUI
                         return 656;
                     if (ulogin == "kostirenko")
                         return 723;
+                    if (ulogin == "asup")
+                        return 690;
+                    if (ulogin == "shehovets_a")
+                        return 1000;
 
 
                     int userNumber;
                     bool isParse = int.TryParse(tabnumber, out userNumber);
 
-                    return (isParse) ? userNumber : 0;      
+                    return (isParse) ? userNumber : 0;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     if (ulogin == "krasilnikova")
                         return 844;
+                    if (ulogin == "utyanska")
+                        return 836;
+
                     //if (ulogin == "zavorotniy")+
                     //    return 757;
                     //if (ulogin == "firsova")
@@ -841,7 +944,7 @@ namespace ERP_NEW.GUI
                     //else if (ulogin == "zaloilo")
                     //    return 804;А
 
-                    MessageBox.Show("Вам не дозволено працювати в системі. \nПеревірте підключення до мережі або зверніться до адміністратора. \nПользователь: " + System.Security.Principal.WindowsIdentity.GetCurrent().Name, "Авторизація користувача", MessageBoxButtons.OK, MessageBoxIcon.Warning);              
+                    MessageBox.Show("Вам не дозволено працювати в системі. \nПеревірте підключення до мережі або зверніться до адміністратора. \nКористувач: " + System.Security.Principal.WindowsIdentity.GetCurrent().Name, "Авторизація користувача", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             return -1;
@@ -856,15 +959,17 @@ namespace ERP_NEW.GUI
         private void MainTabFm_FormClosing(object sender, FormClosingEventArgs e)
         {
             UserOffline();
-            foreach (string FileName in Directory.GetFiles(Utils.HomePath + @"\Temp\"))
-            {
-                try
-                {
-                   if (Path.GetFileName(FileName) != "Dummy.txt")
-                        File.Delete(FileName);
-                }
-                catch { }
-            }
+            Properties.Settings.Default.AccountNumber = 0;
+            //foreach (string FileName in Directory.GetFiles(Utils.HomePath + @"\Temp\"))
+            //{
+            //    try
+            //    {
+            //       if (Path.GetFileName(FileName) != "Dummy.txt")
+            //            File.Delete(FileName);
+            //    }
+            //    catch { }
+            //}
+            Application.Exit();
         }
 
         private void toolsBtn_ElementClick(object sender, NavElementEventArgs e)
@@ -878,10 +983,9 @@ namespace ERP_NEW.GUI
 
             UserAccessMenu();
         }
-
         //------------
 
-        UserTasksDTO userTasksDTO;
+        UserTasksDTO userTasksDTO = new UserTasksDTO();
         //-------------
         private void godModBtn_ElementClick(object sender, NavElementEventArgs e)
         {
@@ -896,6 +1000,62 @@ namespace ERP_NEW.GUI
             userService.TryAuthorize(UserService.AuthorizatedUser.AccountNumber);
 
             UserAccessMenu();
-        }   
+        }
+
+        private void userFotoEdit_Click(object sender, EventArgs e)
+        {
+            UserTasksDTO userTasksDTO = null;
+            if (userAccess != null)
+            {
+                userTasksDTO = userAccess
+                    .Select(s => new UserTasksDTO
+                    {
+                        UserTaskId = s.UserTaskId,
+                        UserRoleId = s.UserRoleId,
+                        UserId = s.UserId,
+                        PriceAttribute = s.PriceAttribute,
+                        AccessRightId = s.AccessRightId
+                    })
+                    .FirstOrDefault();
+            }
+
+            string path = Utils.HomePath;
+            //ref Int32 v
+            using (UserSettingsFm userSettingsFm = new UserSettingsFm(userTasksDTO))
+            {
+                DialogResult ret = userSettingsFm.ShowDialog();
+                if (ret == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (Properties.Settings.Default.AccountNumber != 0)
+                    {
+                        MainTabFm oReadWindow = new MainTabFm(Properties.Settings.Default.AccountNumber);
+                        oReadWindow.ShowDialog(this);
+
+                    }
+                }
+                else if (ret == System.Windows.Forms.DialogResult.Abort)
+                {
+                    this.Close();
+                }
+                //else if (ret == System.Windows.Forms.DialogResult.Retry)
+                //{
+                //    if (Properties.Settings.Default.AccountNumber != 0)
+                //    {
+                //        MainTabFm oReadWindow = new MainTabFm(Properties.Settings.Default.AccountNumber);
+
+                    //    }
+                    //}
+            }
+
+
+
+            //UserSettingsFm userSettingsFm = new UserSettingsFm(userTasksDTO);
+            //userSettingsFm.ShowDialog();
+        }
+
+        private void userFotoEdit_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

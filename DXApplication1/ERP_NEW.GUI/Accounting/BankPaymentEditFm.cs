@@ -30,12 +30,16 @@ namespace ERP_NEW.GUI.Accounting
         private IPeriodService periodService;
         private IAccountingOperationService accountingOperationService;
         private ICalcWithBuyersService calcWithBuyersService;
+        private ILogService logService;
+
+        private const string NameForm = "BankPaymentEditFm";
 
         private BindingSource bankPaymentsBS = new BindingSource();
         private BindingSource currencyRatesBS = new BindingSource();
         private BindingSource accountsBS = new BindingSource();
         
         private Utils.Operation _operation;
+        private UserTasksDTO userTasksDTO;
 
         private ObjectBase Item
         {
@@ -47,13 +51,14 @@ namespace ERP_NEW.GUI.Accounting
             }
         }
 
-        public BankPaymentEditFm(Utils.Operation operation, Bank_PaymentsDTO model)
+        public BankPaymentEditFm(Utils.Operation operation, Bank_PaymentsDTO model, UserTasksDTO userTaskDTO)
         {
             InitializeComponent();
 
             splashScreenManager.ShowWaitForm();
 
             _operation = operation;
+            this.userTasksDTO = userTaskDTO;
             
             bankPaymentsBS.DataSource = Item = model;
 
@@ -63,6 +68,7 @@ namespace ERP_NEW.GUI.Accounting
             currencyService = Program.kernel.Get<ICurrencyService>();
             accountingOperationService = Program.kernel.Get<IAccountingOperationService>();
             calcWithBuyersService = Program.kernel.Get<ICalcWithBuyersService>();
+            logService = Program.kernel.Get<ILogService>();
 
             currencyRatesBS.DataSource = ((Bank_PaymentsDTO)Item).CurrencyRatesConvertId == null ?
                 new Currency_RatesDTO() { Currency_Id = 1, Multiplicity = 1, CurrencyPayment = 0.00m, Rate = 0.000000m } :
@@ -143,9 +149,23 @@ namespace ERP_NEW.GUI.Accounting
                 contractorCheckEdit.Checked = true;
             }
 
-
-
             accountsBS.DataSource = accountsService.GetAccounts();
+
+            if (_operation == Utils.Operation.Info)
+            {
+                employeesEdit.Enabled = false;
+                currencyConvertEdit.Enabled = false;
+                currencyPriceConvertTBox.Enabled = false;
+                rateConvertTBox.Enabled = false;
+
+                contractorCheckEdit.Checked = true;
+                //if(model.Purpose_Account_Id != 26)
+                //    accountsBS.DataSource = accountsService.GetAccounts().Where(flt=>flt.Num.Contains("312") || flt.Num.Contains("313")).ToList();
+            }
+
+
+
+            
 
             #region DataBinding's
 
@@ -206,6 +226,13 @@ namespace ERP_NEW.GUI.Accounting
             currencyConvertEdit.Properties.ValueMember = "Id";
             currencyConvertEdit.Properties.DisplayMember = "Code";
             currencyConvertEdit.Properties.NullText = "Немає данних";
+
+            if (_operation == Utils.Operation.Info)
+            {
+
+                if (model.Purpose_Account_Id != 26)
+                    bankAccountEdit.Properties.DataSource = accountsService.GetAccounts().Where(flt => flt.Num.Contains("312") || flt.Num.Contains("313")).ToList();
+            }
 
             #endregion
 
@@ -275,6 +302,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При збереженні періоду виникла помилка. " + ex.Message, "Збереження періоду", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 return;
             }
         }
@@ -400,7 +428,24 @@ namespace ERP_NEW.GUI.Accounting
                     int cwbVatId = calcWithBuyersService.CalcWithBuyersPaymentVatCreate(cwbVatModel);
 
                     return true;
-                
+
+                case Utils.Operation.Info:
+                    //create BankPayment          
+                    if (convertCheckEdit.Checked && ((Currency_RatesDTO)currencyRatesBS.Current).Currency_Id > 1)
+                    {
+                        ((Currency_RatesDTO)currencyRatesBS.Current).Date = ((Bank_PaymentsDTO)Item).Payment_Date ?? DateTime.Now;
+                        int currencyRatesId = currencyService.CurrencyRatesCreate((Currency_RatesDTO)currencyRatesBS.Current);
+                        ((Bank_PaymentsDTO)Item).CurrencyRatesConvertId = currencyRatesId;
+                    }
+
+                    ((Bank_PaymentsDTO)Item).DateCreate = DateTime.Now;
+                    ((Bank_PaymentsDTO)Item).DateUpdate = DateTime.Now;
+
+                    ((Bank_PaymentsDTO)Item).Id = bankPaymentsService.BankPaymentCreate((Bank_PaymentsDTO)Item);
+
+                    return true;
+
+
                 default:
                     return false;
             }
@@ -452,6 +497,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch (Exception ex)
                 {
                     MessageBox.Show("При збереженні виникла помилка. " + ex.Message, "Збереження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
             }
         }
@@ -649,10 +695,25 @@ namespace ERP_NEW.GUI.Accounting
             this.validateLbl.Visible = !isValidate;
         }
 
+
+
+
         #endregion
 
-        
+        private void accountingOperationEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            
+        }
 
-        
+        private void accountingOperationEdit_EditValueChanging(object sender, DevExpress.XtraEditors.Controls.ChangingEventArgs e)
+        {
+            if (_operation == Utils.Operation.Info && (int)purposeAccountEdit.EditValue!=26)
+            {
+                if (((Bank_PaymentsDTO)Item).AccountingOperationId == 1)
+                    purposeAccountEdit.EditValue = 42;
+                else
+                    purposeAccountEdit.EditValue = 41;
+            }
+        }
     }
 }

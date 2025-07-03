@@ -52,6 +52,7 @@
             this.packingListsGridView = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridView();
             this.gridBand1 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.packingNumberCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.packingNumberPartCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.packingDateCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.responsiblePersonFullNameCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.descriptionCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
@@ -353,6 +354,7 @@
             this.gridBand3});
             this.packingListsGridView.Columns.AddRange(new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn[] {
             this.packingNumberCol,
+            this.packingNumberPartCol,
             this.packingDateCol,
             this.responsiblePersonFullNameCol,
             this.scanStatusCol,
@@ -366,7 +368,6 @@
             this.orderDateCol});
             this.packingListsGridView.GridControl = this.packingListsGrid;
             this.packingListsGridView.Name = "packingListsGridView";
-            this.packingListsGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.packingListsGridView.OptionsView.AllowCellMerge = true;
             this.packingListsGridView.OptionsView.RowAutoHeight = true;
             this.packingListsGridView.OptionsView.ShowAutoFilterRow = true;
@@ -384,12 +385,13 @@
             this.gridBand1.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridBand1.Caption = "Відомості";
             this.gridBand1.Columns.Add(this.packingNumberCol);
+            this.gridBand1.Columns.Add(this.packingNumberPartCol);
             this.gridBand1.Columns.Add(this.packingDateCol);
             this.gridBand1.Columns.Add(this.responsiblePersonFullNameCol);
             this.gridBand1.Columns.Add(this.descriptionCol);
             this.gridBand1.Name = "gridBand1";
             this.gridBand1.VisibleIndex = 0;
-            this.gridBand1.Width = 614;
+            this.gridBand1.Width = 689;
             // 
             // packingNumberCol
             // 
@@ -404,6 +406,19 @@
             this.packingNumberCol.OptionsColumn.AllowFocus = false;
             this.packingNumberCol.Visible = true;
             this.packingNumberCol.Width = 47;
+            // 
+            // packingNumberPartCol
+            // 
+            this.packingNumberPartCol.AppearanceCell.Options.UseTextOptions = true;
+            this.packingNumberPartCol.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.packingNumberPartCol.AppearanceHeader.Options.UseTextOptions = true;
+            this.packingNumberPartCol.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.packingNumberPartCol.Caption = "Номер партії";
+            this.packingNumberPartCol.FieldName = "PackingNumberPart";
+            this.packingNumberPartCol.Name = "packingNumberPartCol";
+            this.packingNumberPartCol.OptionsColumn.AllowEdit = false;
+            this.packingNumberPartCol.OptionsColumn.AllowFocus = false;
+            this.packingNumberPartCol.Visible = true;
             // 
             // packingDateCol
             // 
@@ -694,7 +709,7 @@
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage2;
-            this.xtraTabControl1.Size = new System.Drawing.Size(1419, 202);
+            this.xtraTabControl1.Size = new System.Drawing.Size(1419, 201);
             this.xtraTabControl1.TabIndex = 2;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -709,7 +724,7 @@
             this.xtraTabPage2.Appearance.Header.Options.UseForeColor = true;
             this.xtraTabPage2.Controls.Add(this.expendituresGrid);
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(1413, 173);
+            this.xtraTabPage2.Size = new System.Drawing.Size(1414, 174);
             this.xtraTabPage2.Text = "Списані матеріали";
             // 
             // expendituresGrid
@@ -718,7 +733,7 @@
             this.expendituresGrid.Location = new System.Drawing.Point(0, 0);
             this.expendituresGrid.MainView = this.expenditureBandedGridView;
             this.expendituresGrid.Name = "expendituresGrid";
-            this.expendituresGrid.Size = new System.Drawing.Size(1413, 173);
+            this.expendituresGrid.Size = new System.Drawing.Size(1414, 174);
             this.expendituresGrid.TabIndex = 4;
             this.expendituresGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.expenditureBandedGridView});
@@ -758,7 +773,6 @@
             this.invoiceNumCol});
             this.expenditureBandedGridView.GridControl = this.expendituresGrid;
             this.expenditureBandedGridView.Name = "expenditureBandedGridView";
-            this.expenditureBandedGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.expenditureBandedGridView.OptionsView.ShowAutoFilterRow = true;
             this.expenditureBandedGridView.OptionsView.ShowFooter = true;
             this.expenditureBandedGridView.OptionsView.ShowGroupPanel = false;
@@ -1202,7 +1216,6 @@
             this.sumCurrencyPriceCol});
             this.specofocationGridView.GridControl = this.specificationGrid;
             this.specofocationGridView.Name = "specofocationGridView";
-            this.specofocationGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.specofocationGridView.OptionsView.ShowAutoFilterRow = true;
             this.specofocationGridView.OptionsView.ShowFooter = true;
             this.specofocationGridView.OptionsView.ShowGroupPanel = false;
@@ -1343,7 +1356,6 @@
             this.nameAssCol});
             this.assembliesGridView.GridControl = this.assembliesGrid;
             this.assembliesGridView.Name = "assembliesGridView";
-            this.assembliesGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.assembliesGridView.OptionsView.ShowAutoFilterRow = true;
             this.assembliesGridView.OptionsView.ShowGroupPanel = false;
             // 
@@ -1500,11 +1512,12 @@
         private DevExpress.XtraGrid.Views.Grid.GridView assembliesGridView;
         private DevExpress.XtraGrid.Columns.GridColumn drawingCol;
         private DevExpress.XtraGrid.Columns.GridColumn nameAssCol;
-        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1;
-        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand2;
-        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand7;
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn transportListScanCol;
         private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repositoryItemPictureEdit2;
+        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1;
+        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn packingNumberPartCol;
+        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand2;
+        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand7;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand6;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand3;
     }

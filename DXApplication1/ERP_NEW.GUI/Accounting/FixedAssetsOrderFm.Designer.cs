@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FixedAssetsOrderFm));
             DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
@@ -56,6 +55,7 @@
             this.ribbonGalleryBarItem1 = new DevExpress.XtraBars.RibbonGalleryBarItem();
             this.actWriteOffBtn = new DevExpress.XtraBars.BarButtonItem();
             this.expFixeAssetsBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.printInventoryCardNewBtn = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -139,9 +139,13 @@
             this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.repositoryItemDateEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.repositoryItemDateEdit3 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
-            this.decreeItemMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.amortisationMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.додатиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dateMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.видалитиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decreeItemMenu = new DevExpress.XtraBars.PopupMenu();
             this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
+            this.imageCollection = new DevExpress.Utils.ImageCollection();
             ((System.ComponentModel.ISupportInitialize)(this.fixedAssessOrderTab)).BeginInit();
             this.fixedAssessOrderTab.SuspendLayout();
             this.fixedAssestsTabPage.SuspendLayout();
@@ -176,6 +180,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3.CalendarTimeProperties)).BeginInit();
+            this.amortisationMenu.SuspendLayout();
+            this.dateMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.decreeItemMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection)).BeginInit();
             this.SuspendLayout();
@@ -202,7 +208,7 @@
             this.fixedAssestsTabPage.AlwaysScrollActiveControlIntoView = false;
             this.fixedAssestsTabPage.Controls.Add(this.splitContainerControl1);
             this.fixedAssestsTabPage.Name = "fixedAssestsTabPage";
-            this.fixedAssestsTabPage.Size = new System.Drawing.Size(1372, 654);
+            this.fixedAssestsTabPage.Size = new System.Drawing.Size(1373, 656);
             this.fixedAssestsTabPage.Tag = "0";
             this.fixedAssestsTabPage.Text = "Основні засоби";
             // 
@@ -216,7 +222,7 @@
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1372, 654);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1373, 656);
             this.splitContainerControl1.SplitterPosition = 98;
             this.splitContainerControl1.TabIndex = 0;
             this.splitContainerControl1.Text = "splitContainerControl1";
@@ -242,9 +248,10 @@
             this.journalOrderBtn,
             this.ribbonGalleryBarItem1,
             this.actWriteOffBtn,
-            this.expFixeAssetsBtn});
+            this.expFixeAssetsBtn,
+            this.printInventoryCardNewBtn});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 4;
+            this.ribbonControl1.MaxItemId = 5;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -254,7 +261,7 @@
             this.repositoryItemCheckEdit1});
             this.ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2007;
             this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl1.Size = new System.Drawing.Size(1372, 95);
+            this.ribbonControl1.Size = new System.Drawing.Size(1373, 95);
             this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // yearEdit
@@ -443,6 +450,15 @@
             this.expFixeAssetsBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.expFixeAssetsBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.expFixeAssetsBtn_ItemClick);
             // 
+            // printInventoryCardNewBtn
+            // 
+            this.printInventoryCardNewBtn.Caption = "Інвентарна картка обліку";
+            this.printInventoryCardNewBtn.Id = 4;
+            this.printInventoryCardNewBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("printInventoryCardNewBtn.LargeGlyph")));
+            this.printInventoryCardNewBtn.Name = "printInventoryCardNewBtn";
+            this.printInventoryCardNewBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.printInventoryCardNewBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.printInventoryCardNewBtn_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -482,6 +498,7 @@
             // 
             this.ribbonPageGroup4.ItemLinks.Add(this.printBtn);
             this.ribbonPageGroup4.ItemLinks.Add(this.printInventoryCardBtn);
+            this.ribbonPageGroup4.ItemLinks.Add(this.printInventoryCardNewBtn);
             this.ribbonPageGroup4.ItemLinks.Add(this.actBtn);
             this.ribbonPageGroup4.ItemLinks.Add(this.actWriteOffBtn);
             this.ribbonPageGroup4.ItemLinks.Add(this.materialsBtn, true);
@@ -510,7 +527,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.96124F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.03876F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1372, 551);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1373, 552);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panelControl1
@@ -525,9 +542,9 @@
             this.panelControl1.Controls.Add(this.pictureBox2);
             this.panelControl1.Controls.Add(this.pictureBox1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelControl1.Location = new System.Drawing.Point(3, 519);
+            this.panelControl1.Location = new System.Drawing.Point(3, 520);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1366, 29);
+            this.panelControl1.Size = new System.Drawing.Size(1367, 29);
             this.panelControl1.TabIndex = 2;
             // 
             // labelControl4
@@ -612,7 +629,7 @@
             this.fixedAssetsOrderGrid.Location = new System.Drawing.Point(3, 3);
             this.fixedAssetsOrderGrid.MainView = this.fixedAssetsOrderGridView;
             this.fixedAssetsOrderGrid.Name = "fixedAssetsOrderGrid";
-            this.fixedAssetsOrderGrid.Size = new System.Drawing.Size(1366, 355);
+            this.fixedAssetsOrderGrid.Size = new System.Drawing.Size(1367, 356);
             this.fixedAssetsOrderGrid.TabIndex = 0;
             this.fixedAssetsOrderGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.fixedAssetsOrderGridView});
@@ -641,9 +658,9 @@
             this.fixedAssetsOrderGridView.GridControl = this.fixedAssetsOrderGrid;
             this.fixedAssetsOrderGridView.GroupCount = 1;
             this.fixedAssetsOrderGridView.Name = "fixedAssetsOrderGridView";
-            this.fixedAssetsOrderGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.fixedAssetsOrderGridView.OptionsView.ShowAutoFilterRow = true;
             this.fixedAssetsOrderGridView.OptionsView.ShowFooter = true;
+            this.fixedAssetsOrderGridView.OptionsView.ShowGroupPanel = false;
             this.fixedAssetsOrderGridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.groupCol, DevExpress.Data.ColumnSortOrder.Ascending)});
             this.fixedAssetsOrderGridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.fixedAssetsOrderGridView_FocusedRowChanged);
@@ -954,12 +971,12 @@
             // fixedAssetsMaterialsGrid
             // 
             this.fixedAssetsMaterialsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fixedAssetsMaterialsGrid.Location = new System.Drawing.Point(3, 364);
+            this.fixedAssetsMaterialsGrid.Location = new System.Drawing.Point(3, 365);
             this.fixedAssetsMaterialsGrid.MainView = this.fixedAssetsMaterialsGridView;
             this.fixedAssetsMaterialsGrid.Name = "fixedAssetsMaterialsGrid";
             this.fixedAssetsMaterialsGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemPictureEdit1});
-            this.fixedAssetsMaterialsGrid.Size = new System.Drawing.Size(1366, 149);
+            this.fixedAssetsMaterialsGrid.Size = new System.Drawing.Size(1367, 149);
             this.fixedAssetsMaterialsGrid.TabIndex = 0;
             this.fixedAssetsMaterialsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.fixedAssetsMaterialsGridView});
@@ -984,7 +1001,6 @@
             this.flagCol});
             this.fixedAssetsMaterialsGridView.GridControl = this.fixedAssetsMaterialsGrid;
             this.fixedAssetsMaterialsGridView.Name = "fixedAssetsMaterialsGridView";
-            this.fixedAssetsMaterialsGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.fixedAssetsMaterialsGridView.OptionsView.ShowGroupPanel = false;
             this.fixedAssetsMaterialsGridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.fixedAssetsMaterialsGridView_CustomUnboundColumnData);
             // 
@@ -1242,7 +1258,7 @@
             this.arhivTabPage.Controls.Add(this.fixedAssetsArchiveGrid);
             this.arhivTabPage.Controls.Add(this.ribbonControl2);
             this.arhivTabPage.Name = "arhivTabPage";
-            this.arhivTabPage.Size = new System.Drawing.Size(1372, 654);
+            this.arhivTabPage.Size = new System.Drawing.Size(1373, 656);
             this.arhivTabPage.Tag = "1";
             this.arhivTabPage.Text = "Архів";
             // 
@@ -1253,7 +1269,7 @@
             this.fixedAssetsArchiveGrid.MainView = this.fixedAssetsArchiveGridView;
             this.fixedAssetsArchiveGrid.MenuManager = this.ribbonControl1;
             this.fixedAssetsArchiveGrid.Name = "fixedAssetsArchiveGrid";
-            this.fixedAssetsArchiveGrid.Size = new System.Drawing.Size(1372, 559);
+            this.fixedAssetsArchiveGrid.Size = new System.Drawing.Size(1373, 561);
             this.fixedAssetsArchiveGrid.TabIndex = 1;
             this.fixedAssetsArchiveGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.fixedAssetsArchiveGridView});
@@ -1277,7 +1293,6 @@
             this.fixedAssetsArchiveGridView.GridControl = this.fixedAssetsArchiveGrid;
             this.fixedAssetsArchiveGridView.GroupCount = 1;
             this.fixedAssetsArchiveGridView.Name = "fixedAssetsArchiveGridView";
-            this.fixedAssetsArchiveGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.fixedAssetsArchiveGridView.OptionsPrint.AutoWidth = false;
             this.fixedAssetsArchiveGridView.OptionsPrint.PrintFilterInfo = true;
             this.fixedAssetsArchiveGridView.OptionsView.ShowAutoFilterRow = true;
@@ -1510,7 +1525,7 @@
             this.repositoryItemDateEdit4,
             this.repositoryItemDateEdit5});
             this.ribbonControl2.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl2.Size = new System.Drawing.Size(1372, 95);
+            this.ribbonControl2.Size = new System.Drawing.Size(1373, 95);
             this.ribbonControl2.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // showArchivBtn
@@ -1654,6 +1669,32 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.repositoryItemDateEdit3.Name = "repositoryItemDateEdit3";
             // 
+            // amortisationMenu
+            // 
+            this.amortisationMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.додатиToolStripMenuItem});
+            this.amortisationMenu.Name = "amortisationMenu";
+            this.amortisationMenu.Size = new System.Drawing.Size(114, 26);
+            // 
+            // додатиToolStripMenuItem
+            // 
+            this.додатиToolStripMenuItem.Name = "додатиToolStripMenuItem";
+            this.додатиToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.додатиToolStripMenuItem.Text = "Додати";
+            // 
+            // dateMenu
+            // 
+            this.dateMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.видалитиToolStripMenuItem});
+            this.dateMenu.Name = "dateMenu";
+            this.dateMenu.Size = new System.Drawing.Size(127, 26);
+            // 
+            // видалитиToolStripMenuItem
+            // 
+            this.видалитиToolStripMenuItem.Name = "видалитиToolStripMenuItem";
+            this.видалитиToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.видалитиToolStripMenuItem.Text = "Видалити";
+            // 
             // decreeItemMenu
             // 
             this.decreeItemMenu.Name = "decreeItemMenu";
@@ -1721,6 +1762,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3)).EndInit();
+            this.amortisationMenu.ResumeLayout(false);
+            this.dateMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.decreeItemMenu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection)).EndInit();
             this.ResumeLayout(false);
@@ -1840,5 +1883,10 @@
         private DevExpress.XtraBars.BarButtonItem expFixeAssetsBtn;
         private DevExpress.XtraBars.BarButtonItem printActExpenditureBtn;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup8;
+        private System.Windows.Forms.ContextMenuStrip amortisationMenu;
+        private System.Windows.Forms.ContextMenuStrip dateMenu;
+        private System.Windows.Forms.ToolStripMenuItem додатиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem видалитиToolStripMenuItem;
+        private DevExpress.XtraBars.BarButtonItem printInventoryCardNewBtn;
     }
 }

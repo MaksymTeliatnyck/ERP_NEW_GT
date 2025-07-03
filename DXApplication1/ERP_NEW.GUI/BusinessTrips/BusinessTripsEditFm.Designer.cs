@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule1 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
             DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule2 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
             DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule3 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
@@ -87,7 +86,7 @@
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.firstDateBusinessTripEdit = new DevExpress.XtraBars.BarEditItem();
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
-            this.businessTripValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
+            this.businessTripValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider();
             this.cancelBtn = new DevExpress.XtraEditors.SimpleButton();
             this.saveBtn = new DevExpress.XtraEditors.SimpleButton();
             this.validateLbl = new DevExpress.XtraEditors.LabelControl();
@@ -189,7 +188,6 @@
             this.gridColumn3});
             this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView1.OptionsFind.AlwaysVisible = true;
             this.gridView1.OptionsFind.SearchInPreview = true;
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -365,7 +363,6 @@
             this.gridColumn6});
             this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView3.Name = "gridView3";
-            this.gridView3.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView3.OptionsFind.AlwaysVisible = true;
             this.gridView3.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             this.gridView3.OptionsFind.SearchInPreview = true;
@@ -512,7 +509,6 @@
             this.gridColumn14});
             this.gridView5.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView5.Name = "gridView5";
-            this.gridView5.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView5.OptionsFind.AlwaysVisible = true;
             this.gridView5.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             this.gridView5.OptionsFind.SearchInPreview = true;
@@ -585,7 +581,6 @@
             this.gridColumn11});
             this.gridView4.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView4.Name = "gridView4";
-            this.gridView4.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView4.OptionsFind.AlwaysVisible = true;
             this.gridView4.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             this.gridView4.OptionsFind.SearchInPreview = true;

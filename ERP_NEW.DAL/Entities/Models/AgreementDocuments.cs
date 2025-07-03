@@ -17,5 +17,8 @@ namespace ERP_NEW.DAL.Entities.Models
         public int? AgreementTypeDocumentsId { get; set; }
         public int ResponsiblePersonId { get; set; }
         public DateTime? DateCreateFile { get; set; }
+        public byte[] Scan { get; set; }
+        public string OldURL { get; set; }
+        public DateTime? DateChange { get; set; }
     }
 }

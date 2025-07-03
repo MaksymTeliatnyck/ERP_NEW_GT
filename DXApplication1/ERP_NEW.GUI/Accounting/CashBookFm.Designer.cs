@@ -383,6 +383,7 @@
             this.endDayPriceEdit.ItemAppearance.Normal.Options.UseFont = true;
             this.endDayPriceEdit.ItemAppearance.Normal.Options.UseForeColor = true;
             this.endDayPriceEdit.Name = "endDayPriceEdit";
+            this.endDayPriceEdit.EditValueChanged += new System.EventHandler(this.endDayPriceEdit_EditValueChanged);
             // 
             // repositoryItemTextEdit2
             // 
@@ -660,7 +661,6 @@
             this.pageDateCol});
             this.cashBookPageGridView.GridControl = this.cashBookPageGrid;
             this.cashBookPageGridView.Name = "cashBookPageGridView";
-            this.cashBookPageGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.cashBookPageGridView.OptionsView.ShowAutoFilterRow = true;
             this.cashBookPageGridView.OptionsView.ShowFooter = true;
             this.cashBookPageGridView.OptionsView.ShowGroupPanel = false;
@@ -750,7 +750,7 @@
             this.gridSplitContainer1.Location = new System.Drawing.Point(0, 0);
             this.gridSplitContainer1.Name = "gridSplitContainer1";
             this.gridSplitContainer1.Panel1.Controls.Add(this.cashBookRecordGrid);
-            this.gridSplitContainer1.Size = new System.Drawing.Size(1327, 649);
+            this.gridSplitContainer1.Size = new System.Drawing.Size(1326, 649);
             this.gridSplitContainer1.TabIndex = 0;
             // 
             // cashBookRecordGrid
@@ -760,7 +760,7 @@
             this.cashBookRecordGrid.MainView = this.cashBookRecordGridView;
             this.cashBookRecordGrid.Name = "cashBookRecordGrid";
             this.cashBookRecordGrid.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cashBookRecordGrid.Size = new System.Drawing.Size(1327, 649);
+            this.cashBookRecordGrid.Size = new System.Drawing.Size(1326, 649);
             this.cashBookRecordGrid.TabIndex = 2;
             this.cashBookRecordGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.cashBookRecordGridView});
@@ -777,7 +777,6 @@
             this.nameAdditionalTypeCol});
             this.cashBookRecordGridView.GridControl = this.cashBookRecordGrid;
             this.cashBookRecordGridView.Name = "cashBookRecordGridView";
-            this.cashBookRecordGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.cashBookRecordGridView.OptionsView.ShowAutoFilterRow = true;
             this.cashBookRecordGridView.OptionsView.ShowFooter = true;
             this.cashBookRecordGridView.OptionsView.ShowGroupPanel = false;

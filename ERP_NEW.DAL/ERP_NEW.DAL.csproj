@@ -29,18 +29,32 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Calendar.NET">
-      <HintPath>C:\Users\ponomarev_a\Desktop\Calendar.NET.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -119,14 +133,17 @@
     <Compile Include="Entities\Models\AccountClothes.cs" />
     <Compile Include="Entities\Models\AccountClothesMaterials.cs" />
     <Compile Include="Entities\Models\AccountingOperation.cs" />
+    <Compile Include="Entities\Models\AccountingOperations.cs" />
     <Compile Include="Entities\Models\AccountsType.cs" />
     <Compile Include="Entities\Models\AgreementOrder.cs" />
     <Compile Include="Entities\Models\AgreementOrderPurpose.cs" />
     <Compile Include="Entities\Models\AgreementOrderScan.cs" />
     <Compile Include="Entities\Models\Agreements.cs" />
+    <Compile Include="Entities\Models\AgreementsScan.cs" />
     <Compile Include="Entities\Models\AgreementsType.cs" />
     <Compile Include="Entities\Models\Calculation.cs" />
     <Compile Include="Entities\Models\CalculationMaterials.cs" />
+    <Compile Include="Entities\Models\CashBooks.cs" />
     <Compile Include="Entities\Models\Delivery.cs" />
     <Compile Include="Entities\Models\AgreementDocuments.cs" />
     <Compile Include="Entities\Models\DeliveryOrder.cs" />
@@ -137,6 +154,7 @@
     <Compile Include="Entities\Models\ExpenditureStoreHouse.cs" />
     <Compile Include="Entities\Models\Expenditures_Accountant.cs" />
     <Compile Include="Entities\Models\FixedAssetsMaterials.cs" />
+    <Compile Include="Entities\Models\FixedAssetsNoAmort.cs" />
     <Compile Include="Entities\Models\FixedAssetsOrderRegistration.cs" />
     <Compile Include="Entities\Models\GetOSVkvartal_ForChess.cs" />
     <Compile Include="Entities\Models\Log.cs" />
@@ -150,7 +168,13 @@
     <Compile Include="Entities\Models\MTSNomenclaturesOld.cs" />
     <Compile Include="Entities\Models\MTSPurchasedProducts.cs" />
     <Compile Include="Entities\Models\MTSSpecificationss.cs" />
+    <Compile Include="Entities\Models\MTS_CUSTOMERORDERS.cs" />
+    <Compile Include="Entities\Models\MTS_DETAILS.cs" />
+    <Compile Include="Entities\Models\MTS_MATERIALS.cs" />
+    <Compile Include="Entities\Models\MTS_PURCHASED_PRODUCTS.cs" />
+    <Compile Include="Entities\Models\MTS_SPECIFICATIONS.cs" />
     <Compile Include="Entities\Models\PaintingWorks.cs" />
+    <Compile Include="Entities\Models\ReceiptCertificateDetail.cs" />
     <Compile Include="Entities\Models\ReceiptDetails.cs" />
     <Compile Include="Entities\Models\Region.cs" />
     <Compile Include="Entities\Models\RequestLog.cs" />
@@ -331,6 +355,7 @@
     <Compile Include="Entities\QueryModels\PaintingWorksJournal.cs" />
     <Compile Include="Entities\QueryModels\ReceiptJournal.cs" />
     <Compile Include="Entities\QueryModels\Responsible.cs" />
+    <Compile Include="Entities\QueryModels\SearchTable.cs" />
     <Compile Include="Entities\QueryModels\StoreHouseReceiptProject.cs" />
     <Compile Include="Entities\QueryModels\ReceiptStoreHouses.cs" />
     <Compile Include="Entities\QueryModels\RemainsNomenclature.cs" />
@@ -367,9 +392,11 @@
     <Compile Include="Entities\ReportModel\ContractorVat.cs" />
     <Compile Include="Entities\ReportModel\DetalsReportByOperationContractors.cs" />
     <Compile Include="Entities\ReportModel\ExpenditureForProjectReport.cs" />
+    <Compile Include="Entities\ReportModel\ExpenditureForProjectReportByContractor.cs" />
     <Compile Include="Entities\ReportModel\FixedAssetsOrderByGroupShortReport.cs" />
     <Compile Include="Entities\ReportModel\FixedAssetsOrderReportStrait.cs" />
     <Compile Include="Entities\ReportModel\GetBPDetalsReportByCon.cs" />
+    <Compile Include="Entities\ReportModel\MsDebitCredit.cs" />
     <Compile Include="Entities\ReportModel\MSPaymentsWithoutVat.cs" />
     <Compile Include="Entities\ReportModel\MsReconciliation.cs" />
     <Compile Include="Entities\ReportModel\MsReconciliation681_36.cs" />
@@ -392,6 +419,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DatabaseSQL.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -12,7 +12,7 @@ namespace ERP_NEW.GUI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -111,6 +111,262 @@ namespace ERP_NEW.GUI.Properties {
             }
             set {
                 this["PackingListCustonerOrderInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UserUsedSimpleEmployeeForm {
+            get {
+                return ((bool)(this["UserUsedSimpleEmployeeForm"]));
+            }
+            set {
+                this["UserUsedSimpleEmployeeForm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserFolderRoute {
+            get {
+                return ((string)(this["UserFolderRoute"]));
+            }
+            set {
+                this["UserFolderRoute"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ApplicationSkinName {
+            get {
+                return ((string)(this["ApplicationSkinName"]));
+            }
+            set {
+                this["ApplicationSkinName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateJournalFmFilterUserCol {
+            get {
+                return ((string)(this["CertificateJournalFmFilterUserCol"]));
+            }
+            set {
+                this["CertificateJournalFmFilterUserCol"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CertificateJournalFmExpirationCheck {
+            get {
+                return ((bool)(this["CertificateJournalFmExpirationCheck"]));
+            }
+            set {
+                this["CertificateJournalFmExpirationCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime CertificatePassFmBeginDate {
+            get {
+                return ((global::System.DateTime)(this["CertificatePassFmBeginDate"]));
+            }
+            set {
+                this["CertificatePassFmBeginDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime CertificatePassFmEndDate {
+            get {
+                return ((global::System.DateTime)(this["CertificatePassFmEndDate"]));
+            }
+            set {
+                this["CertificatePassFmEndDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime CertificateJournalFmBeginDate {
+            get {
+                return ((global::System.DateTime)(this["CertificateJournalFmBeginDate"]));
+            }
+            set {
+                this["CertificateJournalFmBeginDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime CertificateJournalFmEndDate {
+            get {
+                return ((global::System.DateTime)(this["CertificateJournalFmEndDate"]));
+            }
+            set {
+                this["CertificateJournalFmEndDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportFmBeginMonth {
+            get {
+                return ((int)(this["ReportFmBeginMonth"]));
+            }
+            set {
+                this["ReportFmBeginMonth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime ReportFmBeginYear {
+            get {
+                return ((global::System.DateTime)(this["ReportFmBeginYear"]));
+            }
+            set {
+                this["ReportFmBeginYear"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportFmEndMonth {
+            get {
+                return ((int)(this["ReportFmEndMonth"]));
+            }
+            set {
+                this["ReportFmEndMonth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime ReportFmEndYear {
+            get {
+                return ((global::System.DateTime)(this["ReportFmEndYear"]));
+            }
+            set {
+                this["ReportFmEndYear"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SuperUser {
+            get {
+                return ((bool)(this["SuperUser"]));
+            }
+            set {
+                this["SuperUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12345678")]
+        public string SuperUserPass {
+            get {
+                return ((string)(this["SuperUserPass"]));
+            }
+            set {
+                this["SuperUserPass"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AccountNumber {
+            get {
+                return ((int)(this["AccountNumber"]));
+            }
+            set {
+                this["AccountNumber"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BdConnectOnline {
+            get {
+                return ((bool)(this["BdConnectOnline"]));
+            }
+            set {
+                this["BdConnectOnline"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UsedHolidayDay {
+            get {
+                return ((bool)(this["UsedHolidayDay"]));
+            }
+            set {
+                this["UsedHolidayDay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AccountingOperationsFmBeginMonth {
+            get {
+                return ((int)(this["AccountingOperationsFmBeginMonth"]));
+            }
+            set {
+                this["AccountingOperationsFmBeginMonth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AccountingOperationsFmEndMonth {
+            get {
+                return ((int)(this["AccountingOperationsFmEndMonth"]));
+            }
+            set {
+                this["AccountingOperationsFmEndMonth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime AccountingOperationsFmBeginYear {
+            get {
+                return ((global::System.DateTime)(this["AccountingOperationsFmBeginYear"]));
+            }
+            set {
+                this["AccountingOperationsFmBeginYear"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime AccountingOperationsFmEndYear {
+            get {
+                return ((global::System.DateTime)(this["AccountingOperationsFmEndYear"]));
+            }
+            set {
+                this["AccountingOperationsFmEndYear"] = value;
             }
         }
     }

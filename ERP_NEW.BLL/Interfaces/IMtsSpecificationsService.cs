@@ -23,7 +23,7 @@ namespace ERP_NEW.BLL.Interfaces
         IEnumerable<MtsAssembliesInfoDTO> GetMtsAssembliesAll(DateTime beginDate, DateTime endDate);
         IEnumerable<MtsAssembliesCustomerInfoDTO> GetJournalAssembliesWithCustomerOrders();
 
-
+        IEnumerable<MTSCustomerOrdersDTO> GetMTSCustomerOrdersFullBySpecificationId(int customerOrderId);
         IEnumerable<MTSSpecificationssDTO> GetAllSpecificationOld();
         IEnumerable<MTSSpecificationssDTO> GetAllSpecificationOldByPeriod(DateTime startDate, DateTime endDate);
         //IEnumerable<MTSCreateDetalsDTO> GetAllDetailsSpecific(int spesificId);
@@ -44,6 +44,7 @@ namespace ERP_NEW.BLL.Interfaces
 
         long CreateAssembly(MtsAssembliesDTO mtsAssembly);
         void UpdateAssembly(MtsAssembliesDTO mtsAssembly);
+        void UpdateAssemblyDesignerCompany(int mtsAssemblyId, int designerCompanyId);
         bool DeleteAssembly(long id);
         
         long CreateSpecification(MtsSpecificationsDTO mtsSpecification);
@@ -52,6 +53,7 @@ namespace ERP_NEW.BLL.Interfaces
 
         int MTSSpecificationCreate(MTSSpecificationssDTO mtsSpecificationDTO);
         void MTSSpecificationUpdate(MTSSpecificationssDTO mtsSpecificationDTO);
+
         bool MTSSpecificationDelete(int id);
 
         int MTSCreateDetailsCreate(MTSCreateDetalsDTO mtsCreateDetalsDTO);

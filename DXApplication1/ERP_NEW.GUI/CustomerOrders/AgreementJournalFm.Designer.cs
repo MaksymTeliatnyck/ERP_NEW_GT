@@ -96,6 +96,7 @@
             this.accountNumberCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.projectNumberCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.gridControl2 = new DevExpress.XtraGrid.GridControl();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2)).BeginInit();
@@ -144,9 +145,10 @@
             this.deleteDocBut,
             this.firstDateEdit,
             this.lastDateEdit,
-            this.searchBtn});
+            this.searchBtn,
+            this.barButtonItem1});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 11;
+            this.ribbonControl1.MaxItemId = 12;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -308,7 +310,6 @@
             this.responsiblePersonCol});
             this.documentGridView.GridControl = this.documentGrid;
             this.documentGridView.Name = "documentGridView";
-            this.documentGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.documentGridView.OptionsView.ShowAutoFilterRow = true;
             this.documentGridView.OptionsView.ShowGroupPanel = false;
             this.documentGridView.DoubleClick += new System.EventHandler(this.documentGridView_DoubleClick);
@@ -428,7 +429,6 @@
             this.currencyCol});
             this.contractorGridView.GridControl = this.contractorGrid;
             this.contractorGridView.Name = "contractorGridView";
-            this.contractorGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.contractorGridView.OptionsView.ShowAutoFilterRow = true;
             this.contractorGridView.OptionsView.ShowGroupPanel = false;
             this.contractorGridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.contractorGridView_FocusedRowChanged);
@@ -611,7 +611,6 @@
             this.deliveryOrdersGridView.GridControl = this.gridControl2;
             this.deliveryOrdersGridView.GroupCount = 1;
             this.deliveryOrdersGridView.Name = "deliveryOrdersGridView";
-            this.deliveryOrdersGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.deliveryOrdersGridView.OptionsView.ShowAutoFilterRow = true;
             this.deliveryOrdersGridView.OptionsView.ShowFooter = true;
             this.deliveryOrdersGridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
@@ -1022,6 +1021,12 @@
             this.gridControl2.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.deliveryOrdersGridView});
             // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "barButtonItem1";
+            this.barButtonItem1.Id = 11;
+            this.barButtonItem1.Name = "barButtonItem1";
+            // 
             // AgreementJournalFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1122,5 +1127,6 @@
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn projectNumberCol;
         private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit1;
         private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit2;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
     }
 }

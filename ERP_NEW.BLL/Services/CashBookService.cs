@@ -80,9 +80,9 @@ namespace ERP_NEW.BLL.Services
 
         #region Method's
 
-        public IEnumerable<CashBookPageDTO> GetPageByPeriod(DateTime beginDate, DateTime endDate)
+        public IEnumerable<CashBookPageDTO> GetPageByPeriod(DateTime beginDate, DateTime endDate, int cashBooksId)
         {
-            return mapper.Map<IEnumerable<CashBookPage>, List<CashBookPageDTO>>(cashBookPage.GetAll().Where(w => w.PageDate >= beginDate && w.PageDate <= endDate));
+            return mapper.Map<IEnumerable<CashBookPage>, List<CashBookPageDTO>>(cashBookPage.GetAll().Where(w => w.PageDate >= beginDate && w.PageDate <= endDate && w.CashBookId == cashBooksId));
         }
 
         public IEnumerable<CashBookBasisTypeDTO> GetBasis()
@@ -118,22 +118,25 @@ namespace ERP_NEW.BLL.Services
             return mapper.Map<IEnumerable<CashBookRecordJournal>, List<CashBookRecordJournalDTO>>(cashBookRecordJournal.SQLExecuteProc(procName, Parameters));
         }
 
-        public IEnumerable<CashBookBalanceDTO> GetCashBookBalanceByPeriod(DateTime beginDate, DateTime endDate)
+        public IEnumerable<CashBookBalanceDTO> GetCashBookBalanceByPeriod(DateTime beginDate, DateTime endDate, int cashBookId)
         {
             FbParameter[] Parameters =
                 {
                     new FbParameter("BeginDateIn", beginDate),
-                    new FbParameter("EndDateIn", endDate)
+                    new FbParameter("EndDateIn", endDate),
+                    new FbParameter("CashBookId", cashBookId)
                 };
 
-            string procName = @"select * from ""GetCashBookBalance""(@BeginDateIn, @EndDateIn)";
+            string procName = @"select * from ""GetCashBookBalance""(@BeginDateIn, @EndDateIn, @CashBookId)";
+
+            var test = cashBookBalance.SQLExecuteProc(procName, Parameters);
 
             return mapper.Map<IEnumerable<CashBookBalance>, List<CashBookBalanceDTO>>(cashBookBalance.SQLExecuteProc(procName, Parameters));
         }
 
-        public IEnumerable<CashBookPageDTO> GetCashBookPages()
+        public IEnumerable<CashBookPageDTO> GetCashBookPages(int cashBookId)
         {
-            return mapper.Map<IEnumerable<CashBookPage>, List<CashBookPageDTO>>(cashBookPage.GetAll());
+            return mapper.Map<IEnumerable<CashBookPage>, List<CashBookPageDTO>>(cashBookPage.GetAll()).Where(srch => srch.CashBookId == cashBookId);
         }
 
 
@@ -142,11 +145,12 @@ namespace ERP_NEW.BLL.Services
             return mapper.Map<IEnumerable<CashBookRecord>, List<CashBookRecordDTO>>(cashBookRecord.GetAll());
         }
 
-        public IEnumerable<CashBookRecordDTO> GetCashBookRecords(DateTime date)
+        public IEnumerable<CashBookRecordDTO> GetCashBookRecords(DateTime date, int cashBookId)
         {
             var result = (from cbr in cashBookRecord.GetAll()
                           join cb in cashBookPage.GetAll() on cbr.CashBookPageId equals cb.Id into cbb
                           from cb in cbb.DefaultIfEmpty()
+                          where cb.CashBookId == cashBookId
                           select new CashBookRecordDTO()
                           {
                             Id = cbr.Id,
@@ -168,9 +172,9 @@ namespace ERP_NEW.BLL.Services
 
         
 
-        public string GetLatestPageNumber(DateTime pageDate)
+        public string GetLatestPageNumber(DateTime pageDate, int cashBookId)
         {
-            var cashBookDto = GetCashBookPages().OrderByDescending(x => Decimal.Parse(x.PageNumber.Replace('/', ','))).FirstOrDefault(x => x.PageDate.Month == pageDate.Month && x.PageDate.Year == pageDate.Year); //DateTime.Today.Year);
+            var cashBookDto = GetCashBookPages(cashBookId).OrderByDescending(x => Decimal.Parse(x.PageNumber.Replace('/', ','))).FirstOrDefault(x => x.PageDate.Month == pageDate.Month && x.PageDate.Year == pageDate.Year); //DateTime.Today.Year);
 
             if (cashBookDto != null)
             {
@@ -183,13 +187,13 @@ namespace ERP_NEW.BLL.Services
             }
         }
 
-        public string GetLatestRecordDocumentNumber(DateTime pageDate, Utils.CurencyOperationType recordCurencyOperation, List<CashBookRecordJournalDTO> models)
+        public string GetLatestRecordDocumentNumber(DateTime pageDate, Utils.CurencyOperationType recordCurencyOperation, List<CashBookRecordJournalDTO> models, int cashBookId)
         {
             if (recordCurencyOperation == Utils.CurencyOperationType.Debit)
             {
                 if (models.Count == 0)
                 {
-                    var cashBookDto = GetCashBookRecords(pageDate).OrderByDescending(x => Decimal.Parse(x.DocumentNumber.Replace('/', ','))).FirstOrDefault(x => x.CurrencyTypeId == 0 && pageDate.Year == DateTime.Today.Year);
+                    var cashBookDto = GetCashBookRecords(pageDate, cashBookId).OrderByDescending(x => Decimal.Parse(x.DocumentNumber.Replace('/', ','))).FirstOrDefault(x => x.CurrencyTypeId == 0 && pageDate.Year == DateTime.Today.Year);
 
                     if (cashBookDto != null)
                     {
@@ -220,7 +224,7 @@ namespace ERP_NEW.BLL.Services
 
                 if (models.Count == 0)
                 {
-                    var cashBookDto = GetCashBookRecords(pageDate).OrderByDescending(x => Decimal.Parse(x.DocumentNumber.Replace('/', ','))).FirstOrDefault(x => x.CurrencyTypeId == 1 && pageDate.Year == DateTime.Today.Year);
+                    var cashBookDto = GetCashBookRecords(pageDate, cashBookId).OrderByDescending(x => Decimal.Parse(x.DocumentNumber.Replace('/', ','))).FirstOrDefault(x => x.CurrencyTypeId == 1 && pageDate.Year == DateTime.Today.Year);
 
                     if (cashBookDto != null)
                     {
@@ -246,8 +250,6 @@ namespace ERP_NEW.BLL.Services
                     }
                 }
             }
-
-            return "1";
         }
 
         public string GetLatestRecordDocumentNumber(DateTime pageDate, Utils.CurencyOperationType recordCurencyOperation)
@@ -284,8 +286,6 @@ namespace ERP_NEW.BLL.Services
                     }
                
             }
-
-            return "1";
         }
         #endregion
 
@@ -310,7 +310,7 @@ namespace ERP_NEW.BLL.Services
                 cashBookPage.Delete(cashBookPage.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -344,7 +344,7 @@ namespace ERP_NEW.BLL.Services
                 cashBookRecord.Delete(cashBookRecord.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -363,7 +363,7 @@ namespace ERP_NEW.BLL.Services
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -392,7 +392,7 @@ namespace ERP_NEW.BLL.Services
                 cashBookBasisType.Delete(cashBookBasisType.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -421,7 +421,7 @@ namespace ERP_NEW.BLL.Services
                 cashBookContractor.Delete(cashBookContractor.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -451,7 +451,7 @@ namespace ERP_NEW.BLL.Services
                 cashBookAdditionalType.Delete(cashBookAdditionalType.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

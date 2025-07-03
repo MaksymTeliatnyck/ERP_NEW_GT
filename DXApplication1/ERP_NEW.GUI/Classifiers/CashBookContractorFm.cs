@@ -33,8 +33,6 @@ namespace ERP_NEW.GUI.Classifiers
 
         private ICashBookService contractorService;
         private BindingSource contractorBS = new BindingSource();
-        private UserTasksDTO _userTasksDTO;
-
         public CashBookContractorFm(UserTasksDTO userTasksDTO)
         {
             InitializeComponent();
@@ -111,7 +109,7 @@ namespace ERP_NEW.GUI.Classifiers
                     int rowHandle = cashBookContractorGridView.FocusedRowHandle - 1;
                     cashBookContractorGridView.BeginDataUpdate();
 
-                    if ((((CashBookContractorDTO)contractorBS.Current).Id) != null)
+                    if ((((CashBookContractorDTO)contractorBS.Current).Id) != -1)
                     {
                         contractorService.CashBookContractorDelete(((CashBookContractorDTO)contractorBS.Current).Id);
                     }

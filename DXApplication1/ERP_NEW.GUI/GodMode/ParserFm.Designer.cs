@@ -40,12 +40,15 @@
             this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
             this.parseExpenditureBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.expAccToExpStoreBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.fixedCertificateBtn = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.expAccToExpStoreBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.fixedCertificateUserBtn = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -66,9 +69,11 @@
             this.barButtonItem8,
             this.barButtonItem9,
             this.parseExpenditureBtn,
-            this.expAccToExpStoreBtn});
+            this.expAccToExpStoreBtn,
+            this.fixedCertificateBtn,
+            this.fixedCertificateUserBtn});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 12;
+            this.ribbonControl1.MaxItemId = 14;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -168,11 +173,32 @@
             this.parseExpenditureBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.parseExpenditureBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.parseExpenditureBtn_ItemClick);
             // 
+            // expAccToExpStoreBtn
+            // 
+            this.expAccToExpStoreBtn.Caption = "ExpAcc to ExpStoreHouse";
+            this.expAccToExpStoreBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("expAccToExpStoreBtn.Glyph")));
+            this.expAccToExpStoreBtn.Id = 11;
+            this.expAccToExpStoreBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("expAccToExpStoreBtn.LargeGlyph")));
+            this.expAccToExpStoreBtn.Name = "expAccToExpStoreBtn";
+            this.expAccToExpStoreBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.expAccToExpStoreBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.expAccToExpStoreBtn_ItemClick);
+            // 
+            // fixedCertificateBtn
+            // 
+            this.fixedCertificateBtn.Caption = "Фикс сертификатов";
+            this.fixedCertificateBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("fixedCertificateBtn.Glyph")));
+            this.fixedCertificateBtn.Id = 12;
+            this.fixedCertificateBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fixedCertificateBtn.LargeGlyph")));
+            this.fixedCertificateBtn.Name = "fixedCertificateBtn";
+            this.fixedCertificateBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.fixedCertificateBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.fixedCertificateBtn_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup3});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "ribbonPage1";
             // 
@@ -189,6 +215,13 @@
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "Списання";
             // 
+            // ribbonPageGroup3
+            // 
+            this.ribbonPageGroup3.ItemLinks.Add(this.fixedCertificateBtn);
+            this.ribbonPageGroup3.ItemLinks.Add(this.fixedCertificateUserBtn);
+            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+            this.ribbonPageGroup3.Text = "Сертифікати та паспорти";
+            // 
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -204,17 +237,16 @@
             // 
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             // 
-            // expAccToExpStoreBtn
+            // fixedCertificateUserBtn
             // 
-            this.expAccToExpStoreBtn.Caption = "ExpAcc to ExpStoreHouse";
-            this.expAccToExpStoreBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("expAccToExpStoreBtn.Glyph")));
-            this.expAccToExpStoreBtn.Id = 11;
-            this.expAccToExpStoreBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("expAccToExpStoreBtn.LargeGlyph")));
-            this.expAccToExpStoreBtn.Name = "expAccToExpStoreBtn";
-            this.expAccToExpStoreBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.expAccToExpStoreBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.expAccToExpStoreBtn_ItemClick);
+            this.fixedCertificateUserBtn.Caption = "Фикс сертификатов (владелец)";
+            this.fixedCertificateUserBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("fixedCertificateUserBtn.Glyph")));
+            this.fixedCertificateUserBtn.Id = 13;
+            this.fixedCertificateUserBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fixedCertificateUserBtn.LargeGlyph")));
+            this.fixedCertificateUserBtn.Name = "fixedCertificateUserBtn";
+            this.fixedCertificateUserBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.fixedCertificateUserBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.fixedCertificateUserBtn_ItemClick);
             // 
             // ParserFm
             // 
@@ -254,7 +286,8 @@
         private DevExpress.XtraBars.BarButtonItem parseExpenditureBtn;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem expAccToExpStoreBtn;
-
-
+        private DevExpress.XtraBars.BarButtonItem fixedCertificateBtn;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraBars.BarButtonItem fixedCertificateUserBtn;
     }
 }

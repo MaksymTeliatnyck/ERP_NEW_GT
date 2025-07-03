@@ -45,8 +45,9 @@ namespace ERP_NEW.GUI.Contractors
             nameTBox.DataBindings.Add("EditValue", contractorBS, "Name");
             tinTBox.DataBindings.Add("EditValue", contractorBS, "Tin");
             srnTBox.DataBindings.Add("EditValue", contractorBS, "Srn");
+            activeCheck.DataBindings.Add("EditValue", contractorBS, "Active");
 
-           
+
             productCategoryEdit.Properties.DataSource = productCategoryBS;
             productCategoryEdit.Properties.ValueMember = "Id";
             productCategoryEdit.Properties.DisplayMember = "CategoryName";
@@ -98,8 +99,8 @@ namespace ERP_NEW.GUI.Contractors
         {
             contractorsService = Program.kernel.Get<IContractorsService>();
             string s = nameTBox.Text.Remove(3);
-            char ch = '"';
-            int indexOfChar = nameTBox.Text.IndexOf(ch);
+            //char ch = '"';
+            //int indexOfChar = nameTBox.Text.IndexOf(ch);
 
             if (contractorsService.CheckContractor(((ContractorsDTO)contractorBS.Current)))
             {
@@ -107,8 +108,6 @@ namespace ERP_NEW.GUI.Contractors
                 return false;
             }
 
-            if (indexOfChar == -1)
-            {
                 if (s != "Дог")
                 {
                     if ((nameTBox.Text.Length > 0) /*&& (contractorTypeEdit.ItemIndex >= 0) && (productCategoryEdit.ItemIndex >= 0)*/)
@@ -147,12 +146,6 @@ namespace ERP_NEW.GUI.Contractors
                     }
                     return true;
                 }
-            }
-            else
-            {
-                MessageBox.Show("Збереження неможливе внесіть інший тип символу кавички в полі Найманування!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
         }
 
         #endregion

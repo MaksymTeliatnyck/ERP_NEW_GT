@@ -221,16 +221,6 @@ namespace ERP_NEW.GUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] ERP_NEW_GUI {
-            get {
-                object obj = ResourceManager.GetObject("ERP_NEW_GUI", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon favicon__2_ {
@@ -386,6 +376,16 @@ namespace ERP_NEW.GUI.Properties {
         internal static System.Drawing.Bitmap redSquareIcon {
             get {
                 object obj = ResourceManager.GetObject("redSquareIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ukrsibbank {
+            get {
+                object obj = ResourceManager.GetObject("ukrsibbank", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

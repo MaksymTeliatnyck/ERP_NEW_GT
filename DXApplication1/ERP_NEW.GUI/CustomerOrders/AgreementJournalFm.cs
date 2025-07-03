@@ -216,8 +216,10 @@ namespace ERP_NEW.GUI.CustomerOrders
         private void LoadDocuments(int btdId)
         {
             contractorService = Program.kernel.Get<IContractorsService>();
+            splashScreenManager.ShowWaitForm();
             documentsBS.DataSource = contractorService.GetAgreementDocumentsByAgreementId(btdId);
             documentGrid.DataSource = documentsBS;
+            splashScreenManager.CloseWaitForm();
         }
         #endregion
 
@@ -245,7 +247,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                     Number = ((AgreementJournalDTO)ItemJournal).NumberOrder,
                     UrlNameJournal = ((AgreementJournalDTO)ItemJournal).UrlNameJournal,
                     NumberWithTilda = ((AgreementJournalDTO)ItemJournal).NumberWithTilda,
-                    AgreementsIdFromContractor = ((AgreementJournalDTO)ItemJournal).ContractorId,
+                    AgreementsIdFromContractor = ((AgreementJournalDTO)ItemJournal).AgreementIdFromContractors,
                     Price = ((AgreementJournalDTO)ItemJournal).Price,
                     Date = ((AgreementJournalDTO)ItemJournal).DateOrder,
                     CurrencyId = ((AgreementJournalDTO)ItemJournal).CurrencyId,
@@ -274,7 +276,7 @@ namespace ERP_NEW.GUI.CustomerOrders
 
         private void editDocBut_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (documentsBS.Count > 0)
+            if (documentsBS.Count > 0) 
                 AddAgreementsJournalDoc(Utils.Operation.Update, (AgreementJournalDTO)agreementJournalBS.Current, (AgreementDocumentsDTO)documentsBS.Current, userTasksDTO);
             else MessageBox.Show("Помилка редагування документу! Документа не існує!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
@@ -297,24 +299,32 @@ namespace ERP_NEW.GUI.CustomerOrders
 
         private void documentGridView_DoubleClick(object sender, EventArgs e)
         {
-            string url = "";
-
-            if (documentsBS.Count > 0)
+            if (((AgreementDocumentsDTO)documentsBS.Current).Scan != null)
             {
-                url = ((AgreementDocumentsDTO)documentsBS.Current).URL;
-                if (url != "")
-                {
-                    try
-                    {
-                        Process.Start(url);
-                    }
-                    catch (Win32Exception win32Exception)
-                    {
-                        //The system cannot find the file specified...
-                        Console.WriteLine(win32Exception.Message);
-                    }
-                }
+                byte[] scan = ((AgreementDocumentsDTO)documentsBS.Current).Scan;
+                string path = Utils.HomePath + @"\Temp\";
+                System.IO.File.WriteAllBytes(path + ((AgreementDocumentsDTO)documentsBS.Current).NameDocument, scan);
+                System.Diagnostics.Process.Start(path + ((AgreementDocumentsDTO)documentsBS.Current).NameDocument);
             }
+
+            //string url = "";
+
+            //if (documentsBS.Count > 0)
+            //{
+            //    url = ((AgreementDocumentsDTO)documentsBS.Current).URL;
+            //    if (url != "")
+            //    {
+            //        try
+            //        {
+            //            Process.Start(url);
+            //        }
+            //        catch (Win32Exception win32Exception)
+            //        {
+            //            //The system cannot find the file specified...
+            //            Console.WriteLine(win32Exception.Message);
+            //        }
+            //    }
+            //}
         }
         #endregion
     }

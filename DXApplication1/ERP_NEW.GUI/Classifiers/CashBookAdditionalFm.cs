@@ -32,7 +32,6 @@ namespace ERP_NEW.GUI.Classifiers
 
         private ICashBookService cashBookService;
         private BindingSource additionalBS = new BindingSource();
-        private UserTasksDTO _userTasksDTO;
 
         public CashBookAdditionalFm(UserTasksDTO userTasksDTO)
         {
@@ -112,7 +111,7 @@ namespace ERP_NEW.GUI.Classifiers
                     int rowHandle = cashBookAdditionalGridView.FocusedRowHandle - 1;
                     cashBookAdditionalGridView.BeginDataUpdate();
 
-                    if ((((CashBookAdditionalTypeDTO)additionalBS.Current).Id) != null)
+                    if ((((CashBookAdditionalTypeDTO)additionalBS.Current).Id) != -1)
                     {
                         cashBookService.CashBookAdditionalTypeDelete(((CashBookAdditionalTypeDTO)additionalBS.Current).Id);
                     }

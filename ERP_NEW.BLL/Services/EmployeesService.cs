@@ -139,9 +139,23 @@ namespace ERP_NEW.BLL.Services
         {
             string procName = @"select * from ""GetEmployeesWorking""";
 
+
             return mapper.Map<IEnumerable<EmployeesInfo>, List<EmployeesInfoDTO>>(employeesInfo.SQLExecuteProc(procName));
         }
 
+        public IEnumerable<EmployeesInfoDTO> GetEmployeesWorkingAll()
+        {
+            string procName = @"select * from ""GetEmployeesWorkingAll""";
+
+            return mapper.Map<IEnumerable<EmployeesInfo>, List<EmployeesInfoDTO>>(employeesInfo.SQLExecuteProc(procName));
+        }
+
+        public IEnumerable<EmployeesInfoDTO> GetEmployeesWorkingOnline()
+        {
+            string procName = @"select * from ""GetEmployeesWorkingOnline""";
+
+            return mapper.Map<IEnumerable<EmployeesInfo>, List<EmployeesInfoDTO>>(employeesInfo.SQLExecuteProc(procName));
+        }
         public IEnumerable<EmployeesInfoDTO> GetEmployeesNotWorking()
         {
             string procName = @"select * from ""GetEmployeesNotWorking""";
@@ -192,7 +206,8 @@ namespace ERP_NEW.BLL.Services
         {
             return mapper.Map<IEnumerable<Professions>, List<ProfessionsDTO>>(professions.GetAll());
         }
-        
+
+
 
 
         public IEnumerable<EmployeeVisitScheduleDTO> GetEmployeeVisitScheduleProc(int employeeId, DateTime startDate, DateTime endDate)
@@ -207,6 +222,11 @@ namespace ERP_NEW.BLL.Services
             string procName = @"select * from ""GetEmployeeVisitScheduleProc""(@Id, @StartDate, @EndDate)";
 
             return mapper.Map<IEnumerable<EmployeeVisitSchedule>, List<EmployeeVisitScheduleDTO>>(employeeVisitSchedule.SQLExecuteProc(procName,Parametrs));
+        }
+
+        public bool CheckAccountNumber(int accountNumber)
+        {
+            return mapper.Map<IEnumerable<Employees>, List<EmployeesDTO>>(employees.GetAll()).Any(bdsm => bdsm.AccountNumber == accountNumber);
         }
 
 
@@ -232,7 +252,7 @@ namespace ERP_NEW.BLL.Services
                 employees.Delete(employees.GetAll().FirstOrDefault(c => c.EmployeeID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -262,7 +282,7 @@ namespace ERP_NEW.BLL.Services
                 employeesDetails.Delete(employeesDetails.GetAll().FirstOrDefault(c => c.RecordID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -291,7 +311,7 @@ namespace ERP_NEW.BLL.Services
                 employeesDetailsStandart.Delete(employeesDetailsStandart.GetAll().FirstOrDefault(c => c.RecordID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -320,7 +340,7 @@ namespace ERP_NEW.BLL.Services
                 employeePhoto.Delete(employeePhoto.GetAll().FirstOrDefault(c => c.EmployeeID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -349,7 +369,7 @@ namespace ERP_NEW.BLL.Services
                 accessScheduleEntity.Delete(accessScheduleEntity.GetAll().FirstOrDefault(c => c.EntityID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -378,7 +398,7 @@ namespace ERP_NEW.BLL.Services
                 departments.Delete(departments.GetAll().FirstOrDefault(c => c.DepartmentID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -407,7 +427,7 @@ namespace ERP_NEW.BLL.Services
                 professions.Delete(professions.GetAll().FirstOrDefault(c => c.ProfessionID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

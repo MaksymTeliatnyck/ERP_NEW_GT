@@ -65,6 +65,7 @@ namespace ERP_NEW.GUI.Marketing
             packingBS.DataSource = Item = model;
 
             packingNumberTBox.DataBindings.Add("EditValue", packingBS, "PackingNumber");
+            packingNumberPartTBox.DataBindings.Add("EditValue", packingBS, "PackingNumberPart");
             packingDateEdit.DataBindings.Add("EditValue", packingBS, "PackingDate");
             descriptionTBox.DataBindings.Add("EditValue", packingBS, "Description");
             descriptionProjectTBox.DataBindings.Add("EditValue", packingBS, "DescriptionProject");
@@ -95,7 +96,8 @@ namespace ERP_NEW.GUI.Marketing
             {
                 case Utils.Operation.Add:
                     ((PackingListsDTO)Item).PackingDate = DateTime.Now;
-                    ((PackingListsDTO)Item).PackingNumber = GetLastNumber();
+                    //((PackingListsDTO)Item).PackingNumber = GetLastNumber();
+                    ((PackingListsDTO)Item).PackingNumber = "";
                     packingMaterialModelPack = new PackingListMaterialsDTO();
                     packingMaterialModelCompl = new PackingListMaterialsDTO();
                     break;
@@ -179,7 +181,7 @@ namespace ERP_NEW.GUI.Marketing
         private string GetLastNumber()
         {
             var allNumberPackingLists = packingListsService.GetPackingLists().OrderByDescending(x => Decimal.
-                Parse(x.PackingNumber.Replace('.', ','))).FirstOrDefault(x => x.PackingDate.Year == DateTime.Now.Year);
+                Parse(x.PackingNumber.Replace('.', ','))).FirstOrDefault();
 
             if (allNumberPackingLists != null)
             {
@@ -592,6 +594,11 @@ namespace ERP_NEW.GUI.Marketing
             packingValidationProvider.Validate((Control)sender);
         }
 
+        private void packingNumberPartTBox_TextChanged(object sender, EventArgs e)
+        {
+            packingValidationProvider.Validate((Control)sender);
+        }
+
         #endregion
 
         private void openComplBtn_Click(object sender, EventArgs e)
@@ -665,7 +672,6 @@ namespace ERP_NEW.GUI.Marketing
                 System.Diagnostics.Process.Start(puth + fileName);
             }
         }
-
 
     }
 }

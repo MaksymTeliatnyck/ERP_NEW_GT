@@ -38,10 +38,14 @@ namespace ERP_NEW.GUI.Accounting
         private UserTasksDTO userTasksDTO;
         private IFixedAssetsOrderService fixedAssetsOrderService;
         private IReportService reportService;
+        private IAccountsService accountsService;
+
         private BindingSource fixedAssetsOrderBS = new BindingSource();
+        private BindingSource fixedAssetsOrderNoAmortBS = new BindingSource();
         private BindingSource fixedAssetsOrderMaterialsBS = new BindingSource();
         private BindingSource fixedAssetsOrderArchiveBS = new BindingSource();
         private BindingSource fixedAssetsOrderArchiveBStest = new BindingSource();
+        private BindingSource fixedAssetsOrderAmortizationDateBS = new BindingSource();
         private List<FixedAssetsMaterialsDTO> materialsList = new List<FixedAssetsMaterialsDTO>();
         private List<FixedAssetsMaterialsDTO> testMaterialsList = new List<FixedAssetsMaterialsDTO>();
         private List<FixedAssetsOrderJournalDTO> testFAList = new List<FixedAssetsOrderJournalDTO>();
@@ -88,24 +92,58 @@ namespace ERP_NEW.GUI.Accounting
 
             LoadFixedAssetsOrder();
             LoadFixedAssetsOrderArchive((DateTime)beginDateArchiveEdit.EditValue, (DateTime)endDateArchiveEdit.EditValue);
+            AuthorizatedUserAccess();
 
-            
+
         }
 
         #region Method's
+
+        private void AuthorizatedUserAccess()
+        {
+            
+            addBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            editBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            deleteBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            actWriteOffBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            deleteFromArchiveBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            expFixeAssetsBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            fixedAssesOrderShowBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            journalOrderBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            materialsBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            printActExpenditureBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            printArchiceBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            printBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            printInventoryCardBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            printInventoryCardNewBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            regArchiveBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            regJournalOrderBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            showArchivBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            soldFixeAssetsBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            transferFixeAssetsBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+
+
+        }
+
         #region FixedAssetsOrder
-        
+
         private void LoadFixedAssetsOrder()
         {
             splashScreenManager.ShowWaitForm();
             fixedAssetsOrderGridView.BeginDataUpdate();
+            //fixedAssetsAmortGridView.BeginDataUpdate();
+
             firstDay = new DateTime(((DateTime)yearEdit.EditValue).Year, (int)monthEdit.EditValue, 1);
             lastDay = new DateTime(((DateTime)yearEdit.EditValue).Year, (int)monthEdit.EditValue, 1).AddMonths(1).AddDays(-1);
             fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
-            fixedAssetsOrderBS.DataSource = fixedAssetsOrderService.GetFixedAssetsOrderJournal(lastDay);
+            testFAList = fixedAssetsOrderService.GetFixedAssetsOrderJournal(lastDay).ToList();
+            fixedAssetsOrderBS.DataSource = testFAList;
+            //fixedAssetsOrderNoAmortBS.DataSource = testFAList;
             fixedAssetsOrderGrid.DataSource = fixedAssetsOrderBS;
+            //fixedAssetsAmortGrid.DataSource = fixedAssetsOrderNoAmortBS;
             fixedAssetsOrderGrid.EndUpdate();
             fixedAssetsOrderGridView.EndDataUpdate();
+            //fixedAssetsAmortGridView.EndDataUpdate();
             splashScreenManager.CloseWaitForm();
 
             testFAList = fixedAssetsOrderBS.DataSource as List<FixedAssetsOrderJournalDTO>;
@@ -122,79 +160,87 @@ namespace ERP_NEW.GUI.Accounting
             testMaterialsList = fixedAssetsOrderMaterialsBS.DataSource as List<FixedAssetsMaterialsDTO>;
         }
 
- /*     
-        private void TestAmortization()
+        private void LoadAmortizationDate(int fixedAssetsOrderId)
         {
-             List<FixedAssetsOrderJournalDTO> test = new List<FixedAssetsOrderJournalDTO>();
-             List<FixedAssetsOrderJournalDTO> rez = new List<FixedAssetsOrderJournalDTO>();
-             rez = testFAList;
-            // testFAList.RemoveAt(56);
-            DateTime year=(DateTime)yearEdit.EditValue;
-             
-
-            //for(int i=0; i<testMaterialsList.Count;i++)
-            //{
-            //    ordDateMonth = testMaterialsList[i].OrderDate.Value.Month;
-            //    expDateMonth = testMaterialsList[i].ExpDate.Value.Month;
-            //    if (ordDateMonth != expDateMonth)
-            //        rez.Add(testMaterialsList[i]);
-            //}
-            testFAList=testFAList.Where(a => a.Id == 56).ToList();
-           
-            if ((int)monthEdit.EditValue == 12 && year.Year==2020)
-            {
-                check = 1;
-                fixedAssetsOrderGridView.BeginDataUpdate();
-                test = testFAList.Select(a => new FixedAssetsOrderJournalDTO
-                    {
-                        Id = a.Id,
-                        CurrentAmortization = (decimal)(1609.30),
-                        Balance_Account_Id = a.Balance_Account_Id,
-                        BalanceAccountNum = a.BalanceAccountNum,
-                        BeginDate = a.BeginDate,
-                        BeginPrice = a.BeginPrice,
-                        BeginRecordDate = a.BeginRecordDate,
-                        CurrentPrice = a.CurrentPrice,
-                        EndRecordDate = a.EndRecordDate,
-                        FixedAccountId = a.FixedAccountId,
-                        FixedAccountNum = a.FixedAccountNum,
-                        FixedCardStatus = a.FixedCardStatus,
-                        InventoryName = a.InventoryName,
-                        TotalPrice = a.TotalPrice,
-                        GroupId = a.GroupId,
-                        GroupName = a.GroupName,
-                        Id_Parent = a.Id_Parent,
-                        IncreasePrice = a.IncreasePrice,
-                        UsefulMonth = a.UsefulMonth,
-                        InventoryNumber = a.InventoryNumber,
-                        OperatingPerson_Id = a.OperatingPerson_Id,
-                        OperatingPersonName = a.OperatingPersonName,
-                        PeriodAmortization = a.PeriodAmortization,
-                        PeriodYearAmortization = a.PeriodYearAmortization+(decimal)(1296.05),
-                        Region_Id = a.Region_Id,
-                        RegionName = a.RegionName,
-                        SupplierId = a.SupplierId,
-                        SupplierName = a.SupplierName,
-                        SelectedCard = a.SelectedCard
-                        
-
-                    }).ToList();
-                rez.AddRange(test);
-              //   = //==56 && p.CurrentAmortization==(decimal)313.25);
-                var w = rez.Single(a => a.Id == 56 && a.CurrentAmortization == (decimal)313.25);//((from r in rez select r.Id).Distinct()).ToList();
-               rez.Remove(w);
-                fixedAssetsOrderGrid.DataSource = rez;
-                fixedAssetsOrderGridView.EndDataUpdate();
-
-
-            }
-            //for(int i=0;i<testFAList.Count;i++)
-            //{
-
-            //}
+            //fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
+            //fixedAssetsOrderAmortizationDateBS.DataSource = fixedAssetsOrderService.GetFixedAssestAmortizationDateById(fixedAssetsOrderId);
+            //dateNoAmortGrid.DataSource = fixedAssetsOrderAmortizationDateBS;
+            //testMaterialsList = fixedAssetsOrderMaterialsBS.DataSource as List<FixedAssetsMaterialsDTO>;
         }
 
-        */
+        /*     
+               private void TestAmortization()
+               {
+                    List<FixedAssetsOrderJournalDTO> test = new List<FixedAssetsOrderJournalDTO>();
+                    List<FixedAssetsOrderJournalDTO> rez = new List<FixedAssetsOrderJournalDTO>();
+                    rez = testFAList;
+                   // testFAList.RemoveAt(56);
+                   DateTime year=(DateTime)yearEdit.EditValue;
+
+
+                   //for(int i=0; i<testMaterialsList.Count;i++)
+                   //{
+                   //    ordDateMonth = testMaterialsList[i].OrderDate.Value.Month;
+                   //    expDateMonth = testMaterialsList[i].ExpDate.Value.Month;
+                   //    if (ordDateMonth != expDateMonth)
+                   //        rez.Add(testMaterialsList[i]);
+                   //}
+                   testFAList=testFAList.Where(a => a.Id == 56).ToList();
+
+                   if ((int)monthEdit.EditValue == 12 && year.Year==2020)
+                   {
+                       check = 1;
+                       fixedAssetsOrderGridView.BeginDataUpdate();
+                       test = testFAList.Select(a => new FixedAssetsOrderJournalDTO
+                           {
+                               Id = a.Id,
+                               CurrentAmortization = (decimal)(1609.30),
+                               Balance_Account_Id = a.Balance_Account_Id,
+                               BalanceAccountNum = a.BalanceAccountNum,
+                               BeginDate = a.BeginDate,
+                               BeginPrice = a.BeginPrice,
+                               BeginRecordDate = a.BeginRecordDate,
+                               CurrentPrice = a.CurrentPrice,
+                               EndRecordDate = a.EndRecordDate,
+                               FixedAccountId = a.FixedAccountId,
+                               FixedAccountNum = a.FixedAccountNum,
+                               FixedCardStatus = a.FixedCardStatus,
+                               InventoryName = a.InventoryName,
+                               TotalPrice = a.TotalPrice,
+                               GroupId = a.GroupId,
+                               GroupName = a.GroupName,
+                               Id_Parent = a.Id_Parent,
+                               IncreasePrice = a.IncreasePrice,
+                               UsefulMonth = a.UsefulMonth,
+                               InventoryNumber = a.InventoryNumber,
+                               OperatingPerson_Id = a.OperatingPerson_Id,
+                               OperatingPersonName = a.OperatingPersonName,
+                               PeriodAmortization = a.PeriodAmortization,
+                               PeriodYearAmortization = a.PeriodYearAmortization+(decimal)(1296.05),
+                               Region_Id = a.Region_Id,
+                               RegionName = a.RegionName,
+                               SupplierId = a.SupplierId,
+                               SupplierName = a.SupplierName,
+                               SelectedCard = a.SelectedCard
+
+
+                           }).ToList();
+                       rez.AddRange(test);
+                     //   = //==56 && p.CurrentAmortization==(decimal)313.25);
+                       var w = rez.Single(a => a.Id == 56 && a.CurrentAmortization == (decimal)313.25);//((from r in rez select r.Id).Distinct()).ToList();
+                      rez.Remove(w);
+                       fixedAssetsOrderGrid.DataSource = rez;
+                       fixedAssetsOrderGridView.EndDataUpdate();
+
+
+                   }
+                   //for(int i=0;i<testFAList.Count;i++)
+                   //{
+
+                   //}
+               }
+
+               */
         private void AddFixedAssetsOrder(Utils.Operation operation, FixedAssetsOrderDTO model, List<FixedAssetsMaterialsDTO> materialsListSource)
         {
             using (FixedAssetsOrderEditFm fixedAssetsOrderEditFm = new FixedAssetsOrderEditFm(operation, model, materialsListSource))
@@ -337,11 +383,11 @@ namespace ERP_NEW.GUI.Accounting
             }
             else
             {
-                deleteBtn.Enabled = true;
-                editBtn.Enabled = true;
-                soldFixeAssetsBtn.Enabled = true;
-                expFixeAssetsBtn.Enabled = true;
-                transferFixeAssetsBtn.Enabled = true;
+                deleteBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+                editBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+                soldFixeAssetsBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+                expFixeAssetsBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+                transferFixeAssetsBtn.Enabled = (userTasksDTO.AccessRightId == 2);
             }
             
 
@@ -369,6 +415,13 @@ namespace ERP_NEW.GUI.Accounting
 
                     if (fixedAssetsOrderService.FixedAssetsOrderDelete(((FixedAssetsOrderJournalDTO)fixedAssetsOrderBS.Current).Id))
                     {
+                        FixedAssetsOrderDTO oldFixedAssets = fixedAssetsOrderService.GetFixedAssestsOrder().Where(srch => srch.Id == ((FixedAssetsOrderJournalDTO)fixedAssetsOrderBS.Current).Id_Parent).FirstOrDefault();
+                        if (oldFixedAssets != null)
+                        {
+                            oldFixedAssets.EndRecordDate = null;
+                            fixedAssetsOrderService.FixedAssetsOrderUpdate(oldFixedAssets);
+                        }
+                           
                         int rowHandle = fixedAssetsOrderGridView.FocusedRowHandle - 1;
                         fixedAssetsOrderGridView.BeginDataUpdate();
 
@@ -902,11 +955,18 @@ namespace ERP_NEW.GUI.Accounting
 
         private void printActExpenditureBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
-            
+            reportService = Program.kernel.Get<IReportService>();
+            accountsService = Program.kernel.Get<IAccountsService>();
             fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
 
             if (fixedAssetsOrderArchiveBS.Count > 0)
             {
+                // получаем счет списания материалов 
+                string expenditureAccount = "";
+                int? expenditureAccountId = fixedAssetsOrderService.GetFixedAssetsMaterialsByFixedAssetsId(((FixedAssetsOrderArchiveJournalDTO)fixedAssetsOrderArchiveBS.Current).Id).First().Fixed_Account_Id;
+                if (expenditureAccountId != null)
+                    expenditureAccount = accountsService.GetAllAccounts().FirstOrDefault(srch => srch.Id == expenditureAccountId).Num;
+                ((FixedAssetsOrderArchiveJournalDTO)fixedAssetsOrderArchiveBS.Current).ExpenditureAccount = expenditureAccount;
 
                 FixedAssetsOrderRegistrationDTO currentFixedAssetsOrderReg = fixedAssetsOrderService.GetByFixedAssetsOrderId(((FixedAssetsOrderArchiveJournalDTO)fixedAssetsOrderArchiveBS.Current).Id, 4);
                 if (currentFixedAssetsOrderReg == null)
@@ -969,6 +1029,20 @@ namespace ERP_NEW.GUI.Accounting
             }
         }
 
+        private void fixedAssetsAmortGridView_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
+            if (fixedAssetsOrderNoAmortBS.Count > 0 && fixedAssetsOrderNoAmortBS != null)
+                LoadAmortizationDate(((FixedAssetsOrderJournalDTO)fixedAssetsOrderNoAmortBS.Current).Id);
+            else
+                fixedAssetsOrderAmortizationDateBS.DataSource = null;
+        }
+
+        private void printInventoryCardNewBtn_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            reportService = Program.kernel.Get<IReportService>();
+            // if (check == 0)
+            reportService.PrintFixedAssetsOderNew((FixedAssetsOrderJournalDTO)fixedAssetsOrderBS.Current, (List<FixedAssetsMaterialsDTO>)fixedAssetsOrderMaterialsBS.DataSource, lastDay, firstDay);
+        }
 
         public FixedAssetsOrderJournalDTO ConvertArchiveJournalToJournal()
         {

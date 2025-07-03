@@ -197,107 +197,6 @@ namespace ERP_NEW.BLL.Services
         {
             List<PaymentImportModelDTO> resultList = new List<PaymentImportModelDTO>();
 
-            //try
-            //{
-            //    if (filePath.Contains("xlsx"))
-            //    {
-            //        //Spire.Xls.Workbook workbookSpire = new Spire.Xls.Workbook();
-            //        //workbookSpire.LoadFromFile(filePath);
-
-            //        //filePath.Replace("xlsx", "xls");
-
-            //        //workbookSpire.SaveToFile(filePath, Spire.Xls.ExcelVersion.Version97to2003);
-            //        //Factory.GetWorkbook(filePath);
-
-            //        ////////////////////////////////////////////////////////////////////////////
-
-            //        //var xlsxFile = new ExcelFile();
-
-            //        //// Load data from XLSX file.
-            //        //xlsxFile.LoadXlsx(fileName + ".xls", XlsxOptions.PreserveMakeCopy);
-
-            //        //// Save XLSX file to XLS file.
-            //        //xlsxFile.SaveXls(fileName + ".xls");
-
-            //        //////////////////////////////////////////////////////////////////////////
-
-
-            //        var app = new Microsoft.Office.Interop.Excel.Application();
-            //        var wb = app.Workbooks.Open(filePath);
-
-            //        filePath.Replace("xlsx", "xls");
-
-            //        wb.SaveAs(Filename: filePath, FileFormat: Microsoft.Office.Interop.Excel.XlFileFormat.xlOpenXMLWorkbook);
-            //        wb.Close();
-            //        app.Quit();
-
-            //        Factory.GetWorkbook(filePath);
-            //        //SpreadsheetGear.IWorkbook workbookk = SpreadsheetGear.Factory.GetWorkbook(filePath);
-            //        //SpreadsheetGear.IWorksheet worksheett = workbookk.Worksheets["Sheet1"];
-            //        //SpreadsheetGear.IRange cellss = worksheett.Cells;
-
-                   
-
-            //    }
-            //    else
-            //    {
-            //        Factory.GetWorkbook(filePath);
-            //    }
-
-            //    //Factory.GetWorkbook(filePath);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Не вірний формат документа! Необхідний формат: xls, xlsx \n" + ex.Message, "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return resultList;
-            //}
-
-
-            ////var Workbook = Factory.GetWorkbook(filePath);
-            ////var Worksheet = Workbook.Worksheets[0];
-            ////var Сells = Worksheet.Cells;
-
-
-
-            ////SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(filePath);
-
-            ////var worksheet = workbook.Worksheets[0];
-            ////var cells = worksheet.Cells;
-
-            ////int currentRow = 4; // 0, 1, 2 - header
-
-            ////while (cells["A" + currentRow].Value != null)
-            ////{
-            ////    decimal d;
-            ////    DateTime docDate;
-
-            ////    bool result = DateTime.TryParse(cells["A" + currentRow].Value.ToString(), out docDate);
-
-            ////    NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
-
-            ////    string value = cells["E" + currentRow].Value.ToString().Replace('.', ',');
-            ////    string formatString = Regex.Replace(value, @"[^0-9$,]", "");
-
-            ////    if (result)
-            ////    {
-            ////        resultList.Add(new PaymentImportModelDTO
-            ////        {
-            ////            DocumentNum = "б/н",
-            ////            Sum = Math.Abs(decimal.TryParse(formatString, out d) ? d : 0),
-            ////            PaymentCurrencyName = "UAH",
-            ////            RecipientSrn = "32686844",
-            ////            RecipientName = "ТОВ \"НВФ \"ТЕХВАГОНМАШ\"",
-            ////            PaymentPurpose = cells["B" + currentRow].Value.ToString().Trim(),
-            ////            DocumentApplyDate = docDate,
-            ////            OperationType = (byte)((cells["E" + currentRow].Value.ToString().Trim().Substring(0, 1) != "-") ? 1 : 0)
-            ////        });
-            ////    }
-
-
-            ////    ++currentRow;
-            ////}
-
-
             var Workbook = Factory.GetWorkbook(filePath);
             var Worksheet = Workbook.Worksheets[0];
             var Сells = Worksheet.Cells;
@@ -318,7 +217,7 @@ namespace ERP_NEW.BLL.Services
 
                 bool result = DateTime.TryParse(cells["A" + currentRow].Value.ToString(), out docDate);
 
-                NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+                //NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
 
                 string value = cells["E" + currentRow].Value.ToString().Replace('.', ',');
                 string formatString = Regex.Replace(value, @"[^0-9$,]", "");
@@ -547,8 +446,22 @@ namespace ERP_NEW.BLL.Services
                         {
                             bankAccount = NumberCrop(bankAccount);
                         }
+                        try
+                        {
+                            paymentRow.RecipientBankAccountNum = ulong.Parse(bankAccount);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Помилка " + ex.Message +"\nПри спробі обробити номер "+ bankAccount +"\nЗменшили номер до 14 символів", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            string trimmedString = bankAccount.Length > 14
+                                                   ? bankAccount.Substring(bankAccount.Length - 14)
+                                                   : bankAccount;
 
-                        paymentRow.RecipientBankAccountNum = ulong.Parse(bankAccount);
+                            MessageBox.Show("Номер після редагування"+ trimmedString, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            bankAccount = trimmedString;
+                            paymentRow.RecipientBankAccountNum = ulong.Parse(bankAccount);
+                        }
+
                         paymentRow.RecipientSrn = SearchString(srn, srnPos + 5, allData[i]);
                         paymentRow.RecipientName = allData[++i].Trim();
 
@@ -867,6 +780,74 @@ namespace ERP_NEW.BLL.Services
             }
 
             return returnValue;
+        }
+
+        public List<PaymentImportModelDTO> GetUkrSibBankList(string filePath)
+        {
+            List<PaymentImportModelDTO> resultList = new List<PaymentImportModelDTO>();
+
+            var Workbook = Factory.GetWorkbook(filePath);
+            var Worksheet = Workbook.Worksheets[0];
+            var Сells = Worksheet.Cells;
+
+            SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(filePath);
+
+            var worksheet = workbook.Worksheets[0];
+            var cells = worksheet.Cells;
+
+            int currentRow = 2; // 1 - header
+
+            string modoficateBancAccount = "311/8";
+
+            if (modoficateBancAccount.Any(c => char.IsLetter(c)))
+                modoficateBancAccount = NumberCrop(modoficateBancAccount);
+
+            while (cells["A" + currentRow].Value != null)
+            {
+                decimal d;
+                DateTime docDate;
+                string value;
+                string formatString;
+
+                bool result = DateTime.TryParse(cells["M" + currentRow].Value.ToString(), out docDate);
+
+                //NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+
+                if (cells["N" + currentRow].Value.ToString() != "")
+                {
+                    value = cells["N" + currentRow].Value.ToString().Replace('.', ',');
+                    formatString = Regex.Replace(value, @"[^0-9$,]", "");
+                }
+                else
+                {
+                    value = cells["O" + currentRow].Value.ToString().Replace('.', ',');
+                    formatString = Regex.Replace(value, @"[^0-9$,]", "");
+                }
+
+                if (result)
+                {
+                    resultList.Add(new PaymentImportModelDTO
+                    {
+                        DocumentNum = cells["L" + currentRow].Value.ToString(),
+                        //RecipientName = cells["H" + currentRow].Value.ToString(),
+                        RecipientBankName = cells["H" + currentRow].Value.ToString(),
+                        RecipientBankCode = 351005,
+                        //RecipientBankAccountNum = ulong.Parse(modoficateBancAccount),
+                        Sum = Math.Abs(decimal.TryParse(formatString, out d) ? d : 0),
+                        PaymentCurrencyName = "UAH",
+                        //RecipientSrn = "32686844",
+                        //RecipientName = "ТОВ \"НВФ \"ТЕХВАГОНМАШ\"",
+                        RecipientSrn = cells["J" + currentRow].Value.ToString(),
+                        RecipientName = cells["K" + currentRow].Value.ToString(),
+                        PaymentPurpose = cells["P" + currentRow].Value.ToString().Trim(),
+                        DocumentApplyDate = docDate,
+                        OperationType = (byte)(((cells["N" + currentRow].Value.ToString()) != "") ? 0 : 1)
+                    });
+                }
+
+                ++currentRow;
+            }
+            return resultList;
         }
     }
 }

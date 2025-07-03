@@ -21,6 +21,8 @@ namespace ERP_NEW.GUI.Accounting
     {
         private OpenFileDialog openDialog = new OpenFileDialog();
 
+        private const string NameForm = "BankPaymentsImportFm";
+
         private IAccountsService accountsService;
         private ICurrencyService currencyService;
         private IBankImportService bankImportService;
@@ -28,17 +30,23 @@ namespace ERP_NEW.GUI.Accounting
         private IContractorsService contractorsService;
         private IPeriodService periodService;
         private ICustomerOrdersService customerOrdersService;
+        private ILogService logService;
 
         private BindingSource bankPaymentBS = new BindingSource();
         private List<BankPaymentsInfoDTO> bankPaymentList = new List<BankPaymentsInfoDTO>();
 
-        public BankPaymentsImportFm()
+        private UserTasksDTO userTasksDTO;
+
+        public BankPaymentsImportFm(UserTasksDTO userTasksDTO)
         {
             InitializeComponent();
+
+            this.userTasksDTO = userTasksDTO;
 
             accountsService = Program.kernel.Get<IAccountsService>();
             currencyService = Program.kernel.Get<ICurrencyService>();
             customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
+            logService = Program.kernel.Get<ILogService>();
 
             vatAccountsEditRepository.DataSource = accountsService.GetAccounts().Where(s => s.VatMark == 1).ToList();
             vatAccountsEditRepository.ValueMember = "Id";
@@ -89,8 +97,11 @@ namespace ERP_NEW.GUI.Accounting
                 case 109:
                     bankNameItem.Caption = "Банк Кредит Днепр";
                     break;
-                case 133://311/7
+                case 133:// 311/7
                     bankNameItem.Caption = "АТ УКРЕКСІМБАНК";
+                    break;
+                case 244:// 311/8
+                    bankNameItem.Caption = "Укрсиббанк";
                     break;
                 default:
                     bankNameItem.Caption = "";
@@ -189,6 +200,7 @@ namespace ERP_NEW.GUI.Accounting
 
                 if (item.Contractor_Id == null)
                 {
+                    // тут нужно разработать проверку
                     List<ContractorsDTO> contractorsList = contractorsService.GetContractors(1).ToList();
 
                     var tempContractorModel = contractorsList.FirstOrDefault(c => (c.Srn ?? "").Trim() == item.ContractorName.Trim());
@@ -275,6 +287,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -298,6 +311,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch(Exception ex)
                 {
                     MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -306,6 +320,11 @@ namespace ERP_NEW.GUI.Accounting
 
         private void poltavaBankItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            //string str =  "078999980313191206084016719";
+            //string str1 = "0000026006031206245";
+
+            //ulong test = ulong.Parse(str1);
+            //Int64 test1 = Int64.Parse(str);
             openDialog.Filter = "Текстовые файлы(*.txt)|*.txt";
 
             if (openDialog.ShowDialog() == DialogResult.OK)
@@ -321,6 +340,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -344,6 +364,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -367,6 +388,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -394,6 +416,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch
                 {
                     MessageBox.Show("Не можливо прочитати документ!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -417,6 +440,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch
                 {
                     MessageBox.Show("Не можливо прочитати документ!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -440,6 +464,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch
                 {
                     MessageBox.Show("Не можливо прочитати документ!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -463,6 +488,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch
                 {
                     MessageBox.Show("Не можливо прочитати документ!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -498,6 +524,7 @@ namespace ERP_NEW.GUI.Accounting
                     catch (Exception ex)
                     {
                         MessageBox.Show("При збереженні виникла помилка. " + ex.Message, "Збереження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                     }
                 }
 
@@ -641,6 +668,7 @@ namespace ERP_NEW.GUI.Accounting
                 {
                     splashScreenManager.CloseWaitForm();
                     MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                     return;
                 }
 
@@ -696,6 +724,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 }
 
                 splashScreenManager.CloseWaitForm();
@@ -734,6 +763,30 @@ namespace ERP_NEW.GUI.Accounting
                         importPaymentsGridView.EndDataUpdate();
                     }
                 }
+            }
+        }
+
+        private void ukrSibItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            openDialog.Filter = "Все файлы(*.*)|*.*";
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                splashScreenManager.ShowWaitForm();
+
+                bankImportService = Program.kernel.Get<IBankImportService>();
+
+                try
+                {
+                    LoadBankPaymentData(bankImportService.GetUkrSibBankList(openDialog.FileName), 244);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Не можливо прочитати документ!\n" + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
+                }
+
+                splashScreenManager.CloseWaitForm();
             }
         }
     }

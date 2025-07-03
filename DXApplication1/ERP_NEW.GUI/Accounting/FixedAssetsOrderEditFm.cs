@@ -462,7 +462,7 @@ namespace ERP_NEW.GUI.Accounting
 
             if (e.Column == flagImageCol && e.IsGetData)
             {
-                if (item.Id != null)
+                if (item.Id != -1)
                 {
                     if (item.Flag == 0)
                         e.Value = imageCollection.Images[0];
@@ -565,10 +565,102 @@ namespace ERP_NEW.GUI.Accounting
             fixedAssetsOrderValidationProvider.Validate((Control)sender);
         }
 
+
+
+
         #endregion
 
+        private void fixedAssetsGroupLookUp_Properties_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
+            switch (e.Button.Index)
+            {
+                case 1: //Додати
+                    {
+                        using (FixedAssetsOrderGroupEditFm fixedAssetsOrderGroupEditFm = new FixedAssetsOrderGroupEditFm(Utils.Operation.Add, new FixedAssetsGroupDTO()))
+                        {
+                            if (fixedAssetsOrderGroupEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                long return_Id = fixedAssetsOrderGroupEditFm.Return();
+                                fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
+                                //List<FixedAssetsGroupDTO> groupList = fixedAssetsOrderService.GetFixedAssestGroup().ToList();
+                                fixedAssetsGroupLookUp.Properties.DataSource = fixedAssetsOrderService.GetFixedAssestGroup().ToList();
 
+                                //contractorsEdit.Properties.DataSource = contractorsService.GetContractors(1);
+                                fixedAssetsGroupLookUp.EditValue = return_Id;
+                            }
+                        }
+                        break;
+                    }
+                case 2: //Видалити
+                    {
+                        if (MessageBox.Show("Ви впевнені що бажаєте видалити групу основного засобу?", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
+                                fixedAssetsOrderService.FixedAssetsOrderGroupDelete(((FixedAssetsGroupDTO)fixedAssetsGroupLookUp.GetSelectedDataRow()).Id);
+                                fixedAssetsGroupLookUp.Properties.DataSource = fixedAssetsOrderService.GetFixedAssestGroup().ToList();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("При видаленні виникла помилка. " + ex.Message, "Видалення групи основного засобу", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
 
+                        fixedAssetsGroupLookUp.EditValue = null;
+                        fixedAssetsGroupLookUp.Properties.NullText = "Немає данних";
 
+                        break;
+                    }
+            }
+        }
+
+        private void regionLookUp_Properties_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
+            switch (e.Button.Index)
+            {
+                case 1: //Додати
+                    {
+                        using (FixedAssetsOrderRegionEditFm fixedAssetsOrderRegionEditFm = new FixedAssetsOrderRegionEditFm(Utils.Operation.Add, new RegionDTO()))
+                        {
+                            if (fixedAssetsOrderRegionEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                long return_Id = fixedAssetsOrderRegionEditFm.Return();
+                                fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
+                                //List<FixedAssetsGroupDTO> groupList = fixedAssetsOrderService.GetFixedAssestGroup().ToList();
+                                regionLookUp.Properties.DataSource = fixedAssetsOrderService.GetRegion().ToList();
+                                //fixedAssetsGroupLookUp.Properties.DataSource = fixedAssetsOrderService.GetFixedAssestGroup().ToList();
+
+                                //contractorsEdit.Properties.DataSource = contractorsService.GetContractors(1);
+                                fixedAssetsGroupLookUp.EditValue = return_Id;
+                            }
+                        }
+                        break;
+                    }
+                case 2: //Видалити
+                    {
+                        if (MessageBox.Show("Ви впевнені що бажаєте видалити групу основного засобу?", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
+                                fixedAssetsOrderService.RegionDelete(((RegionDTO)regionLookUp.GetSelectedDataRow()).Id);
+                                regionLookUp.Properties.DataSource = fixedAssetsOrderService.GetRegion().ToList();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("При видаленні виникла помилка. " + ex.Message, "Видалення групи основного засобу", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+
+                        regionLookUp.EditValue = null;
+                        regionLookUp.Properties.NullText = "Немає данних";
+
+                        break;
+                    }
+            }
+        }
     }
 }

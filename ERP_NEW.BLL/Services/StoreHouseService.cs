@@ -67,6 +67,8 @@ namespace ERP_NEW.BLL.Services
         private IRepository<OrderReceipFromQuery> orderReceipFromQuery;
         private IRepository<Contractors> contractors;
         private IRepository<ReceiptOrders> receiptOrders;
+        private IRepository<ReceiptCertificates> receiptCertificate;
+        private IRepository<ReceiptCertificateDetail> receiptCertificateDetail;
         private IRepository<ToolActs> toolActs;
         private IRepository<ToolActMaterials> toolActMaterials;
         private IRepository<ToolActMaterialsJournal> toolActMaterialsJournal;
@@ -130,6 +132,8 @@ namespace ERP_NEW.BLL.Services
             orderReceipFromQuery = Database.GetRepository<OrderReceipFromQuery>();
             contractors = Database.GetRepository<Contractors>();
             receiptOrders = Database.GetRepository<ReceiptOrders>();
+            receiptCertificate = Database.GetRepository<ReceiptCertificates>();
+            receiptCertificateDetail = Database.GetRepository<ReceiptCertificateDetail>();
             toolActs = Database.GetRepository<ToolActs>();
             toolActMaterials = Database.GetRepository<ToolActMaterials>();
             toolActMaterialsJournal = Database.GetRepository<ToolActMaterialsJournal>();
@@ -211,6 +215,8 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<Nomenclature_Groups, NomenclatureGroupsDTO>();
                 cfg.CreateMap<NomenclatureGroupsDTO, Nomenclature_Groups>();
                 cfg.CreateMap<ReceiptOrders, ReceiptOrdersDTO>();
+                cfg.CreateMap<ReceiptCertificates, ReceiptCertificatesDTO>();
+                cfg.CreateMap<ReceiptCertificateDetail, ReceiptCertificateDetailDTO>();
                 cfg.CreateMap<ToolActs, ToolActsDTO>();
                 cfg.CreateMap<ToolActsDTO, ToolActs>();
                 cfg.CreateMap<ToolActMaterials,ToolActMaterialsDTO>();
@@ -715,27 +721,57 @@ namespace ERP_NEW.BLL.Services
 
         public IEnumerable<NomenclaturesDTO> GetAllNomenclaturesMaterials(int id)
         {
-            var query = (from nom in nomenclatures.GetAll()
-                         join unt in units.GetAll() on nom.UnitId equals unt.UnitId into untt
-                         from unt in untt.DefaultIfEmpty()
-                         join ac in accounts.GetAll() on nom.BALANCE_ACCOUNT_ID equals ac.ID
-                         where nom.Nomencl_Group_Id == id
-                         select new NomenclaturesDTO()
-                         {
-                             ID = nom.ID,
-                             BALANCE_ACCOUNT_ID = ac.ID,
-                             Num = ac.NUM,
-                             UnitId = unt.UnitId,
-                             UnitLocalName = unt.UnitLocalName,
-                             Nomenclature = nom.NOMENCLATURE,
-                             Nomencl_Group_Id = nom.Nomencl_Group_Id,
-                             Name = nom.NAME
+            if (id == -1)
+            {
 
-                         });
+                var query = (from nom in nomenclatures.GetAll()
+                             join unt in units.GetAll() on nom.UnitId equals unt.UnitId into untt
+                             from unt in untt.DefaultIfEmpty()
+                             join ac in accounts.GetAll() on nom.BALANCE_ACCOUNT_ID equals ac.ID
+                             select new NomenclaturesDTO()
+                             {
+                                 ID = nom.ID,
+                                 BALANCE_ACCOUNT_ID = ac.ID,
+                                 Num = ac.NUM,
+                                 UnitId = unt.UnitId,
+                                 UnitLocalName = unt.UnitLocalName,
+                                 Nomenclature = nom.NOMENCLATURE,
+                                 Nomencl_Group_Id = nom.Nomencl_Group_Id,
+                                 Name = nom.NAME
 
-            return query.ToList();
+                             });
+
+                return query.ToList();
+            }
+            else
+            {
+                var query = (from nom in nomenclatures.GetAll()
+                             join unt in units.GetAll() on nom.UnitId equals unt.UnitId into untt
+                             from unt in untt.DefaultIfEmpty()
+                             join ac in accounts.GetAll() on nom.BALANCE_ACCOUNT_ID equals ac.ID
+                             where nom.Nomencl_Group_Id == id
+                             select new NomenclaturesDTO()
+                             {
+                                 ID = nom.ID,
+                                 BALANCE_ACCOUNT_ID = ac.ID,
+                                 Num = ac.NUM,
+                                 UnitId = unt.UnitId,
+                                 UnitLocalName = unt.UnitLocalName,
+                                 Nomenclature = nom.NOMENCLATURE,
+                                 Nomencl_Group_Id = nom.Nomencl_Group_Id,
+                                 Name = nom.NAME
+
+                             });
+
+                return query.ToList();
+            }
         }
 
+
+        public IEnumerable<OrdersDTO> GetOrders()
+        {
+            return mapper.Map<IEnumerable<ORDERS>, List<OrdersDTO>>(orders.GetAll());
+        }
         public IEnumerable<OrdersInfoDTO> GetReceiptsByPeriod(DateTime beginDate, DateTime endDate)
         {
             var query = (from r in receipts.GetAll()
@@ -1156,7 +1192,7 @@ namespace ERP_NEW.BLL.Services
                              BalanceAccountId = acc.ID,
                              BalanceAccountNum = acc.NUM,
                              CustomerOrderId = esh.CustomerOrderId,
-                             CustomerOrderNumber = esh.CustomerOrderId != null ? cus.OrderNumber : e.EmployeeID != null ? "0 (" + ed.LastName + " " + ed.FirstName.Substring(0, 1) + ". " + ed.MiddleName.Substring(0, 1) + "." + ")" : "0",
+                             CustomerOrderNumber = esh.CustomerOrderId != null ? cus.OrderNumber : esh.EmployeeId != null ? "0 (" + ed.LastName + " " + ed.FirstName.Substring(0, 1) + ". " + ed.MiddleName.Substring(0, 1) + "." + ")" : "0",
                              ExpDate = esh.ExpDate,
                              NomenclatureId = nom.ID,
                              Nomenclature = nom.NOMENCLATURE,
@@ -1396,7 +1432,21 @@ namespace ERP_NEW.BLL.Services
             return query.ToList();
         }
 
+        public int GetUserIdByReceiptCertId(int recCertId)
+        {
+            var query = (from recC in receiptCertificate.GetAll()
+                         join recCertD in receiptCertificateDetail.GetAll() on recC.ReceiptCertificateId equals recCertD.ReceiptCertificateId into recCertt
+                         from recCertD in recCertt.DefaultIfEmpty()
+                         join rec in receipts.GetAll() on recCertD.ReceiptId equals rec.ID into recc
+                         from rec in recc.DefaultIfEmpty()
+                         join ord in orders.GetAll() on rec.ORDER_ID equals ord.ID into ordd
+                         from ord in ordd.DefaultIfEmpty()
+                         where (recC.ReceiptCertificateId == recCertId)
+                         let supplierId = ord.SUPPLIER_ID ?? 0 // Use 0 or default value as per your requirement
+                         select supplierId).FirstOrDefault(); // Use FirstOrDefault to get a single result or default
 
+            return query;
+        }
 
 
         #endregion
@@ -1423,7 +1473,7 @@ namespace ERP_NEW.BLL.Services
                 accountClothes.Delete(accountClothes.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1461,7 +1511,7 @@ namespace ERP_NEW.BLL.Services
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1510,7 +1560,7 @@ namespace ERP_NEW.BLL.Services
                 invoiceRequirementOrders.Delete(invoiceRequirementOrders.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1566,7 +1616,7 @@ namespace ERP_NEW.BLL.Services
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1621,7 +1671,7 @@ namespace ERP_NEW.BLL.Services
                 storeHouses.Delete(storeHouses.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1650,7 +1700,7 @@ namespace ERP_NEW.BLL.Services
                 nomenclaturesGroups.Delete(nomenclaturesGroups.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1679,7 +1729,7 @@ namespace ERP_NEW.BLL.Services
                 nomenclatures.Delete(nomenclatures.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1708,7 +1758,7 @@ namespace ERP_NEW.BLL.Services
                 toolActs.Delete(toolActs.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1748,7 +1798,7 @@ namespace ERP_NEW.BLL.Services
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1801,7 +1851,7 @@ namespace ERP_NEW.BLL.Services
                 var updateOrder = orders.GetAll().SingleOrDefault(c => c.ID == oDTO.ID);
                 orders.Update((mapper.Map<OrdersDTO, ORDERS>(oDTO, updateOrder)));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (afterCreate)
                     OrderDelete(oDTO.ID);
@@ -1817,7 +1867,7 @@ namespace ERP_NEW.BLL.Services
                 orders.Delete(orders.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1851,7 +1901,7 @@ namespace ERP_NEW.BLL.Services
                                                                 ", \"Storehouse_Id\" =" + null +
                                                                 " WHERE ID =" + receiptsDTO.ID);                                    
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return 0;
             }
@@ -1894,7 +1944,7 @@ namespace ERP_NEW.BLL.Services
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1914,7 +1964,7 @@ namespace ERP_NEW.BLL.Services
                 receipts.Delete(receipts.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1944,7 +1994,7 @@ namespace ERP_NEW.BLL.Services
                 delivery.Delete(delivery.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1971,7 +2021,7 @@ namespace ERP_NEW.BLL.Services
                 deliveryOrder.Delete(deliveryOrder.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1999,7 +2049,7 @@ namespace ERP_NEW.BLL.Services
                 deliveryOrdersDetails.Delete(deliveryOrdersDetails.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -2043,7 +2093,7 @@ namespace ERP_NEW.BLL.Services
                 vat.Delete(vat.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -2070,7 +2120,7 @@ namespace ERP_NEW.BLL.Services
                 expenditureAccountant.Delete(expenditureAccountant.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -2098,7 +2148,7 @@ namespace ERP_NEW.BLL.Services
                 expendituresStoreHouses.Delete(expendituresStoreHouses.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -2126,7 +2176,7 @@ namespace ERP_NEW.BLL.Services
                 expenditureStoreHouse.Delete(expenditureStoreHouse.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

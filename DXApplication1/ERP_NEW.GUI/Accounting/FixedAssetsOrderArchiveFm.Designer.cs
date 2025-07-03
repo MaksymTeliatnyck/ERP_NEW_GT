@@ -218,13 +218,13 @@
             this.fixedAssetsArchiveGridView.GridControl = this.fixedAssetsArchiveGrid;
             this.fixedAssetsArchiveGridView.GroupCount = 1;
             this.fixedAssetsArchiveGridView.Name = "fixedAssetsArchiveGridView";
-            this.fixedAssetsArchiveGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.fixedAssetsArchiveGridView.OptionsPrint.AutoWidth = false;
             this.fixedAssetsArchiveGridView.OptionsView.ShowAutoFilterRow = true;
             this.fixedAssetsArchiveGridView.OptionsView.ShowFooter = true;
             this.fixedAssetsArchiveGridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn11, DevExpress.Data.ColumnSortOrder.Ascending)});
             this.fixedAssetsArchiveGridView.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.fixedAssetsArchiveGridView_RowCellStyle);
+            this.fixedAssetsArchiveGridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.fixedAssetsArchiveGridView_FocusedRowChanged);
             // 
             // gridColumn1
             // 

@@ -18,7 +18,7 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>\\SERVER-ASUP\ERP_Tech\</PublishUrl>
+    <PublishUrl>\\SBD1\Publish\ERP\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -28,20 +28,20 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\SERVER-ASUP\ERP_Tech\</InstallUrl>
-    <UpdateUrl>\\SERVER-ASUP\ERP_Tech\</UpdateUrl>
+    <InstallUrl>\\SBD1\Publish\ERP\</InstallUrl>
+    <UpdateUrl>\\SBD1\Publish\ERP\</UpdateUrl>
     <ProductName>ERP Techvagonmash</ProductName>
     <PublisherName>IT</PublisherName>
     <SuiteName>Корпоративна інформаційна система</SuiteName>
-    <MinimumRequiredVersion>1.0.0.440</MinimumRequiredVersion>
-    <ApplicationRevision>440</ApplicationRevision>
+    <MinimumRequiredVersion>1.0.0.567</MinimumRequiredVersion>
+    <ApplicationRevision>568</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Absolute</BootstrapperComponentsLocation>
-    <BootstrapperComponentsUrl>\\SERVER-ASUP\ERP_Tech</BootstrapperComponentsUrl>
+    <BootstrapperComponentsUrl>\\SERVER-TFS\Publish\ERP</BootstrapperComponentsUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,11 +52,12 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -72,10 +73,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>CE3B1C2D18A220A8392BCE62BF7F7ADB43EB46B4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>AF400EE837E7C1AB7A4237A52665DA64CEE93968</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ERP_NEW.GUI_3_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ERP_NEW.GUI_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -89,6 +90,26 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Calendar.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -114,46 +135,46 @@
     <Reference Include="DevExpress.BonusSkins.v16.1">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Charts.v16.1.Core, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Charts.v16.1.Core, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.CodeParser.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
     <Reference Include="DevExpress.Data.v16.1">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.DataAccess.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.DataAccess.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.DataAccess.v16.1.UI, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.DataAccess.v16.1.UI, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Images.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Images.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Office.v16.1.Core, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Office.v16.1.Core, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.PivotGrid.v16.1.Core, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.PivotGrid.v16.1.Core, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
     <Reference Include="DevExpress.Printing.v16.1.Core">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v16.1.Core, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.RichEdit.v16.1.Core, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.SpellChecker.v16.1.Core, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.SpellChecker.v16.1.Core, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
     <Reference Include="DevExpress.Utils.v16.1">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Utils.v16.1.UI, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Utils.v16.1.UI, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpo.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpo.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
     <Reference Include="DevExpress.XtraBars.v16.1">
@@ -162,64 +183,67 @@
     <Reference Include="DevExpress.Sparkline.v16.1.Core">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraCharts.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v16.1.Extensions, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraCharts.v16.1.Extensions, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v16.1.UI, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraCharts.v16.1.UI, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v16.1.Wizard, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraCharts.v16.1.Wizard, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
     <Reference Include="DevExpress.XtraEditors.v16.1">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraGauges.v16.1.Core, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraGauges.v16.1.Core, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraGrid.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraGrid.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraLayout.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraLayout.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraNavBar.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraNavBar.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraPivotGrid.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraPivotGrid.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraPrinting.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraReports.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v16.1.Extensions, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraReports.v16.1.Extensions, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraRichEdit.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraRichEdit.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraScheduler.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Reporting.Extensions, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraScheduler.v16.1.Core, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraScheduler.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraScheduler.v16.1.Extensions, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Core, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraSpellChecker.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Extensions, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraTreeList.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraSpellChecker.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraVerticalGrid.v16.1, Version=16.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraTreeList.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraVerticalGrid.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -233,6 +257,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="ERP_NEW.BLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ERP_NEW.BLL\bin\Release\ERP_NEW.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="ERP_NEW.DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ERP_NEW.DAL\bin\Release\ERP_NEW.DAL.dll</HintPath>
     </Reference>
     <Reference Include="FirebirdSql.Data.FirebirdClient, Version=5.7.0.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FirebirdSql.Data.FirebirdClient.5.7.0\lib\net40-client\FirebirdSql.Data.FirebirdClient.dll</HintPath>
@@ -272,8 +304,8 @@
       <HintPath>..\..\packages\Nager.Date.1.22.3\lib\net45\Nager.Date.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -358,6 +390,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Remoting">
       <Private>True</Private>
     </Reference>
@@ -382,6 +415,10 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telegram.Bot, Version=16.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telegram.Bot.16.0.2\lib\net45\Telegram.Bot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="UIAutomationClient" />
     <Reference Include="WindowsBase" />
     <Reference Include="Zidium.Api, Version=1.0.47.0, Culture=neutral, processorArchitecture=MSIL">
@@ -419,6 +456,18 @@
     </Compile>
     <Compile Include="Accounting\AccountingOrdersReceiptEditFm.Designer.cs">
       <DependentUpon>AccountingOrdersReceiptEditFm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Accounting\AccountingTransferEditFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\AccountingTransferEditFm.Designer.cs">
+      <DependentUpon>AccountingTransferEditFm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Accounting\AccountingTransferFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\AccountingTransferFm.Designer.cs">
+      <DependentUpon>AccountingTransferFm.cs</DependentUpon>
     </Compile>
     <Compile Include="Accounting\BankPaymentsImportContractorEditFm.cs">
       <SubType>Form</SubType>
@@ -528,6 +577,12 @@
     <Compile Include="Accounting\FixedAssetsOrderArchiveFm.Designer.cs">
       <DependentUpon>FixedAssetsOrderArchiveFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Accounting\FixedAssetsOrderCancelAmortizationFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\FixedAssetsOrderCancelAmortizationFm.Designer.cs">
+      <DependentUpon>FixedAssetsOrderCancelAmortizationFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Accounting\FixedAssetsOrderEditCostFm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -558,6 +613,12 @@
     <Compile Include="Accounting\FixedAssetsOrderFm.Designer.cs">
       <DependentUpon>FixedAssetsOrderFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Accounting\FixedAssetsOrderGroupEditFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\FixedAssetsOrderGroupEditFm.Designer.cs">
+      <DependentUpon>FixedAssetsOrderGroupEditFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Accounting\FixedAssetsOrderJournalEditFm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -581,6 +642,12 @@
     </Compile>
     <Compile Include="Accounting\FixedAssetsOrderMaterialsForPrintFm.Designer.cs">
       <DependentUpon>FixedAssetsOrderMaterialsForPrintFm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Accounting\FixedAssetsOrderRegionEditFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\FixedAssetsOrderRegionEditFm.Designer.cs">
+      <DependentUpon>FixedAssetsOrderRegionEditFm.cs</DependentUpon>
     </Compile>
     <Compile Include="Accounting\FixedAssetsOrderSoldFm.cs">
       <SubType>Form</SubType>
@@ -881,6 +948,12 @@
     <Compile Include="Classifiers\EmployeesInfoFm.Designer.cs">
       <DependentUpon>EmployeesInfoFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classifiers\EmployeesMiniFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classifiers\EmployeesMiniFm.Designer.cs">
+      <DependentUpon>EmployeesMiniFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Classifiers\InfoFormFm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1043,6 +1116,12 @@
     <Compile Include="Contractors\ContactPersonEditFm.Designer.cs">
       <DependentUpon>ContactPersonEditFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Contractors\ContractorAgreementEditFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contractors\ContractorAgreementEditFm.Designer.cs">
+      <DependentUpon>ContractorAgreementEditFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contractors\ContractorContactAddressEditFm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1054,6 +1133,12 @@
     </Compile>
     <Compile Include="Contractors\ContractorEditFm.Designer.cs">
       <DependentUpon>ContractorEditFm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contractors\ContractorFindDuplicateFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contractors\ContractorFindDuplicateFm.Designer.cs">
+      <DependentUpon>ContractorFindDuplicateFm.cs</DependentUpon>
     </Compile>
     <Compile Include="Contractors\ContractorsFm.cs">
       <SubType>Form</SubType>
@@ -1382,6 +1467,12 @@
     <Compile Include="MainTabFm.Designer.cs">
       <DependentUpon>MainTabFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OTK\CertificateJournalFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OTK\CertificateJournalFm.Designer.cs">
+      <DependentUpon>CertificateJournalFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OTK\CertificatePassFm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1706,6 +1797,12 @@
     <Compile Include="Tools\TasksEditFm.Designer.cs">
       <DependentUpon>TasksEditFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\UserAuthFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\UserAuthFm.Designer.cs">
+      <DependentUpon>UserAuthFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\UserRoleEditFm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1724,6 +1821,18 @@
     <Compile Include="Tools\UsersByRolesFm.Designer.cs">
       <DependentUpon>UsersByRolesFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\UserSettingsFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\UserSettingsFm.Designer.cs">
+      <DependentUpon>UserSettingsFm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\WaitForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\WaitForm2.Designer.cs">
+      <DependentUpon>WaitForm2.cs</DependentUpon>
+    </Compile>
     <Compile Include="WaitForm1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1740,6 +1849,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\AccountingInvoicesFm.resx">
       <DependentUpon>AccountingInvoicesFm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\AccountingOrdersEditFm.resx">
       <DependentUpon>AccountingOrdersEditFm.cs</DependentUpon>
@@ -1749,6 +1859,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\AccountingOrdersReceiptEditFm.resx">
       <DependentUpon>AccountingOrdersReceiptEditFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\AccountingTransferEditFm.resx">
+      <DependentUpon>AccountingTransferEditFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\AccountingTransferFm.resx">
+      <DependentUpon>AccountingTransferFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\BankPaymentsImportContractorEditFm.resx">
       <DependentUpon>BankPaymentsImportContractorEditFm.cs</DependentUpon>
@@ -1810,6 +1926,9 @@
     <EmbeddedResource Include="Accounting\FixedAssetsOrderArchiveFm.resx">
       <DependentUpon>FixedAssetsOrderArchiveFm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\FixedAssetsOrderCancelAmortizationFm.resx">
+      <DependentUpon>FixedAssetsOrderCancelAmortizationFm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Accounting\FixedAssetsOrderEditCostFm.resx">
       <DependentUpon>FixedAssetsOrderEditCostFm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1825,6 +1944,9 @@
     <EmbeddedResource Include="Accounting\FixedAssetsOrderFm.resx">
       <DependentUpon>FixedAssetsOrderFm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\FixedAssetsOrderGroupEditFm.resx">
+      <DependentUpon>FixedAssetsOrderGroupEditFm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Accounting\FixedAssetsOrderJournalEditFm.resx">
       <DependentUpon>FixedAssetsOrderJournalEditFm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1836,6 +1958,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\FixedAssetsOrderMaterialsForPrintFm.resx">
       <DependentUpon>FixedAssetsOrderMaterialsForPrintFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\FixedAssetsOrderRegionEditFm.resx">
+      <DependentUpon>FixedAssetsOrderRegionEditFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\FixedAssetsOrderSoldFm.resx">
       <DependentUpon>FixedAssetsOrderSoldFm.cs</DependentUpon>
@@ -1988,6 +2113,9 @@
     <EmbeddedResource Include="Classifiers\EmployeesInfoFm.resx">
       <DependentUpon>EmployeesInfoFm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Classifiers\EmployeesMiniFm.resx">
+      <DependentUpon>EmployeesMiniFm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Classifiers\InfoFormFm.resx">
       <DependentUpon>InfoFormFm.cs</DependentUpon>
     </EmbeddedResource>
@@ -2069,11 +2197,17 @@
     <EmbeddedResource Include="Contractors\ContactPersonEditFm.resx">
       <DependentUpon>ContactPersonEditFm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Contractors\ContractorAgreementEditFm.resx">
+      <DependentUpon>ContractorAgreementEditFm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Contractors\ContractorContactAddressEditFm.resx">
       <DependentUpon>ContractorContactAddressEditFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Contractors\ContractorEditFm.resx">
       <DependentUpon>ContractorEditFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contractors\ContractorFindDuplicateFm.resx">
+      <DependentUpon>ContractorFindDuplicateFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Contractors\ContractorsFm.resx">
       <DependentUpon>ContractorsFm.cs</DependentUpon>
@@ -2239,6 +2373,9 @@
       <DependentUpon>MainTabFm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="OTK\CertificateJournalFm.resx">
+      <DependentUpon>CertificateJournalFm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OTK\CertificatePassFm.resx">
       <DependentUpon>CertificatePassFm.cs</DependentUpon>
     </EmbeddedResource>
@@ -2330,6 +2467,7 @@
     <EmbeddedResource Include="OTK\ReceiptCertificatesFm.resx">
       <DependentUpon>ReceiptCertificatesFm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -2411,6 +2549,9 @@
     <EmbeddedResource Include="Tools\TasksEditFm.resx">
       <DependentUpon>TasksEditFm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tools\UserAuthFm.resx">
+      <DependentUpon>UserAuthFm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tools\UserRoleEditFm.resx">
       <DependentUpon>UserRoleEditFm.cs</DependentUpon>
     </EmbeddedResource>
@@ -2420,6 +2561,12 @@
     <EmbeddedResource Include="Tools\UsersByRolesFm.resx">
       <DependentUpon>UsersByRolesFm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\UserSettingsFm.resx">
+      <DependentUpon>UserSettingsFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\WaitForm2.resx">
+      <DependentUpon>WaitForm2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.resx">
       <DependentUpon>WaitForm1.cs</DependentUpon>
@@ -2431,9 +2578,8 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ERP_NEW.GUI_1_TemporaryKey.pfx" />
-    <None Include="ERP_NEW.GUI_2_TemporaryKey.pfx" />
-    <None Include="ERP_NEW.GUI_3_TemporaryKey.pfx" />
+    <None Include="ERP_NEW.GUI_6_TemporaryKey.pfx" />
+    <None Include="ERP_NEW.GUI_7_TemporaryKey.pfx" />
     <None Include="ERP_NEW.GUI_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -2497,6 +2643,7 @@
     <None Include="Resources\orangeSquareIcon.ico" />
     <None Include="Resources\redSquareIcon.ico" />
     <None Include="Resources\Edit_Add.png" />
+    <None Include="Resources\ukrsibbank.png" />
     <Content Include="Temp\Templates\AccountClothesJournalTemplate.xls" />
     <Content Include="Temp\Templates\AccountJournalTemplate.xlsx" />
     <Content Include="Temp\Templates\AccountJournalWriteOffTemplate.xls" />
@@ -2557,6 +2704,7 @@
     <Content Include="Temp\Pdf\OperatorDbManual.xls" />
     <Content Include="Temp\Templates\FixedAssetsOrderActExpenditure.xls" />
     <Content Include="Temp\Templates\FixedAssetsDecreeExpenditureTemplate.xls" />
+    <Content Include="Temp\Templates\FixedAssetsInventoryCartTemplate.xls" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -3196,12 +3344,6 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ERP_NEW.BLL\ERP_NEW.BLL.csproj">
-      <Project>{8ac81dfe-dd85-4373-b7fc-247c4e63b675}</Project>
-      <Name>ERP_NEW.BLL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -21,6 +21,7 @@ using System;
 using System.Diagnostics;
 using ERP_NEW.BLL.Infrastructure;
 using DevExpress.XtraEditors.Repository;
+using DevExpress.Export;
 
 namespace ERP_NEW.GUI.CustomerOrders
 {
@@ -30,6 +31,7 @@ namespace ERP_NEW.GUI.CustomerOrders
         private IStoreHouseService storeHouseService;
         private IReportService reportService;
         private ICurrencyService currencyService;
+        private IMtsSpecificationsService mtsSpecificationsService;
 
         private BindingSource customerOrdersBS = new BindingSource();
         private BindingSource customerOrdersSpecBS = new BindingSource();
@@ -38,6 +40,7 @@ namespace ERP_NEW.GUI.CustomerOrders
         private BindingSource customerOrderPaymentsBS = new BindingSource();
         private BindingSource expenditureMaterialBS = new BindingSource();
         private BindingSource paymentsInfoBS = new BindingSource();
+        private BindingSource customerOrderMtsBS = new BindingSource();
 
         private CustomerOrderPaymentsInfoDTO paymentsInfo = new CustomerOrderPaymentsInfoDTO();
 
@@ -80,6 +83,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 LoadCustomerOrderPaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderPrepaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderMaterialExpenditure(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
+                LoadCustomerOrderMtsSpecification(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCurrencyInformation();
 
                 SetCustomerOrderSummary();
@@ -123,6 +127,15 @@ namespace ERP_NEW.GUI.CustomerOrders
             prepaymentsGrid.DataSource = customerOrderPrepaymentsBS;
         }
 
+        private void LoadCustomerOrderMtsSpecification(int customerOrderId)
+        {
+            mtsSpecificationsService = Program.kernel.Get<IMtsSpecificationsService>();
+            customerOrderMtsBS.DataSource = mtsSpecificationsService.GetMTSCustomerOrdersFullBySpecificationId(customerOrderId);
+            specificGrid.DataSource = customerOrderMtsBS;
+        }
+
+
+
         private void LoadCustomerOrderPaymentsData(int customerOrderId)
         {
             customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
@@ -149,14 +162,18 @@ namespace ERP_NEW.GUI.CustomerOrders
 
         private void AuthorizatedUserAccess()
         {
-           // addItem.Enabled = (userTasksDTO.AccessRightId == 2);
-          //  editItem.Enabled = (userTasksDTO.AccessRightId == 2);
-         //   deleteItem.Enabled = (userTasksDTO.AccessRightId == 2);
+            addItem.Enabled = (userTasksDTO.AccessRightId == 2);
+            editItem.Enabled = (userTasksDTO.AccessRightId == 2);
+            deleteItem.Enabled = (userTasksDTO.AccessRightId == 2);
 
-          //  addPaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
-          //  deletePaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
-         //   addPrepaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
-          //  deletePrepaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            addPaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            deletePaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            addPrepaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            deletePrepaymentBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+
+            addAssBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            editAssBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            deleteAssBtn.Enabled = (userTasksDTO.AccessRightId == 2);
 
             orderPriceCol.Visible = (userTasksDTO.PriceAttribute == 1);
             orderPriceCol.Visible = (userTasksDTO.PriceAttribute == 1);
@@ -427,10 +444,11 @@ namespace ERP_NEW.GUI.CustomerOrders
             }
             else
             {
-                editItem.Enabled = true;
-                deleteItem.Enabled = true;
-                editAssBtn.Enabled = true;
-                addAssBtn.Enabled = true;
+
+                editItem.Enabled = (userTasksDTO.AccessRightId == 2);
+                deleteItem.Enabled = (userTasksDTO.AccessRightId == 2);
+                editAssBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+                addAssBtn.Enabled = (userTasksDTO.AccessRightId == 2);
               //  addPaymentBtn.Enabled = true;
               //  deletePaymentBtn.Enabled = true;
 
@@ -445,6 +463,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 LoadCustomerOrderPaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderPrepaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderMaterialExpenditure(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
+                LoadCustomerOrderMtsSpecification(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCurrencyInformation();
 
 
@@ -457,6 +476,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 paymentsGrid.DataSource = null;
                 prepaymentsGrid.DataSource = null;
                 expendituresGrid.DataSource = null;
+                specificGrid.DataSource = null;
             }
         }
 
@@ -487,8 +507,21 @@ namespace ERP_NEW.GUI.CustomerOrders
         private void addPaymentBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (customerOrdersBS.Count > 0)
-                AddCustomerOrderPayments(2, ((CustomerOrdersDTO)customerOrdersBS.Current).Id);
+            {
+                if (((CustomerOrdersDTO)customerOrdersBS.Current).Enable == 1)
+                {
+                    if (MessageBox.Show("Заказ на складі!\nВи впевнені, що бажаєте додати нову виплату? ", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        AddCustomerOrderPayments(2, ((CustomerOrdersDTO)customerOrdersBS.Current).Id);
+                    }
+                }
+                else
+                {
+                    AddCustomerOrderPayments(2, ((CustomerOrdersDTO)customerOrdersBS.Current).Id);
+                }    
+            }
         }
+        
 
         private void deletePaymentBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -649,5 +682,47 @@ namespace ERP_NEW.GUI.CustomerOrders
             }
         }
 
+        private void exportToXlsBtn_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string exportFilePath = Utils.HomePath + @"\Temp\Закази за період з "+ ((DateTime)beginDateEditItem.EditValue).ToShortDateString() + " по "+ ((DateTime)endDateEditItem.EditValue).ToShortDateString() + ".xls";
+            var optionXls = new XlsExportOptionsEx();
+
+            optionXls.SheetName = "Закази";
+            optionXls.TextExportMode = DevExpress.XtraPrinting.TextExportMode.Value;
+            optionXls.ShowColumnHeaders = DevExpress.Utils.DefaultBoolean.True;
+            optionXls.ExportType = ExportType.WYSIWYG;
+            customerOrdersGridView.OptionsPrint.AutoWidth = false;
+            customerOrdersGridView.BestFitColumns();
+
+            string fileExtenstion = new FileInfo(exportFilePath).Extension;
+
+            try
+            {
+                customerOrdersGrid.ExportToXls(exportFilePath, optionXls);
+
+                if (File.Exists(exportFilePath))
+                {
+                    try
+                    {
+                        System.Diagnostics.Process.Start(exportFilePath);
+                    }
+                    catch
+                    {
+                        String msg = "Не можливо відкрити файл." + Environment.NewLine + Environment.NewLine + "Шлях: " + exportFilePath;
+                        MessageBox.Show(msg, "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    String msg = "Не можливо відкрити файл." + Environment.NewLine + Environment.NewLine + "Шлях: " + exportFilePath;
+                    MessageBox.Show(msg, "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Файл вже відкрито! Закрийте файл!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

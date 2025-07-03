@@ -52,21 +52,24 @@ namespace ERP_NEW.GUI.CustomerOrders
             agreementJournalBS.DataSource = Item = model;
             LoadData();          
 
-            numberLookUpEdit.DataBindings.Add("EditValue", agreementJournalBS, "AgreementsIdFromContractor", true, DataSourceUpdateMode.OnPropertyChanged); // same AgreementsDTO
-            List<ContractorsDTO> numberList = contractorsService.GetContractors(3).ToList();     
-            List<AgreementsDTO> contractorList = contractorsService.GetAgreements().ToList();
+            // same AgreementsDTO
+            List<ContractorsDTO> numberList = contractorsService.GetContractors(5).ToList();
 
-            numberList.RemoveAll(el => contractorList.Exists(el2 => el2.AgreementsIdFromContractor == el.Id));
+            //List<AgreementsDTO> contractorList = contractorsService.GetAgreements().ToList();
+
+            //numberList.RemoveAll(el => contractorList.Exists(el2 => el2.AgreementsIdFromContractor == el.Id));
+
+            numberLookUpEdit.DataBindings.Add("EditValue", agreementJournalBS, "AgreementsIdFromContractor", true, DataSourceUpdateMode.OnPropertyChanged);
 
             numberLookUpEdit.Properties.DataSource = numberList;
             numberLookUpEdit.Properties.ValueMember = "Id";
             numberLookUpEdit.Properties.DisplayMember = "Name";
             numberLookUpEdit.Properties.NullText = "Немає данних";
 
-            if (operation == Utils.Operation.Update)
-            {
-               numberLookUpEdit.Enabled = false;
-            }
+            //if (operation == Utils.Operation.Update)
+            //{
+            //   numberLookUpEdit.Enabled = false;
+            //}
             nameContractorLookUpEdit.DataBindings.Add("EditValue", agreementJournalBS, "ContractorId", true, DataSourceUpdateMode.OnPropertyChanged);
 
             List<ContractorsDTO> nameContractroList = contractorsService.GetContractors(1).ToList();
@@ -90,6 +93,8 @@ namespace ERP_NEW.GUI.CustomerOrders
             typeLookUpEdit.Properties.ValueMember = "Id";
             typeLookUpEdit.Properties.DisplayMember = "TypeName";
             typeLookUpEdit.Properties.NullText = "Немає данних";
+
+            
 
             dateEdit.DataBindings.Add("EditValue", agreementJournalBS, "Date", true, DataSourceUpdateMode.OnPropertyChanged);
             totalSumEdit.DataBindings.Add("EditValue", agreementJournalBS, "Price", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -116,9 +121,9 @@ namespace ERP_NEW.GUI.CustomerOrders
             contractorsService = Program.kernel.Get<IContractorsService>();
             accountsService = Program.kernel.Get<IAccountsService>();
             homePath = DefinitionPathToServer.DefinitionPath();
-            if (homePath == "server-asup")
-                homePath = @"\\SERVER-ASUP\Data\Journal\";
-            else homePath = @"\\SERVER-ASUP\Data\DebugJournal\";
+            if (homePath == "SBD1")
+                homePath = @"\\SBD1\Data\Journal\";
+            else homePath = @"\\SBD1\Data\DebugJournal\";
         }
 
         public AgreementsDTO Return()
@@ -139,13 +144,11 @@ namespace ERP_NEW.GUI.CustomerOrders
                     if ((rezNumber != "") && (rezNumber != "Немає данних"))
                     {
                         
-                        CreteDirectoryAgreement();
+                        //CreteDirectoryAgreement();
                         if (checkAccessToDirectory == 0)
                         {
-                            if (nameJournalWithTilda != "")
-                            {
 
-                                if (checkCreateDirectory == 0)
+                               if (checkCreateDirectory == 0)
                                 {
                                     ((AgreementsDTO)Item).Number = rezNumber;
                                     ((AgreementsDTO)Item).NumberWithTilda = nameJournalWithTilda;
@@ -157,12 +160,6 @@ namespace ERP_NEW.GUI.CustomerOrders
                                     MessageBox.Show("Папка з ім'ям Номер договору вже існує!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return false;
                                 }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Поле Номер договору не створено!");
-                                return false;
-                            }
                             return true;
                         }
                         else return false;
@@ -191,7 +188,7 @@ namespace ERP_NEW.GUI.CustomerOrders
 
         private void CreteDirectoryAgreement()
         {
-            DirectoryInfo dInfo = new DirectoryInfo(@"\\SERVER-ASUP\Data");
+            DirectoryInfo dInfo = new DirectoryInfo(@"\\SBD1\Data");
            
             string nameJournal = rezNumber;
             string num;
@@ -235,7 +232,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("У вас немає доступу до мережевої папки! Зверніться будь-ласка у відділ АСУП", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 checkAccessToDirectory = 1;
             }

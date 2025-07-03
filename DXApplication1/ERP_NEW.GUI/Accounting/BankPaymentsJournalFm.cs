@@ -38,11 +38,14 @@ namespace ERP_NEW.GUI.Accounting
         //public static extern void mouse_event(ERP_NEW.BLL.Infrastructure.Utils.MouseEvent dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
         private List<ColorsDTO> colorsPallete = new List<ColorsDTO>();
 
+        private const string NameForm = "BankPaymentsJournalFm";
+
         private IBankPaymentsService bankPaymentsService;
         private IPeriodService periodService;
         private IReportService reportService;
         private IAccountsService accountsService;
         private IBusinessTripsService businessTripsService;
+        private ILogService logService;
 
         private BindingSource bankPaymentsBS = new BindingSource();
         
@@ -97,6 +100,7 @@ namespace ERP_NEW.GUI.Accounting
             editBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
             deleteBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
             periodBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
+            addTemplateMenuBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
         }
 
         private void LoadDataByPeriod(DateTime beginDate, DateTime endDate)
@@ -104,6 +108,7 @@ namespace ERP_NEW.GUI.Accounting
             splashScreenManager.ShowWaitForm();
 
             bankPaymentsService = Program.kernel.Get<IBankPaymentsService>();
+            logService = Program.kernel.Get<ILogService>();
 
             bankPaymentsBS.DataSource = bankPaymentsService.GetBankPaymentsJournal(_beginDate, _endDate);
             bankPaymentsGrid.DataSource = bankPaymentsBS;
@@ -146,7 +151,7 @@ namespace ERP_NEW.GUI.Accounting
 
         private void EditBankPayment(Utils.Operation operation, Bank_PaymentsDTO model)
         {
-            using (BankPaymentEditFm bankPaymentEditFm = new BankPaymentEditFm(operation, model))
+            using (BankPaymentEditFm bankPaymentEditFm = new BankPaymentEditFm(operation, model, _userTasksDTO))
             {
                 if (bankPaymentEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -327,7 +332,8 @@ namespace ERP_NEW.GUI.Accounting
                     VatAccountId = item.VatAccountId,
                     VatPrice = item.VatPrice ?? 0.00m,
                     UserId = _userTasksDTO.UserId,
-                    AccountingOperationId = item.AccountingOperationId
+                    AccountingOperationId = item.AccountingOperationId,
+                    ColorId = item.ColorId
                 };
 
                 EditBankPayment(Utils.Operation.Update, model);
@@ -403,6 +409,7 @@ namespace ERP_NEW.GUI.Accounting
                 catch (Exception ex)
                 {
                     MessageBox.Show("При збереженні періоду виникла помилка. " + ex.Message, "Збереження періоду", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                     return;
                 }
             }
@@ -410,7 +417,7 @@ namespace ERP_NEW.GUI.Accounting
 
         private void importBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            using (BankPaymentsImportFm bankPaymentsImportFm = new BankPaymentsImportFm())
+            using (BankPaymentsImportFm bankPaymentsImportFm = new BankPaymentsImportFm(_userTasksDTO))
             {
                 if (bankPaymentsImportFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -431,11 +438,35 @@ namespace ERP_NEW.GUI.Accounting
             CriteriaOperator op = bankPaymentsGridView.ActiveFilterCriteria;
             string filterString = DevExpress.Data.Filtering.CriteriaToWhereClauseHelper.GetDataSetWhere(op).ToString();
 
-            string replace_string = "Convert([Payment_Date], 'System.String') like";
-            string replaceable_string = "[Payment_Date] like";
+            string replace_string_date = "Convert([Payment_Date], 'System.String') like";
+            string replaceable_string_date = "[Payment_Date] like";
+            string replace_string_debitprice = "Convert([DebitPrice], 'System.String') like";
+            string replaceable_string_debitprice = "[DebitPrice] like";
+            string replace_string_debitpricecurrency = "Convert([DebitPriceCurrency], 'System.String') like";
+            string replaceable_string_debitpricecurrency = "[DebitPriceCurrency] like";
+            string replace_string_creditprice = "Convert([CreditPrice], 'System.String') like";
+            string replaceable_string_creditprice = "[CreditPrice] like";
+            string replace_string_creditPriceCurrency = "Convert([CreditPriceCurrency], 'System.String') like";
+            string replaceable_string_creditPriceCurrency = "[CreditPriceCurrency] like";
+            string replace_string_vatprice = "Convert([VatPrice], 'System.String') like";
+            string replaceable_string_vatprice = "[VatPrice] like";
+            string replace_string_customerorderprice = "Convert([CustomerOrderPrice], 'System.String') like";
+            string replaceable_string_customerorderprice = "[CustomerOrderPrice] like";
+            string replace_string_customerordercurrencyprice = "Convert([CustomerOrderCurrencyPrice], 'System.String') like";
+            string replaceable_string_customerordercurrencyprice = "[CustomerOrderCurrencyPrice] like";
 
 
-            filterString = filterString.Replace(replaceable_string, replace_string);
+
+            filterString = filterString.Replace(replaceable_string_date, replace_string_date);
+            filterString = filterString.Replace(replaceable_string_debitprice, replace_string_debitprice);
+            filterString = filterString.Replace(replaceable_string_debitpricecurrency, replace_string_debitpricecurrency);
+            filterString = filterString.Replace(replaceable_string_creditprice, replace_string_creditprice);
+            filterString = filterString.Replace(replaceable_string_creditPriceCurrency, replace_string_creditPriceCurrency);
+            filterString = filterString.Replace(replaceable_string_vatprice, replace_string_vatprice);
+            filterString = filterString.Replace(replaceable_string_customerorderprice, replace_string_customerorderprice);
+            filterString = filterString.Replace(replaceable_string_customerordercurrencyprice, replace_string_customerordercurrencyprice);
+
+
 
             IEnumerable<BankPaymentsInfoDTO> lst = (IEnumerable<BankPaymentsInfoDTO>)bankPaymentsBS.DataSource;
             DataTable dt = ToDataTable<BankPaymentsInfoDTO>(lst);
@@ -443,7 +474,7 @@ namespace ERP_NEW.GUI.Accounting
 
             List<BankPaymentsInfoDTO> rows = new List<BankPaymentsInfoDTO>();
             
-            dv.RowFilter = filterString;
+            dv.RowFilter = string.Format(filterString);
             
             DataTable table = dv.ToTable();
                         
@@ -627,7 +658,7 @@ namespace ERP_NEW.GUI.Accounting
                 Payment_Price = 0.00m,
                 Payment_PriceCurrency = 0.00m,
                 Purpose = "Послуга їдальні",
-                Purpose_Account_Id = 86,
+                Purpose_Account_Id = 247,
                 Rate = 0.00m,
                 UserId = _userTasksDTO.UserId,
                 VatAccountId = 38,
@@ -745,7 +776,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                 splashScreenManager.CloseWaitForm();
 
                 return;
@@ -795,7 +826,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                 splashScreenManager.CloseWaitForm();
 
                 return;
@@ -818,7 +849,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                 splashScreenManager.CloseWaitForm();
 
                 return;
@@ -841,7 +872,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                 splashScreenManager.CloseWaitForm();
 
                 return;
@@ -872,7 +903,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                 splashScreenManager.CloseWaitForm();
 
                 return;
@@ -895,7 +926,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                 splashScreenManager.CloseWaitForm();
 
                 return;
@@ -938,7 +969,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, _userTasksDTO, NameForm);
                 splashScreenManager.CloseWaitForm();
 
                 return;
@@ -947,6 +978,55 @@ namespace ERP_NEW.GUI.Accounting
 
         #endregion
 
+        private void addTemplateKursBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Bank_PaymentsDTO tempItem = new Bank_PaymentsDTO()
+            {
+                AccountingOperationId = 1,
+                Bank_Account_Id = 24,
+                Contractor_Id = -1,
+                CurrencyId = 1,
+                DateCreate = DateTime.Now,
+                DateUpdate = DateTime.Now,
+                Payment_Date = DateTime.Now,
+                Payment_Document = "Курс",
+                Payment_Price = 0.00m,
+                Payment_PriceCurrency = 0.00m,
+                Purpose = "Курсова різниця",
+                Purpose_Account_Id = 41,
+                Rate = 0.00m,
+                UserId = _userTasksDTO.UserId,
+                VatAccountId = null,
+                VatPrice = 0.00m
+            };
+
+            EditBankPayment(Utils.Operation.Info, tempItem);
+        }
+
+        private void addTemplateCorrect644Btn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Bank_PaymentsDTO tempItem = new Bank_PaymentsDTO()
+            {
+                AccountingOperationId = 1,
+                Bank_Account_Id = 26,
+                Contractor_Id = -1,
+                CurrencyId = 1,
+                DateCreate = DateTime.Now,
+                DateUpdate = DateTime.Now,
+                Payment_Date = new DateTime(2021, 12, 01),
+                Payment_Document = "644",
+                Payment_Price = 0.00m,
+                Payment_PriceCurrency = 0.00m,
+                Purpose = "Корегування 644",
+                Purpose_Account_Id = 26,
+                Rate = 0.00m,
+                UserId = _userTasksDTO.UserId,
+                VatPrice = 0.00m,
+                ColorId = 16
+            };
+
+            EditBankPayment(Utils.Operation.Info, tempItem);
+        }
     }
 
     

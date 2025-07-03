@@ -4,6 +4,7 @@ namespace ERP_NEW.BLL.DTO.SelectedDTO
 {
     public class OrdersInfoDTO
     {
+        public int RecId { get; set; }
         public int ReceiptId { get; set; }
         public decimal? Quantity { get; set; }
         public string Nomenclature { get; set; }
@@ -30,5 +31,6 @@ namespace ERP_NEW.BLL.DTO.SelectedDTO
         public decimal? UnitPrice { get; set; }
         public decimal? TotalPrice { get; set; }
         public string ColorName { get; set; }
+        public int? ReceiptCertificateDetailId { get; set; }
     }
 }

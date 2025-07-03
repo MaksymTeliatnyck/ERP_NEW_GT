@@ -19,6 +19,9 @@ namespace ERP_NEW.GUI.Accounting
     public partial class CashBookEditFm : DevExpress.XtraEditors.XtraForm
     {
         private ICashBookService cashBookService;
+        private ILogService logService;
+
+        private const string NameForm = "CashBookEditFm";
 
         private BindingSource cashBookPageBS = new BindingSource();
         private BindingSource cashBookRecordsBS = new BindingSource();
@@ -27,6 +30,7 @@ namespace ERP_NEW.GUI.Accounting
         private List<CashBookRecordDTO> deleteCashBookRecordList = new List<CashBookRecordDTO>();
 
         private Utils.Operation operation;
+        private UserTasksDTO userTasksDTO;
 
         private ObjectBase Item
         {
@@ -38,13 +42,14 @@ namespace ERP_NEW.GUI.Accounting
             }
         }
 
-        public CashBookEditFm(Utils.Operation operation, CashBookPageDTO model, List<CashBookRecordJournalDTO> cashBookRecordsSource)
+        public CashBookEditFm(Utils.Operation operation, CashBookPageDTO model, List<CashBookRecordJournalDTO> cashBookRecordsSource, UserTasksDTO userTasksDTO)
         {
             InitializeComponent();
 
             LoadData();
 
             this.operation = operation;
+            this.userTasksDTO = userTasksDTO;
 
             cashBookRecordsList = cashBookRecordsSource;
 
@@ -58,7 +63,7 @@ namespace ERP_NEW.GUI.Accounting
             if (this.operation == Utils.Operation.Add)
             {
                 ((CashBookPageDTO)Item).PageDate = DateTime.Now;
-                ((CashBookPageDTO)Item).PageNumber = cashBookService.GetLatestPageNumber(((CashBookPageDTO)Item).PageDate);
+                ((CashBookPageDTO)Item).PageNumber = cashBookService.GetLatestPageNumber(((CashBookPageDTO)Item).PageDate, model.CashBookId);
             }
             else
             {
@@ -72,6 +77,7 @@ namespace ERP_NEW.GUI.Accounting
         private void LoadData()
         {
             cashBookService = Program.kernel.Get<ICashBookService>();
+            logService = Program.kernel.Get<ILogService>();
 
         }
 
@@ -85,7 +91,7 @@ namespace ERP_NEW.GUI.Accounting
         {
             cashBookService = Program.kernel.Get<ICashBookService>();
 
-            using (CashBookRecordEditFm cashBookRecordEditFm = new CashBookRecordEditFm(operation, model, models, ((CashBookPageDTO)Item).PageDate))
+            using (CashBookRecordEditFm cashBookRecordEditFm = new CashBookRecordEditFm(operation, model, models, ((CashBookPageDTO)Item).PageDate, ((CashBookPageDTO)Item).CashBookId))
             {
                 if (cashBookRecordEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -277,6 +283,7 @@ namespace ERP_NEW.GUI.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("При збереженні виникла помилка. " + ex.Message, "Збереження", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm);
                 return false;
             }
 
@@ -320,7 +327,7 @@ namespace ERP_NEW.GUI.Accounting
         private void cashBookPageDateEdit_EditValueChanged(object sender, EventArgs e)
         {
             if (cashBookPageDateEdit != null && operation == Utils.Operation.Add)
-                    ((CashBookPageDTO)Item).PageNumber = cashBookService.GetLatestPageNumber((DateTime)cashBookPageDateEdit.EditValue);
+                    ((CashBookPageDTO)Item).PageNumber = cashBookService.GetLatestPageNumber((DateTime)cashBookPageDateEdit.EditValue, ((CashBookPageDTO)Item).CashBookId);
             
             cashBookValidationProvider.Validate((Control)sender);
         }

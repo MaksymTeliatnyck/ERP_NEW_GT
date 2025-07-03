@@ -13,5 +13,6 @@ namespace ERP_NEW.DAL.Entities.Models
         public int Id { get; set; }
         public DateTime PageDate { get; set; }
         public string PageNumber { get; set; }
+        public int CashBookId { get; set; }
     }
 }

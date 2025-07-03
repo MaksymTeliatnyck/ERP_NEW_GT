@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 using ERP_NEW.BLL.Interfaces;
@@ -21,12 +20,11 @@ using ERP_NEW.BLL.DTO.SelectedDTO;
 using Words = Microsoft.Office.Interop.Word;
 using System.Globalization;
 using ERP_NEW.BLL.NameCaseLib;
-using System.Text.RegularExpressions;
 using Nager.Date;
 using AutoMapper;
 using ERP_NEW.DAL.Entities.Models;
 using ERP_NEW.DAL.Entities.QueryModels;
-using ERP_NEW.BLL.DTO; 
+using ERP_NEW.BLL.DTO;
 
 
 
@@ -79,6 +77,7 @@ namespace ERP_NEW.BLL.Services
         
         private IRepository<MsTrialBalanceCurrency> msTrialBalanceCurrency;
         private IRepository<MsTrialBalance> msTrialBalance;
+        private IRepository<MsDebitCredit> msDebitCredit;
         private IRepository<MsTrialBalanceByAccountsCurrency> msTrialBalanceByAccountsCurrency;
         private IRepository<MsReconciliation> msReconciliation;
         private IRepository<MsReconciliation681_36> msReconciliation681_36;
@@ -88,8 +87,7 @@ namespace ERP_NEW.BLL.Services
         private IRepository<StoreHouseInventory> storeHouseInventory;
         private IRepository<TrialBalanceByAccountsReport> trialBalanceByAccountsReport;
         private IRepository<ExpenditureForProjectReport> expenditureForProjectReport;
-        private IFixedAssetsOrderService fixedAssetsOrderService;
-        private IRepository<FixedAssetsOrderJournalPrint> fixedAssetsOrderJournalPrint;
+        private IRepository<ExpenditureForProjectReportByContractor> expenditureForProjectReportByContractor;
         private IRepository<ORDERS> orders;
         private IRepository<OrdersInfo> ordersInfo;
         private IRepository<AccountOrders> accountOrders;
@@ -131,6 +129,7 @@ namespace ERP_NEW.BLL.Services
             contractors = Database.GetRepository<Contractors>();
             contractorsVat = Database.GetRepository<ContractorVat>();
             expenditureForProjectReport = Database.GetRepository<ExpenditureForProjectReport>();
+            expenditureForProjectReportByContractor = Database.GetRepository<ExpenditureForProjectReportByContractor>();
             bankPayments = Database.GetRepository<Bank_Payments>();
             bankPaymentsReportTrialBalance = Database.GetRepository<BankPaymentsReportTrialBalance>();
             bankPaymentsReportForCustomBill = Database.GetRepository<BankPaymentsReportForCustomBill>();
@@ -143,6 +142,7 @@ namespace ERP_NEW.BLL.Services
             msPaymentWithoutVat = Database.GetRepository<MSPaymentsWithoutVat>();
             msTrialBalanceCurrency = Database.GetRepository<MsTrialBalanceCurrency>();
             msTrialBalance = Database.GetRepository<MsTrialBalance>();
+            msDebitCredit = Database.GetRepository<MsDebitCredit>();
             msTrialBalanceByAccountsCurrency = Database.GetRepository<MsTrialBalanceByAccountsCurrency>();
             msReconciliation = Database.GetRepository<MsReconciliation>();
             msReconciliation681_36 = Database.GetRepository<MsReconciliation681_36>();
@@ -199,8 +199,10 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<ContractorVatDTO, ContractorVat>();
                 cfg.CreateMap<ORDERS, OrdersDTO>();
                 cfg.CreateMap<ExpenditureForProjectReport, ExpenditureForProjectReportDTO>();
+                cfg.CreateMap<ExpenditureForProjectReportByContractor, ExpenditureForProjectReportByContractorDTO>();
                 cfg.CreateMap<MsTrialBalanceCurrency, MsTrialBalanceCurrencyDTO>();
                 cfg.CreateMap<MsTrialBalance, MsTrialBalanceDTO>();
+                cfg.CreateMap<MsDebitCredit, MsDebitCreditDTO>();
                 cfg.CreateMap<MsReconciliation, MsReconciliationDTO>();
                 cfg.CreateMap<MsTrialBalanceByAccountsCurrency, MsTrialBalanceByAccountsCurrencyDTO>();
                 cfg.CreateMap<MsReconciliation681_36, MsReconciliation681_36DTO>();
@@ -651,7 +653,7 @@ namespace ERP_NEW.BLL.Services
             var cells = worksheet.Cells;
             var reportname = "ОСВ № 372";
 
-            string name = "Обігово-сальдова відомість по рахунку № 372";
+            string name = "Обігово-сальдова відомість по рахунку № 372 (Журнал авансів і звітів)";
             var nameperiod = "";
             if (start != DateTime.MinValue && end != DateTime.MaxValue)
             {
@@ -1696,14 +1698,14 @@ namespace ERP_NEW.BLL.Services
                 }
 
                 InsertLines(4);
-                const string boss = "Валентин Кондрашов";
-                str.TypeText("Перший заступник директора                                                                  " + boss);
+                const string boss = "Іван Шалаєвський";
+                str.TypeText("Директор виконавчий                                                                  " + boss);
                 str.ParagraphFormat.Alignment = alignCenter;
 
                 if (SaveAsDoc(@"\Приказы о командировках\" + source[0].DecreeDate.Value.Year + @"\", reportname))
                     word.Visible = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 document.Close(ref falseObj, ref  missingObj, ref missingObj);
                 word.Quit(ref missingObj, ref  missingObj, ref missingObj);
@@ -1753,7 +1755,7 @@ namespace ERP_NEW.BLL.Services
             var Worksheet = Workbook.Worksheets[0];
             var Сells = Worksheet.Cells;
             IRange cells = Worksheet.Cells;
-            string strInn = "";
+            //string strInn = "";
            
             Dictionary<string, byte> HeaderColumn = new Dictionary<string, byte>();
  
@@ -1764,9 +1766,6 @@ namespace ERP_NEW.BLL.Services
             Сells["H20"].Value = source.PurposeName;
             Сells["J35"].Value = source.DecreeDate;
             Сells["O35"].Value = source.DecreeNumber;
-            
-            
-            char sym;
 
             //if (source.IdentNumber != "" && source.IdentNumber != null)
             //{
@@ -1916,14 +1915,14 @@ namespace ERP_NEW.BLL.Services
                 }
 
                 InsertLines(4);
-                const string boss = "Валентин Кондрашов";
-                str.TypeText("Перший заступник директора                                                                  " + boss);
+                const string boss = "Іван Шалаєвський";
+                str.TypeText("Директор виконавчий                                                                  " + boss);
                 str.ParagraphFormat.Alignment = alignCenter;
 
                 if (SaveAsDoc(@"\Приказы о командировках\" + source[0].DecreeDate.Value.Year + @"\", reportname))
                     word.Visible = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // MessageBox.Show("Документ уже открыт!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 document.Close(ref falseObj, ref  missingObj, ref missingObj);
@@ -2021,14 +2020,14 @@ namespace ERP_NEW.BLL.Services
                 }
 
                 InsertLines(4);
-                const string boss = "Валентин Кондрашов";
-                str.TypeText("Перший заступник директора                                                                  " + boss);
+                const string boss = "Іван Шалаєвський";
+                str.TypeText("Директор виконавчий                                                                  " + boss);
                 str.ParagraphFormat.Alignment = alignCenter;
 
                 if (SaveAsDoc(@"\Приказы о командировках\" + source[0].DecreeDate.Value.Year + @"\", reportname))
                     word.Visible = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // MessageBox.Show("Документ уже открыт!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 document.Close(ref falseObj, ref  missingObj, ref missingObj);
@@ -2332,7 +2331,7 @@ namespace ERP_NEW.BLL.Services
                     cells[startRow + currentRow, DateCol + 9].Value = rowData[i].CityName_UA;
                     cells[startRow + currentRow, DateCol + 9].HorizontalAlignment = HAlign.Center;
 
-                    File.AppendAllText("D:\\log.txt", rowData[i].Fio.ToString()+" ");
+                    //File.AppendAllText("D:\\log.txt", rowData[i].Fio.ToString()+" ");
                 //    File.AppendAllText("D:\\log.txt", "\n");
                 }
                
@@ -3008,11 +3007,11 @@ namespace ERP_NEW.BLL.Services
             int recCount = source.Count();
             Dictionary<string, byte> HeaderColumn = new Dictionary<string, byte>();
             int startPosition = 4, currentPosition = startPosition + 2;
-            byte startHeaderPosition = 1;
+            //byte startHeaderPosition = 1;
 
             
 
-            int currentColumn = 2;
+            //int currentColumn = 2;
 
             Сells["A" + 4].Value = "за " + statementDate + " року";
             Сells["A" + 4].HorizontalAlignment = HAlign.Center;
@@ -3348,6 +3347,14 @@ namespace ERP_NEW.BLL.Services
             Сells["L" + 31].Value = cashBookRecordJournalDTO.NameAdditionalType;
             Сells["L" + 31].HorizontalAlignment = HAlign.Center;
 
+            Сells["AS" + 18].Value = cashBookRecordJournalDTO.CashBookContractorName;
+
+            //if (cashBookPageDTO.CashBookId == 2)
+            //{
+            //    Сells["AS" + 18].Value = cashBookRecordJournalDTO.CashBookContractorName;
+            //    //Сells["N" + 23].Value = "ТОВ \"НВФ \"ТЕХВАГОНМАШ\"";
+            //    Сells["N" + 23].HorizontalAlignment = HAlign.Center;
+            //}
 
 
             try
@@ -3379,8 +3386,8 @@ namespace ERP_NEW.BLL.Services
             var Сells = Worksheet.Cells;
 
 
-            decimal SumDebit = 0;
-            decimal SumCredit = 0;
+            //decimal SumDebit = 0;
+            //decimal SumCredit = 0;
 
             Сells["C" + 2].Value = RuDateAndMoneyConverter.DateToTextLong(cashBookPageDTO.PageDate);
             Сells["C" + 2].HorizontalAlignment = HAlign.Center;
@@ -3513,7 +3520,12 @@ namespace ERP_NEW.BLL.Services
             
             var dataSourceBody = mapper.Map<IEnumerable<CashPaymentsReportByAccounts>, List<CashPaymentsReportByAccountsDTO>>(cpReportByAccounts.SQLExecuteProc(procName, ParametersAccounts));
 
-            //Saldo body
+            //Filter foe employees, who don't have paymant and prepayment 
+
+            dataSourceBody = dataSourceBody.Where(srch => srch.DebitStart > 0 || srch.DebitEnd > 0 || srch.CreditStart > 0 || srch.CreditEnd > 0 || srch.PaymentPrice > 0 || srch.PrepaymentPrice > 0).ToList();
+
+
+           //Saldo body
 
             FbParameter[] ParametersSaldo =
             {
@@ -3586,7 +3598,7 @@ namespace ERP_NEW.BLL.Services
             var cells = worksheet.Cells;
             var reportname = "ОСВ господарських потреб";
 
-            string name = "Оборотно-сальдова відомість господарських потреб";
+            string name = "Оборотно-сальдова відомість господарських потреб (Журнал господарських потреб)";
             var nameperiod = "";
             if (start != DateTime.MinValue && end != DateTime.MaxValue)
             {
@@ -5744,9 +5756,9 @@ namespace ERP_NEW.BLL.Services
 
             int contractorId = 0;
             int employeesId = 0;
-            string account = "";
+            //string account = "";
             int startContractor = currentPosition;
-            int sumPosition = 0;
+            //int sumPosition = 0;
 
             decimal startDebit = 0, startDebitCurrencyRUB = 0, startDebitCurrencyEUR = 0, startDebitCurrencyUSD = 0,
                     startCredit = 0, startCreditCurrencyRUB = 0, startCreditCurrencyEUR = 0, startCreditCurrencyUSD = 0,
@@ -6015,9 +6027,9 @@ namespace ERP_NEW.BLL.Services
 
             int contractorId = 0;
             int employeesId = 0;
-            string account = "";
+            //string account = "";
             int startContractor = currentPosition;
-            int sumPosition = 0;
+            //int sumPosition = 0;
 
             decimal startDebit = 0, startCredit = 0, endDebit = 0, endCredit = 0, debitPeriod = 0, creditPeriod = 0;
 
@@ -6148,6 +6160,22 @@ namespace ERP_NEW.BLL.Services
             var dataSource = mapper.Map<IEnumerable<ExpenditureForProjectReport>, List<ExpenditureForProjectReportDTO>>(expenditureForProjectReport.SQLExecuteProc(procName, Parameters));
 
             return PrintExpendituresForProjectsByPeriod(dataSource, startDate.Date.ToShortDateString(), endDate.Date.ToShortDateString());
+        }
+
+        public bool GetExpenditureByContractorByPeriod(DateTime startDate, DateTime endDate)
+        {
+            FbParameter[] Parameters =
+                {
+                    new FbParameter("StartDate", startDate),
+                    new FbParameter("EndDate", endDate),
+                };
+
+            string procName = @"select * from ""SHReportExpenditureByContractor""(@StartDate, @EndDate)";
+
+
+            var dataSource = mapper.Map<IEnumerable<ExpenditureForProjectReportByContractor>, List<ExpenditureForProjectReportByContractorDTO>>(expenditureForProjectReportByContractor.SQLExecuteProc(procName, Parameters));
+
+            return PrintExpendituresForContractorByPeriod(dataSource, startDate.Date.ToShortDateString(), endDate.Date.ToShortDateString());
         }
 
         public bool PrintExpendituresForProjectsByPeriod(List<ExpenditureForProjectReportDTO> reportList, string StartDate, string EndDate)
@@ -6370,8 +6398,228 @@ namespace ERP_NEW.BLL.Services
             }
         }
 
-        #endregion
+        public bool PrintExpendituresForContractorByPeriod(List<ExpenditureForProjectReportByContractorDTO> reportList, string StartDate, string EndDate)
+        {
+            SpreadsheetGear.IWorkbook Workbook = Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\ExpendituresForProjects.xls");
+            var Worksheet = Workbook.Worksheets[0];
+            var Cells = Worksheet.Cells;
 
+            var Worksheet1 = Workbook.Worksheets[1];
+            var Cells1 = Worksheet1.Cells;
+
+            int captionPosition = 6;
+            int startWith1 = captionPosition + 1;
+
+            int fontSize = 12;
+
+            int startWith = captionPosition + 1;
+            int a = 0;
+
+            Cells1["A" + captionPosition].Value += StartDate + " по " + EndDate;
+
+            for (int i = 0; i < reportList.Count; i++)
+            {
+                if (i == 0 || reportList[i].ContractorName.ToString().Trim() != reportList[i - 1].ContractorName.ToString().Trim())
+                {
+                    a = 0;
+                    startWith++;
+                    Cells["D" + startWith + ":" + "F" + startWith].Merge();
+                    Cells["D" + startWith].Value = "Cтверджую";
+                    Cells["D" + startWith].Font.Size = 14;
+                    Cells["D" + startWith].Font.Bold = true;
+                    Cells["D" + startWith].HorizontalAlignment = HAlign.Center;
+                    //
+                    startWith++;
+                    Cells["D" + startWith + ":" + "F" + startWith].Merge();
+                    Cells["D" + startWith + ":" + "F" + startWith].Value = "_______________________________";
+                    Cells["D" + startWith].HorizontalAlignment = HAlign.Center;
+                    //
+                    startWith++;
+                    Cells["D" + startWith + ":" + "F" + startWith].Merge();
+                    Cells["D" + startWith + ":" + "F" + startWith].Value = "_______________________________";
+                    Cells["D" + startWith].HorizontalAlignment = HAlign.Center;
+                    //
+                    startWith++;
+                    Cells["A" + startWith + ":" + "G" + startWith].Merge();
+                    Cells["A" + startWith + ":" + "G" + startWith].Value = "Реєстр";
+                    Cells["A" + startWith + ":" + "G" + startWith].Font.Size = 16;
+                    Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                    //
+                    startWith++;
+                    Cells["A" + startWith + ":" + "G" + startWith].Merge();
+                    Cells["A" + startWith + ":" + "G" + startWith].Value = "на списання матеріалів";
+                    Cells["A" + startWith].Font.Size = 14;
+                    Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                    //
+                    startWith++;
+                    Cells["A" + startWith + ":" + "G" + startWith].Merge();
+                    Cells["A" + startWith + ":" + "G" + startWith].Value = "за контрагентом " + reportList[i].ContractorName.ToString().Trim() + " за період " + StartDate.ToString() + "-" + EndDate.ToString();
+                    Cells["A" + startWith].Font.Size = 14;
+                    Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                    //
+                    //
+                    startWith++;
+                    Cells["A" + startWith].Value = "№ п/п";
+                    Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["A" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["A" + startWith].Font.Bold = true;
+                    //
+                    Cells["B" + startWith].Value = "Ном. номер";
+                    Cells["B" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["B" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["B" + startWith].Font.Bold = true;
+                    //
+                    Cells["C" + startWith].Value = "Найменування матеріалу";
+                    Cells["C" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["C" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["C" + startWith].Font.Bold = true;
+                    //
+                    Cells["D" + startWith].Value = "Од. вим.";
+                    Cells["D" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["D" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["D" + startWith].Font.Bold = true;
+                    //
+                    Cells["E" + startWith].Value = "Кіл-ть";
+                    Cells["E" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["E" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["E" + startWith].Font.Bold = true;
+                    //
+                    Cells["F" + startWith].Value = "Ціна за од.";
+                    Cells["F" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["F" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["F" + startWith].Font.Bold = true;
+                    //
+                    Cells["G" + startWith].Value = "Сума";
+                    Cells["G" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["G" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["G" + startWith].Font.Bold = true;
+                }
+
+                a++;
+                startWith++;
+                Cells["A" + startWith].Value = a;
+                Cells["A" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["A" + startWith].Font.Size = fontSize;
+
+                Cells["B" + startWith].Value = reportList[i].Nomenclature;
+                Cells["B" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["B" + startWith].Font.Size = fontSize;
+
+                Cells["C" + startWith].Value = reportList[i].Name;
+                Cells["C" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["C" + startWith].Font.Size = fontSize;
+
+                Cells["D" + startWith].Value = reportList[i].Measure;
+                Cells["D" + startWith].HorizontalAlignment = HAlign.Center;
+                Cells["D" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["D" + startWith].Font.Size = fontSize;
+
+                Cells["E" + startWith].Value = reportList[i].Quantity;
+                Cells["E" + startWith].NumberFormat = "### ##0.0##";
+                Cells["E" + startWith].HorizontalAlignment = HAlign.Right;
+                Cells["E" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["E" + startWith].Font.Size = fontSize;
+
+                Cells["F" + startWith].Value = reportList[i].UnitPrice;
+                Cells["F" + startWith].NumberFormat = "### ### ##0.00";
+                Cells["F" + startWith].HorizontalAlignment = HAlign.Right;
+                Cells["F" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["F" + startWith].Font.Size = fontSize;
+
+                Cells["G" + startWith].Value = reportList[i].Price;
+                Cells["G" + startWith].NumberFormat = "### ### ##0.00";
+                Cells["G" + startWith].HorizontalAlignment = HAlign.Right;
+                Cells["G" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["G" + startWith].Font.Size = fontSize;
+
+                if ((i < reportList.Count - 1 && reportList[i].ContractorName.ToString() != reportList[i + 1].ContractorName.ToString() || i == reportList.Count - 1))
+                {
+                    startWith++;
+                    Cells["A" + startWith + ":" + "F" + startWith].Merge();
+                    Cells["A" + startWith].Font.Size = fontSize;
+
+                    Cells["A" + startWith].Value = "Разом по " + reportList[i].ContractorName.ToString() + ":";
+                    Cells["A" + startWith].Font.Bold = true;
+                    Cells["A" + startWith].Font.Size = fontSize;
+
+                    Cells["G" + startWith].Formula = SetFormula("G", (startWith - a), "G", (startWith - 1), "SUM");
+                    Cells["G" + startWith].NumberFormat = "### ### ##0.00";
+                    Cells["G" + startWith].Font.Bold = true;
+                    Cells["G" + startWith].Interior.Color = Color.LightGreen;
+                    Cells["G" + startWith].Font.Size = fontSize;
+
+                    Cells["A" + startWith + ":" + "G" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["A" + startWith].Font.Size = fontSize;
+
+                    //
+                    //
+                    startWith1++;
+                    Cells1["A" + startWith1].Value = reportList[i].ContractorName.ToString();
+                    Cells1["A" + startWith1].Borders.LineStyle = LineStyle.Continous;
+                    Cells1["B" + startWith1].Value = Math.Round(Convert.ToDouble(Cells["G" + startWith].Value.ToString()), 2);
+                    Cells1["B" + startWith1].NumberFormat = "### ### ##0.00";
+                    Cells1["B" + startWith1].HorizontalAlignment = HAlign.Right;
+                    Cells1["B" + startWith1].Borders.LineStyle = LineStyle.Continous;
+                    //
+                    //
+
+                    startWith++;
+                    // Page Break
+                    SetPageBreak(Worksheet, startWith, 0);
+                }
+            }
+
+            //
+            startWith1++;
+            Cells1["A" + startWith1].Value = "Разом:";
+            Cells1["A" + startWith1].Font.Bold = true;
+            Cells1["A" + startWith1].Borders.LineStyle = LineStyle.Continous;
+            Cells1["B" + startWith1].Formula = SetFormula("B", 3, "B", (startWith1 - 1), "SUM");
+            Cells1["B" + startWith1].NumberFormat = "### ### ##0.00";
+            Cells1["B" + startWith1].Font.Bold = true;
+            Cells1["B" + startWith1].HorizontalAlignment = HAlign.Right;
+            Cells1["B" + startWith1].Interior.Color = Color.LightGreen;
+            Cells1["B" + startWith1].Borders.LineStyle = LineStyle.Continous;
+            //
+            startWith1++;
+            Cells1["A" + startWith1].Value = "Разом по контрагентам:";
+            Cells1["A" + startWith1].Font.Bold = true;
+            Cells1["A" + startWith1].Borders.LineStyle = LineStyle.Continous;
+            Cells1["B" + startWith1].Formula = "=B" + (startWith1 - 1) + "-B3";
+            Cells1["B" + startWith1].NumberFormat = "### ### ##0.00";
+            Cells1["B" + startWith1].Font.Bold = true;
+            Cells1["B" + startWith1].HorizontalAlignment = HAlign.Right;
+            Cells1["B" + startWith1].Interior.Color = Color.LightGreen;
+            Cells1["B" + startWith1].Borders.LineStyle = LineStyle.Continous;
+            //
+
+            PrintSignatures(Cells, startWith + 3);
+            PrintSignatures(Cells1, startWith1 + 3);
+
+            try
+            {
+                Workbook.SaveAs(GeneratedReportsDir + "Реєстр на списання по контаргентам за період з " + StartDate + " по " + EndDate + ".xls", FileFormat.Excel8);
+
+                Process process = new Process();
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "Реєстр на списання по контаргентам за період з " + StartDate + " по " + EndDate + ".xls" + "\"";
+                process.StartInfo.FileName = "Excel.exe";
+                process.Start();
+                return true;
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Документ вже відкритий!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                MessageBox.Show("Не знайдено програму Microsoft Excel!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
+        #endregion
+         
         #region AccountClothes report's
 
         public void PrintAccountClothesCard(AccountClothesInfoDTO model, List<AccountClothesMaterialsDTO> source)
@@ -6855,7 +7103,7 @@ namespace ERP_NEW.BLL.Services
         }
 
         #endregion
-
+        
         #region Production report's
 
         public bool ExpendituresForProject(List<ExpedinturesAccountantDTO> source, DateTime startDate, DateTime endDate)
@@ -6864,7 +7112,7 @@ namespace ERP_NEW.BLL.Services
             {
                 Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -7049,7 +7297,7 @@ namespace ERP_NEW.BLL.Services
             {
                 Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -7230,7 +7478,7 @@ namespace ERP_NEW.BLL.Services
             {
                 Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -8945,6 +9193,8 @@ namespace ERP_NEW.BLL.Services
             cells["A" + currentPosition].HorizontalAlignment = HAlign.Center;
             cells["A" + currentPosition].Font.Bold = true;
             cells["A" + currentPosition].Value = "Оплати без ПДВ з " + startDate.ToShortDateString() + " по " + endDate.ToShortDateString() + " за " + accountNum;
+
+            
             currentPosition += 2;
 
             for (int i = 0; i < rowData.Count; i++)
@@ -9027,6 +9277,200 @@ namespace ERP_NEW.BLL.Services
             }
         }
 
+        public bool GetMSDebitCredit(DateTime startDate, DateTime endDate, string flag1, string flag3, string flag4, string pflag3, string pflag4)
+        {
+            //FbParameter[] Parameters =
+            //    {
+            //        new FbParameter("EndDate", endDate),
+            //        new FbParameter("Flag1", flag1),
+            //        new FbParameter("Flag3", flag3),
+            //        new FbParameter("Flag4", flag4),
+            //        new FbParameter("PFlag3", pflag3),
+            //        new FbParameter("PFlag4", pflag4)
+            //    };
+
+            //string procName = @"select * from ""ReportDebitCredit""(@EndDate, @Flag1, @Flag3, @Flag4, @PFlag3, @PFlag4)";
+
+            //var dataSource = mapper.Map<IEnumerable<MsDebitCredit>, List<MsDebitCreditDTO>>(msDebitCredit.SQLExecuteProc(procName, Parameters));
+
+            //MsDebitCreditDTO deleteItem = dataSource.Where(srch => srch.ContractorName == "Нет").FirstOrDefault();
+            //dataSource.Remove(deleteItem);
+
+            FbParameter[] Parameters =
+                {
+                    new FbParameter("Start_Date", startDate),
+                    new FbParameter("End_Date", endDate),
+                    new FbParameter("Flag1", flag1),
+                    new FbParameter("Flag3", flag3),
+                    new FbParameter("Flag4", flag4),
+                    new FbParameter("PFlag3", pflag3),
+                    new FbParameter("PFlag4", pflag4)
+                };
+
+            string procName = @"select * from ""ReportMSTrialBalanceByAccounts""(@Start_Date, @End_Date, @Flag1, @Flag3, @Flag4,@PFlag3,@PFlag4)"; ;
+            var model = mapper.Map<IEnumerable<MSTrialBalanceByAccounts>, List<MSTrialBalanceByAccountsDTO>>(msTrialBalanceByAccount.SQLExecuteProc(procName, Parameters));
+
+            //  return PrintMSTrialBalanceByAccounts(dataSource, startDate, endDate);//, accountNum.Replace('/', '.'), contractorName, contractorSrnCode);
+            if (model.Count() == 0)
+            {
+                MessageBox.Show("За вибраний період немає даних!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+
+
+
+            // если тут проблема со строкой, то скорее всего засунули контрагента с null єдрпо
+            var orderSource = model.AsEnumerable()
+                                .OrderBy(s => s.ContractorSrn)
+                                .ThenBy(i => i.Contractor_Id)
+                                .ThenBy(w => w.FlagDebitCredit).ToList();
+            // .CopyToDataTable();
+
+            var workbook = Factory.GetWorkbook(GeneratedReportsDir + @"Templates\TemplateWithStamp.xls");
+            var worksheet = workbook.Worksheets[0];
+            var cells = worksheet.Cells;
+
+            List<MsDebitCreditDTO> dataSource = new List<MsDebitCreditDTO>();
+            orderSource = orderSource.Where(flt => flt.FlagDebitCredit == 0).ToList();
+            foreach (var item in orderSource)
+            {
+                if (item.EndCredit > item.EndDebit)
+                {
+                    dataSource.Add(new MsDebitCreditDTO()
+                    {
+                        ContractorName = item.ContractorName,
+                        ContractorSrn = item.ContractorSrn,
+                        DebitCredit = "Creditor",
+                        Price = item.EndCredit
+                    });
+                }
+                else if (item.EndCredit < item.EndDebit)
+                {
+                    dataSource.Add(new MsDebitCreditDTO()
+                    {
+                        ContractorName = item.ContractorName,
+                        ContractorSrn = item.ContractorSrn,
+                        DebitCredit = "Debitor",
+                        Price = item.EndDebit
+                    });
+                }
+                else
+                {
+                    continue;
+                }  
+            }
+
+            return PrintMSDebitCredit(dataSource, endDate);
+        }
+
+        public bool PrintMSDebitCredit(List<MsDebitCreditDTO> reportTable, DateTime EndDate)
+        {
+            if (reportTable.Count() == 0)
+            {
+                MessageBox.Show("За вибраний період немає даних!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
+            IWorksheet worksheet = workbook.Worksheets[0];
+            IRange cells = worksheet.Cells;
+
+            workbook.Worksheets[0].Name = "Debitor";
+            workbook.Worksheets.Add();
+            workbook.Worksheets[1].Name = "Creditor";
+
+            int captionPosition = 6;
+            int startPosition = captionPosition + 4;
+            int currentPosition;
+
+            
+
+            var DebCred = reportTable.AsEnumerable().Select(c => new { DebCred = c.DebitCredit}).Distinct();
+            foreach (var debCred in DebCred)
+            {
+                currentPosition = startPosition;
+
+                worksheet = workbook.Worksheets[debCred.DebCred.ToString()];
+                cells = worksheet.Cells;
+
+                cells["A:A"].ColumnWidth = 15;
+                cells["B:B"].ColumnWidth = 70;
+                cells["C:C"].ColumnWidth = 70;
+
+                cells["A" + (captionPosition + 1) + ":" + "C" + (captionPosition + 3)].Font.Bold = true;
+                cells["A" + (captionPosition + 1) + ":" + "C" + (captionPosition + 1)].Merge();
+                cells["A" + (captionPosition + 1) + ":" + "C" + (captionPosition + 1)].HorizontalAlignment = HAlign.Center;
+                cells["A" + (captionPosition + 1)].Value = string.Format("Дебіторсько-кредиторська заборгованість на {0}", EndDate.ToShortDateString());
+
+
+                cells["A" + (captionPosition + 2) + ":" + "C" + (captionPosition + 2)].Merge();
+                cells["A" + (captionPosition + 2) + ":" + "C" + (captionPosition + 2)].HorizontalAlignment = HAlign.Center;
+                if (debCred.DebCred.ToString() == "Debitor")
+                    cells["A" + (captionPosition + 2)].Value = "Дебітори";
+                else
+                    cells["A" + (captionPosition + 2)].Value = "Кредитори";
+
+                cells["A" + (captionPosition + 3)].Value = "Едрпоу";
+                //cells["A" + (captionPosition + 3)].Font.Bold = true;
+                cells["B" + (captionPosition + 3)].Value = "Найменування контрагента";
+                //cells["B" + (captionPosition + 3)].Font.Bold = true;
+                cells["C" + (captionPosition + 3)].Value = "Сума";
+
+                
+                //cells["A" + (captionPosition + 2)].Font.Bold = true;
+                
+
+                
+
+                var Debit = reportTable.AsEnumerable().Where(c => c.DebitCredit.ToString() == debCred.DebCred.ToString()).OrderBy(c => (decimal)c.Price);
+                foreach (var debit in Debit)
+                {
+                    cells["A" + currentPosition].Value = debit.ContractorSrn;
+                    cells["B" + currentPosition].Value = debit.ContractorName;
+                    cells["C" + currentPosition].Value = debit.Price;
+                    currentPosition++;
+                }
+
+                cells["B" + startPosition + ":" + "B" + currentPosition].WrapText = true;
+
+                cells["A" + startPosition + ":" + "A" + currentPosition].NumberFormat = "############";
+                cells["A" + startPosition + ":" + "B" + currentPosition].HorizontalAlignment = HAlign.Left;
+                cells["C" + startPosition + ":" + "C" + currentPosition].HorizontalAlignment = HAlign.Right;
+                cells["C" + startPosition + ":" + "C" + currentPosition].NumberFormat = "### ### ##0.00";
+                cells["A" + (startPosition-2) + ":" + "C" + currentPosition].Borders.LineStyle = LineStyle.Continous;
+
+                cells["A" + currentPosition + ":" + "B" + currentPosition].Merge();
+                cells["A" + currentPosition + ":" + "B" + currentPosition].HorizontalAlignment = HAlign.Center;
+                cells["A" + currentPosition + ":" + "C" + currentPosition].Font.Bold = true;
+                cells["A" + currentPosition].Value = "Разом";
+                cells["C" + currentPosition].Formula = SetFormula("C", startPosition, "C", currentPosition - 1, "SUM");
+                cells["C" + currentPosition].Interior.Color = Color.LightGreen;
+
+                PrintSignatures(cells, currentPosition + 3);
+            }
+
+            try
+            {
+                workbook.SaveAs(GeneratedReportsDir + "ДКЗ на кінець " + EndDate.ToShortDateString() + ".xls", FileFormat.Excel8);
+
+                Process process = new Process();
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "ДКЗ на кінець " + EndDate.ToShortDateString() + ".xls" + "\"";
+                process.StartInfo.FileName = "Excel.exe";
+                process.Start();
+                return true;
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Документ вже відкритий!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                MessageBox.Show("Не знайдена програма Microsoft Excel!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
         public bool GetContractorVat(DateTime startDate, DateTime endDate)
         {
             FbParameter[] Parameters =
@@ -9035,7 +9479,7 @@ namespace ERP_NEW.BLL.Services
                     new FbParameter("EndDate", endDate)
                 };
 
-            string procName = @"select * from ""ReportContractorVat""(@StartDate, @EndDate)";
+            string procName = @"select * from ""ReportContractorVatNew""(@StartDate, @EndDate)";
 
             var dataSource = mapper.Map<IEnumerable<ContractorVat>, List<ContractorVatDTO>>(contractorsVat.SQLExecuteProc(procName, Parameters));
 
@@ -9050,7 +9494,16 @@ namespace ERP_NEW.BLL.Services
                 return false;
             }
 
-            List<ContractorVatDTO> contractorVatList = contractorVatData.ToList();
+
+            //List<ContractorVatDTO> contractorVatList = contractorVatData.ToList();
+
+
+            List<ContractorVatDTO> contractorVatList1 = contractorVatData.Where(srch => srch.DebitVat644 !=0 || srch.SaldoCreditEnd !=0 
+                || srch.SaldoCreditStart!=0 || srch.SaldoDebitEnd!=0 || srch.SaldoDebitStart!=0 || srch.CreditPeriod != 0 || srch.CreditPeriod644 != 0 
+                || srch.DebitVat63 != 0 || srch.DebitVat631 != 0 || srch.DebitVat632 != 0).OrderBy(ord=> ord.Srn).ToList();
+
+            List<ContractorVatDTO> contractorVatList = contractorVatList1.Where(srch => srch.Tin!=null).ToList();
+
 
             SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\ContractorsVat.xls");
             var worksheet = workbook.Worksheets[0];
@@ -9072,38 +9525,74 @@ namespace ERP_NEW.BLL.Services
                 cells["A" + currentPosition].Value = n;
                 cells["B" + currentPosition].Value = contractorVatList[i].Tin;
                 cells["B" + currentPosition].NumberFormat = "### ### ### ###";
+
                 cells["C" + currentPosition].HorizontalAlignment = HAlign.Center;
+
                 cells["C" + currentPosition].WrapText = true;
-                cells["C" + currentPosition].Value = contractorVatList[i].Name;
-                cells["C" + currentPosition].Font.Size = 14;
-                cells["D" + currentPosition].Value = contractorVatList[i].SaldoDebitStart;
-                cells["E" + currentPosition].Value = contractorVatList[i].SaldoCreditStart;
-                cells["F" + currentPosition].Value = contractorVatList[i].DebitVat63;
-                cells["H" + currentPosition].Value = contractorVatList[i].DebitVat631;
-                cells["J" + currentPosition].Value = contractorVatList[i].CreditPeriod;
-                cells["K" + currentPosition].Value = contractorVatList[i].SaldoDebitEnd;
-                cells["L" + currentPosition].Value = contractorVatList[i].SaldoCreditEnd;
+                cells["C" + currentPosition].Value = contractorVatList[i].Srn;
+
+                cells["D" + currentPosition].HorizontalAlignment = HAlign.Center;
+                cells["D" + currentPosition].WrapText = true;
+                cells["D" + currentPosition].Value = contractorVatList[i].Name;
+                cells["D" + currentPosition].Font.Size = 14;
+
+                cells["E" + currentPosition].Value = contractorVatList[i].SaldoDebitStart;
+                cells["F" + currentPosition].Value = contractorVatList[i].SaldoCreditStart;
+
+                cells["G" + currentPosition].Value = contractorVatList[i].DebitVat63;
+               
+                cells["I" + currentPosition].Value = contractorVatList[i].DebitVat631;
+                cells["J" + currentPosition].Value = contractorVatList[i].DebitVat632;
+                cells["K" + currentPosition].Value = contractorVatList[i].DebitVat644;
+                cells["L" + currentPosition].Value = "=SUM(G" + (currentPosition) +":" + ("K" + (currentPosition)) + ")";
+
+                cells["N" + currentPosition].Value = contractorVatList[i].CreditPeriod;
+                cells["O" + currentPosition].Value = contractorVatList[i].CreditPeriod644;
+                cells["P" + currentPosition].Value = contractorVatList[i].CreditPeriod949;
+                if(contractorVatList[i].CreditPeriod949>0)
+                    cells["D" + captionPosition].Font.Bold = true;
+
+
+                //cells["P" + currentPosition].Value = "=SUM(M" + (currentPosition) + ":" + ("O" + (currentPosition)) + ")";
+                cells["Q" + currentPosition].Value = "=SUM(M" + (currentPosition) + ":" + ("P" + (currentPosition)) + ")";
+
+                //cells["Q" + currentPosition].Value = contractorVatList[i].SaldoDebitEnd;
+                //cells["R" + currentPosition].Value = contractorVatList[i].SaldoCreditEnd;
+                cells["R" + currentPosition].Value = contractorVatList[i].SaldoDebitEnd;
+                cells["S" + currentPosition].Value = contractorVatList[i].SaldoCreditEnd;
 
                 currentPosition++;
                 n++;
             }
 
-            cells["A" + startPosition + ":" + ("L" + currentPosition)].Borders.LineStyle = LineStyle.Continous;
+            //cells["A" + startPosition + ":" + ("R" + currentPosition)].Borders.LineStyle = LineStyle.Continous;
+            cells["A" + startPosition + ":" + ("S" + currentPosition)].Borders.LineStyle = LineStyle.Continous;
 
             cells["C" + currentPosition].Value = "Разом:";
             cells["C" + currentPosition].VerticalAlignment = VAlign.Distributed;
             cells["C" + currentPosition].Font.Bold = true;
-            cells["A" + currentPosition + ":" + "L" + currentPosition].Font.Size = 14;
-            cells["A" + currentPosition + ":" + "L" + currentPosition].Interior.Color = Color.Bisque;
+            //cells["A" + currentPosition + ":" + "R" + currentPosition].Font.Size = 14;
+            //cells["A" + currentPosition + ":" + "R" + currentPosition].Interior.Color = Color.Bisque;
 
-            cells["D" + currentPosition].Value = "=SUM(D" + 4 + ":" + ("D" + (currentPosition - 1)) + ")";
-            cells["E" + currentPosition].Value = "=SUM(E" + 4 + ":" + ("E" + (currentPosition - 1)) + ")";
-            cells["F" + currentPosition].Value = "=SUM(F" + 4 + ":" + ("F" + (currentPosition - 1)) + ")";
-            cells["H" + currentPosition].Value = "=SUM(H" + 4 + ":" + ("H" + (currentPosition - 1)) + ")";
-            cells["I" + currentPosition].Value = "=SUM(I" + 4 + ":" + ("I" + (currentPosition - 1)) + ")";
-            cells["J" + currentPosition].Value = "=SUM(J" + 4 + ":" + ("J" + (currentPosition - 1)) + ")";
-            cells["K" + currentPosition].Value = "=SUM(K" + 4 + ":" + ("K" + (currentPosition - 1)) + ")";
-            cells["L" + currentPosition].Value = "=SUM(L" + 4 + ":" + ("L" + (currentPosition - 1)) + ")";
+            cells["A" + currentPosition + ":" + "S" + currentPosition].Font.Size = 14;
+            cells["A" + currentPosition + ":" + "S" + currentPosition].Interior.Color = Color.Bisque;
+
+
+            cells["E" + currentPosition].Value = "=SUM(E" + 10 + ":" + ("E" + (currentPosition - 1)) + ")";
+            cells["F" + currentPosition].Value = "=SUM(F" + 10 + ":" + ("F" + (currentPosition - 1)) + ")";
+            cells["G" + currentPosition].Value = "=SUM(G" + 10 + ":" + ("G" + (currentPosition - 1)) + ")";
+            cells["H" + currentPosition].Value = "=SUM(H" + 10 + ":" + ("H" + (currentPosition - 1)) + ")";
+            cells["I" + currentPosition].Value = "=SUM(I" + 10 + ":" + ("I" + (currentPosition - 1)) + ")";
+            cells["J" + currentPosition].Value = "=SUM(J" + 10 + ":" + ("J" + (currentPosition - 1)) + ")";
+            cells["K" + currentPosition].Value = "=SUM(K" + 10 + ":" + ("K" + (currentPosition - 1)) + ")";
+            cells["L" + currentPosition].Value = "=SUM(L" + 10 + ":" + ("L" + (currentPosition - 1)) + ")";
+            cells["M" + currentPosition].Value = "=SUM(M" + 10 + ":" + ("M" + (currentPosition - 1)) + ")";
+            cells["N" + currentPosition].Value = "=SUM(N" + 10 + ":" + ("N" + (currentPosition - 1)) + ")";
+            cells["O" + currentPosition].Value = "=SUM(O" + 10 + ":" + ("O" + (currentPosition - 1)) + ")";
+            cells["P" + currentPosition].Value = "=SUM(P" + 10 + ":" + ("P" + (currentPosition - 1)) + ")";
+            cells["Q" + currentPosition].Value = "=SUM(Q" + 10 + ":" + ("Q" + (currentPosition - 1)) + ")";
+            cells["R" + currentPosition].Value = "=SUM(R" + 10 + ":" + ("R" + (currentPosition - 1)) + ")";
+            cells["S" + currentPosition].Value = "=SUM(S" + 10 + ":" + ("S" + (currentPosition - 1)) + ")";
             //cells["M" + currentPosition].Value = "=SUM(M" + 4 + ":" + ("M" + (currentPosition - 1)) + ")";
 
             PrintSignatures(cells, currentPosition + 3);
@@ -9432,7 +9921,7 @@ namespace ERP_NEW.BLL.Services
 
         
 
-        public bool GetMSTrialBalanceByAccountsCurrency(DateTime startDate, DateTime endDate, string accountNum)
+        public bool  GetMSTrialBalanceByAccountsCurrency(DateTime startDate, DateTime endDate, string accountNum)
         {
             FbParameter[] Parameters =
                 {
@@ -9808,8 +10297,8 @@ namespace ERP_NEW.BLL.Services
                         cells[vsS[HeaderColumn["Payment_Date"] - 1] + currentPosition].Value = rowData[i].Payment_Date;
                         cells[vsS[HeaderColumn["PeriodPrice"] - 1] + currentPosition].Value = rowData[i].PeriodPrice;
                         cells[vsS[HeaderColumn["Rate"] - 1] + currentPosition].Value = rowData[i].Rate;
-                        if (HeaderColumn.ContainsKey("DebitSum"))
-                        cells[vsS[HeaderColumn["DebitSum" + rowData[i].CurrencyName] - 1] + currentPosition].Value = rowData[i].PeriodPriceCurrency;
+                        if (HeaderColumn.ContainsKey("DebitSumUSD") || HeaderColumn.ContainsKey("DebitSumEUR") || HeaderColumn.ContainsKey("DebitSumRUB"))
+                            cells[vsS[HeaderColumn["DebitSum" + rowData[i].CurrencyName] - 1] + currentPosition].Value = rowData[i].PeriodPriceCurrency;
                     }
                     else if (rowData[i].FlagDebitCredit == 2)
                     {
@@ -9819,7 +10308,8 @@ namespace ERP_NEW.BLL.Services
                         cells[vsS[HeaderColumn["Invoice_Date"] - 1] + currentPosition].Value = rowData[i].Invoice_Date;
                         cells[vsS[HeaderColumn["PeriodOrderPrice"] - 1] + currentPosition].Value = rowData[i].PeriodPrice;
                         cells[vsS[HeaderColumn["OrderRate"] - 1] + currentPosition].Value = rowData[i].Rate;
-                        cells[vsS[HeaderColumn["CreditSum" + rowData[i].CurrencyName] - 1] + currentPosition].Value = rowData[i].PeriodPriceCurrency;
+                        if(HeaderColumn.ContainsKey("CreditSumUSD") || HeaderColumn.ContainsKey("CreditSumEUR") || HeaderColumn.ContainsKey("CreditSumRUB"))
+                           cells[vsS[HeaderColumn["CreditSum" + rowData[i].CurrencyName] - 1] + currentPosition].Value = rowData[i].PeriodPriceCurrency;
                     }
                     if (rowData[i].AccountId > 0)
                     {
@@ -9854,8 +10344,10 @@ namespace ERP_NEW.BLL.Services
                         cells[vsS[HeaderColumn["Invoice_Date"] - 1] + currentPosition].Value = rowData[i].Invoice_Date;
                         cells[vsS[HeaderColumn["PeriodOrderPrice"] - 1] + currentPosition].Value = rowData[i].PeriodPrice;
                         cells[vsS[HeaderColumn["OrderRate"] - 1] + currentPosition].Value = rowData[i].Rate;
-                        if (HeaderColumn.ContainsKey("CreditSum"))
-                        cells[vsS[HeaderColumn["CreditSum" + rowData[i].CurrencyName] - 1] + currentPosition].Value = rowData[i].PeriodPriceCurrency;
+
+                        //if (HeaderColumn.ContainsKey("CreditSum"))
+                        if (HeaderColumn.ContainsKey("CreditSumUSD") || HeaderColumn.ContainsKey("CreditSumEUR") || HeaderColumn.ContainsKey("CreditSumRUB"))
+                            cells[vsS[HeaderColumn["CreditSum" + rowData[i].CurrencyName] - 1] + currentPosition].Value = rowData[i].PeriodPriceCurrency;
                     }
                     if (rowData[i].AccountId > 0)
                     {
@@ -10589,7 +11081,7 @@ namespace ERP_NEW.BLL.Services
   
         public IEnumerable<MSTrialBalanceByAccountsDTO> GetCreditDebit63ForChess(DateTime startDate, DateTime endDate, string PFlag1, string Flag3, string Flag4, string PFlag3, string PFlag4)
         {
-            decimal credit63;
+            //decimal credit63;
             FbParameter[] Parameters =
                 {
                     new FbParameter("Start_Date", startDate),
@@ -11139,8 +11631,6 @@ namespace ERP_NEW.BLL.Services
 
             #region Result summary
 
- 
-
             cells["A" + currentPosition + ":" + vsS[startHeaderPosition - 1] + currentPosition].Interior.Color = Color.LightGreen;
             cells["B" + currentPosition].HorizontalAlignment = HAlign.Right;
             cells["B" + currentPosition + ":" + vsS[startHeaderPosition - 1] + currentPosition].Font.Bold = true;
@@ -11186,10 +11676,12 @@ namespace ERP_NEW.BLL.Services
 
             string FlagType;
 
-            if (!report531)
+            if (!report531 && PFlag3!="15")
                 FlagType = "63";
-            else
+            else if(report531)
                 FlagType = "531";
+            else
+                FlagType = "631";
 
             cells["A" + captionPosition + ":" + vsS[startHeaderPosition - 1] + captionPosition].Merge();
             string subName = "Розрахунки з постачальниками та підрядниками";
@@ -11266,7 +11758,7 @@ namespace ERP_NEW.BLL.Services
             int captionPosition = 6;
             int startPosition = captionPosition + 2;
             int startSaldoPosition = 7;
-            int endSaldoPosition = 0;
+            //int endSaldoPosition = 0;
             int currentPosition = startPosition + 3;
             byte startHeaderPosition = 1;
 
@@ -12674,15 +13166,31 @@ namespace ERP_NEW.BLL.Services
 
             int currentColumn = 2;
 
+            //for (int i = 1; i <= days; i++)
+            //{
+            //    if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, i), CountryCode.UA) || DateSystem.IsWeekend(new DateTime(currentDate.Year, currentDate.Month, i), CountryCode.UA))
+            //    {
+            //        weekendDays++;
+            //        cells[vsS[currentColumn + i] + "5" + ":" + vsS[currentColumn + i] + "8"].Interior.Color = Color.DodgerBlue;
+
+            //    }
+            //}
+
             for (int i = 1; i <= days; i++)
             {
-                if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, i), CountryCode.UA) || DateSystem.IsWeekend(new DateTime(currentDate.Year, currentDate.Month, i), CountryCode.UA))
+                if (DateSystem.IsWeekend(new DateTime(currentDate.Year, currentDate.Month, i), CountryCode.UA))
                 {
                     weekendDays++;
                     cells[vsS[currentColumn + i] + "5" + ":" + vsS[currentColumn + i] + "8"].Interior.Color = Color.DodgerBlue;
-                
+
                 }
             }
+
+            //===========================================================
+            //корректировка октября
+            //weekendDays--;
+            //weekendDays--;
+            //===========================================================
 
             for (int i = 0; i < recCount; i++)
             {
@@ -12706,13 +13214,13 @@ namespace ERP_NEW.BLL.Services
                         Сells[source.Count + 15, 2].Value = "Пархоменко Н. М.";
                         break;
                     case 14://технический
-                        Сells[source.Count + 15, 2].Value = "Дорошенко В. А. ";
+                        Сells[source.Count + 15, 2].Value = "Маслов В.В.";
                         break;
                     case 17://плановый
                         Сells[source.Count + 15, 2].Value = "Пінчук М. М. ";
                         break;
                     case 18://маркетинг
-                        Сells[source.Count + 15, 2].Value = "Шалаєвський І. М.";
+                        Сells[source.Count + 15, 2].Value = "Качан Т. Л.";
                         break;
                     case 20://материально технический
                         Сells[source.Count + 15, 2].Value = "Уманець О. О. ";
@@ -12763,7 +13271,7 @@ namespace ERP_NEW.BLL.Services
                         Сells[source.Count + 15, 2].Value = "Яковенко Н. В. ";
                         break;
                     case 61://договорник
-                        Сells[source.Count + 15, 2].Value = "Дузік О. В. ";
+                        Сells[source.Count + 15, 2].Value = "Залоїло С. О. ";
                         break;
                     case 63://готовая продукция
                         Сells[source.Count + 15, 2].Value = "Костиренко С. В.";
@@ -12793,24 +13301,106 @@ namespace ERP_NEW.BLL.Services
 
                     // Использовать если нужно какой-то день сделать "особенным", где j - число месяца
 
-                    //if (j == 15)
+                    //if (j == 5)
+                    //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "8";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    //cells[vsS[currentColumn + j + 1] + "5" + ":" + vsS[currentColumn + j + 1] + "8"].Interior.Color = Color.White;
+
+                    //    continue;
+                    //}
+
+                    //if (j == 25)
+                    //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "8";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    //cells[vsS[currentColumn + j + 1] + "5" + ":" + vsS[currentColumn + j + 1] + "8"].Interior.Color = Color.White;
+
+                    //    continue;
+                    //}
+
+                    //if (j == 31)
                     //{
                     //    cells[vsS[currentColumn + j] + startWith].Value = "ВС";
                     //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
-                    //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.DodgerBlue;
+                    //    //cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    //cells[vsS[currentColumn + j] + startWith].Borders.LineStyle = LineStyle.Continous;
+                    //    cells[vsS[currentColumn + j] + 5 + ":" + vsS[currentColumn + j] + 8].Interior.Color = Color.DodgerBlue;
+                    //    cells[vsS[currentColumn + j] + startWith].Borders.LineStyle = LineStyle.Continous;
+                    //    //cells[vsS[currentColumn + j + 1] + "5" + ":" + vsS[currentColumn + j + 1] + "8"].Interior.Color = Color.DodgerBlue;
+                    //    continue;
+                    //}
+
+                    //if (j == 9)
+                    //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "ВС";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    //cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    //cells[vsS[currentColumn + j] + startWith].Borders.LineStyle = LineStyle.Continous;
+                    //    cells[vsS[currentColumn + j] + 5 + ":" + vsS[currentColumn + j] + 8].Interior.Color = Color.DodgerBlue;
+                    //    cells[vsS[currentColumn + j] + startWith].Borders.LineStyle = LineStyle.Continous;
                     //    //cells[vsS[currentColumn + j + 1] + "5" + ":" + vsS[currentColumn + j + 1] + "8"].Interior.Color = Color.DodgerBlue;
                     //    continue;
                     //}
 
                     //if (j == 30)
                     //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "ВС";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    //cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    //cells[vsS[currentColumn + j] + startWith].Borders.LineStyle = LineStyle.Continous;
+                    //    cells[vsS[currentColumn + j] + 5 + ":" + vsS[currentColumn + j] + 8].Interior.Color = Color.DodgerBlue;
+                    //    cells[vsS[currentColumn + j] + startWith].Borders.LineStyle = LineStyle.Continous;
+                    //    //cells[vsS[currentColumn + j + 1] + "5" + ":" + vsS[currentColumn + j + 1] + "8"].Interior.Color = Color.DodgerBlue;
+                    //    continue;
+                    //}
+
+                    //if (j == 17)
+                    //{
                     //    cells[vsS[currentColumn + j] + startWith].Value = "8";
                     //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
                     //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    cells[vsS[currentColumn + j] + startWith].Borders.LineStyle = LineStyle.Continous;
                     //    //cells[vsS[currentColumn + j] + 5 + ":" + vsS[currentColumn + j] + 8].Interior.Color = Color.DodgerBlue;
                     //    //cells[vsS[currentColumn + j + 1] + "5" + ":" + vsS[currentColumn + j + 1] + "8"].Interior.Color = Color.DodgerBlue;
                     //    continue;
                     //}
+
+                    //if (j == 8)
+                    //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "СТ";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    continue;
+                    //}
+
+                    //if (j == 15)
+                    //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "СТ";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    continue;
+                    //}
+
+                    //if (j == 22)
+                    //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "СТ";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    continue;
+                    //}
+
+                    //if (j == 29)
+                    //{
+                    //    cells[vsS[currentColumn + j] + startWith].Value = "СТ";
+                    //    cells[vsS[currentColumn + j] + startWith].Font.Bold = true;
+                    //    cells[vsS[currentColumn + j] + "5" + ":" + vsS[currentColumn + j] + "8"].Interior.Color = Color.Transparent;
+                    //    continue;
+                    //}
+
+
 
                     int startCell = j + 4;
 
@@ -12825,7 +13415,8 @@ namespace ERP_NEW.BLL.Services
                             cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
                             // cells[vsS[currentColumn + j-1] + startWith].Value = "вMon-1";
                         }
-                      //  else { cells[vsS[currentColumn + j] + startWith].Value = 100; }
+                        else { cells[vsS[currentColumn + j] + startWith].Value = 8; }
+                        //  else { cells[vsS[currentColumn + j] + startWith].Value = 100; }
                     }
                    // if (daysOfWeek.DayOfWeek == DayOfWeek.Monday && !(DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA)) && (daysOfWeek.DayOfWeek == DayOfWeek.Sunday) && (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA)))
                       //  else   { cells[vsS[currentColumn + j] + startWith].Value = 100; }
@@ -12837,7 +13428,7 @@ namespace ERP_NEW.BLL.Services
                         if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
                         {
                             cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
-                            cells[vsS[currentColumn + j - 1] + startWith].Value =  7;//ВРЕМЕННО!
+                            //cells[vsS[currentColumn + j - 1] + startWith].Value =  7;//ВРЕМЕННО!
                           //  cells[vsS[currentColumn + j - 1] + startWith].Interior.Color = Color.DodgerBlue;//ВРЕМЕННО!
                         }
                         else { cells[vsS[currentColumn + j] + startWith].Value = 8; }
@@ -12849,7 +13440,7 @@ namespace ERP_NEW.BLL.Services
                         if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
                         {
                             cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
-                            cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
+                            //cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
                         }
                         else { cells[vsS[currentColumn + j] + startWith].Value = 8; }
                     }
@@ -12859,19 +13450,20 @@ namespace ERP_NEW.BLL.Services
                         if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
                         {
                             cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
-                            cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
+                            //cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
                         }
                         else { cells[vsS[currentColumn + j] + startWith].Value = 8; }
 
                     }
                     if (daysOfWeek.DayOfWeek == DayOfWeek.Friday)
                     {
-                        if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
-                        {
-                            cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
-                            cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
-                        }
-                        else { cells[vsS[currentColumn + j] + startWith].Value = 8; }
+                        //if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
+                        //{
+                        //    cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
+                        //    //cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
+                        //}
+                        //else { cells[vsS[currentColumn + j] + startWith].Value = 8; }
+                        cells[vsS[currentColumn + j] + startWith].Value = 8;
 
                     }
 
@@ -12881,7 +13473,7 @@ namespace ERP_NEW.BLL.Services
                             if (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
                             {
                                 cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
-                                cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
+                                //cells[vsS[currentColumn + j - 1] + startWith].Value = 7;
 
                                 cells[vsS[currentColumn + j + curcolSut] + startWith].Value = "BC";
                                 cells[vsS[currentColumn + j + curcolSut] + "5" + ":" + vsS[currentColumn + j + curcolSut] + "8"].Interior.Color = Color.DodgerBlue;
@@ -12899,23 +13491,23 @@ namespace ERP_NEW.BLL.Services
                         int curcolSund = 1;
 
 
-                        if (((daysOfWeek.DayOfWeek == DayOfWeek.Saturday)||(daysOfWeek.DayOfWeek == DayOfWeek.Sunday) )&& (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA)))
-                        {
-                            dopWeekend += curcolSund;
+                    //    if (((daysOfWeek.DayOfWeek == DayOfWeek.Saturday)||(daysOfWeek.DayOfWeek == DayOfWeek.Sunday) )&& (DateSystem.IsPublicHoliday(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA)))
+                    //    {
+                    //        dopWeekend += curcolSund;
 
-                            cells[vsS[currentColumn + j + curcolSund] + startWith].Value = "BC";
+                    //        cells[vsS[currentColumn + j + curcolSund] + startWith].Value = "BC";
 
-                            cells[vsS[currentColumn + j + 1] + startWith].Value = "BC";
-                            cells[vsS[currentColumn + j + curcolSund] + "5" + ":" + vsS[currentColumn + j + curcolSund] + "8"].Interior.Color = Color.DodgerBlue;
+                    //        cells[vsS[currentColumn + j + 1] + startWith].Value = "BC";
+                    //        cells[vsS[currentColumn + j + curcolSund] + "5" + ":" + vsS[currentColumn + j + curcolSund] + "8"].Interior.Color = Color.DodgerBlue;
 
-                        }
-                        else
-                        {
-                            //if (j < days - 1)
-                            //{
-                            //  cells[vsS[currentColumn + j + curcolSund] + startWith].Value = 8;
-                            //}
-                        }
+                    //    }
+                    //    else
+                    //    {
+                    //    if (j < days - 1)
+                    //    {
+                    //        cells[vsS[currentColumn + j + curcolSund] + startWith].Value = 8;
+                    //    }
+                    //}
 
 
 
@@ -12930,27 +13522,27 @@ namespace ERP_NEW.BLL.Services
                         if ((dtw == 2) && (daysOfWeek.DayOfWeek == DayOfWeek.Monday) || (dayH = false))
                             cells[vsS[currentColumn + j] + startWith].Value = 8;
 
-                            //2024 year won't work    
-                        //For december 2019 if need special weeked
-                        //if (currentDate.Month == 12)
-                        //{
-                        //    cells[vsS[currentColumn + 21] + startWith].Value = 8;
-                        //    cells[vsS[currentColumn + 21] + "5" + ":" + vsS[currentColumn + 21] + "8"].Interior.Color = Color.White;
-                        //    cells[vsS[currentColumn + 28] + startWith].Value = 8;
-                        //    cells[vsS[currentColumn + 28] + "5" + ":" + vsS[currentColumn + 28] + "8"].Interior.Color = Color.White;
+                    //2024 year won't work    
+                    //For december 2019 if need special weeked
+                    //if (currentDate.Month == 12)
+                    //{
+                    //    cells[vsS[currentColumn + 21] + startWith].Value = 8;
+                    //    cells[vsS[currentColumn + 21] + "5" + ":" + vsS[currentColumn + 21] + "8"].Interior.Color = Color.White;
+                    //    cells[vsS[currentColumn + 28] + startWith].Value = 8;
+                    //    cells[vsS[currentColumn + 28] + "5" + ":" + vsS[currentColumn + 28] + "8"].Interior.Color = Color.White;
 
-                        //    cells[vsS[currentColumn + 30] + startWith].Value = "ВС";
-                        //    cells[vsS[currentColumn + 30] + "5" + ":" + vsS[currentColumn + 30] + "8"].Interior.Color = Color.DodgerBlue;
+                    //    cells[vsS[currentColumn + 30] + startWith].Value = "ВС";
+                    //    cells[vsS[currentColumn + 30] + "5" + ":" + vsS[currentColumn + 30] + "8"].Interior.Color = Color.DodgerBlue;
 
-                        //    cells[vsS[currentColumn + 31] + startWith].Value = "ВС";
-                        //    cells[vsS[currentColumn + 31] + "5" + ":" + vsS[currentColumn + 31] + "8"].Interior.Color = Color.DodgerBlue;
-                        //}
+                    //    cells[vsS[currentColumn + 31] + startWith].Value = "ВС";
+                    //    cells[vsS[currentColumn + 31] + "5" + ":" + vsS[currentColumn + 31] + "8"].Interior.Color = Color.DodgerBlue;
+                    //}
 
-                        if (DateSystem.IsWeekend(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
-                            cells[vsS[currentColumn + j] + startWith].Value =  "ВС";
+                    if (DateSystem.IsWeekend(new DateTime(currentDate.Year, currentDate.Month, j), CountryCode.UA))
+                        cells[vsS[currentColumn + j] + startWith].Value = "ВС";
 
-                        //if (DateSystem.IsWeekend(new DateTime(currentDate.Year, currentDate.Month, 28), CountryCode.UA))//ВРЕМЕННО!
-                        //    cells[vsS[currentColumn + 28] + startWith].Value = "НА";//ВРЕМЕННО!
+                    //if (DateSystem.IsWeekend(new DateTime(currentDate.Year, currentDate.Month, 28), CountryCode.UA))//ВРЕМЕННО!
+                    //    cells[vsS[currentColumn + 28] + startWith].Value = "НА";//ВРЕМЕННО!
 
                     Сells["A" + startWith].EntireRow.AutoFit();
                     Сells["A:BB"].Style.Font.Size = 11;
@@ -13105,9 +13697,9 @@ namespace ERP_NEW.BLL.Services
                     Сells[vsS[days + 24] + startWith].Orientation = 0;
 
                     //style line in table
-                    cells[startWith - 1, j].Borders.LineStyle = LineStyle.None;
-                    cells[startWith - 1, 0].Borders.LineStyle = LineStyle.None;
-                    cells[startWith - 1, j + 22].Borders.LineStyle = LineStyle.None;
+                    //cells[startWith - 1, j].Borders.LineStyle = LineStyle.None;
+                    //cells[startWith - 1, 0].Borders.LineStyle = LineStyle.None;
+                    //cells[startWith - 1, j + 22].Borders.LineStyle = LineStyle.None;
                     cells[startWith - 1, j].Borders.LineStyle = LineStyle.Continuous;
                     cells[startWith - 1, 0].Borders.LineStyle = LineStyle.Continuous;
                     cells[startWith - 1, j + 22].Borders.LineStyle = LineStyle.Continuous;
@@ -13129,12 +13721,15 @@ namespace ERP_NEW.BLL.Services
 
                     if ((DateSystem.IsPublicHoliday(lastDay, CountryCode.UA)))
                     {
-                        if (((DateSystem.IsWeekend(lastDay, CountryCode.UA) == false)))
-                        {
-                            cells[vsS[currentColumn + previousDays] + startWith].Value = 7;
-                        }//????
-                        else { cells[vsS[currentColumn + previousDays] + startWith].Value = 7;// "ВC"; 
-                        }
+                        //if (((DateSystem.IsWeekend(lastDay, CountryCode.UA) == false)))
+                        //{
+                        //    cells[vsS[currentColumn + previousDays] + startWith].Value = 7;
+                            
+                        //}//????
+                        //else if(lastDay.DayOfWeek!= DayOfWeek.Sunday && lastDay.DayOfWeek != DayOfWeek.Monday)
+                        //{
+                        //    cells[vsS[currentColumn + previousDays] + startWith].Value = 7;// "ВC"; 
+                        //}
                     }
 
                     else
@@ -13322,7 +13917,54 @@ namespace ERP_NEW.BLL.Services
         }
         public string ToMonthName( DateTime dateTime)
         {
-            return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dateTime.Month);
+
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("uk-UA");
+            string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dateTime.Month);
+
+            switch (month)
+            {
+                case "январь":
+                    month = "січень";
+                    break;
+                case "февраль":
+                    month = "лютий";
+                    break;
+                case "март":
+                    month = "березень";
+                    break;
+                case "апрель":
+                    month = "квітень";
+                    break;
+                case "май":
+                    month = "травень";
+                    break;
+                case "июнь":
+                    month = "червень";
+                    break;
+                case "июль":
+                    month = "липень";
+                    break;
+                case "август":
+                    month = "серпень";
+                    break;
+                case "сентябрь":
+                    month = "вересень";
+                    break;
+                case "октябрь":
+                    month = "жовтень";
+                    break;
+                case "ноябрь":
+                    month = "листопад";
+                    break;
+                case "декабрь":
+                    month = "грудень";
+                    break;
+                default:
+                    break;
+            }
+
+
+            return month;
         }
 
 
@@ -13331,7 +13973,7 @@ namespace ERP_NEW.BLL.Services
 
         #region AccountingInvoices report's
 
-        public void PrintAccountingInvoices(List<InvoicesDTO> sourceList)
+        public void PrintAccountingInvoices(List<InvoicesDTO> sourceList, int? month = null)
         {
             
             string templateName = " ";
@@ -13339,23 +13981,26 @@ namespace ERP_NEW.BLL.Services
 
 
             templateName = @"\Templates\AccountingInvoicesTemplate.xlsx";
-
+            List<InvoicesDTO> sourceListData = new List<InvoicesDTO>();
             SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(GeneratedReportsDir + templateName);
             SpreadsheetGear.IWorksheet worksheet = workbook.Worksheets[0];
             SpreadsheetGear.IRange cells = worksheet.Cells;
 
-
+            if (month != null)
+                sourceListData = sourceList.Where(srch => srch.Month_Current.Month == month).ToList();
+            else
+                sourceListData = sourceList.ToList();
 
             int count = 1;
             int border = 0;
-            foreach (var item in sourceList)
+            foreach (var item in sourceListData)
             {
               cells[count, 0 ].Value = item.Month_Current;
               cells[count, 1].Value = item.Month_Invoice;
               cells[count, 2].Value = item.Invoice_Number;
               cells[count, 3].Value = item.Contractor_Name;
-              cells[count, 4].Value = item.Tin;
               cells[count, 5].Value = item.Price;
+              cells[count, 4].Value = item.Tin.ToString();
               cells[count, 6].Value = item.Vat;
               cells[count, 7].Value = item.Non_Taxable;
               cells[count, 8].Value = item.Total_Price;
@@ -13492,7 +14137,7 @@ namespace ERP_NEW.BLL.Services
                                   Vendor_Name = c.con.Name,
                                   Vendor_Code = c.con.Tin,
                                   Month_Current = c.inv.Month_Current.ToShortDateString(),
-                                  Month_Invoice = c.inv.Month_Invoice.ToShortDateString(),
+                                  Month_Invoice = ((DateTime)c.inv.Month_Invoice).ToShortDateString(),
                                   Invoice_Number = c.inv.Invoice_Number,
                                   Bez_Nds = c.inv.Price.ToString(),
                                   Nds = c.inv.Vat.ToString(),
@@ -13738,6 +14383,233 @@ namespace ERP_NEW.BLL.Services
 
         #region FixedAssetsOrder report's
 
+
+        public void PrintFixedAssetsOderNew(FixedAssetsOrderJournalDTO model, List<FixedAssetsMaterialsDTO> materialsListSource, DateTime endDate, DateTime firstDay)
+        {
+            List<FixedAssetsMaterialsDTO> materialsList = new List<FixedAssetsMaterialsDTO>();
+            string templateName = " ";
+            templateName = @"\Templates\FixedAssetsInventoryCartTemplate.xls";
+
+            var Workbook = Factory.GetWorkbook(GeneratedReportsDir + templateName);
+            var Worksheet = Workbook.Worksheets[0];
+            var Сells = Worksheet.Cells;
+            IRange cells = Worksheet.Cells;
+            
+            string indexRowStr;
+
+            if (model.Id == 0)
+            {
+                MessageBox.Show("За обраний період немає даних!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            //Head document
+            //cells["B2"].Value = "Карточка основного засобу за період: з " + firstDay.ToShortDateString() + " по " + endDate.ToShortDateString();
+            //cells["B2"].Font.Size = 14;
+            //cells["B2"].Font.Bold = true;
+            //cells["B2"].HorizontalAlignment = SpreadsheetGear.HAlign.Center;
+            //cells["B2"].VerticalAlignment = SpreadsheetGear.VAlign.Center;
+            //cells["B2:" + "P2"].Merge();
+
+            //Head table1          
+            //indexRowStr = indexRow.ToString();
+            ////ColumnWidth
+            //Worksheet.Cells["B:B"].ColumnWidth = 12.47;
+            //Worksheet.Cells["C:C"].ColumnWidth = 32.9;
+            //Worksheet.Cells["D:D"].ColumnWidth = 16.19;
+            //Worksheet.Cells["E:E"].ColumnWidth = 26.19;
+            //Worksheet.Cells["F:F"].ColumnWidth = 14.86;
+            //Worksheet.Cells["G:G"].ColumnWidth = 13.04;
+            //Worksheet.Cells["H:H"].ColumnWidth = 11.43;
+            //Worksheet.Cells["I:I"].ColumnWidth = 25.43;
+
+            //Worksheet.Cells["J:J"].ColumnWidth = 16.14;
+            //Worksheet.Cells["K:K"].ColumnWidth = 12.33;
+            //Worksheet.Cells["L:L"].ColumnWidth = 13.9;
+            //Worksheet.Cells["M:M"].ColumnWidth = 14.04;
+            //Worksheet.Cells["N:N"].ColumnWidth = 24.43;
+            //Worksheet.Cells["O:O"].ColumnWidth = 24.43;
+            //Worksheet.Cells["P:P"].ColumnWidth = 12.33;
+            //         int rowcount = materialsListSource.Count;
+
+            //TITLE
+            //cells["B" + indexRowStr].Value = "Інвентарний номер";
+            //cells["C" + indexRowStr].Value = "Найменування";
+            //cells["D" + indexRowStr].Value = "Бал./рах.";
+            //cells["E" + indexRowStr].Value = "Відповідальна особа";
+            //cells["F" + indexRowStr].Value = "Термін використання (міс.)";
+            //cells["G" + indexRowStr].Value = "Дата приняття до обліку";
+            //cells["H" + indexRowStr].Value = "Дата зняття з обліку";
+            //cells["I" + indexRowStr].Value = "Група";
+            //cells["J" + indexRowStr].Value = "Первинна вартість";
+            //cells["K" + indexRowStr].Value = "Збільшення вартості";
+            //cells["L" + indexRowStr].Value = "Поточна вартість";
+            //cells["M" + indexRowStr].Value = "Залишкова вартість";
+            //cells["N" + indexRowStr].Value = "Сума амортизації";
+            //cells["O" + indexRowStr].Value = "Амортизація за місяць";
+            cells["N" + 6].Value = model.BeginDate;
+            cells["AA" + 6].Value = model.TotalPrice;
+            cells["A" + 10].Value = model.InventoryName;
+            cells["A" + 14].Value = model.InventoryName;
+
+            int startRow = 20;
+            int indexRow = startRow;
+
+            for (var i = 0; i < materialsListSource.Count; i++)
+            {
+                indexRow++;
+                indexRowStr = indexRow.ToString();
+
+                cells["A" + indexRowStr].Value = materialsListSource[i].Nomenclature!=null? materialsListSource[i].Nomenclature:"" ;//((FixedAssetsMaterialsDTO)fixedAssetsOrderBS[i]).Nomenclature;
+                cells["B" + indexRowStr].Value = materialsListSource[i].OrderNum != null ? materialsListSource[i].OrderNum : ""; 
+                cells["C" + indexRowStr].Value = materialsListSource[i].FixedNum != null ? materialsListSource[i].FixedNum : "";
+                cells["E" + indexRowStr].Value = materialsListSource[i].UnitPrice != null ? materialsListSource[i].UnitPrice.ToString() : "";
+                cells["F" + indexRowStr].Value = materialsListSource[i].AccountNum != null ? materialsListSource[i].AccountNum : "";
+                cells["G" + indexRowStr].Value = materialsListSource[i].OrderNum != null ? materialsListSource[i].OrderNum : "";
+                cells["P" + indexRowStr].Value = materialsListSource[i].ExpDate != null ? materialsListSource[i].ExpDate.Value.ToShortDateString() : "";
+
+                cells["S" + indexRowStr].Value = materialsListSource[i].Nomenclature != null ? materialsListSource[i].Nomenclature : "";
+                cells["T" + indexRowStr].Value = "";
+                cells["U" + indexRowStr].Value = "";
+
+                cells["W" + indexRowStr].Value = materialsListSource[i].ExpDate != null ? materialsListSource[i].ExpDate.Value.Year.ToString() : "";
+
+                //cells["I" + indexRowStr].Value = materialsListSource[i].UnitPrice;
+                //cells["J" + indexRowStr].Value = materialsListSource[i].TotalPrice;
+                //cells["K" + indexRowStr].Value = materialsListSource[i].ExpDate;
+                //cells["L" + indexRowStr].Value = materialsListSource[i].Price;
+                //cells["M" + indexRowStr].Value = materialsListSource[i].FixedPrice;
+                //switch (materialsListSource[i].Flag)
+                //{
+                //    case 0:
+                //        typeMaterial = "Основний засіб";
+                //        break;
+                //    case 1:
+                //        typeMaterial = "Збільшення вартості";
+                //        break;
+                //    case 2:
+                //        typeMaterial = "Корегування";
+                //        break;
+                //    default:
+                //        typeMaterial = "";
+                //        break;
+                //}
+                //cells["N" + indexRowStr].Value = typeMaterial;
+
+                ////Interval I->J
+                //cells["I" + indexRowStr + ":" + "J" + indexRowStr].NumberFormat = "### ### ##0.00";
+                //cells["L" + indexRowStr + ":" + "M" + indexRowStr].NumberFormat = "### ### ##0.00";
+            }
+
+
+            //body table
+
+            //indexRowStr = indexRow.ToString();
+
+
+
+            //cells["B" + indexRowStr].Value = model.InventoryNumber;
+            //cells["C" + indexRowStr].Value = model.InventoryName;
+            //cells["D" + indexRowStr].Value = model.BalanceAccountNum;
+            //cells["E" + indexRowStr].Value = model.SupplierName;
+            //cells["F" + indexRowStr].Value = model.UsefulMonth;
+            //cells["G" + indexRowStr].Value = model.BeginDate;
+            //cells["H" + indexRowStr].Value = model.EndRecordDate;
+            //cells["I" + indexRowStr].Value = model.GroupName;
+            //cells["J" + indexRowStr].Value = model.BeginPrice;
+            //cells["K" + indexRowStr].Value = model.IncreasePrice;
+            //cells["L" + indexRowStr].Value = model.TotalPrice;
+            //cells["M" + indexRowStr].Value = model.CurrentPrice;
+            //cells["N" + indexRowStr].Value = model.PeriodAmortization;
+            //cells["O" + indexRowStr].Value = model.CurrentAmortization;
+            //cells["I" + indexRowStr + ":" + "O" + indexRowStr].NumberFormat = "### ### ##0.00";
+            //cells["L" + indexRowStr + ":" + "M" + indexRowStr].NumberFormat = "### ### ##0.00";
+            //// first row headtable
+            //cells["B" + (startRow + 1) + ":" + "P" + (startRow + 1)].WrapText = true;
+            //cells["B" + (startRow + 1) + ":" + "P" + (startRow + 1)].HorizontalAlignment = SpreadsheetGear.HAlign.Center;
+            //cells["B" + (startRow + 1) + ":" + "P" + (startRow + 1)].VerticalAlignment = SpreadsheetGear.VAlign.Center;
+            //cells["B" + (startRow + 1) + ":" + "P" + indexRow].Borders.LineStyle = LineStyle.Continous;
+            //// first row headtable
+            //cells["B" + (startRow + 1) + ":" + "P" + (startRow + 1)].WrapText = true;
+            //cells["B" + (startRow + 1) + ":" + "P" + (startRow + 1)].HorizontalAlignment = SpreadsheetGear.HAlign.Center;
+            //cells["B" + (startRow + 1) + ":" + "P" + (startRow + 1)].VerticalAlignment = SpreadsheetGear.VAlign.Center;
+            //cells["B" + (startRow + 1) + ":" + "P" + indexRow].Borders.LineStyle = LineStyle.Continous;
+
+            ////table 2
+            //indexRow++;
+            //startRow = indexRow++;
+            //indexRowStr = indexRow.ToString();
+            //cells["B" + indexRowStr].Value = "Ном. номер";
+            //cells["C" + indexRowStr].Value = "Найменування";
+            //cells["D" + indexRowStr].Value = "Рах. нарахування амортизації";
+            //cells["E" + indexRowStr].Value = "Номер надходження";
+            //cells["F" + indexRowStr].Value = "Дата надходження";
+            //cells["G" + indexRowStr].Value = "Балансовий рахунок";
+            //cells["H" + indexRowStr].Value = "К-сть";
+            //cells["I" + indexRowStr].Value = "Ціна";
+            //cells["J" + indexRowStr].Value = "Сума";
+            //cells["K" + indexRowStr].Value = "Дата списання";
+            //cells["L" + indexRowStr].Value = "Сума списання";
+            //cells["M" + indexRowStr].Value = "Сумма до обліку";
+            //cells["N" + indexRowStr].Value = "Тип";
+
+            ////body table 2
+            //for (var i = 0; i < materialsListSource.Count; i++)
+            //{
+            //    indexRow++;
+            //    indexRowStr = indexRow.ToString();
+
+            //    cells["B" + indexRowStr].Value = materialsListSource[i].Nomenclature;//((FixedAssetsMaterialsDTO)fixedAssetsOrderBS[i]).Nomenclature;
+            //    cells["C" + indexRowStr].Value = materialsListSource[i].Name;
+            //    cells["D" + indexRowStr].Value = materialsListSource[i].FixedNum;
+            //    cells["E" + indexRowStr].Value = materialsListSource[i].ReceiptNum;
+            //    cells["F" + indexRowStr].Value = materialsListSource[i].OrderDate;
+            //    cells["G" + indexRowStr].Value = materialsListSource[i].OrderNum;
+            //    cells["H" + indexRowStr].Value = materialsListSource[i].Quantity;
+            //    cells["I" + indexRowStr].Value = materialsListSource[i].UnitPrice;
+            //    cells["J" + indexRowStr].Value = materialsListSource[i].TotalPrice;
+            //    cells["K" + indexRowStr].Value = materialsListSource[i].ExpDate;
+            //    cells["L" + indexRowStr].Value = materialsListSource[i].Price;
+            //    cells["M" + indexRowStr].Value = materialsListSource[i].FixedPrice;
+            //    switch (materialsListSource[i].Flag)
+            //    {
+            //        case 0:
+            //            typeMaterial = "Основний засіб";
+            //            break;
+            //        case 1:
+            //            typeMaterial = "Збільшення вартості";
+            //            break;
+            //        case 2:
+            //            typeMaterial = "Корегування";
+            //            break;
+            //        default:
+            //            typeMaterial = "";
+            //            break;
+            //    }
+            //    cells["N" + indexRowStr].Value = typeMaterial;
+
+            //    //Interval I->J
+            //    cells["I" + indexRowStr + ":" + "J" + indexRowStr].NumberFormat = "### ### ##0.00";
+            //    cells["L" + indexRowStr + ":" + "M" + indexRowStr].NumberFormat = "### ### ##0.00";
+            //}
+
+            //cells["B" + (startRow + 1) + ":" + "N" + (startRow + 1)].WrapText = true;
+            //cells["B" + (startRow + 1) + ":" + "N" + (startRow + 1)].HorizontalAlignment = SpreadsheetGear.HAlign.Center;
+            //cells["B" + (startRow + 1) + ":" + "N" + (startRow + 1)].VerticalAlignment = SpreadsheetGear.VAlign.Center;
+            //cells["B" + (startRow + 1) + ":" + "N" + indexRow].Borders.LineStyle = LineStyle.Continous;
+            //indexRow = indexRow + 2;
+            //startRow = startRow + materialsListSource.Count + 3;
+            //indexRowStr = indexRow.ToString();
+            try
+            {
+                Workbook.SaveAs(GeneratedReportsDir + "Карточка ОЗ " + model.InventoryNumber + ".xls", FileFormat.Excel8); Process process = new Process();
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "Карточка ОЗ " + model.InventoryNumber + ".xls";
+                process.StartInfo.FileName = "Excel.exe";
+                process.Start();
+            }
+            catch (System.IO.IOException) { MessageBox.Show("Документ вже відкритий!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }
+
         public void PrintFixedAssetsOder(FixedAssetsOrderJournalDTO model, List<FixedAssetsMaterialsDTO> materialsListSource, DateTime endDate, DateTime firstDay)
         {
             List<FixedAssetsMaterialsDTO> materialsList = new List<FixedAssetsMaterialsDTO>();
@@ -13753,7 +14625,7 @@ namespace ERP_NEW.BLL.Services
             int indexRow = startRow + 1;
             string indexRowStr;
 
-            if (model.Id == null)
+            if (model.Id == -1)
             {
                 MessageBox.Show("За обраний період немає даних!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -13900,8 +14772,8 @@ namespace ERP_NEW.BLL.Services
                 indexRowStr = indexRow.ToString();
             try
             {
-                Workbook.SaveAs(GeneratedReportsDir + "Карточка ОЗ " + model.InventoryNumber + ".xls", FileFormat.Excel8);                Process process = new Process();
-                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "Карточка ОЗ " +model.InventoryNumber+ ".xls";
+                Workbook.SaveAs(GeneratedReportsDir + "Карточка ОЗ " + model.InventoryNumber.ToString().Replace("/", "_") + ".xls", FileFormat.Excel8);                Process process = new Process();
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "Карточка ОЗ " + model.InventoryNumber.ToString().Replace("/", "_") + ".xls";
                 process.StartInfo.FileName = "Excel.exe";
                 process.Start();
             }
@@ -14064,7 +14936,8 @@ namespace ERP_NEW.BLL.Services
             IRange cellsSecond = WorksheetSecond.Cells;
 
             List<FixedAssetsMaterialsDTO> newMaterialsList = new List<FixedAssetsMaterialsDTO>();
-            decimal sumPrice = 0;
+            //decimal sumPrice = 0;
+            float percentUsefullMonth = (100 / (Convert.ToInt16(model.UsefulMonth) / 12));
 
             int rows = 120;
             int cols = 31;
@@ -14073,12 +14946,17 @@ namespace ERP_NEW.BLL.Services
             cells[1, 1, rows, cols].Replace("{currYear}", dt.Year.ToString(), LookAt.Part, SearchOrder.ByRows, false);
             cells[1, 1, rows, cols].Replace("{currDate}", dt.ToShortDateString(), LookAt.Part, SearchOrder.ByRows, false);
 
+            
+            //cells["V27"].Value = percentUsefullMonth.ToString() + "%";
+
             cells["AI16"].Value = dt.ToShortDateString();
-            cells["B30"].Value = model.RegionName.ToString();
+            //cells["B30"].Value = model.RegionName.ToString();
+            cells["B30"].Value =  $"НВП \"Техвагонмаш\"";
             cells["M30"].Value = model.SoldPrice;
             cells["P30"].Value = model.TransferPrice;
             cells["S30"].Value = model.InventoryNumber.ToString();
-            cells["X30"].Value = model.BalanceAccountNum.ToString();
+            cells["X30"].Value = model.ExpenditureAccount;
+            cells["AA30"].Value = percentUsefullMonth.ToString() + "%";
             cells["AI30"].Value =   model.BeginDate.Year;
             cells["AL30"].Value = RuDateAndMoneyConverter.MonthName(model.BeginDate.Month, Utils.TextCase.Nominative).ToString() + " " + model.BeginDate.Year;
             cells["AR30"].Value = RuDateAndMoneyConverter.MonthName(model.BeginDate.Month, Utils.TextCase.Nominative).ToString() + " " + model.BeginDate.Year;
@@ -14226,24 +15104,18 @@ namespace ERP_NEW.BLL.Services
             {
                 case "103":
                     return "3";
-                    break;
                 case "104":
                 case "104/1":
                     return "4";
-                    break;
                 case "105":
                     return "5";
-                    break;
                 case "106":
                 case "127":
                     return "6";
-                    break;
                 case "109":
                     return "9";
-                    break;
                 default:
                     return "Невідома группа";
-                    break;
             }
         }
 
@@ -14257,8 +15129,8 @@ namespace ERP_NEW.BLL.Services
             SpreadsheetGear.IWorksheet worksheet = workbook.Worksheets[0];
             SpreadsheetGear.IRange cells = worksheet.Cells;
 
-            int rows = 120;
-            int cols = 31;
+            //int rows = 120;
+            //int cols = 31;
             DateTime dt = DateTime.Now;
             DateTime amortizationDate = new DateTime(((DateTime)model.DateOrder).Year, ((DateTime)model.DateOrder).Month, 1);
             amortizationDate = amortizationDate.AddMonths(1);
@@ -14309,7 +15181,7 @@ namespace ERP_NEW.BLL.Services
             cells["B" + 23].Value = " Термін корисного використання " + years + " " +NumberToYear(Convert.ToInt32(years)) + ".";
             cells["A" + 25].Value = " 4 . ";
             cells["B" + 25].Value = " Контроль за виконанням цього наказу покладаю  ";
-            cells["B" + 26].Value = " на Першого заступника директора - Кондрашова В.В.. ";
+            cells["B" + 26].Value = " на Першого заступника директора - Івана Шалаєвського. ";
             try
             {
                 worksheet.SaveAs(GeneratedReportsDir + "Наказ № 00-00-00-інв.№" + model.InventoryNumber.ToString().Replace("/", "_") + ".xls", FileFormat.Excel8);
@@ -14412,7 +15284,7 @@ namespace ERP_NEW.BLL.Services
             cells["B" + 23].Value = "Термін корисного використання " + years + " " + NumberToYear(Convert.ToInt32(years)) + ".";//RuDateAndMoneyConverter.NumberToYear(Convert.ToInt32(years)) + " . ";
             cells["A" + 25].Value = " 4 . ";
             cells["B" + 25].Value = "Контроль за виконанням цього наказу покладаю на ";
-            cells["B" + 26].Value = "Першого заступника директора Кондрашова В.В.. ";
+            cells["B" + 26].Value = "Першого заступника директора Івана Шалаєвського. ";
 
             try
             {
@@ -14504,7 +15376,7 @@ namespace ERP_NEW.BLL.Services
             cells["B" + 15].Value = "інвентарний № " + model.InventoryNumber + " . ";
             cells["A" + 17].Value = " 2 . ";
             cells["B" + 17].Value = "Відповідальним за продаж призначаю: ";
-            cells["B" + 18].Value = "Першого заступника директора - Кондрашова В.В.. ";
+            cells["B" + 18].Value = "Першого заступника директора - Івана Шалаєвського. ";
 
             cells["A" + 20].Value = " 3 . ";
             cells["B" + 20].Value = "Головному бухгалтеру Сергієнко Л.В. виконати необхідні ";
@@ -14513,7 +15385,7 @@ namespace ERP_NEW.BLL.Services
             cells["B" + 23].Value = "інвентарний № " + model.InventoryNumber + " . ";
             cells["A" + 25].Value = " 4 . ";
             cells["B" + 25].Value = "Контроль за виконанням цього наказу покладаю на ";
-            cells["B" + 26].Value = "Першого заступника директора - Кондрашова В.В.. ";
+            cells["B" + 26].Value = "Першого заступника директора - Івана Шалаєвського. ";
 
             try
             {
@@ -14549,7 +15421,7 @@ namespace ERP_NEW.BLL.Services
             cells["B" + 7].Value = ((DateTime)model.DateOrder).Day.ToString();
             cells["D" + 7].Value = rez;
             cells["F" + 7].Value = ((DateTime)model.DateOrder).Year.ToString();
-            cells["J" + 7].Value = model.NumberOrder;
+            cells["N" + 7].Value = model.NumberOrder;
 
             for (int i = 13; i < 27; i++)
             {
@@ -14558,25 +15430,27 @@ namespace ERP_NEW.BLL.Services
             }
             cells["B" + 15].HorizontalAlignment = HAlign.Center;
             cells["B" + 23].HorizontalAlignment = HAlign.Center;
+            cells["A" + 10].HorizontalAlignment = HAlign.Left;
+            cells["A" + 15].HorizontalAlignment = HAlign.Left;
 
             cells["A" + 9].HorizontalAlignment = HAlign.Left;
-            cells["A" + 9].Value = "« Про списання замортизованих основних засобів " + model.InventoryName +
-                " інвентарний № " + model.InventoryNumber + " »";
+            cells["A" + 9].Value = "« Про списання замортизованих основних засобів " ;
+            cells["A" + 10].Value =  model.InventoryName +  " інвентарний № " + model.InventoryNumber + " »";
             cells["A" + 14].Value = " 1 . ";
-            cells["B" + 14].Value = "Списати замортизований " + model.InventoryName + ":";
-            cells["B" + 15].Value = "інвентарний № " + model.InventoryNumber + " . ";
+            cells["B" + 14].Value = "Списати замортизований, морально застарілий";
+            cells["B" + 15].Value = " "+ model.InventoryName + ": інвентарний № " + model.InventoryNumber + " . ";
             cells["A" + 17].Value = " 2 . ";
             cells["B" + 17].Value = "Відповідальним за продаж призначаю: ";
-            cells["B" + 18].Value = "Першого заступника директора - Кондрашова В.В.. ";
+            cells["B" + 18].Value = "Першого заступника директора - Івана Шалаєвського. ";
 
             cells["A" + 20].Value = " 3 . ";
             cells["B" + 20].Value = "Головному бухгалтеру Сергієнко Л.В. виконати необхідні ";
             cells["B" + 21].Value = "бухгалтерські операції при продажу та при знятті ";
             cells["B" + 22].Value = "Основних засобів з бухгалтерського обліку:";
-            cells["B" + 23].Value = "інвентарний № " + model.InventoryNumber + " . ";
+            cells["B" + 23].Value = " "+ model.InventoryName+ "інвентарний № " + model.InventoryNumber + " . ";
             cells["A" + 25].Value = " 4 . ";
             cells["B" + 25].Value = "Контроль за виконанням цього наказу покладаю на ";
-            cells["B" + 26].Value = "Першого заступника директора - Кондрашова В.В.. ";
+            cells["B" + 26].Value = "Першого заступника директора - Івана Шалаєвського. ";
 
             try
             {
@@ -16194,11 +17068,16 @@ namespace ERP_NEW.BLL.Services
 
         public bool  PrintTrialBalanceAccounts(List<TrialBalanceByAccountsReportDTO> reportList, string StartDate, string EndDate)
         {
+            //for (int i = 0; i < reportList.Count; i++)
+            //{
+            //    reportList[i].FlagDebitCredit = Math.Abs(reportList[i].FlagDebitCredit);
+            //}
 
             var balanceSource = reportList
                                 .OrderBy(s => s.BalanceAccountNum)
                                 .ThenBy(w => w.FlagDebitCredit)
                                 .ToList();
+
             SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
             //var workbook = Factory.GetWorkbook(TemplatesDir + "TemplateWithStamp.xls");
             var worksheet = workbook.Worksheets[0];
@@ -16845,11 +17724,11 @@ namespace ERP_NEW.BLL.Services
 
                 RuDateAndMoneyConverter.MonthName(itemMonth.Date.Month, Utils.TextCase.Nominative);
 
-                cells["A" + startWith + ":R" + startWith].Merge();
-                cells["A" + startWith + ":R" + startWith].Interior.Color = System.Drawing.Color.MistyRose;
-                cells["A" + startWith + ":R" + startWith].Value = RuDateAndMoneyConverter.MonthName(itemMonth.Date.Month, Utils.TextCase.Nominative) + " " + itemMonth.Date.Year + " р.";
-                cells["A" + startWith + ":R" + startWith].HorizontalAlignment = HAlign.Center;
-                cells["A" + startWith + ":R" + startWith].Borders.LineStyle = SpreadsheetGear.LineStyle.Continous;
+                cells["A" + startWith + ":T" + startWith].Merge();
+                cells["A" + startWith + ":T" + startWith].Interior.Color = System.Drawing.Color.MistyRose;
+                cells["A" + startWith + ":T" + startWith].Value = RuDateAndMoneyConverter.MonthName(itemMonth.Date.Month, Utils.TextCase.Nominative) + " " + itemMonth.Date.Year + " р.";
+                cells["A" + startWith + ":T" + startWith].HorizontalAlignment = HAlign.Center;
+                cells["A" + startWith + ":T" + startWith].Borders.LineStyle = SpreadsheetGear.LineStyle.Continous;
 
                 ++startWith;
 
@@ -16858,8 +17737,9 @@ namespace ERP_NEW.BLL.Services
                     List<int> maxCounter = new List<int>();
 
                     var bankPaymantByContractor = bankPaymantData.Where(srt => srt.Contractor_Id == item.Id && srt.Payment_Date.Value.Month == itemMonth.Date.Month).OrderBy(ord => ord.Payment_Date).ToList();
-                    var invoiceDataByContractor = invoicesData.Where(srt => srt.Contractor_Id == item.Id && srt.Month_Invoice.Month == itemMonth.Date.Month).OrderBy(ord => ord.Month_Invoice).ToList();
-                    var ordersDataByContractor = ordersData.Where(srt => srt.VendorId == item.Id && srt.InvoiceDate.Value.Month == itemMonth.Date.Month).OrderBy(ord => ord.InvoiceDate).ToList();
+                    var invoiceDataByContractor = invoicesData.Where(srt => srt.Contractor_Id == item.Id && (((DateTime)srt.Month_Invoice).Month == itemMonth.Date.Month || srt.Month_Current.Month == itemMonth.Date.Month)).OrderBy(ord => ord.Month_Invoice).ToList();
+                    //var ordersDataByContractor = ordersData.Where(srt => srt.VendorId == item.Id && srt.InvoiceDate.Value.Month == itemMonth.Date.Month).OrderBy(ord => ord.InvoiceDate).ToList();
+                    var ordersDataByContractor = ordersData.Where(srt => srt.VendorId == item.Id && srt.OrderDate.Value.Month == itemMonth.Date.Month).OrderBy(ord => ord.InvoiceDate).ToList();
 
                     decimal? invoiceTotalPrice = 0m;
                     decimal? invoicePrice = 0m;
@@ -16879,11 +17759,11 @@ namespace ERP_NEW.BLL.Services
                     if (maxCounter.Max() == 0)
                         continue;
 
-                    cells["A" + startWith + ":R" + startWith].Merge();
-                    cells["A" + startWith + ":R" + startWith].Interior.Color = System.Drawing.Color.PeachPuff;
-                    cells["A" + startWith + ":R" + startWith].Value = item.Name + " " + item.Srn;
-                    cells["A" + startWith + ":R" + startWith].HorizontalAlignment = HAlign.Center;
-                    cells["A" + startWith + ":R" + startWith].Borders.LineStyle = SpreadsheetGear.LineStyle.Continous;
+                    cells["A" + startWith + ":T" + startWith].Merge();
+                    cells["A" + startWith + ":T" + startWith].Interior.Color = System.Drawing.Color.PeachPuff;
+                    cells["A" + startWith + ":T" + startWith].Value = item.Name + " " + item.Srn;
+                    cells["A" + startWith + ":T" + startWith].HorizontalAlignment = HAlign.Center;
+                    cells["A" + startWith + ":T" + startWith].Borders.LineStyle = SpreadsheetGear.LineStyle.Continous;
                     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     List<DateTime?> dateOfPayment = bankPaymantByContractor.Select(slc => slc.Payment_Date).ToList();
@@ -16911,15 +17791,17 @@ namespace ERP_NEW.BLL.Services
                          for (int k = 0; k < invoicesByDate.Count(); ++k)
                          {
                              cells["A" + (startWith + k + 1)].Value = invoicesByDate[k].Invoice_Number;
-                             cells["B" + (startWith + k + 1)].Value = invoicesByDate[k].Month_Invoice.ToShortDateString();
-                             cells["C" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["C" + (startWith + k + 1)].Value = invoicesByDate[k].Total_Price;
+                             cells["B" + (startWith + k + 1)].Value = ((DateTime)invoicesByDate[k].Month_Invoice).ToShortDateString();
+                             cells["C" + (startWith + k + 1)].Value = invoicesByDate[k].Month_Current.ToShortDateString();
+
                              cells["D" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["D" + (startWith + k + 1)].Value = invoicesByDate[k].Price;
+                             cells["D" + (startWith + k + 1)].Value = invoicesByDate[k].Total_Price;
                              cells["E" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["E" + (startWith + k + 1)].Value = invoicesByDate[k].Vat;
-                             cells["F" + (startWith + k + 1)].NumberFormat = "";
-                             cells["F" + (startWith + k + 1)].Value = invoicesByDate[k].Bal_Name; // <=====  рахунок пдв сюда 
+                             cells["E" + (startWith + k + 1)].Value = invoicesByDate[k].Price;
+                             cells["F" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
+                             cells["F" + (startWith + k + 1)].Value = invoicesByDate[k].Vat;
+                             cells["G" + (startWith + k + 1)].NumberFormat = "";
+                             cells["G" + (startWith + k + 1)].Value = invoicesByDate[k].Bal_Name; // <=====  рахунок пдв сюда 
 
                              invoiceTotalPrice += invoicesByDate[k].Total_Price;
                              invoicePrice += invoicesByDate[k].Price;
@@ -16928,33 +17810,50 @@ namespace ERP_NEW.BLL.Services
 
                          for (int k = 0; k < bankPaymantsByDate.Count(); ++k)
                          {
-                             cells["N" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Payment_Document;
-                             cells["O" + (startWith + k + 1)].Value = ((DateTime)bankPaymantsByDate[k].Payment_Date).ToShortDateString();
-                             cells["P" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Purpose;
-                             cells["Q" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["Q" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Payment_Price;
-                             cells["R" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["R" + (startWith + k + 1)].Value = bankPaymantsByDate[k].VatPrice;
+                             cells["P" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Payment_Document;
 
-                             bankPaymantPaymantPrice += bankPaymantsByDate[k].Payment_Price;
+                             cells["Q" + (startWith + k + 1)].Value = ((DateTime)bankPaymantsByDate[k].Payment_Date).ToShortDateString();
+
+                            cells["R" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Purpose;
+
+                            cells["S" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
+                            cells["S" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Payment_Price;
+
+                            cells["T" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
+                            cells["T" + (startWith + k + 1)].Value = bankPaymantsByDate[k].VatPrice;
+
+                            //cells["O" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Payment_Document;
+                            //cells["P" + (startWith + k + 1)].Value = ((DateTime)bankPaymantsByDate[k].Payment_Date).ToShortDateString();
+
+                            //cells["Q" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Purpose;
+                            //cells["R" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
+                            //cells["R" + (startWith + k + 1)].Value = bankPaymantsByDate[k].Payment_Price;
+                            //cells["S" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
+                            //cells["S" + (startWith + k + 1)].Value = bankPaymantsByDate[k].VatPrice;
+
+
+
+                            bankPaymantPaymantPrice += bankPaymantsByDate[k].Payment_Price;
                              bankPaymantVatPrice += bankPaymantsByDate[k].VatPrice;
                          }
 
                          for (int k = 0; k < ordersByDate.Count(); ++k)
                          {
-                             cells["G" + (startWith + k + 1)].Value = ordersByDate[k].InvoiceNum;
-                             cells["H" + (startWith + k + 1)].Value = ((DateTime)ordersByDate[k].InvoiceDate).ToShortDateString();
-                             cells["I" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["I" + (startWith + k + 1)].Value = ordersByDate[k].TotalWithVat;
-                             cells["J" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["J" + (startWith + k + 1)].Value = ordersByDate[k].TotalPrice;
+                             cells["H" + (startWith + k + 1)].Value = ordersByDate[k].InvoiceNum;
+                             cells["I" + (startWith + k + 1)].Value = ((DateTime)ordersByDate[k].InvoiceDate).ToShortDateString();
+                             cells["J" + (startWith + k + 1)].Value = ((DateTime)ordersByDate[k].OrderDate).ToShortDateString();
+
                              cells["K" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
-                             cells["K" + (startWith + k + 1)].Value = ordersByDate[k].Vat;
-                             cells["L" + (startWith + k + 1)].NumberFormat = "";
-                             cells["L" + (startWith + k + 1)].HorizontalAlignment = HAlign.Center;
-                             cells["L" + (startWith + k + 1)].Value = ordersByDate[k].VatAccountNum; // <=====  рахунок пдв сюда
-                             cells["M" + (startWith + k + 1)].NumberFormat = "";
-                             cells["M" + (startWith + k + 1)].Value = ordersByDate[k].AccountNum;
+                             cells["K" + (startWith + k + 1)].Value = ordersByDate[k].TotalWithVat;
+                             cells["L" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
+                             cells["L" + (startWith + k + 1)].Value = ordersByDate[k].TotalPrice;
+                             cells["M" + (startWith + k + 1)].NumberFormat = "### ### ##0.00";
+                             cells["M" + (startWith + k + 1)].Value = ordersByDate[k].Vat;
+                             cells["N" + (startWith + k + 1)].NumberFormat = "";
+                             cells["N" + (startWith + k + 1)].HorizontalAlignment = HAlign.Center;
+                             cells["N" + (startWith + k + 1)].Value = ordersByDate[k].VatAccountNum; // <=====  рахунок пдв сюда
+                             cells["O" + (startWith + k + 1)].NumberFormat = "";
+                             cells["O" + (startWith + k + 1)].Value = ordersByDate[k].AccountNum;
                              
                              orderTotalWithWat += ordersByDate[k].TotalWithVat;
                              orderTotalPrice += ordersByDate[k].TotalPrice;
@@ -16977,15 +17876,16 @@ namespace ERP_NEW.BLL.Services
                     for (int i = 0; i < invoiceDataByContractor.Count(); ++i)
                     {
                         cells["A" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Invoice_Number;
-                        cells["B" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Month_Invoice.ToShortDateString();
-                        cells["C" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["C" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Total_Price;
+                        cells["B" + (startWith + i + 1)].Value = ((DateTime)invoiceDataByContractor[i].Month_Invoice).ToShortDateString();
+                        cells["C" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Month_Current.ToShortDateString();
                         cells["D" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["D" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Price;
+                        cells["D" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Total_Price;
                         cells["E" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["E" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Vat;
-                        cells["F" + (startWith + i + 1)].NumberFormat = "";
-                        cells["F" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Bal_Name; // <=====  рахунок пдв сюда 
+                        cells["E" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Price;
+                        cells["F" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
+                        cells["F" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Vat;
+                        cells["G" + (startWith + i + 1)].NumberFormat = "";
+                        cells["G" + (startWith + i + 1)].Value = invoiceDataByContractor[i].Bal_Name; // <=====  рахунок пдв сюда 
 
                         invoiceTotalPrice += invoiceDataByContractor[i].Total_Price;
                         invoicePrice += invoiceDataByContractor[i].Price;
@@ -16994,13 +17894,13 @@ namespace ERP_NEW.BLL.Services
 
                     for (int i = 0; i < bankPaymantByContractor.Count(); ++i)
                     {
-                        cells["N" + (startWith + i + 1)].Value = bankPaymantByContractor[i].Payment_Document;
-                        cells["O" + (startWith + i + 1)].Value = ((DateTime)bankPaymantByContractor[i].Payment_Date).ToShortDateString();
-                        cells["P" + (startWith + i + 1)].Value = bankPaymantByContractor[i].Purpose;
-                        cells["Q" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["Q" + (startWith + i + 1)].Value = bankPaymantByContractor[i].Payment_Price;
-                        cells["R" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["R" + (startWith + i + 1)].Value = bankPaymantByContractor[i].VatPrice;
+                        cells["P" + (startWith + i + 1)].Value = bankPaymantByContractor[i].Payment_Document;
+                        cells["Q" + (startWith + i + 1)].Value = ((DateTime)bankPaymantByContractor[i].Payment_Date).ToShortDateString();
+                        cells["R" + (startWith + i + 1)].Value = bankPaymantByContractor[i].Purpose;
+                        cells["S" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
+                        cells["S" + (startWith + i + 1)].Value = bankPaymantByContractor[i].Payment_Price;
+                        cells["T" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
+                        cells["T" + (startWith + i + 1)].Value = bankPaymantByContractor[i].VatPrice;
 
                         bankPaymantPaymantPrice += bankPaymantByContractor[i].Payment_Price;
                         bankPaymantVatPrice += bankPaymantByContractor[i].VatPrice;
@@ -17008,19 +17908,21 @@ namespace ERP_NEW.BLL.Services
 
                     for (int i = 0; i < ordersDataByContractor.Count(); ++i)
                     {
-                        cells["G" + (startWith + i + 1)].Value = ordersDataByContractor[i].InvoiceNum;
-                        cells["H" + (startWith + i + 1)].Value = ((DateTime)ordersDataByContractor[i].InvoiceDate).ToShortDateString();
-                        cells["I" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["I" + (startWith + i + 1)].Value = ordersDataByContractor[i].TotalWithVat;
-                        cells["J" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["J" + (startWith + i + 1)].Value = ordersDataByContractor[i].TotalPrice;
+                        cells["H" + (startWith + i + 1)].Value = ordersDataByContractor[i].InvoiceNum;
+                        cells["I" + (startWith + i + 1)].Value = ((DateTime)ordersDataByContractor[i].InvoiceDate).ToShortDateString();
+                        cells["J" + (startWith + i + 1)].Value = ((DateTime)ordersDataByContractor[i].OrderDate).ToShortDateString();
+
                         cells["K" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
-                        cells["K" + (startWith + i + 1)].Value = ordersDataByContractor[i].Vat;
-                        cells["L" + (startWith + i + 1)].NumberFormat = "";
-                        cells["L" + (startWith + i + 1)].HorizontalAlignment = HAlign.Center;
-                        cells["L" + (startWith + i + 1)].Value = ordersDataByContractor[i].VatAccountNum; // <=====  рахунок пдв сюда
-                        cells["M" + (startWith + i + 1)].NumberFormat = "";
-                        cells["M" + (startWith + i + 1)].Value = ordersDataByContractor[i].AccountNum;
+                        cells["K" + (startWith + i + 1)].Value = ordersDataByContractor[i].TotalWithVat;
+                        cells["L" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
+                        cells["L" + (startWith + i + 1)].Value = ordersDataByContractor[i].TotalPrice;
+                        cells["M" + (startWith + i + 1)].NumberFormat = "### ### ##0.00";
+                        cells["M" + (startWith + i + 1)].Value = ordersDataByContractor[i].Vat;
+                        cells["N" + (startWith + i + 1)].NumberFormat = "";
+                        cells["N" + (startWith + i + 1)].HorizontalAlignment = HAlign.Center;
+                        cells["N" + (startWith + i + 1)].Value = ordersDataByContractor[i].VatAccountNum; // <=====  рахунок пдв сюда
+                        cells["O" + (startWith + i + 1)].NumberFormat = "";
+                        cells["O" + (startWith + i + 1)].Value = ordersDataByContractor[i].AccountNum;
 
                         orderTotalWithWat += ordersDataByContractor[i].TotalWithVat;
                         orderTotalPrice += ordersDataByContractor[i].TotalPrice;
@@ -17029,14 +17931,15 @@ namespace ERP_NEW.BLL.Services
 
                     startWith += counterRemains;
 
-                    cells["C" + (startWith + 1)].Value = invoiceTotalPrice;
-                    cells["D" + (startWith + 1)].Value = invoicePrice;
-                    cells["E" + (startWith + 1)].Value = invoiceVat;
-                    cells["I" + (startWith + 1)].Value = orderTotalWithWat;
-                    cells["J" + (startWith + 1)].Value = orderTotalPrice;
-                    cells["K" + (startWith + 1)].Value = orderVat;
-                    cells["Q" + (startWith + 1)].Value = bankPaymantPaymantPrice;
-                    cells["R" + (startWith + 1)].Value = bankPaymantVatPrice;
+                    cells["D" + (startWith + 1)].Value = invoiceTotalPrice;
+                    cells["E" + (startWith + 1)].Value = invoicePrice;
+                    cells["F" + (startWith + 1)].Value = invoiceVat;
+
+                    cells["L" + (startWith + 1)].Value = orderTotalWithWat;
+                    cells["K" + (startWith + 1)].Value = orderTotalPrice;
+                    cells["M" + (startWith + 1)].Value = orderVat;
+                    cells["S" + (startWith + 1)].Value = bankPaymantPaymantPrice;
+                    cells["T" + (startWith + 1)].Value = bankPaymantVatPrice;
                     
                     invoiceTotaMonthPrice += invoiceTotalPrice;
                     invoiceMonthPrice += invoicePrice;
@@ -17048,22 +17951,22 @@ namespace ERP_NEW.BLL.Services
                     bankPaymantVatMonthPrice += bankPaymantVatPrice;
 
                     cells["A" + (startWith + 1)].Value = "Разом:";
-                    cells["A" + (startWith + 1) + ":R" + (startWith + 1)].Interior.Color = System.Drawing.Color.LightBlue;
+                    cells["A" + (startWith + 1) + ":T" + (startWith + 1)].Interior.Color = System.Drawing.Color.LightBlue;
 
                     startWith += 3;
                 }
 
-                cells["C" + startWith].Value = invoiceTotaMonthPrice;
-                cells["D" + startWith].Value = invoiceMonthPrice;
-                cells["E" + startWith].Value = invoiceMonthVat;
-                cells["I" + startWith].Value = orderTotalMonthWithWat;
-                cells["J" + startWith].Value = orderTotalMonthPrice;
-                cells["K" + startWith].Value = orderMonthVat;
-                cells["Q" + startWith].Value = bankPaymantPaymantMonthPrice;
-                cells["R" + startWith].Value = bankPaymantVatMonthPrice;
+                cells["D" + startWith].Value = invoiceTotaMonthPrice;
+                cells["E" + startWith].Value = invoiceMonthPrice;
+                cells["F" + startWith].Value = invoiceMonthVat;
+                cells["L" + startWith].Value = orderTotalMonthWithWat;
+                cells["L" + startWith].Value = orderTotalMonthPrice;
+                cells["M" + startWith].Value = orderMonthVat;
+                cells["S" + startWith].Value = bankPaymantPaymantMonthPrice;
+                cells["T" + startWith].Value = bankPaymantVatMonthPrice;
 
                 cells["A" + startWith].Value = "Разом за " + RuDateAndMoneyConverter.MonthName(itemMonth.Date.Month, Utils.TextCase.Nominative) + " " + itemMonth.Date.Year + " року:";
-                cells["A" + startWith  + ":R" + startWith].Interior.Color = System.Drawing.Color.LightBlue;
+                cells["A" + startWith  + ":T" + startWith].Interior.Color = System.Drawing.Color.LightBlue;
 
                 startWith += 2;
             }
@@ -19963,4 +20866,3 @@ namespace ERP_NEW.BLL.Services
         }
     }
 }
-

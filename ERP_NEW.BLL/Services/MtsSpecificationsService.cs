@@ -28,24 +28,29 @@ namespace ERP_NEW.BLL.Services
         private IRepository<CustomerOrders> customerOrders;
         private IRepository<Contractors> contractors;
         private IRepository<EmployeesDetails> employeesDetails;
-        private IRepository<MtsSpecifications> mtsSpecifications;
+        private IRepository<MtsSpecifications> mtsSpecificationss;
         private IRepository<MtsDetailsInfo> mtsDetailsInfo;
 
         private IRepository<MTSSpecificationss> mtsSpecificationsOld;
         private IRepository<MTSAuthorizationUsers> mtsAuthorizationUsers;
-        private IRepository<MTSDetails> mtsDetails;
+        private IRepository<MTSDetails> mtsDetailss;
         private IRepository<MTSGost> mtsGost;
         private IRepository<MTSCreateDetals> mtsCreateDetals;
         private IRepository<MTSDetalsProcessing> mtsDetailsProcessing;
         private IRepository<MTSGuages> mtsGuages;
         private IRepository<MTSNomenclaturesOld> mtsNomenclatures;
         private IRepository<MTSMeasure> mtsMeasure;
-        private IRepository<MTSPurchasedProducts> mtsPurchasedProducts;
-        private IRepository<MTSMaterials> mtsMaterials;
+        private IRepository<MTSPurchasedProducts> mtsPurchasedProductss;
+        private IRepository<MTSMaterials> mtsMaterialss;
         private IRepository<MTSNomenclatureGroupsOld> mtsNomenclatureGroups;
         private IRepository<MTSDetails> mtsDetals;
+        private IRepository<MTS_CUSTOMERORDERS> mtsCustomerOrders;
+        private IRepository<MTS_DETAILS> mtsDetails;
+        private IRepository<MTS_SPECIFICATIONS> mtsSpecifications;
+        private IRepository<MTS_PURCHASED_PRODUCTS> mtsPurchasedProducts;
+        private IRepository<MTS_MATERIALS> mtsMaterials;
 
-        
+
         private IMapper mapper;
 
         public MtsSpecificationsService(IUnitOfWork uow)
@@ -59,24 +64,33 @@ namespace ERP_NEW.BLL.Services
             mtsAssembliesInfo = Database.GetRepository<MtsAssembliesInfo>();
             mtsAssembliesCustomerInfo = Database.GetRepository<MtsAssembliesCustomerInfo>();
             mtsSpecificationTreeInfo = Database.GetRepository<MtsSpecificationTreeInfo>();
-            mtsSpecifications = Database.GetRepository<MtsSpecifications>();
+            mtsSpecificationss = Database.GetRepository<MtsSpecifications>();
             mtsDetailsInfo = Database.GetRepository<MtsDetailsInfo>();
 
             mtsSpecificationsOld = Database.GetRepository<MTSSpecificationss>();
             mtsAuthorizationUsers = Database.GetRepository<MTSAuthorizationUsers>();
-            mtsDetails = Database.GetRepository<MTSDetails>();
+            mtsDetailss = Database.GetRepository<MTSDetails>();
             mtsGost = Database.GetRepository<MTSGost>();
+            
             mtsCreateDetals = Database.GetRepository<MTSCreateDetals>();
             mtsDetailsProcessing = Database.GetRepository<MTSDetalsProcessing>();
             mtsGuages = Database.GetRepository<MTSGuages>();
             mtsNomenclatures = Database.GetRepository<MTSNomenclaturesOld>();
             mtsMeasure = Database.GetRepository<MTSMeasure>();
-            mtsPurchasedProducts = Database.GetRepository<MTSPurchasedProducts>();
-            mtsMaterials = Database.GetRepository<MTSMaterials>();
+            mtsPurchasedProductss = Database.GetRepository<MTSPurchasedProducts>();
+            mtsMaterialss = Database.GetRepository<MTSMaterials>();
             mtsNomenclatureGroups = Database.GetRepository<MTSNomenclatureGroupsOld>();
             mtsDetals = Database.GetRepository<MTSDetails>();
+            mtsDetails = Database.GetRepository<MTS_DETAILS>();
+            mtsPurchasedProducts = Database.GetRepository<MTS_PURCHASED_PRODUCTS>();
+            mtsMaterials = Database.GetRepository<MTS_MATERIALS>();
+            mtsSpecifications = Database.GetRepository<MTS_SPECIFICATIONS>();
+            mtsCustomerOrders = Database.GetRepository<MTS_CUSTOMERORDERS>();
 
-            var config = new MapperConfiguration(cfg =>
+
+
+
+        var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<MtsAssembliesInfo, MtsAssembliesInfoDTO>();
                 cfg.CreateMap<MtsSpecificationTreeInfo, MtsSpecificationTreeInfoDTO>();
@@ -101,6 +115,7 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<MTSGost, MTSGostDTO>();
                 cfg.CreateMap<MTSCreateDetalsDTO, MTSCreateDetals>();
                 cfg.CreateMap<MTSCreateDetals, MTSCreateDetalsDTO>();
+                
                 cfg.CreateMap<MTSDetalsProcessingDTO, MTSDetalsProcessing>();
                 cfg.CreateMap<MTSDetalsProcessing, MTSDetalsProcessingDTO>();
                 cfg.CreateMap<MTSGuagesDTO, MTSGuages>();
@@ -117,6 +132,12 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<MTSNomenclatureGroupsOld, MTSNomenclatureGroupsOldDTO>();
                 cfg.CreateMap<MTSDetailsDTO, MTSDetails>();
                 cfg.CreateMap<MTSDetails, MTSDetailsDTO>();
+                cfg.CreateMap<MTS_DETAILS, MTSDetailsDTO>();
+                cfg.CreateMap<MTS_MATERIALS, MTSMaterialsDTO>();
+                cfg.CreateMap<MTS_PURCHASED_PRODUCTS, MTSPurchasedProductsDTO>();
+                cfg.CreateMap<MTS_SPECIFICATIONS, MtsSpecificationsDTO>();
+                cfg.CreateMap<MTS_CUSTOMERORDERS, MTSCustomerOrdersDTO>();
+
             });
 
             mapper = config.CreateMapper();
@@ -127,7 +148,7 @@ namespace ERP_NEW.BLL.Services
         public IEnumerable<MtsAssembliesDTO> GetMtsAssembliesByRoot(long rootId)
         {
             var result = (from a in mtsAssemblies.GetAll()
-                          join ed in mtsSpecifications.GetAll() on a.Id equals ed.AssemblyId into aed
+                          join ed in mtsSpecificationss.GetAll() on a.Id equals ed.AssemblyId into aed
                           from ed in aed.DefaultIfEmpty()
                           where ed.RootId == rootId && ed.AssemblyId != null
                           select new MtsAssembliesDTO()
@@ -481,17 +502,49 @@ namespace ERP_NEW.BLL.Services
 
         public IEnumerable<MTSDetailsDTO> GetAllDetailsSpecificShort(int specificId)
         {
-            return mapper.Map<IEnumerable<MTSDetails>, List<MTSDetailsDTO>>(mtsDetails.GetAll().Where(srch => srch.SPECIFICATIONS_ID == specificId));
+            return mapper.Map<IEnumerable<MTSDetails>, List<MTSDetailsDTO>>(mtsDetailss.GetAll().Where(srch => srch.SPECIFICATIONS_ID == specificId));
         }
 
         public IEnumerable<MTSPurchasedProductsDTO> GetBuysDetalSpecificShort(int specificId)
         {
-            return mapper.Map<IEnumerable<MTSPurchasedProducts>, List<MTSPurchasedProductsDTO>>(mtsPurchasedProducts.GetAll().Where(srch => srch.SPECIFICATIONS_ID == specificId));
+            return mapper.Map<IEnumerable<MTSPurchasedProducts>, List<MTSPurchasedProductsDTO>>(mtsPurchasedProductss.GetAll().Where(srch => srch.SPECIFICATIONS_ID == specificId));
         }
 
         public IEnumerable<MTSMaterialsDTO> GetMaterialsSpecificShort(int specificId)
         {
-            return mapper.Map<IEnumerable<MTSMaterials>, List<MTSMaterialsDTO>>(mtsMaterials.GetAll().Where(srch => srch.SPECIFICATIONS_ID == specificId));
+            return mapper.Map<IEnumerable<MTSMaterials>, List<MTSMaterialsDTO>>(mtsMaterialss.GetAll().Where(srch => srch.SPECIFICATIONS_ID == specificId));
+        }
+
+        public IEnumerable<MTSCustomerOrdersDTO> GetMTSCustomerOrdersFullBySpecificationId(int customerOrderId)
+        {
+            var result = (from mco in mtsCustomerOrders.GetAll()
+                          join co in customerOrders.GetAll() on mco.CustomerOrderId equals co.Id into coc
+                          from co in coc.DefaultIfEmpty()
+                          join mso in mtsSpecifications.GetAll() on mco.SpecificationId equals mso.ID into msoo
+                          from mso in msoo.DefaultIfEmpty()
+                          join con in contractors.GetAll() on co.ContractorId equals con.Id into conn
+                          from con in conn.DefaultIfEmpty()
+
+                          where mco.CustomerOrderId == customerOrderId
+                          //orderby co.OrderDate, co.OrderNumber
+
+                          select new MTSCustomerOrdersDTO
+                          {
+                              Id = mco.Id,
+                              OrderNumber = co.OrderNumber,
+                              CustomerOrderId = co.Id,
+                              SpecificationId = mso.ID,
+                               Assembly = mso.ASSEMBLY,
+                                Quantity = mso.QUANTITY,
+                                  SpecificationName = mso.NAME,
+                                  
+                              DataCreateCustomerOrder = co.DateCreate,
+                              ContractorName = con.Name,
+                              DateCreate = mco.DateCreate,
+                              DateUpdate = mco.DateUpdate
+                          });
+
+            return result.ToList();
         }
 
         public IEnumerable<MTSDetailsDTO> GetAllDetailsSpecific(int spesificId)
@@ -540,7 +593,7 @@ namespace ERP_NEW.BLL.Services
                               NOMENCLATURESNOTE = mtsNom.NOTE,
 
                               NOM_GROUP_ID = mtsNomGroup.ID,
-                              NOM_GROUP_ADDIT_CALCULATION_ACTIVE = mtsNomGroup.ADDIT_CALCULATION_ACTIVE,
+                              //NOM_GROUP_ADDIT_CALCULATION_ACTIVE = (bool)mtsNomGroup.ADDIT_CALCULATION_ACTIVE,
                               NOM_GROUP_ADDIT_CALCULATION_ID = mtsNomGroup.ADDIT_CALCULATION_ID,
                               NOM_GROUP_CODPROD = mtsNomGroup.CODPROD,
                               NOM_GROUP_NAME = mtsNomGroup.NAME,
@@ -822,6 +875,13 @@ namespace ERP_NEW.BLL.Services
             mtsAssemblies.Update((mapper.Map<MtsAssembliesDTO, MtsAssemblies>(mtsAssembly, eGroup)));
         }
 
+        public void UpdateAssemblyDesignerCompany(int mtsAssemblyId, int designerCompanyId)
+        {
+            var eGroup = mtsAssemblies.GetAll().SingleOrDefault(c => c.Id == mtsAssemblyId);
+            eGroup.DesignerCompanyId = designerCompanyId;
+            mtsAssemblies.Update(eGroup);
+        }
+
         public bool DeleteAssembly(long id)
         {
             try
@@ -829,7 +889,7 @@ namespace ERP_NEW.BLL.Services
                 mtsAssemblies.Delete(mtsAssemblies.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -841,24 +901,24 @@ namespace ERP_NEW.BLL.Services
 
         public long CreateSpecification(MtsSpecificationsDTO mtsSpecification)
         {
-            var createrecord = mtsSpecifications.Create(mapper.Map<MtsSpecifications>(mtsSpecification));
+            var createrecord = mtsSpecificationss.Create(mapper.Map<MtsSpecifications>(mtsSpecification));
             return (long)createrecord.Id;
         }
 
         public void UpdateSpecification(MtsSpecificationsDTO mtsSpecification)
         {
-            var eGroup = mtsSpecifications.GetAll().SingleOrDefault(c => c.Id == mtsSpecification.Id);
-            mtsSpecifications.Update((mapper.Map<MtsSpecificationsDTO, MtsSpecifications>(mtsSpecification, eGroup)));
+            var eGroup = mtsSpecificationss.GetAll().SingleOrDefault(c => c.Id == mtsSpecification.Id);
+            mtsSpecificationss.Update((mapper.Map<MtsSpecificationsDTO, MtsSpecifications>(mtsSpecification, eGroup)));
         }
 
         public bool DeleteSpecification(long rootId)
         {
             try
             {
-                mtsSpecifications.DeleteAll(mtsSpecifications.GetAll().Where(c => c.RootId == rootId));
+                mtsSpecificationss.DeleteAll(mtsSpecificationss.GetAll().Where(c => c.RootId == rootId));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -887,7 +947,7 @@ namespace ERP_NEW.BLL.Services
                 mtsSpecificationsOld.Delete(mtsSpecificationsOld.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -913,7 +973,7 @@ namespace ERP_NEW.BLL.Services
                 mtsCreateDetals.Delete(mtsCreateDetals.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -939,7 +999,7 @@ namespace ERP_NEW.BLL.Services
                 mtsCreateDetals.Delete(mtsCreateDetals.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -951,19 +1011,19 @@ namespace ERP_NEW.BLL.Services
 
         public int MTSPurchasedProductsCreate(MTSPurchasedProductsDTO mtsPurchasedProductsDTO)
         {
-            var createPurchprod = mtsPurchasedProducts.Create(mapper.Map<MTSPurchasedProducts>(mtsPurchasedProductsDTO));
+            var createPurchprod = mtsPurchasedProductss.Create(mapper.Map<MTSPurchasedProducts>(mtsPurchasedProductsDTO));
             return (int)createPurchprod.ID;
         }
 
         public void MTSPurchasedProductsCreateRange(List<MTSPurchasedProductsDTO> source)
         {
-            mtsPurchasedProducts.CreateRange(mapper.Map<List<MTSPurchasedProductsDTO>, IEnumerable<MTSPurchasedProducts>>(source));
+            mtsPurchasedProductss.CreateRange(mapper.Map<List<MTSPurchasedProductsDTO>, IEnumerable<MTSPurchasedProducts>>(source));
         }
 
         public void MTSPurchasedProductsUpdate(MTSPurchasedProductsDTO mtsPurchasedProductsDTO)
         {
-            var updatePurchProd = mtsPurchasedProducts.GetAll().SingleOrDefault(c => c.ID == mtsPurchasedProductsDTO.ID);
-            mtsPurchasedProducts.Update((mapper.Map<MTSPurchasedProductsDTO, MTSPurchasedProducts>(mtsPurchasedProductsDTO, updatePurchProd)));
+            var updatePurchProd = mtsPurchasedProductss.GetAll().SingleOrDefault(c => c.ID == mtsPurchasedProductsDTO.ID);
+            mtsPurchasedProductss.Update((mapper.Map<MTSPurchasedProductsDTO, MTSPurchasedProducts>(mtsPurchasedProductsDTO, updatePurchProd)));
         }
 
         public bool MTSPurchasedProductsDelete(int id)
@@ -973,7 +1033,7 @@ namespace ERP_NEW.BLL.Services
                 mtsPurchasedProducts.Delete(mtsPurchasedProducts.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -985,19 +1045,19 @@ namespace ERP_NEW.BLL.Services
 
         public int MTSMaterialCreate(MTSMaterialsDTO mtsMaterialsDTO)
         {
-            var createMaterial= mtsMaterials.Create(mapper.Map<MTSMaterials>(mtsMaterialsDTO));
+            var createMaterial= mtsMaterialss.Create(mapper.Map<MTSMaterials>(mtsMaterialsDTO));
             return (int)createMaterial.ID;
         }
 
         public void MTSMaterialCreateRange(List<MTSMaterialsDTO> source)
         {
-            mtsMaterials.CreateRange(mapper.Map<List<MTSMaterialsDTO>, IEnumerable<MTSMaterials>>(source));
+            mtsMaterialss.CreateRange(mapper.Map<List<MTSMaterialsDTO>, IEnumerable<MTSMaterials>>(source));
         }
 
         public void MTSMaterialUpdate(MTSMaterialsDTO mtsMaterialsDTO)
         {
-            var updateMaterial = mtsMaterials.GetAll().SingleOrDefault(c => c.ID == mtsMaterialsDTO.ID);
-            mtsMaterials.Update((mapper.Map<MTSMaterialsDTO, MTSMaterials>(mtsMaterialsDTO, updateMaterial)));
+            var updateMaterial = mtsMaterialss.GetAll().SingleOrDefault(c => c.ID == mtsMaterialsDTO.ID);
+            mtsMaterialss.Update((mapper.Map<MTSMaterialsDTO, MTSMaterials>(mtsMaterialsDTO, updateMaterial)));
         }
 
         public bool MTSMaterialDelete(int id)
@@ -1007,7 +1067,7 @@ namespace ERP_NEW.BLL.Services
                 mtsMaterials.Delete(mtsMaterials.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1019,33 +1079,20 @@ namespace ERP_NEW.BLL.Services
 
         public int MTSDetailsCreate(MTSDetailsDTO mtsDetailsDTO)
         {
-            var createDetails = mtsDetails.Create(mapper.Map<MTSDetails>(mtsDetailsDTO));
+            var createDetails = mtsDetailss.Create(mapper.Map<MTSDetails>(mtsDetailsDTO));
             return (int)createDetails.ID;
         }
 
         public void MTSDetailsCreateRange(List<MTSDetailsDTO> source)
         {
-            mtsDetails.CreateRange(mapper.Map<List<MTSDetailsDTO>, IEnumerable<MTSDetails>>(source));
+            mtsDetailss.CreateRange(mapper.Map<List<MTSDetailsDTO>, IEnumerable<MTSDetails>>(source));
         }
 
         public void MTSDetailsUpdate(MTSDetailsDTO mtsDetailsDTO)
         {
-            var updateDetail = mtsDetails.GetAll().SingleOrDefault(c => c.ID == mtsDetailsDTO.ID);
-            mtsDetails.Update((mapper.Map<MTSDetailsDTO, MTSDetails>(mtsDetailsDTO, updateDetail)));
+            var updateDetail = mtsDetailss.GetAll().SingleOrDefault(c => c.ID == mtsDetailsDTO.ID);
+            mtsDetailss.Update((mapper.Map<MTSDetailsDTO, MTSDetails>(mtsDetailsDTO, updateDetail)));
         }
-
-        //public bool MTSDetailDelete(int id)
-        //{
-        //    try
-        //    {
-        //        mtsDetails.Delete(mtsDetails.GetAll().FirstOrDefault(c => c.ID == id));
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
 
         #endregion
 
@@ -1070,7 +1117,7 @@ namespace ERP_NEW.BLL.Services
                 mtsCreateDetals.Delete(mtsCreateDetals.GetAll().FirstOrDefault(c => c.ID == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

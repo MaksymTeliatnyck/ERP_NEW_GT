@@ -23,7 +23,6 @@ namespace ERP_NEW.GUI.Production
         private IStoreHouseService storeHouseService;
         private ICustomerOrdersService customerOrdersService;
         private IPeriodService periodService;
-        private IAccountsService accountsService;
         private IEmployeesService employeesService;
         private ICurrencyService currencyService;
 
@@ -37,22 +36,20 @@ namespace ERP_NEW.GUI.Production
         private BindingSource expendituresBS = new BindingSource();
 
         private Utils.Operation operation;
-        private Utils.ExpendTypes expendType;
         private UserTasksDTO userTasksDTO;
 
         private bool limitActive = false;
+        private bool enableOrderActive = false;
 
         private decimal expQuantity = 0.000000m;
         private decimal expPrice = 0.00m;
 
         private decimal expQuantityGeneral = 0.000000m;
-        private decimal expPriceGeneral = 0.00m;
+        //private decimal expPriceGeneral = 0.00m;
 
         private DateTime beginDate, endDate;
 
         private List<NomenclaturesDTO> nomenclatureSearch = new List<NomenclaturesDTO>();
-        //private List<ExpendituresStoreHousesDTO> expendituresStoreHouseList = new List<ExpendituresStoreHousesDTO>();
-        //private List<ExpendituresStoreHousesInfoDTO> expendituresStoreHouseInfoList = new List<ExpendituresStoreHousesInfoDTO>();
         private List<ExpedinturesAccountantDTO> expenditureStoreHouseList = new List<ExpedinturesAccountantDTO>();
         private List<ExpenditureInfoDTO> expenditureStoreHouseInfoList = new List<ExpenditureInfoDTO>();
 
@@ -75,6 +72,7 @@ namespace ERP_NEW.GUI.Production
             this.userTasksDTO = userTasksDTO;
             this.beginDate = beginDate;
             this.endDate = endDate;
+            this.operation = operation;
 
             expenditureBS.DataSource = Item = model;
             searchDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
@@ -356,7 +354,7 @@ namespace ERP_NEW.GUI.Production
             splashScreenManager.ShowWaitForm();
 
             //expenditureStoreHouseInfoList = storeHouseService.GetExpendituresStoreHousesInfoByPeriod(beginDate, endDate).ToList();
-            expenditureStoreHouseInfoList = storeHouseService.GetExpenditureJournalByPeriod(beginDate, endDate).Where(srch => srch.ExpenditureType == true).ToList();
+            expenditureStoreHouseInfoList = storeHouseService.GetExpenditureJournalByPeriod(beginDate, endDate).Where(srch => srch.ExpenditureType == true).OrderByDescending(ord => ord.Id).ToList();
             expenditureStoreHouseList = ConvertToExpenditureList(expenditureStoreHouseInfoList);
             expendituresBS.DataSource = expenditureStoreHouseList;
             expenditureFullGrid.DataSource = expendituresBS;
@@ -458,6 +456,22 @@ namespace ERP_NEW.GUI.Production
             }
         }
 
+        private void CheckCustomerOrderEnable(int? customerOrderId)
+        {
+            if (customerOrdersService.CheckCustomerOrderEnable((int?)orderNumberEdit.EditValue))
+            {
+                ShowCustomerOrderEnablePanel(true);
+                saveBtn.Enabled = false;
+
+            }
+            else
+            {
+                ShowCustomerOrderEnablePanel(false);
+                saveBtn.Enabled = true;
+            }
+          
+        }
+
         void ShowLimitPanel(bool showLimitPanel)
         {
             if (showLimitPanel)
@@ -472,6 +486,19 @@ namespace ERP_NEW.GUI.Production
             }
         }
 
+        void ShowCustomerOrderEnablePanel(bool customerOrdersEnablePanel)
+        {
+            if (customerOrdersEnablePanel)
+            {
+                enableOrderTimer.Start();
+                customerOrderEnablePanel.Visible = true;
+            }
+            else
+            {
+                enableOrderTimer.Stop();
+                customerOrderEnablePanel.Visible = false;
+            }
+        }
         private void Calculate()
         {
             if (remainsBS.Count != 0)
@@ -747,6 +774,22 @@ namespace ERP_NEW.GUI.Production
             }
         }
 
+        private void enableOrderTimer_Tick(object sender, EventArgs e)
+        {
+            if (enableOrderActive)
+            {
+                enableOrderPicture.Visible = true;
+                enableOrderActive = false;
+                return;
+            }
+            else
+            {
+                enableOrderPicture.Visible = false;
+                enableOrderActive = true;
+                return;
+            }
+        }
+
         private void expenditureFullGridView_RowCellStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs e)
         {
             ////if (e.RowHandle >= 0 && ((e.Column.Name == "expAccountantOrderCol") || (e.Column.Name == "expAccountCol") || (e.Column.Name == "expAccountQuantityCol")))
@@ -799,9 +842,10 @@ namespace ERP_NEW.GUI.Production
             }
             else
             {
-
                 LoadDetaExpenditureByCustomerOrder(beginDate, endDate, (int?)orderNumberEdit.EditValue);
                 LoadDataExpenditureTotalPrice((int?)orderNumberEdit.EditValue);
+                CheckCustomerOrderEnable((int?)orderNumberEdit.EditValue);
+
                 employeesEdit.Visible = false;
                 employeesLbl.Visible = false;
                 ((ExpedinturesAccountantDTO)Item).PROJECT_NUM = orderNumberEdit.Text.Replace(".", "");
@@ -841,6 +885,8 @@ namespace ERP_NEW.GUI.Production
             expQuantityGeneral = (decimal)0;
             expQuantityGeneralEdit.EditValue = expQuantityGeneral;
         }
+
+        
 
         private void storeHouseProjectGrid_DoubleClick(object sender, EventArgs e)
         {

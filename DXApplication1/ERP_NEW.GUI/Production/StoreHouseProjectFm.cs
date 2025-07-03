@@ -21,10 +21,8 @@ namespace ERP_NEW.GUI.Production
     public partial class StoreHouseProjectFm : DevExpress.XtraEditors.XtraForm
     {
         private IStoreHouseService storeHouseService;
-        private IReportService reportService;
         private ICustomerOrdersService customerOrdersService;
         private List<StoreHouseReceiptProjectDTO> stoteHouseReceiptProject = new List<StoreHouseReceiptProjectDTO>();
-        private string nomenclatureCurrent;
         private decimal quantityCurrent = 0;
         private string lastNomenclature;
         //private List<InvoiceRequirementOrdersDTO> invoiceRequiremtOrdersList = new List<InvoiceRequirementOrdersDTO>();
@@ -54,7 +52,7 @@ namespace ERP_NEW.GUI.Production
             //repositoryItemSearchLookUpEdit.DataSource = employeesService.GetEmployeesWorkingNonPhoto();
             repositoryItemGridLookUpEdit.ValueMember = "Id";
             repositoryItemGridLookUpEdit.DisplayMember = "OrderNumber";
-            repositoryItemGridLookUpEdit.Properties.NullText = "Немає данних";
+            repositoryItemGridLookUpEdit.NullText = "Немає данних";
 
 
             //firstDateEdit.EditValue = firstDay;

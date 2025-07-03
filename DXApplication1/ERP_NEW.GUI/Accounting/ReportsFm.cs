@@ -29,7 +29,6 @@ namespace ERP_NEW.GUI.Accounting
         private IReportService reportService;
         private IAccountsService accountService;
         private IFixedAssetsOrderService fixedAssetsOrderService;
-        private IEmployeesService employeesService;
         private IAccountingInvoicesService accountingInvoicesService;
         private IAccountsService accountsService;
         private ICustomerOrdersService customerOrdersService;
@@ -52,11 +51,26 @@ namespace ERP_NEW.GUI.Accounting
         {
             InitializeComponent();
 
-            beginYearEdit.EditValue = DateTime.Now;
-            endYearEdit.EditValue = DateTime.Now;
 
-            beginMonthEdit.EditValue = DateTime.Now.Month;
-            endMonthEdit.EditValue = DateTime.Now.Month;
+            if (Properties.Settings.Default.ReportFmBeginYear.Year < 2000)
+                beginYearEdit.EditValue = DateTime.Now;
+            else
+                beginYearEdit.EditValue = Properties.Settings.Default.ReportFmBeginYear;
+
+            if (Properties.Settings.Default.ReportFmEndYear.Year < 2000)
+                endYearEdit.EditValue = DateTime.Now;
+            else
+                endYearEdit.EditValue = Properties.Settings.Default.ReportFmEndYear;
+
+            if (Properties.Settings.Default.ReportFmBeginMonth == 0)
+                beginMonthEdit.EditValue = DateTime.Now.Month;
+            else
+                beginMonthEdit.EditValue = Properties.Settings.Default.ReportFmBeginMonth;
+
+            if (Properties.Settings.Default.ReportFmEndMonth == 0)
+                endMonthEdit.EditValue = DateTime.Now.Month;
+            else
+                endMonthEdit.EditValue = Properties.Settings.Default.ReportFmEndMonth;
 
             _beginDate = new DateTime(((DateTime)beginYearEdit.EditValue).Year, (int)beginMonthEdit.EditValue, 1);
             _endDate = new DateTime(((DateTime)endYearEdit.EditValue).Year, (int)beginMonthEdit.EditValue, 1).AddMonths(1).AddDays(-1);
@@ -66,7 +80,6 @@ namespace ERP_NEW.GUI.Accounting
             balanceAccountEdit.Properties.DataSource = accountService.GetCalcWithBuyerAccounts();
             balanceAccountEdit.Properties.ValueMember = "Id";
             balanceAccountEdit.Properties.DisplayMember = "Num";
-            //balanceAccountEdit.Properties.NullText = "Немає данних";
 
             bankAccountEdit.Properties.DataSource = accountService.GetBankPaymentAccounts();
             bankAccountEdit.Properties.ValueMember = "Id";
@@ -241,6 +254,10 @@ namespace ERP_NEW.GUI.Accounting
                         reportService.GetMSTrialBalanceByAccounts(_beginDate, _endDate, Flag1, Flag3, Flag4, PFlag3, PFlag4, true);
                         //MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
+                    case "631":
+                        reportService.GetMSTrialBalanceByAccounts(_beginDate, _endDate, Flag1, Flag3, Flag4, PFlag3, PFlag4);
+                        //MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
                     default:
                         reportService.GetMSTrialBalanceByAccounts(_beginDate, _endDate, Flag1, Flag3, Flag4, PFlag3, PFlag4);
                        // MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -314,6 +331,10 @@ namespace ERP_NEW.GUI.Accounting
                         if (!reportService.PrintMSReconciliation362_681(bankPaymentsList, calcWithBuyersList, calcWithBuyersForSaldoList, _beginDate, _endDate))
                             MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
+                    case "631+63":
+                        if (!reportService.GetMSReconciliation(_beginDate, _endDate, (int)contractorsEdit.EditValue, "15", "16", contractorAccountsEdit.Text, contractorsEdit.Text, currentContractorSrnCode))
+                            MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
 
                     default:
                         if (!reportService.GetMSReconciliation(_beginDate, _endDate, (int)contractorsEdit.EditValue, PFlag3, PFlag4, contractorAccountsEdit.Text, contractorsEdit.Text, currentContractorSrnCode))
@@ -350,7 +371,7 @@ namespace ERP_NEW.GUI.Accounting
                     Flag1 = "-1"; Flag3 = "-1"; Flag4 = "1";
                     PFlag3 = "16"; PFlag4 = "16";
                     break;
-                case "631, 63":
+                case "631+63":
                     Flag1 = "1"; Flag3 = "1"; Flag4 = "1";
                     PFlag3 = "15"; PFlag4 = "16";
                     break;
@@ -366,7 +387,7 @@ namespace ERP_NEW.GUI.Accounting
                     Flag1 = "1"; Flag3 = "1"; Flag4 = "-1";
                     PFlag3 = "128"; PFlag4 = "128";
                     break;
-                case "362,681":
+                case "362+681":
                     Flag1 = "1"; Flag3 = "1"; Flag4 = "-1";
                     PFlag3 = "101"; PFlag4 = "96";
                     break;
@@ -385,7 +406,31 @@ namespace ERP_NEW.GUI.Accounting
 
         private void debtorsCreditorsBtn_Click(object sender, EventArgs e)
         {
+            //reportService.GetMSTrialBalanceByAccounts(_beginDate, _endDate, Flag1, Flag3, Flag4, PFlag3, PFlag4);
 
+
+            try
+            {
+                splashScreenManager.ShowWaitForm();
+
+                reportService = Program.kernel.Get<IReportService>();
+
+                //if(!reportService.GetMSTrialBalanceByAccounts(_beginDate, _endDate, Flag1, Flag3, Flag4, PFlag3, PFlag4))
+                //    MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!reportService.GetMSDebitCredit(_beginDate, _endDate, "1", "1", "1", "15", "16"))
+                    MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                splashScreenManager.CloseWaitForm();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                splashScreenManager.CloseWaitForm();
+
+                return;
+            }
         }
 
         private void paymentsWithoutVatBtn_Click(object sender, EventArgs e)
@@ -1180,6 +1225,16 @@ namespace ERP_NEW.GUI.Accounting
                 reportService = Program.kernel.Get<IReportService>();
 
                 var accountingInvoices = accountingInvoicesService.GetInvoices(_beginDate, _endDate);
+                //var accountingInvoicesByMonthInvoices = accountingInvoicesService.GetInvoicesByMonthInvoice(_beginDate, _endDate);
+
+                //List<InvoicesDTO> accountingInvoicesList = new List<InvoicesDTO>();
+                //accountingInvoicesList.AddRange(accountingInvoices);
+                //accountingInvoicesList.AddRange(accountingInvoicesByMonthInvoices);
+
+                //var res = accountingInvoicesList.GroupBy(x => x.Id).Select(x => x.First());
+
+
+                //List<InvoicesDTO> accountingInvoicesSortList = accountingInvoicesList.Union(accountingInvoicesList).ToList();
 
                 if (!reportService.GetOperationActByPeriod(_beginDate, _endDate, accountingInvoices))
                     MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1241,9 +1296,37 @@ namespace ERP_NEW.GUI.Accounting
             }
         }
 
-        private void beginYearEdit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void expenditureByContractorsReportBtn_Click(object sender, EventArgs e)
         {
+            try
+            {
+                splashScreenManager.ShowWaitForm();
 
+                reportService = Program.kernel.Get<IReportService>();
+
+                if (!reportService.GetExpenditureByContractorByPeriod(_beginDate, _endDate))
+                    MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                splashScreenManager.CloseWaitForm();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                splashScreenManager.CloseWaitForm();
+
+                return;
+            }
+        
+    }
+
+        private void ReportsFm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.ReportFmBeginMonth = (int)beginMonthEdit.EditValue;
+            Properties.Settings.Default.ReportFmBeginYear = (DateTime)beginYearEdit.EditValue;
+            Properties.Settings.Default.ReportFmEndMonth = (int)endMonthEdit.EditValue;
+            Properties.Settings.Default.ReportFmEndYear = (DateTime)endYearEdit.EditValue;
+            Properties.Settings.Default.Save();
         }
 
         private void chessBtn_Click(object sender, EventArgs e)
@@ -1317,8 +1400,11 @@ namespace ERP_NEW.GUI.Accounting
                 calcWithBuyersService = Program.kernel.Get<ICalcWithBuyersService>();
 
                 List<CalcWithBuyersInfoDTO> calcWithBayersInfoList36_1 = new List<CalcWithBuyersInfoDTO>();
-                calcWithBayersInfoList36_1 = calcWithBuyersService.GetCalcWithBuyersJournal(_beginDate, _endDate).Where(a => a.BalanceNum == "712" && a.PurposeNum == "36/1").ToList();
 
+                splashScreenManager.CloseWaitForm();
+
+                calcWithBayersInfoList36_1 = calcWithBuyersService.GetCalcWithBuyersJournal(_beginDate, _endDate).Where(a => a.BalanceNum == "712" && a.PurposeNum == "36/1").ToList();
+                
 
                 //try
                 //{
@@ -1334,7 +1420,7 @@ namespace ERP_NEW.GUI.Accounting
                 //    return;
                 //}
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

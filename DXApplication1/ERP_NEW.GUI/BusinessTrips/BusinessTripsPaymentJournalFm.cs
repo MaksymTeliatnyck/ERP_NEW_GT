@@ -26,6 +26,7 @@ namespace ERP_NEW.GUI.BusinessTrips
     {
         private IAccountsService accountsService;
         private IBusinessTripsService businessTripsService;
+        private ICustomerOrdersService customerOrdersService;
         private IReportService reportService;
         private IPeriodService periodService;
         
@@ -34,6 +35,7 @@ namespace ERP_NEW.GUI.BusinessTrips
         private BindingSource paymentsBS = new BindingSource();
 
         private List<ColorsDTO> colorsPallete = new List<ColorsDTO>();
+        private List<BusinessTripsOrderCustDTO> businessTripsCustOrderList = new List<BusinessTripsOrderCustDTO>();
 
         private UserTasksDTO _userTasksDTO;
         private DateTime _beginDate;
@@ -52,6 +54,7 @@ namespace ERP_NEW.GUI.BusinessTrips
 
             businessTripsService = Program.kernel.Get<IBusinessTripsService>();
             accountsService = Program.kernel.Get<IAccountsService>();
+            customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
 
             //splashScreenManager.ShowWaitForm();
 
@@ -80,6 +83,11 @@ namespace ERP_NEW.GUI.BusinessTrips
 
             LoadDataByPeriod(_beginDate, _endDate);
 
+            repositoryItemGridLookUpEdit.DataSource = customerOrdersService.GetCustomerOrders(); 
+            repositoryItemGridLookUpEdit.ValueMember = "Id";
+            repositoryItemGridLookUpEdit.DisplayMember = "OrderNumber";
+            //repositoryItemGridLookUpEdit.Properties.NullText = "Немає данних";
+
             //splashScreenManager.CloseWaitForm();
 
             //MergedRowsHelper helper = new MergedRowsHelper();
@@ -98,6 +106,11 @@ namespace ERP_NEW.GUI.BusinessTrips
             editPaymentBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
             deletePaymentBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
             addTemplatePaymentBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
+            periodBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
+            customerOrderEditBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
+            markedBusinessTripsBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
+            customerOrderAtachEdit.Enabled = (_userTasksDTO.AccessRightId == 2);
+            editPaymantAccountBtn.Enabled = (_userTasksDTO.AccessRightId == 2);
         }
 
         private void LoadDataByPeriod(DateTime beginDate, DateTime endDate)
@@ -108,7 +121,7 @@ namespace ERP_NEW.GUI.BusinessTrips
 
             var fdf = businessTripsService.GetBusinessTripsPrepaymentJournalByPeriod(_beginDate, _endDate);
             businessTripsBS.DataSource = fdf;
-            businessTripsGrid.DataSource = businessTripsBS;
+            За.DataSource = businessTripsBS;
 
             if (businessTripsBS.Count > 0)
             {
@@ -1002,7 +1015,7 @@ namespace ERP_NEW.GUI.BusinessTrips
 
                 reportService = Program.kernel.Get<IReportService>();
 
-                if (!reportService.GetBSTReportPrepaymentsByAccountId((DateTime)beginReportDateEdit.EditValue, (DateTime)endReportDateEdit.EditValue, 176, "473"))
+                if (!reportService.GetBSTReportPaymentsByAccountId((DateTime)beginReportDateEdit.EditValue, (DateTime)endReportDateEdit.EditValue, 176, "473"))
                     MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 splashScreenManager.CloseWaitForm();
@@ -1013,6 +1026,75 @@ namespace ERP_NEW.GUI.BusinessTrips
 
                 splashScreenManager.CloseWaitForm();
 
+                return;
+            }
+        }
+
+        private void bstReportPaymentsBy474_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                splashScreenManager.ShowWaitForm();
+
+                reportService = Program.kernel.Get<IReportService>();
+
+                if (!reportService.GetBSTReportPaymentsByAccountId((DateTime)beginReportDateEdit.EditValue, (DateTime)endReportDateEdit.EditValue, 134, "474"))
+                    MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                splashScreenManager.CloseWaitForm();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("При формуванні звіту виникла помилка: " + ex.Message, "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                splashScreenManager.CloseWaitForm();
+
+                return;
+            }
+        }
+
+        private void customerOrderAtachEdit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (customerOrderEdit.EditValue != null)
+            {
+
+                //splashScreenManager.ShowWaitForm();
+
+                businessTripsGridView.PostEditor();
+
+                businessTripsGridView.BeginDataUpdate();
+
+                List<BusinessTripsPrepaymentJournalDTO> businessTripsPrepaymentJournalDTO = (List<BusinessTripsPrepaymentJournalDTO>)businessTripsBS.DataSource;
+                var customerOrder = repositoryItemGridLookUpEdit.GetRowByKeyValue((int)customerOrderEdit.EditValue);
+                var checkItems = businessTripsPrepaymentJournalDTO.Where(t => t.Check == true);
+
+                //List<BusinessTripsPrepaymentJournalDTO> selectedItem  = ((List<BusinessTripsPrepaymentJournalDTO>)businessTripsBS.DataSource).Where(s => (bool)s.Check == true).ToList();
+                if (checkItems.Count() > 0)
+                {
+                    foreach (var item in checkItems)
+                    {
+                        BusinessTripsOrderCustDTO businessTripsOrderCustDTO = new BusinessTripsOrderCustDTO()
+                        {
+                            ID = 0,
+                            BusinessTripsId = item.BusinessTripsID,
+                            CustomerOrderId = (int)((CustomerOrdersDTO)customerOrder).Id,
+                            UserId = _userTasksDTO.UserId
+                        };
+
+                        businessTripsService.BusinessTripsOrderCustCreate(businessTripsOrderCustDTO);
+
+                    }
+
+                    LoadDataByPeriod(_beginDate, _endDate);
+                }
+
+                else { MessageBox.Show("Не обрано відрядження!"); }
+
+                businessTripsGridView.EndDataUpdate();
+            }
+            else
+            {
+                MessageBox.Show("Не обрано співробітника або не додано суму!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }

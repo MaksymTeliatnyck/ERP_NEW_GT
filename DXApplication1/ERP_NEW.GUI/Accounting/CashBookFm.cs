@@ -20,6 +20,8 @@ namespace ERP_NEW.GUI.Accounting
     {
         private ICashBookService cashBookService;
         private IReportService reportService;
+        private ILogService logService;
+        private string NameForm = "CashBookFm";
 
         private BindingSource cashBookBS = new BindingSource();
         private BindingSource cashBookRecordsBS = new BindingSource();
@@ -27,21 +29,23 @@ namespace ERP_NEW.GUI.Accounting
         List<CashBookPageDTO> cashBookPagesList = new List<CashBookPageDTO>();
 
         private UserTasksDTO userTasksDTO;
+        private CashBooksDTO cashBooksDTO;
         private CashBookBalanceDTO cashBookBalanceDTO = new CashBookBalanceDTO();
 
         private DateTime currentDate;
         private DateTime stockDate = new DateTime(2018,12,31);
 
-        private decimal beginDayPrice = 0.00m;
-        private decimal endDayPrice = 0.00m;
+        //private decimal beginDayPrice = 0.00m;
+        //private decimal endDayPrice = 0.00m;
 
 
 
-        public CashBookFm(UserTasksDTO userTasksDTO)
+        public CashBookFm(UserTasksDTO userTasksDTO, CashBooksDTO cashBooksDTO)
         {
             InitializeComponent();
 
             this.userTasksDTO = userTasksDTO;
+            this.cashBooksDTO = cashBooksDTO;
 
             yearEdit.EditValue = DateTime.Now;
 
@@ -65,7 +69,7 @@ namespace ERP_NEW.GUI.Accounting
 
             cashBookService = Program.kernel.Get<ICashBookService>();
             
-            cashBookPagesList = cashBookService.GetPageByPeriod(beginDate, endDate).OrderByDescending(c => c.PageDate).ToList();
+            cashBookPagesList = cashBookService.GetPageByPeriod(beginDate, endDate, cashBooksDTO.Id).OrderByDescending(c => c.PageDate).ToList();
 
             if (cashBookPagesList.Count() > 0)
             {
@@ -137,7 +141,7 @@ namespace ERP_NEW.GUI.Accounting
             }
             
 
-            var balanceByPeriod = cashBookService.GetCashBookBalanceByPeriod(stockDate, currentDate);
+            var balanceByPeriod = cashBookService.GetCashBookBalanceByPeriod(stockDate, currentDate, cashBooksDTO.Id);
 
             cashBookBalanceDTO = balanceByPeriod.FirstOrDefault(bbp => bbp.Id == 1);
             cashBookBalanceDTO.SumBeginDay = cashBookBalanceDTO.FullSaldo;
@@ -181,9 +185,9 @@ namespace ERP_NEW.GUI.Accounting
             }
         }
 
-        private void EditCashBookPages(Utils.Operation operation, CashBookPageDTO model, List<CashBookRecordJournalDTO> cashBookrecordsList)
+        private void EditCashBookPages(Utils.Operation operation, CashBookPageDTO model, List<CashBookRecordJournalDTO> cashBookrecordsList, UserTasksDTO userTasksDTO)
         {
-            using (CashBookEditFm cashBookEditFm = new CashBookEditFm(operation, model, cashBookrecordsList))
+            using (CashBookEditFm cashBookEditFm = new CashBookEditFm(operation, model, cashBookrecordsList, userTasksDTO))
             {
                 if (cashBookEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -216,12 +220,12 @@ namespace ERP_NEW.GUI.Accounting
 
         private void addBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            EditCashBookPages(Utils.Operation.Add, new CashBookPageDTO(), new List<CashBookRecordJournalDTO>());
+            EditCashBookPages(Utils.Operation.Add, new CashBookPageDTO() {  CashBookId = cashBooksDTO.Id}, new List<CashBookRecordJournalDTO>(), userTasksDTO);
         }
 
         private void editBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            EditCashBookPages(Utils.Operation.Update, (CashBookPageDTO)cashBookBS.Current, (List<CashBookRecordJournalDTO>)cashBookRecordsBS.DataSource);
+            EditCashBookPages(Utils.Operation.Update, (CashBookPageDTO)cashBookBS.Current, (List<CashBookRecordJournalDTO>)cashBookRecordsBS.DataSource, userTasksDTO);
         }
 
         private void deleteBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -235,6 +239,8 @@ namespace ERP_NEW.GUI.Accounting
                 catch (System.Exception ex)
                 {
                     MessageBox.Show("При видаленні виникла помилка. " + ex.Message, "Видалення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTasksDTO, NameForm); 
+
                 }
             }
         }
@@ -291,7 +297,7 @@ namespace ERP_NEW.GUI.Accounting
                 reportService = Program.kernel.Get<IReportService>();
                 cashBookService = Program.kernel.Get<ICashBookService>();
 
-                var balanceByPeriod = cashBookService.GetCashBookBalanceByPeriod(stockDate, (DateTime)firstReportDateEdit.EditValue);
+                var balanceByPeriod = cashBookService.GetCashBookBalanceByPeriod(stockDate, (DateTime)firstReportDateEdit.EditValue, cashBooksDTO.Id);
 
                 cashBookBalanceDTO = balanceByPeriod.FirstOrDefault(bbp => bbp.Id == 1);
 
@@ -311,17 +317,33 @@ namespace ERP_NEW.GUI.Accounting
             }
         }
 
-        #endregion
-
         private void printTrialSaldoBalanceBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            reportService = Program.kernel.Get<IReportService>();
+            if (firstReportDateEdit.EditValue != null || lastReportDateEdit.EditValue != null)
+                reportService.GetCashBookTrialBalanceByAccounts((DateTime)firstReportDateEdit.EditValue, (DateTime)lastReportDateEdit.EditValue);
+            else
+                MessageBox.Show("Не вказана дата");
+        }
 
-                reportService = Program.kernel.Get<IReportService>();
+        private void endDayPriceEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            if ((decimal)endDayPriceEdit.EditValue > 10000)
+            {
+                endDayPriceEdit.ItemAppearance.Normal.ForeColor = Color.Red;
+                endDayPriceEdit.ItemAppearance.Hovered.ForeColor = Color.Red;
+                endDayPriceEdit.ItemAppearance.Pressed.ForeColor = Color.Red;
+            }
+            else
+            {
+                endDayPriceEdit.ItemAppearance.Normal.ForeColor = Color.Black;
+                endDayPriceEdit.ItemAppearance.Hovered.ForeColor = Color.Black;
+                endDayPriceEdit.ItemAppearance.Pressed.ForeColor = Color.Black;
+            }
+        }
 
-                if (firstReportDateEdit.EditValue != null || lastReportDateEdit.EditValue != null)
-                    reportService.GetCashBookTrialBalanceByAccounts((DateTime)firstReportDateEdit.EditValue, (DateTime)lastReportDateEdit.EditValue);
-                else
-                    MessageBox.Show("Не вказана дата");
-        }  
+        #endregion
+
+
     }
 }

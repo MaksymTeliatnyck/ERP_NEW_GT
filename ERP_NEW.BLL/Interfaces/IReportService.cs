@@ -61,9 +61,10 @@ namespace ERP_NEW.BLL.Interfaces
         void PrintBusinessTripDecreeCancel(List<BusinessTripsJournalDTO> source);
         void PrintBusinessTripDecreeProlong(List<BusinessTripsJournalDTO> source);
 
-      
-             
+
         
+
+
         void PrintCustomerOrderInfo(CustomerOrdersDTO curRecord);
 
         void PrintAccountClothesCard(AccountClothesInfoDTO model, List<AccountClothesMaterialsDTO> source);
@@ -89,7 +90,7 @@ namespace ERP_NEW.BLL.Interfaces
 
         void PrintTimeSheet(List<EmployeesInfoDTO> list, DateTime dateTime);
 
-        void PrintAccountingInvoices(List<InvoicesDTO> sourceList);
+        void PrintAccountingInvoices(List<InvoicesDTO> sourceList, int? month = null);
 
          List<PaymentDTO> GetPayments(DateTime startDate, DateTime endDate);
 
@@ -100,6 +101,8 @@ namespace ERP_NEW.BLL.Interfaces
         void GetPaymentsReport(List<ReportInvoiceDTO> invoices, List<PaymentDTO> payments, IEnumerable<BeginCreditDTO> beginCredit);
 
         bool GetExpenditureForProjectByPeriod(DateTime startDate, DateTime endDate);
+
+        bool GetExpenditureByContractorByPeriod(DateTime startDate, DateTime endDate);
         bool ExpendituresForProject(List<ExpedinturesAccountantDTO> source, DateTime startDate, DateTime endDate);
         bool ExpendituresForProject(List<ExpenditureInfoDTO> source);
         bool ExpendituresForProjectWithTotalPrice(List<ExpedinturesAccountantDTO> source, DateTime startDate, DateTime endDate, bool materialPrint);
@@ -114,6 +117,7 @@ namespace ERP_NEW.BLL.Interfaces
         bool PrintTrialBalanceAccounts(List<TrialBalanceByAccountsReportDTO> reportList, string StartDate, string EndDate);
 
         void PrintFixedAssetsOder(FixedAssetsOrderJournalDTO model, List<FixedAssetsMaterialsDTO> materialsListSource, DateTime endDate, DateTime startDate);
+        void PrintFixedAssetsOderNew(FixedAssetsOrderJournalDTO model, List<FixedAssetsMaterialsDTO> materialsListSource, DateTime endDate, DateTime firstDay);
         void PrintInventoryCardForSoftware(FixedAssetsOrderJournalDTO model);
         void PrintFixedAssetsOrderAct(FixedAssetsOrderJournalDTO model, List<FixedAssetsMaterialsDTO> materialsListSource);
         void PrintFixedAssetsOrderActWriteOff(FixedAssetsOrderJournalDTO model, List<FixedAssetsMaterialsDTO> materialsListSource, int monthSource, int yearSource);
@@ -170,6 +174,9 @@ namespace ERP_NEW.BLL.Interfaces
         IEnumerable<ContractorVatDTO> GetContractorVatForChess(DateTime startDate, DateTime endDate);
         IEnumerable<CashPaymentsPeriodBalanceDTO> GetEconomicsNeeds_ForChess(DateTime startDate, DateTime endDate);
         IEnumerable<GetOSVkvartal_ForChessDTO> GetOSVkvartal_ForChess(DateTime startDate, DateTime endDate, int accountId);
+
+        bool GetMSDebitCredit(DateTime startDate, DateTime endDate, string flag1, string flag3, string flag4, string pflag3, string pflag4);
+        bool PrintMSDebitCredit(List<MsDebitCreditDTO> reportTable, DateTime EndDate);
         void Dispose();
 
 

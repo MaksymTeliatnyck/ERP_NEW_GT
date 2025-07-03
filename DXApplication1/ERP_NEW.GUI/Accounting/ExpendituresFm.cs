@@ -54,9 +54,19 @@ namespace ERP_NEW.GUI.Accounting
             this.endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
 
             LoadExpendituresjournalByPeriod(beginDate, endDate);
+            AuthorizatedUserAccess();
         }
 
         #region Method's
+
+        private void AuthorizatedUserAccess()
+        {
+            addBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            editOrderBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            editBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            deleteBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+            periodBtn.Enabled = (userTasksDTO.AccessRightId == 2);
+        }
 
         private void LoadExpendituresjournalByPeriod(DateTime beginDate, DateTime endDate)
         {
@@ -343,7 +353,7 @@ namespace ERP_NEW.GUI.Accounting
             var optionXls = new XlsExportOptionsEx();
 
             optionXls.SheetName = "Списання матеріалів";
-            optionXls.TextExportMode = DevExpress.XtraPrinting.TextExportMode.Text;
+            optionXls.TextExportMode = DevExpress.XtraPrinting.TextExportMode.Value;
             optionXls.ShowColumnHeaders = DevExpress.Utils.DefaultBoolean.True;
             optionXls.ExportType = ExportType.WYSIWYG;
             expenditureBandedGridView.OptionsPrint.AutoWidth = false;
@@ -374,7 +384,7 @@ namespace ERP_NEW.GUI.Accounting
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Файл вже відкрито! Закрийте файл!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -383,8 +393,6 @@ namespace ERP_NEW.GUI.Accounting
         private void expenditureBandedGridView_RowCellStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs e)
         {
             GridView gv = sender as GridView;
-            Decimal valueCur;
-            Decimal valueInv;
 
             var valueCurrentCreditAcc = gv.GetRowCellValue(e.RowHandle, "CreditAccountNum");
             var valueCurrentCheckDate = gv.GetRowCellValue(e.RowHandle, "ExpenditureCheckDate");

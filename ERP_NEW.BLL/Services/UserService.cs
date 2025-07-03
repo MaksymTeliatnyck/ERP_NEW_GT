@@ -90,24 +90,59 @@ namespace ERP_NEW.BLL.Services
                 
                 return true;
             }
-            return false;
+            else //cюда попадаем если пользователя нету в базе или если не получилось подключится к базе
+            {
+                AuthorizatedUser = GetUserDetails(empNumber);
+                //AuthorizatedUserAccess = GetAuthorizationUserTasks(AuthorizatedUser.UserId);
+                return false;
+            }
+        }
+
+
+        public int GetEmployeeIdByUserId(int userId)
+        {
+            int employeeId = users.GetAll().SingleOrDefault(c => c.UserId == userId).EmployeeId;
+            return employeeId;
         }
 
         public UsersDTO GetUserByNumber(decimal employeeNumber)
         {
-            var user = users.GetAll().SingleOrDefault(c => c.EmployeeNumber == employeeNumber);
-            return mapper.Map<Users, UsersDTO>(user);        
+            try
+            {
+                var user = users.GetAll().SingleOrDefault(c => c.EmployeeNumber == employeeNumber);
+                return mapper.Map<Users, UsersDTO>(user);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }       
         }
 
         private UserDetailsDTO GetUserDetails(decimal employeeNumber)
         {
-            FbParameter[] Parameters =
+            if (employeeNumber > 0)
             {
+                FbParameter[] Parameters =
+                {
                 new FbParameter("Number", employeeNumber),
-            };
-            string procName = @"select * from ""GetUserDetails""(@Number)";
+                };
+                string procName = @"select * from ""GetUserDetails""(@Number)";
 
-            return mapper.Map<UserDetailsDTO>(userDetails.SQLExecuteProc(procName, Parameters).SingleOrDefault()); 
+                return mapper.Map<UserDetailsDTO>(userDetails.SQLExecuteProc(procName, Parameters).SingleOrDefault());
+            }
+            else
+            {
+                UserDetailsDTO noDatabaseUser = new UserDetailsDTO()
+                {
+                    AccountNumber = -1,
+                    UserId = -1,
+                    DepartmentName = "",
+                    Fio = "Користувач відсутній в базі",
+                    UserPhoto = null
+                };
+
+                return noDatabaseUser;
+            }
         }
 
         private UserDetailsDTO GetUserDetailsCrutch(decimal employeeNumber) // процедура для возможности работы с учетки человека уволленого с предприятия
@@ -242,7 +277,7 @@ namespace ERP_NEW.BLL.Services
                 userTasks.Delete(delTasks);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -261,7 +296,7 @@ namespace ERP_NEW.BLL.Services
                 users.Delete(delUser);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -289,7 +324,7 @@ namespace ERP_NEW.BLL.Services
                 userRoles.Delete(delUserRole);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {                
                 return false;
             }
@@ -345,7 +380,7 @@ namespace ERP_NEW.BLL.Services
                 tasks.Delete(deltasks);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

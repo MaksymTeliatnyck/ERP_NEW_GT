@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NomenclaturesFm));
             DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
             DevExpress.XtraCharts.Series series1 = new DevExpress.XtraCharts.Series();
             DevExpress.XtraCharts.LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
-            this.receiptHistoryOrdersDTOBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.receiptHistoryOrdersDTOBindingSource = new System.Windows.Forms.BindingSource();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.addMaterialsBtn = new DevExpress.XtraBars.BarButtonItem();
@@ -44,6 +43,7 @@
             this.editGroupBtn = new DevExpress.XtraBars.BarButtonItem();
             this.deleteGroupBtn = new DevExpress.XtraBars.BarButtonItem();
             this.addSubGroupBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.printNomenclatureBtn = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -115,10 +115,11 @@
             this.addGroupBtn,
             this.editGroupBtn,
             this.deleteGroupBtn,
-            this.addSubGroupBtn});
+            this.addSubGroupBtn,
+            this.printNomenclatureBtn});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ribbonControl1.MaxItemId = 10;
+            this.ribbonControl1.MaxItemId = 11;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -198,6 +199,16 @@
             this.addSubGroupBtn.Name = "addSubGroupBtn";
             this.addSubGroupBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addSubGroupBtn_ItemClick);
             // 
+            // printNomenclatureBtn
+            // 
+            this.printNomenclatureBtn.Caption = "Друк номенклатури";
+            this.printNomenclatureBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("printNomenclatureBtn.Glyph")));
+            this.printNomenclatureBtn.Id = 10;
+            this.printNomenclatureBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("printNomenclatureBtn.LargeGlyph")));
+            this.printNomenclatureBtn.Name = "printNomenclatureBtn";
+            this.printNomenclatureBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.printNomenclatureBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.printNomenclatureBtn_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -229,6 +240,7 @@
             // ribbonPageGroup2
             // 
             this.ribbonPageGroup2.AllowTextClipping = false;
+            this.ribbonPageGroup2.ItemLinks.Add(this.printNomenclatureBtn);
             this.ribbonPageGroup2.ItemLinks.Add(this.refreshBtn);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.ShowCaptionButton = false;
@@ -291,7 +303,7 @@
             this.splitContainerControl2.Panel1.Text = "Panel1";
             this.splitContainerControl2.Panel2.Controls.Add(this.xtraTabControl1);
             this.splitContainerControl2.Panel2.Text = "Panel2";
-            this.splitContainerControl2.Size = new System.Drawing.Size(854, 473);
+            this.splitContainerControl2.Size = new System.Drawing.Size(853, 473);
             this.splitContainerControl2.SplitterPosition = 264;
             this.splitContainerControl2.TabIndex = 0;
             this.splitContainerControl2.Text = "splitContainerControl2";
@@ -305,7 +317,7 @@
             this.nomenclaturesMaterialGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nomenclaturesMaterialGrid.MenuManager = this.ribbonControl1;
             this.nomenclaturesMaterialGrid.Name = "nomenclaturesMaterialGrid";
-            this.nomenclaturesMaterialGrid.Size = new System.Drawing.Size(854, 264);
+            this.nomenclaturesMaterialGrid.Size = new System.Drawing.Size(853, 264);
             this.nomenclaturesMaterialGrid.TabIndex = 0;
             this.nomenclaturesMaterialGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.nomenclaturesMaterialGridView});
@@ -320,7 +332,6 @@
             this.numCol});
             this.nomenclaturesMaterialGridView.GridControl = this.nomenclaturesMaterialGrid;
             this.nomenclaturesMaterialGridView.Name = "nomenclaturesMaterialGridView";
-            this.nomenclaturesMaterialGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.nomenclaturesMaterialGridView.OptionsView.ShowAutoFilterRow = true;
             this.nomenclaturesMaterialGridView.OptionsView.ShowGroupedColumns = true;
             this.nomenclaturesMaterialGridView.OptionsView.ShowGroupPanel = false;
@@ -388,7 +399,7 @@
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
             this.xtraTabControl1.ShowTabHeader = DevExpress.Utils.DefaultBoolean.True;
-            this.xtraTabControl1.Size = new System.Drawing.Size(854, 204);
+            this.xtraTabControl1.Size = new System.Drawing.Size(853, 203);
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -400,7 +411,7 @@
             this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage1.Name = "xtraTabPage1";
             this.xtraTabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.xtraTabPage1.Size = new System.Drawing.Size(848, 176);
+            this.xtraTabPage1.Size = new System.Drawing.Size(847, 175);
             this.xtraTabPage1.Text = "Графік цін ";
             // 
             // chartControl
@@ -474,7 +485,7 @@
             this.chartControl.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1};
             this.chartControl.SeriesTemplate.ArgumentDataMember = "OrderDate";
-            this.chartControl.Size = new System.Drawing.Size(840, 168);
+            this.chartControl.Size = new System.Drawing.Size(839, 167);
             this.chartControl.TabIndex = 0;
             // 
             // xtraTabPage2
@@ -483,7 +494,7 @@
             this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
             this.xtraTabPage2.Name = "xtraTabPage2";
             this.xtraTabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.xtraTabPage2.Size = new System.Drawing.Size(848, 176);
+            this.xtraTabPage2.Size = new System.Drawing.Size(847, 175);
             this.xtraTabPage2.Text = "Надходження";
             // 
             // recieptArchiveGrid
@@ -495,7 +506,7 @@
             this.recieptArchiveGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.recieptArchiveGrid.MenuManager = this.ribbonControl1;
             this.recieptArchiveGrid.Name = "recieptArchiveGrid";
-            this.recieptArchiveGrid.Size = new System.Drawing.Size(840, 168);
+            this.recieptArchiveGrid.Size = new System.Drawing.Size(839, 167);
             this.recieptArchiveGrid.TabIndex = 0;
             this.recieptArchiveGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.recieptArchibeGridView});
@@ -514,7 +525,6 @@
             this.dateCol});
             this.recieptArchibeGridView.GridControl = this.recieptArchiveGrid;
             this.recieptArchibeGridView.Name = "recieptArchibeGridView";
-            this.recieptArchibeGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.recieptArchibeGridView.OptionsView.ShowGroupPanel = false;
             // 
             // nomenclatureArchivCol
@@ -692,5 +702,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn unitPriceCol;
         private DevExpress.XtraGrid.Columns.GridColumn quantityCol;
         private DevExpress.XtraCharts.ChartControl chartControl;
+        private DevExpress.XtraBars.BarButtonItem printNomenclatureBtn;
     }
 }

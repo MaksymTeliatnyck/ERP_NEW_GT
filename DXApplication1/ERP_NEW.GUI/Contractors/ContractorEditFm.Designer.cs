@@ -38,6 +38,8 @@
             this.xtraTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.contractorContactAddressesPage = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
+            this.activeCheck = new DevExpress.XtraEditors.CheckEdit();
             this.validateLbl = new DevExpress.XtraEditors.LabelControl();
             this.cancelBtn = new DevExpress.XtraEditors.SimpleButton();
             this.ownTypeCBox = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -84,6 +86,7 @@
             this.contractorContactAddressesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.activeCheck.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ownTypeCBox.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nameTBox.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productCategoryEdit.Properties)).BeginInit();
@@ -119,7 +122,7 @@
             // 
             this.contractorContactAddressesPage.Controls.Add(this.groupControl1);
             this.contractorContactAddressesPage.Name = "contractorContactAddressesPage";
-            this.contractorContactAddressesPage.Size = new System.Drawing.Size(797, 524);
+            this.contractorContactAddressesPage.Size = new System.Drawing.Size(798, 526);
             this.contractorContactAddressesPage.Text = "Загальна інформація";
             // 
             // groupControl1
@@ -128,6 +131,8 @@
             this.groupControl1.AppearanceCaption.ForeColor = System.Drawing.Color.Navy;
             this.groupControl1.AppearanceCaption.Options.UseFont = true;
             this.groupControl1.AppearanceCaption.Options.UseForeColor = true;
+            this.groupControl1.Controls.Add(this.labelControl7);
+            this.groupControl1.Controls.Add(this.activeCheck);
             this.groupControl1.Controls.Add(this.validateLbl);
             this.groupControl1.Controls.Add(this.cancelBtn);
             this.groupControl1.Controls.Add(this.ownTypeCBox);
@@ -148,6 +153,22 @@
             this.groupControl1.Size = new System.Drawing.Size(779, 510);
             this.groupControl1.TabIndex = 12;
             this.groupControl1.Text = "Контрагент";
+            // 
+            // labelControl7
+            // 
+            this.labelControl7.Location = new System.Drawing.Point(19, 237);
+            this.labelControl7.Name = "labelControl7";
+            this.labelControl7.Size = new System.Drawing.Size(56, 13);
+            this.labelControl7.TabIndex = 63;
+            this.labelControl7.Text = "Активність";
+            // 
+            // activeCheck
+            // 
+            this.activeCheck.Location = new System.Drawing.Point(125, 234);
+            this.activeCheck.Name = "activeCheck";
+            this.activeCheck.Properties.Caption = "";
+            this.activeCheck.Size = new System.Drawing.Size(117, 19);
+            this.activeCheck.TabIndex = 62;
             // 
             // validateLbl
             // 
@@ -390,7 +411,6 @@
             this.contactPersonAddressGridView.GridControl = this.contactPersonAddressGrid;
             this.contactPersonAddressGridView.Name = "contactPersonAddressGridView";
             this.contactPersonAddressGridView.OptionsBehavior.ReadOnly = true;
-            this.contactPersonAddressGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.contactPersonAddressGridView.OptionsDetail.EnableDetailToolTip = true;
             this.contactPersonAddressGridView.OptionsView.ShowGroupPanel = false;
             // 
@@ -506,6 +526,7 @@
             // 
             this.deleteAllBtn.Appearance.Options.UseTextOptions = true;
             this.deleteAllBtn.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            this.deleteAllBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.deleteAllBtn.Image = ((System.Drawing.Image)(resources.GetObject("deleteAllBtn.Image")));
             this.deleteAllBtn.Location = new System.Drawing.Point(263, 23);
             this.deleteAllBtn.Name = "deleteAllBtn";
@@ -563,7 +584,6 @@
             this.contractorContactAddressGridView.GridControl = this.contractorContactAddressGrid;
             this.contractorContactAddressGridView.Name = "contractorContactAddressGridView";
             this.contractorContactAddressGridView.OptionsBehavior.ReadOnly = true;
-            this.contractorContactAddressGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.contractorContactAddressGridView.OptionsView.ShowGroupPanel = false;
             // 
             // nameTypeCol
@@ -618,6 +638,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             this.groupControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.activeCheck.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ownTypeCBox.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nameTBox.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.productCategoryEdit.Properties)).EndInit();
@@ -684,5 +705,7 @@
         private DevExpress.XtraEditors.SimpleButton deleteAllBtn;
         private DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider contractorValidationProvider;
         private DevExpress.XtraEditors.LabelControl validateLbl;
+        private DevExpress.XtraEditors.LabelControl labelControl7;
+        private DevExpress.XtraEditors.CheckEdit activeCheck;
     }
 }

@@ -24,8 +24,6 @@ namespace ERP_NEW.GUI.Classifiers
     {
         private ICityService cityService;
         private BindingSource cityBS = new BindingSource();
-        private UserTasksDTO _userTasksDTO;
-        private Utils.Operation _operation;
         private CityDTO newModel;
 
         private ObjectBase Item
@@ -71,7 +69,7 @@ namespace ERP_NEW.GUI.Classifiers
                 };
                 newModel.Id = cityService.CityCreate(newModel);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

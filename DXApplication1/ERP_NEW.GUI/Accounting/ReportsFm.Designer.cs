@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportsFm));
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -55,12 +54,13 @@
             this.repositoryItemGridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.supplierItem = new DevExpress.XtraBars.BarListItem();
             this.inventoryFixedAssetsBtn = new DevExpress.XtraEditors.DropDownButton();
-            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.leftUpSplitContainerControl = new DevExpress.XtraEditors.SplitContainerControl();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.expenditureByContractorsReportBtn = new System.Windows.Forms.Button();
             this.storeHouseInventoryReportBtn = new System.Windows.Forms.Button();
             this.expenditureByProjectReportBtn = new System.Windows.Forms.Button();
             this.storeHouseTrialBalanceAccountReportBtn = new System.Windows.Forms.Button();
@@ -298,7 +298,6 @@
             this.beginYearEdit.ItemAppearance.Normal.Options.UseFont = true;
             this.beginYearEdit.Name = "beginYearEdit";
             this.beginYearEdit.EditValueChanged += new System.EventHandler(this.beginYearEdit_EditValueChanged);
-            this.beginYearEdit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.beginYearEdit_ItemClick);
             // 
             // repositoryItemDateEdit1
             // 
@@ -460,7 +459,6 @@
             // 
             this.repositoryItemGridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.repositoryItemGridLookUpEdit1View.Name = "repositoryItemGridLookUpEdit1View";
-            this.repositoryItemGridLookUpEdit1View.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.repositoryItemGridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.repositoryItemGridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
@@ -569,6 +567,7 @@
             // 
             // xtraTabPage1
             // 
+            this.xtraTabPage1.Controls.Add(this.expenditureByContractorsReportBtn);
             this.xtraTabPage1.Controls.Add(this.storeHouseInventoryReportBtn);
             this.xtraTabPage1.Controls.Add(this.expenditureByProjectReportBtn);
             this.xtraTabPage1.Controls.Add(this.storeHouseTrialBalanceAccountReportBtn);
@@ -577,6 +576,24 @@
             this.xtraTabPage1.Padding = new System.Windows.Forms.Padding(5);
             this.xtraTabPage1.Size = new System.Drawing.Size(619, 317);
             this.xtraTabPage1.Text = "Обороти";
+            // 
+            // expenditureByContractorsReportBtn
+            // 
+            this.expenditureByContractorsReportBtn.AutoSize = true;
+            this.expenditureByContractorsReportBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.expenditureByContractorsReportBtn.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.expenditureByContractorsReportBtn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.expenditureByContractorsReportBtn.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.expenditureByContractorsReportBtn.ForeColor = System.Drawing.Color.Black;
+            this.expenditureByContractorsReportBtn.Location = new System.Drawing.Point(5, 177);
+            this.expenditureByContractorsReportBtn.Margin = new System.Windows.Forms.Padding(70, 30, 30, 30);
+            this.expenditureByContractorsReportBtn.Name = "expenditureByContractorsReportBtn";
+            this.expenditureByContractorsReportBtn.Padding = new System.Windows.Forms.Padding(30, 10, 10, 10);
+            this.expenditureByContractorsReportBtn.Size = new System.Drawing.Size(609, 43);
+            this.expenditureByContractorsReportBtn.TabIndex = 5;
+            this.expenditureByContractorsReportBtn.Text = "Списання за контрагентами";
+            this.expenditureByContractorsReportBtn.UseVisualStyleBackColor = false;
+            this.expenditureByContractorsReportBtn.Click += new System.EventHandler(this.expenditureByContractorsReportBtn_Click);
             // 
             // storeHouseInventoryReportBtn
             // 
@@ -828,7 +845,6 @@
             this.gridColumn2});
             this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView1.OptionsFind.AlwaysVisible = true;
             this.gridView1.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             this.gridView1.OptionsFind.SearchInPreview = true;
@@ -971,7 +987,6 @@
             this.gridColumn6});
             this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView3.Name = "gridView3";
-            this.gridView3.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView3.OptionsFind.AlwaysVisible = true;
             this.gridView3.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             this.gridView3.OptionsFind.SearchInPreview = true;
@@ -1260,6 +1275,7 @@
             this.chessBtn.AutoSize = true;
             this.chessBtn.BackColor = System.Drawing.Color.WhiteSmoke;
             this.chessBtn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chessBtn.Enabled = false;
             this.chessBtn.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chessBtn.ForeColor = System.Drawing.Color.Black;
             this.chessBtn.Location = new System.Drawing.Point(8, 303);
@@ -1481,7 +1497,6 @@
             this.gridColumn3});
             this.gridLookUpEdit2View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridLookUpEdit2View.Name = "gridLookUpEdit2View";
-            this.gridLookUpEdit2View.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridLookUpEdit2View.OptionsView.ShowAutoFilterRow = true;
             this.gridLookUpEdit2View.OptionsView.ShowGroupPanel = false;
@@ -1816,7 +1831,6 @@
             this.gridColumn8});
             this.gridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView2.Name = "gridView2";
-            this.gridView2.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView2.OptionsFind.AlwaysVisible = true;
             this.gridView2.OptionsFind.SearchInPreview = true;
             this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -2075,6 +2089,7 @@
             this.ShowIcon = false;
             this.Text = "Звіти";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ReportsFm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMonth1)).EndInit();
@@ -2300,5 +2315,6 @@
         private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager;
         private System.Windows.Forms.Button cashbookTrialBalanceBtn;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private System.Windows.Forms.Button expenditureByContractorsReportBtn;
     }
 }

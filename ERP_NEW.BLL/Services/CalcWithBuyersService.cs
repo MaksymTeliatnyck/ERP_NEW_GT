@@ -68,7 +68,10 @@ namespace ERP_NEW.BLL.Services
         }
 
         #region Get method's
-
+        public IEnumerable<CalcWithBuyersDTO> GetCalcWithBuyers()
+        {
+            return mapper.Map<IEnumerable<CalcWithBuyers>, List<CalcWithBuyersDTO>>(calcWithBuyers.GetAll());
+        }
         public IEnumerable<CalcWithBuyersInfoDTO> GetCalcWithBuyersJournal(DateTime beginDate, DateTime endDate)
         {
             FbParameter[] Parameters =
@@ -174,7 +177,7 @@ namespace ERP_NEW.BLL.Services
                 calcWithBuyers.Delete(calcWithBuyers.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -213,7 +216,7 @@ namespace ERP_NEW.BLL.Services
                 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -242,7 +245,7 @@ namespace ERP_NEW.BLL.Services
                 calcWithBuyersPaymentVat.Delete(calcWithBuyersPaymentVat.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -265,7 +268,7 @@ namespace ERP_NEW.BLL.Services
                 customerOrdersForCWB.Delete(customerOrdersForCWB.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

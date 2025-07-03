@@ -164,6 +164,7 @@ namespace ERP_NEW.BLL.Marketing
                     ResponsiblePersonId = modelJournal.ResponsiblePersonId,
                     PackingDate = modelJournal.PackingDate,
                     PackingNumber = modelJournal.PackingNumber,
+                    PackingNumberPart = modelJournal.PackingNumberPart,
                     PackingListMaterialsId = modelJournal.PackingListMaterialsId,
                     PackingListComplectId = modelJournal.PackingListComplectId,
                     DescriptionProject = modelJournal.DescriptionProject,
@@ -192,7 +193,7 @@ namespace ERP_NEW.BLL.Marketing
 
             if (e.Column == transportListScanCol)
             {
-                if (item.ScanComplStatus != null)
+                if (item.ScanComplStatus != -1)
                 {
                     if (item.ScanComplStatus == 1)
                         e.Value = columnCollection.Images[0];
@@ -203,7 +204,7 @@ namespace ERP_NEW.BLL.Marketing
 
             if (e.Column == scanStatusCol)
             {
-                if (item.ScanStatus != null)
+                if (item.ScanStatus != -1)
                 {
                     if (item.ScanStatus == 1)
                         e.Value = columnCollection.Images[0];
@@ -228,7 +229,7 @@ namespace ERP_NEW.BLL.Marketing
         }
 
 
-        private void packingListsGridView_CellMerge(object sender, DevExpress.XtraGrid.Views.Grid.CellMergeEventArgs e)
+        private void packingListsGridView_CellMerge(object sender, CellMergeEventArgs e)
         {
             GridView view = sender as GridView;
             PackingListsJournalDTO model1 = (PackingListsJournalDTO)view.GetRow(e.RowHandle1);

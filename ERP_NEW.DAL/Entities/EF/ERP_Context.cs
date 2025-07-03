@@ -4,6 +4,7 @@ using FirebirdSql.Data.FirebirdClient;
 using ERP_NEW.DAL.Entities.QueryModels;
 using ERP_NEW.DAL.Entities.Models;
 using ERP_NEW.DAL.Entities.ReportModel;
+using System;
 
 namespace ERP_NEW.DAL.EF
 {
@@ -24,12 +25,14 @@ namespace ERP_NEW.DAL.EF
         public DbSet<AccountClothesMaterials> AccountClothesMaterials { get; set; }
         public DbSet<AccountClothesJournal> AccountClothesJournal { get; set; }
         public DbSet<AccessRights> AccessRights { get; set; }
+        public DbSet<AccountingOperations> AccountingOperations { get; set; }
         public DbSet<AccountingOperation> AccountingOperation { get; set; }
         public DbSet<AccountOrders> AccountOrders { get; set; }
         public DbSet<AgreementJournal> AgreementJournal { get; set; }
         public DbSet<AgreementsType> AgreementsType { get; set; }
         public DbSet<AgreementDocuments> AgreementDocuments { get; set; }
         public DbSet<Agreements> Agreements { get; set; }
+        //public DbSet<Agreements> AgreementsScan{ get; set; }
         public DbSet<AgreementTypeDocuments> AgreementTypeDocuments { get; set; }
         public DbSet<AgreementOrder> AgreementOrder { get; set; }
         public DbSet<AgreementOrderScan> AgreementOrderScan { get; set; }
@@ -103,6 +106,7 @@ namespace ERP_NEW.DAL.EF
         public DbSet<CashPrepayments> CashPrepayments { get; set; }
         public DbSet<CashPayments> CashPayments { get; set; }
         public DbSet<CashPrepaymentsInfo> CashPrepaymentsInfo { get; set; }
+        public DbSet<CashBooks> CashBooks { get; set; }
         public DbSet<CashPaymentsInfo> CashPaymentsInfo { get; set; }
         public DbSet<CalcWithBuyers> CalcWithBuyers { get; set; }
         public DbSet<CalcWithBuyersSpec> CalcWithBuyersSpec { get; set; }
@@ -168,11 +172,13 @@ namespace ERP_NEW.DAL.EF
         public DbSet<ExpenditureStoreHouse> ExpenditureStoreHouse { get; set; }
         public DbSet<ExpendituresStoreHousesInfo> ExpendituresStoreHousesInfo { get; set; }
         public DbSet<ExpenditureStoreHouseInfo> ExpenditureStoreHouseInfo { get; set; }
+        public DbSet<ExpenditureForProjectReportByContractor> ExpenditureForProjectReportByContractor { get; set; }
 
         //F
         public DbSet<FixedAssetsGroup> FixedAssetsGroup { get; set; }
         public DbSet<FixedAssetsOrder> FixedAssetsOrder { get; set; }
         public DbSet<FixedAssetsOrderJournal> FixedAssetsOrderJournal { get; set; }
+        public DbSet<FixedAssetsNoAmort> FixedAssetsNoAmort { get; set; }
         public DbSet<FixedAssetsMaterials> FixedAssetsMaterials { get; set; }
         public DbSet<FixedAssetsOrderListMaterialsJournal> FixedAssetsOrderListMaterialsJournal { get; set; }
         public DbSet<FixedAssetsOrderArchiveJournal> FixedAssetsOrderArchiveJournal { get; set; }
@@ -241,10 +247,18 @@ namespace ERP_NEW.DAL.EF
         public DbSet<MTSMeasure> MTSMeasure { get; set; }
         public DbSet<MTSPurchasedProducts> MTSPurchasedProducts { get; set; }
         public DbSet<MTSNomenclatureGroupsOld> MTSNomenclatureGroupsOld { get; set; }
-        
+
+        public DbSet<MTS_DETAILS> MTS_DETAILS { get; set; }
+        public DbSet<MTS_MATERIALS> MTS_MATERIALS { get; set; }
+        public DbSet<MTS_PURCHASED_PRODUCTS> MTS_PURCHASED_PRODUCTS { get; set; }
+        public DbSet<MTS_CUSTOMERORDERS> MTSCustomerOrders { get; set; }
+        public DbSet<MTS_SPECIFICATIONS> MTS_SPECIFICATIONS { get; set; }
+
+
 
         public DbSet<MsTrialBalanceCurrency> MsTrialBalanceCurrency { get; set; }
         public DbSet<MsTrialBalance> MsTrialBalance { get; set; }
+        public DbSet<MsDebitCredit> MsDebitCredit { get; set; }
         public DbSet<MsTrialBalanceByAccountsCurrency> MsTrialBalanceByAccountsCurrency { get; set; }
         public DbSet<MsReconciliation> MsReconciliation { get; set; }
         public DbSet<MsReconciliation681_36> MsReconciliation681_36 { get; set; }
@@ -274,6 +288,7 @@ namespace ERP_NEW.DAL.EF
 
         //R
         public DbSet<ReceiptCertificates> ReceiptCertificates { get; set; }
+        public DbSet<ReceiptCertificateDetail> ReceiptCertificateDetail { get; set; }
         public DbSet<RECEIPTS> Receipts { get; set; }
         public DbSet<ReceiptDetails> ReceiptDetails { get; set; }
         public DbSet<ReceiptOrders> ReceiptOrders { get; set; }
@@ -285,8 +300,6 @@ namespace ERP_NEW.DAL.EF
         public DbSet<RequestLog> RequestLog { get; set; }
         public DbSet<RequestLogContractors> RequestLogContractors { get; set; }
         public DbSet<RequestLogJournal> RequestLogJournal { get; set; }
-        public DbSet<StoreHouseReceiptProject> ReceiptStoreHouseProject { get; set; }
-
         public DbSet<Responsible> Responsible { get; set; }
 
         //S
@@ -294,8 +307,10 @@ namespace ERP_NEW.DAL.EF
         public DbSet<Storehouses> Storehouses { get; set; }
         public DbSet<SettlementTypes> SettlementTypes { get; set; }
         public DbSet<StoreHouseTrialBalance> StoreHouseTrialBalance { get; set; }
+        public DbSet<StoreHouseReceiptProject> ReceiptStoreHouseProject { get; set; }
         public DbSet<StoreHouseRemains> StoreHouseRemains { get; set; }
         public DbSet<StoreHouseInventory> StoreHouseInventory { get; set; }
+        public DbSet<SearchTable> SearchTable { get; set; }
 
         public DbSet<SUPPLIERS> Suppliers { get; set; }
         //T
@@ -327,8 +342,9 @@ namespace ERP_NEW.DAL.EF
         public DbSet<WeldAttestationPersonsInfo> WeldAttestationPersonsInfo { get; set; }
         public DbSet<WeldAttestationTreeInfo> WeldAttestationTreeInfo { get; set; }
         public DbSet<WeldCertificates> WeldCertificates { get; set; }
-        
+
         #endregion
+
 
         static ERP_Context()
         {
@@ -336,36 +352,96 @@ namespace ERP_NEW.DAL.EF
 
             csb = new FbConnectionStringBuilder()
             {
-                DataSource = "server-asup",
+                //DataSource = "localhost",
+                //Database = "TVM_DB",
+                //UserID = "sysdba",
+                //Password = "masterkey",
+                //Charset = "UTF8",
+                //Pooling = true,
+                //ConnectionLifeTime = 900,
+                DataSource = "10.0.0.50",
                 Database = "TVM_DB",
                 UserID = "sysdba",
                 Password = "masterkey",
                 Charset = "UTF8",
                 Pooling = true,
                 ConnectionLifeTime = 900
+
             };
 
-            #if DEBUG
+#if DEBUG
+            //csb = new FbConnectionStringBuilder()
+            //{
+            //    DataSource = "10.0.0.50",
+            //    Database = "TVM_DB_TEST",
+            //    UserID = "sysdba",
+            //    Password = "masterkey",
+            //    Charset = "UTF8",
+            //    Pooling = true,
+            //    ConnectionLifeTime = 900
+            //};
             csb = new FbConnectionStringBuilder()
             {
-                DataSource = "server-tfs",
+                DataSource = "localhost",
+                //Database = "TVM_DB",
+                //UserID = "sysdba",
+                //Password = "masterkey",
+                //Charset = "UTF8",
+                //Pooling = true,
+                //ConnectionLifeTime = 900,
+                //DataSource = "10.0.0.50",
                 Database = "TVM_DB",
                 UserID = "sysdba",
                 Password = "masterkey",
                 Charset = "UTF8",
                 Pooling = true,
                 ConnectionLifeTime = 900
+
             };
-            #endif
+
+#endif
 
             Connection.ConnectionString = csb.ConnectionString;
+
+            //using (var connection = new FbConnection(csb.ConnectionString))
+            //{
+            //    try
+            //    {
+            //        connection.Open();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new InvalidOperationException("Unable to connect to the database. Please check the connection string and ensure the database server is running.", ex);
+            //    }
+            //}
+
             Database.SetInitializer<ERP_Context>(null); 
         }
 
-        public ERP_Context()
-            : base(new FbConnection(Connection.ConnectionString), true)
+        public ERP_Context(): base(new FbConnection(Connection.ConnectionString), true)
         {
+ 
+
+
+
             Configuration.LazyLoadingEnabled = false;
+        }
+
+        public bool CheckConnect()
+        {
+            using (var connection = new FbConnection(Connection.ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    //throw new InvalidOperationException("Unable to connect to the database. Please check the connection string and ensure the database server is running.", ex);
+                    return false;
+                }
+            }
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
