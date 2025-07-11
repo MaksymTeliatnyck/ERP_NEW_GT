@@ -20,6 +20,8 @@ namespace ERP_NEW.BLL.Services
     public class AccountingOperationService : IAccountingOperationService
     {
         private IUnitOfWork Database { get; set; }
+
+
         private IRepository<AccountingOperation> accountingOperation;
         private IRepository<AccountingOperations> accountingOperations;
         private IRepository<ACCOUNTS> accounts_from;
