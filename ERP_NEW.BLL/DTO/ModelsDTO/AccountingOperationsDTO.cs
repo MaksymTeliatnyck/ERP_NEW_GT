@@ -10,6 +10,9 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
     public class AccountingOperationsDTO:ObjectBase
     {
         public int Id { get; set; }
+
+
+
         public DateTime? PaymentDate { get; set; }
         public string OperateDocument { get; set; }
         public decimal? PaymentPrice { get; set; }
