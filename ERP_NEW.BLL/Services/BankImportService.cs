@@ -361,7 +361,7 @@ namespace ERP_NEW.BLL.Services
 
                 //NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
 
-                string value = cells["W" + currentRow].Value.ToString().Replace('.', ',');
+                string value = cells["R" + currentRow].Value.ToString().Replace('.', ',');
                 string formatString = Regex.Replace(value, @"[^0-9$,]", "");
 
                 if (result)
