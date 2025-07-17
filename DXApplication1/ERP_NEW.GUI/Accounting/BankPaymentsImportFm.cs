@@ -325,8 +325,8 @@ namespace ERP_NEW.GUI.Accounting
 
             //ulong test = ulong.Parse(str1);
             //Int64 test1 = Int64.Parse(str);
-            openDialog.Filter = "Текстовые файлы(*.txt)|*.txt";
-
+            //openDialog.Filter = "Текстовые файлы(*.txt)|*.txt";
+            openDialog.Filter = "Все файлы(*.*)|*.*";
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 splashScreenManager.ShowWaitForm();

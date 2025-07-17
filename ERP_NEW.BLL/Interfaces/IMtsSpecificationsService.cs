@@ -30,6 +30,7 @@ namespace ERP_NEW.BLL.Interfaces
         IEnumerable<MTSDetailsDTO> GetAllDetailsSpecific(int spesificId);
         IEnumerable<MTSPurchasedProductsDTO> GetBuysDetalSpecific(int spesificId);
         IEnumerable<MTSMaterialsDTO> GetMaterialsSpecific(int spesificId);
+        MTSSpecificationssDTO GetMtsSpecificationById(long id);
 
         IEnumerable<MTSNomenclatureGroupsOldDTO> GetAllNomenclatureGroupsOld();
         IEnumerable<MTSNomenclaturesOldDTO> GetAllNomenclatures(int nomenGroupId);

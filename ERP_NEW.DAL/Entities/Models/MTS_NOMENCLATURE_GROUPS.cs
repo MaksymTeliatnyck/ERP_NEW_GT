@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ERP_NEW.DAL.Entities.Models
 {
-    public class MTSNomenclatureGroupsOld
+    public class MTS_NOMENCLATURE_GROUPS
     {
         [Key]
         public int ID { get; set; }
@@ -15,7 +15,7 @@ namespace ERP_NEW.DAL.Entities.Models
         public int? PARENT_ID { get; set; }
         public decimal RATIO_OF_WASTE { get; set; }
         public int? ADDIT_CALCULATION_ID { get; set; }
-        public int ADDIT_CALCULATION_ACTIVE { get; set; }
+        public bool? ADDIT_CALCULATION_ACTIVE { get; set; }
         public int? CODPROD { get; set; }
         public int SORTPOSITION { get; set; }
     }

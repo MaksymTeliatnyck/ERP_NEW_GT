@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace ERP_NEW.DAL.Entities.Models
 {
-    public class MtsAdditCalculations
+    public class MTS_DEATAILS_PROCESSING
     {
         [Key]
-        public int Id { get; set; }
-        public int UnitId { get; set; }
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int? QUANTITY_OF_PARAMS { get; set; }
     }
 }

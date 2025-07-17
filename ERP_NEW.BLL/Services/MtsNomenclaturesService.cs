@@ -23,7 +23,7 @@ namespace ERP_NEW.BLL.Services
         private IRepository<MtsNomenclatureGroups> mtsNomenclatureGroups;
         private IRepository<MtsGosts> mtsGosts;
         private IRepository<Units> units;
-        private IRepository<MtsAdditCalculations> mtsAdditCalculations;
+        private IRepository<MtsAdditCalculation> mtsAdditCalculations;
         private IRepository<MtsSpecifications> mtsSpecifications;
 
         private IMapper mapper;
@@ -33,7 +33,7 @@ namespace ERP_NEW.BLL.Services
             Database = uow;
             mtsNomenclatures = Database.GetRepository<MtsNomenclatures>();
             mtsNomenclatureGroups = Database.GetRepository<MtsNomenclatureGroups>();
-            mtsAdditCalculations = Database.GetRepository<MtsAdditCalculations>();
+            mtsAdditCalculations = Database.GetRepository<MtsAdditCalculation>();
             mtsGosts = Database.GetRepository<MtsGosts>();
             units = Database.GetRepository<Units>();
             mtsSpecifications = Database.GetRepository<MtsSpecifications>();
@@ -47,7 +47,7 @@ namespace ERP_NEW.BLL.Services
                  cfg.CreateMap<MtsGosts, MtsGostsDTO>();
                  cfg.CreateMap<MtsGostsDTO, MtsGosts>();
                  cfg.CreateMap<Units, UnitsDTO>();
-                 cfg.CreateMap<MtsAdditCalculations, MtsAdditCalculationsDTO>();
+                 cfg.CreateMap<MtsAdditCalculation, MtsAdditCalculationsDTO>();
 
              });
 

@@ -639,6 +639,9 @@
         geLKUTtl+f8gY//Axjn6F8f+AXtHGV3GT+qTmOL/wFqMAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="specificContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>599, 17</value>
+  </metadata>
   <metadata name="imageCollection.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>313, 17</value>
   </metadata>
