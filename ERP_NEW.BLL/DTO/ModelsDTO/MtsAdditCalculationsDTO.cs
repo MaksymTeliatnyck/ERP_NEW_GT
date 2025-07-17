@@ -10,5 +10,8 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
         public int MtsNomenclatureGroupId { get; set; }
         public string GroupName { get; set; }
         public string AdditUnitLocalName { get; set; }
+
+        public int MEASURE_ID { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -40,8 +40,12 @@ namespace ERP_NEW.GUI.CustomerOrders
         private BindingSource customerOrderPaymentsBS = new BindingSource();
         private BindingSource expenditureMaterialBS = new BindingSource();
         private BindingSource paymentsInfoBS = new BindingSource();
-        private BindingSource customerOrderMtsBS = new BindingSource();
 
+        private BindingSource customerOrderMtsBS = new BindingSource();
+        private BindingSource detalsSpecificBS = new BindingSource();
+        private BindingSource byusDetalsSpecificBS = new BindingSource();
+        private BindingSource materialsSpecificBS = new BindingSource();
+        
         private CustomerOrderPaymentsInfoDTO paymentsInfo = new CustomerOrderPaymentsInfoDTO();
 
         private UserTasksDTO userTasksDTO;
@@ -724,5 +728,44 @@ namespace ERP_NEW.GUI.CustomerOrders
                 MessageBox.Show("Файл вже відкрито! Закрийте файл!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void showSpecificMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadSpecific((int)((MTSCustomerOrdersDTO)customerOrderMtsBS.Current).SpecificationId);
+            LoadBuysDetalSpecific((int)((MTSCustomerOrdersDTO)customerOrderMtsBS.Current).SpecificationId);
+            LoadMaterialsSpecific((int)((MTSCustomerOrdersDTO)customerOrderMtsBS.Current).SpecificationId);
+
+            mtsSpecificationsService = Program.kernel.Get<IMtsSpecificationsService>();
+            reportService = Program.kernel.Get<IReportService>();
+
+            MTSSpecificationssDTO currentSpecific = mtsSpecificationsService.GetMtsSpecificationById((int)((MTSCustomerOrdersDTO)customerOrderMtsBS.Current).SpecificationId);
+
+            reportService.SpecificationProcess(currentSpecific, (List<MTSDetailsDTO>)detalsSpecificBS.DataSource, (List<MTSPurchasedProductsDTO>)byusDetalsSpecificBS.DataSource, (List<MTSMaterialsDTO>)materialsSpecificBS.DataSource);
+        }
+
+        private void LoadSpecific(int detailId)
+        {
+            mtsSpecificationsService = Program.kernel.Get<IMtsSpecificationsService>();
+            //detalsSpecificGridView.ClearColumnsFilter();
+            detalsSpecificBS.Clear();
+            detalsSpecificBS.DataSource = mtsSpecificationsService.GetAllDetailsSpecific(detailId).OrderByDescending(ord => ord.ID).ToList();
+
+        }
+
+        private void LoadBuysDetalSpecific(int detailId)
+        {
+            mtsSpecificationsService = Program.kernel.Get<IMtsSpecificationsService>();
+            byusDetalsSpecificBS.Clear();
+            //buysDetalsSpecificGridView.ClearColumnsFilter();
+            byusDetalsSpecificBS.DataSource = mtsSpecificationsService.GetBuysDetalSpecific(detailId).OrderByDescending(ord => ord.ID).ToList();
+        }
+        private void LoadMaterialsSpecific(int detailId)
+        {
+
+            mtsSpecificationsService = Program.kernel.Get<IMtsSpecificationsService>();
+            materialsSpecificBS.Clear();
+            materialsSpecificBS.DataSource = mtsSpecificationsService.GetMaterialsSpecific(detailId).OrderByDescending(ord => ord.ID).ToList();
+        }
+
     }
 }

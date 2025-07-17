@@ -337,176 +337,236 @@ namespace ERP_NEW.BLL.Services
                
         public List<PaymentImportModelDTO> GetPoltavaBankList(string filePath)
         {
-            string[] CurrenciesStrName = { "USD", "EUR", "RUB", "UAH" };
-            
-            List<string> allData = new List<string>();
-            List<PaymentImportModelDTO> payments = new List<PaymentImportModelDTO>();
-            string lastFoundPaymentCurrencyName = "";
+            List<PaymentImportModelDTO> resultList = new List<PaymentImportModelDTO>();
 
-            using (StreamReader sr = new StreamReader(filePath, Encoding.GetEncoding("windows-1251")))
+            var Workbook = Factory.GetWorkbook(filePath);
+            var Worksheet = Workbook.Worksheets[0];
+            var Сells = Worksheet.Cells;
+
+
+
+            SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(filePath);
+
+            var worksheet = workbook.Worksheets[0];
+            var cells = worksheet.Cells;
+
+            int currentRow = 2; // 1 header
+
+            while (cells["A" + currentRow].Value != null)
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                decimal d;
+                DateTime docDate;
+
+                bool result = DateTime.TryParse(cells["A" + currentRow].Value.ToString(), out docDate);
+
+                //NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+
+                string value = cells["W" + currentRow].Value.ToString().Replace('.', ',');
+                string formatString = Regex.Replace(value, @"[^0-9$,]", "");
+
+                if (result)
                 {
-                    if (line != "")
-                        allData.Add(line);
+                    resultList.Add(new PaymentImportModelDTO
+                    {
+                        DocumentNum = cells["F" + currentRow].Value.ToString().Trim(),
+                        Sum = Math.Abs(decimal.TryParse(formatString, out d) ? d : 0),
+
+                        PaymentCurrencyName = "UAH",
+                        RecipientBankName = "",
+                        RecipientSrn = cells["K" + currentRow].Value.ToString().Trim(),
+                        RecipientName = cells["L" + currentRow].Value.ToString().Trim(),
+                        RecipientBankAccountNum = Convert.ToUInt64(cells["J" + currentRow].Value.ToString().Trim()),
+                        RecipientBankCode = Convert.ToUInt32(cells["I" + currentRow].Value.ToString().Trim()),
+                        PayerSrn = cells["K" + currentRow].Value.ToString().Trim(),
+                        PayerName = cells["L" + currentRow].Value.ToString().Trim(),
+                        PayerBankAccountNum = Convert.ToUInt64(cells["J" + currentRow].Value.ToString().Trim()),
+                         
+
+
+                        PaymentPurpose = cells["T" + currentRow].Value.ToString().Trim(),                      
+                        DocumentApplyDate = docDate,
+                        OperationType = (byte)((cells["H" + currentRow].Value.ToString().Trim().Substring(0, 1) != "2") ? 1 : 0)
+                    });
                 }
+
+
+                ++currentRow;
             }
 
-            for (int i = 0; i < allData.Count; i++)
-            {
-                var paymentRow = new PaymentImportModelDTO();
-                var currentRow = allData[i];
 
-                #region currencyName
-                if (currentRow.IndexOf("Вал.:") != -1)
-                {
-                    //PaymentCurrencyName
-                    for (int elem = 0; elem < CurrenciesStrName.Length; elem++)
-                    {
-                        if (currentRow.IndexOf(CurrenciesStrName[elem]) != -1)
-                        {
-                            lastFoundPaymentCurrencyName = CurrenciesStrName[elem];
-                            break;
-                        }
-                    }
-                }
-                paymentRow.PaymentCurrencyName = lastFoundPaymentCurrencyName;
-
-                #endregion currencyName
-
-                if (Char.IsDigit(currentRow[0]))
-                {
-                    int operationLength = 8;
-                    int sumPos = currentRow.IndexOf("Списання");
-                    byte operationType = 0;
-                    if (sumPos < 0)
-                    {
-                        sumPos = currentRow.IndexOf("Зарахування");
-
-                        operationLength = 11;
-                        operationType = 1;
-                    }
-
-                    #region documentNumber
-
-                    string documentNumber = "";
-
-                    for (int y = sumPos - 1; y > 0; y--)
-                    {
-                        if (currentRow[y] != ' ')
-                        {
-                            documentNumber += currentRow[y];
-                            if (currentRow[y - 1] == ' ')
-                                break;
-                        }
-                    }
-
-                    var array = documentNumber.ToCharArray();
-                    Array.Reverse(array);
-                    paymentRow.DocumentNum = new String(array);
-
-                    #endregion documentNumber
-
-                    #region sum
-
-                    string sum = "";
-                    string returnValue = SearchString(sum, sumPos + operationLength, currentRow);
-                    paymentRow.Sum = decimal.Parse(returnValue.Replace(',', ' ').Replace('.', ','));
-
-                    #endregion sum
-
-                    #region payment account, srn, contractor, purpose
-
-                    string purpose = "";
-
-                    i += 2;
-
-                    //string modoficateBancAccount = items[8];
-
-                    //if (modoficateBancAccount.Any(c => char.IsLetter(c)))
-                    //{
-                    //    int indexOfStr = modoficateBancAccount.IndexOf("2600");
-                    //    modoficateBancAccount = modoficateBancAccount.Remove(0, indexOfStr);
-                    //}
+            return resultList;
 
 
-                    int paymentAccountPos = allData[i].IndexOf("Рах.:");
-                    int srnPos = allData[i].IndexOf("Код:");
 
-                    if (paymentAccountPos >= 0 && srnPos >= 0)
-                    {
-                        string paymentAccount = "";
-                        string srn = "";
+            //string[] CurrenciesStrName = { "USD", "EUR", "RUB", "UAH" };
 
-                        //paymentRow.RecipientBankAccountNum = ulong.Parse(SearchString(paymentAccount, paymentAccountPos + 5, allData[i]));
+            //List<string> allData = new List<string>();
+            //List<PaymentImportModelDTO> payments = new List<PaymentImportModelDTO>();
+            //string lastFoundPaymentCurrencyName = "";
 
-                        string bankAccount = SearchString(paymentAccount, paymentAccountPos + 5, allData[i]);
+            //using (StreamReader sr = new StreamReader(filePath, Encoding.GetEncoding("windows-1251")))
+            //{
+            //    string line;
+            //    while ((line = sr.ReadLine()) != null)
+            //    {
+            //        if (line != "")
+            //            allData.Add(line);
+            //    }
+            //}
 
-                        if (bankAccount.Any(c => char.IsLetter(c)))
-                        {
-                            bankAccount = NumberCrop(bankAccount);
-                        }
-                        try
-                        {
-                            paymentRow.RecipientBankAccountNum = ulong.Parse(bankAccount);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Помилка " + ex.Message +"\nПри спробі обробити номер "+ bankAccount +"\nЗменшили номер до 14 символів", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            string trimmedString = bankAccount.Length > 14
-                                                   ? bankAccount.Substring(bankAccount.Length - 14)
-                                                   : bankAccount;
+            //for (int i = 0; i < allData.Count; i++)
+            //{
+            //    var paymentRow = new PaymentImportModelDTO();
+            //    var currentRow = allData[i];
 
-                            MessageBox.Show("Номер після редагування"+ trimmedString, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            bankAccount = trimmedString;
-                            paymentRow.RecipientBankAccountNum = ulong.Parse(bankAccount);
-                        }
+            //    #region currencyName
+            //    if (currentRow.IndexOf("Вал.:") != -1)
+            //    {
+            //        //PaymentCurrencyName
+            //        for (int elem = 0; elem < CurrenciesStrName.Length; elem++)
+            //        {
+            //            if (currentRow.IndexOf(CurrenciesStrName[elem]) != -1)
+            //            {
+            //                lastFoundPaymentCurrencyName = CurrenciesStrName[elem];
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    paymentRow.PaymentCurrencyName = lastFoundPaymentCurrencyName;
 
-                        paymentRow.RecipientSrn = SearchString(srn, srnPos + 5, allData[i]);
-                        paymentRow.RecipientName = allData[++i].Trim();
+            //    #endregion currencyName
 
-                        i++;
+            //    if (Char.IsDigit(currentRow[0]))
+            //    {
+            //        int operationLength = 8;
+            //        int sumPos = currentRow.IndexOf("Списання");
+            //        byte operationType = 0;
+            //        if (sumPos < 0)
+            //        {
+            //            sumPos = currentRow.IndexOf("Зарахування");
+            //            operationLength = 11;
+            //            operationType = 1;
+            //        }
 
-                        int k = i;
-                        while (!Char.IsDigit(allData[k][0]))
-                        {
-                            purpose += allData[k];
+            //        #region documentNumber
 
-                            if (k + 1 == allData.Count || allData[k + 1].Contains("---------------- ----------------"))
-                                break;
-                            else
-                                k++;
-                        }
-                    }
+            //        string documentNumber = "";
 
-                    #endregion payment account, srn, contractor, purpose
+            //        for (int y = sumPos - 1; y > 0; y--)
+            //        {
+            //            if (currentRow[y] != ' ')
+            //            {
+            //                documentNumber += currentRow[y];
+            //                if (currentRow[y - 1] == ' ')
+            //                    break;
+            //            }
+            //        }
 
-                    #region payment date
+            //        var array = documentNumber.ToCharArray();
+            //        Array.Reverse(array);
+            //        paymentRow.DocumentNum = new String(array);
 
-                    var row = allData.First(c => c.Contains("Дата проведення"));
+            //        #endregion documentNumber
 
-                    string paymentDate = "";
-                    int paymentDatePos = row.IndexOf("Дата проведення");
+            //        #region sum
 
-                    if (paymentDatePos >= 0)
-                    {
-                        int pPosition = paymentDatePos + 16;
+            //        string sum = "";
+            //        string returnValue = SearchString(sum, sumPos + operationLength, currentRow);
+            //        paymentRow.Sum = decimal.Parse(returnValue.Replace(',', ' ').Replace('.', ','));
 
-                        if (row[pPosition] != ' ')
-                            paymentDate += row.Substring(pPosition, 10);
-                    }
+            //        #endregion sum
 
-                    #endregion payment date
+            //        #region payment account, srn, contractor, purpose
 
-                    paymentRow.OperationType = operationType;
-                    paymentRow.PaymentPurpose = purpose.Trim();
-                    paymentRow.DocumentApplyDate = DateTime.Parse(paymentDate);
-                    payments.Add(paymentRow);
-                }
-            }
+            //        string purpose = "";
 
-            return payments;
+            //        i += 2;
+
+            //        //string modoficateBancAccount = items[8];
+
+            //        //if (modoficateBancAccount.Any(c => char.IsLetter(c)))
+            //        //{
+            //        //    int indexOfStr = modoficateBancAccount.IndexOf("2600");
+            //        //    modoficateBancAccount = modoficateBancAccount.Remove(0, indexOfStr);
+            //        //}
+
+
+            //        int paymentAccountPos = allData[i].IndexOf("Рах.:");
+            //        int srnPos = allData[i].IndexOf("Код:");
+
+            //        if (paymentAccountPos >= 0 && srnPos >= 0)
+            //        {
+            //            string paymentAccount = "";
+            //            string srn = "";
+
+            //            //paymentRow.RecipientBankAccountNum = ulong.Parse(SearchString(paymentAccount, paymentAccountPos + 5, allData[i]));
+
+            //            string bankAccount = SearchString(paymentAccount, paymentAccountPos + 5, allData[i]);
+
+            //            if (bankAccount.Any(c => char.IsLetter(c)))
+            //            {
+            //                bankAccount = NumberCrop(bankAccount);
+            //            }
+            //            try
+            //            {
+            //                paymentRow.RecipientBankAccountNum = ulong.Parse(bankAccount);
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show("Помилка " + ex.Message +"\nПри спробі обробити номер "+ bankAccount +"\nЗменшили номер до 14 символів", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                string trimmedString = bankAccount.Length > 14
+            //                                       ? bankAccount.Substring(bankAccount.Length - 14)
+            //                                       : bankAccount;
+
+            //                MessageBox.Show("Номер після редагування"+ trimmedString, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                bankAccount = trimmedString;
+            //                paymentRow.RecipientBankAccountNum = ulong.Parse(bankAccount);
+            //            }
+
+            //            paymentRow.RecipientSrn = SearchString(srn, srnPos + 5, allData[i]);
+            //            paymentRow.RecipientName = allData[++i].Trim();
+
+            //            i++;
+
+            //            int k = i;
+            //            while (!Char.IsDigit(allData[k][0]))
+            //            {
+            //                purpose += allData[k];
+
+            //                if (k + 1 == allData.Count || allData[k + 1].Contains("---------------- ----------------"))
+            //                    break;
+            //                else
+            //                    k++;
+            //            }
+            //        }
+
+            //        #endregion payment account, srn, contractor, purpose
+
+            //        #region payment date
+
+            //        var row = allData.First(c => c.Contains("Дата проведення"));
+
+            //        string paymentDate = "";
+            //        int paymentDatePos = row.IndexOf("Дата проведення");
+
+            //        if (paymentDatePos >= 0)
+            //        {
+            //            int pPosition = paymentDatePos + 16;
+
+            //            if (row[pPosition] != ' ')
+            //                paymentDate += row.Substring(pPosition, 10);
+            //        }
+
+            //        #endregion payment date
+
+            //        paymentRow.OperationType = operationType;
+            //        paymentRow.PaymentPurpose = purpose.Trim();
+            //        paymentRow.DocumentApplyDate = DateTime.Parse(paymentDate);
+            //        payments.Add(paymentRow);
+            //    }
+            //}
+
+            //return payments;
         }
 
         public List<PaymentImportModelDTO> GetPoltavaBankCurrencyList(string filePath)

@@ -34,22 +34,30 @@ namespace ERP_NEW.BLL.Services
         private IRepository<MTSSpecificationss> mtsSpecificationsOld;
         private IRepository<MTSAuthorizationUsers> mtsAuthorizationUsers;
         private IRepository<MTSDetails> mtsDetailss;
-        private IRepository<MTSGost> mtsGost;
+        private IRepository<MTSGost> mtsGosts;
         private IRepository<MTSCreateDetals> mtsCreateDetals;
         private IRepository<MTSDetalsProcessing> mtsDetailsProcessing;
         private IRepository<MTSGuages> mtsGuages;
-        private IRepository<MTSNomenclaturesOld> mtsNomenclatures;
+        private IRepository<MTS_NOMENCLATURES> mtsNomenclatures;
         private IRepository<MTSMeasure> mtsMeasure;
         private IRepository<MTSPurchasedProducts> mtsPurchasedProductss;
         private IRepository<MTSMaterials> mtsMaterialss;
-        private IRepository<MTSNomenclatureGroupsOld> mtsNomenclatureGroups;
+        
         private IRepository<MTSDetails> mtsDetals;
+
+        private IRepository<MTS_NOMENCLATURE_GROUPS> mtsNomenclatureGroups;
         private IRepository<MTS_CUSTOMERORDERS> mtsCustomerOrders;
         private IRepository<MTS_DETAILS> mtsDetails;
         private IRepository<MTS_SPECIFICATIONS> mtsSpecifications;
         private IRepository<MTS_PURCHASED_PRODUCTS> mtsPurchasedProducts;
         private IRepository<MTS_MATERIALS> mtsMaterials;
-
+        private IRepository<MTS_ADDIT_CALCULATION> mtsAdditCalculation;
+        private IRepository<MTS_MEASURE> mtsMeasureAdc;
+        private IRepository<MTS_MEASURE> mtsMeasureAdcс;
+        private IRepository<MTS_CREATED_DETAILS> mtsCreatedDetail;
+        private IRepository<MTS_DEATAILS_PROCESSING> mtsDetailProcessing;
+        private IRepository<MTS_GUAGES> mtsGuage;
+        private IRepository<MTS_GOST> mtsGost;
 
         private IMapper mapper;
 
@@ -70,24 +78,32 @@ namespace ERP_NEW.BLL.Services
             mtsSpecificationsOld = Database.GetRepository<MTSSpecificationss>();
             mtsAuthorizationUsers = Database.GetRepository<MTSAuthorizationUsers>();
             mtsDetailss = Database.GetRepository<MTSDetails>();
-            mtsGost = Database.GetRepository<MTSGost>();
+            mtsGosts = Database.GetRepository<MTSGost>();
             
             mtsCreateDetals = Database.GetRepository<MTSCreateDetals>();
             mtsDetailsProcessing = Database.GetRepository<MTSDetalsProcessing>();
             mtsGuages = Database.GetRepository<MTSGuages>();
-            mtsNomenclatures = Database.GetRepository<MTSNomenclaturesOld>();
+            
             mtsMeasure = Database.GetRepository<MTSMeasure>();
             mtsPurchasedProductss = Database.GetRepository<MTSPurchasedProducts>();
             mtsMaterialss = Database.GetRepository<MTSMaterials>();
-            mtsNomenclatureGroups = Database.GetRepository<MTSNomenclatureGroupsOld>();
+
+
+            mtsNomenclatureGroups = Database.GetRepository<MTS_NOMENCLATURE_GROUPS>();
             mtsDetals = Database.GetRepository<MTSDetails>();
             mtsDetails = Database.GetRepository<MTS_DETAILS>();
             mtsPurchasedProducts = Database.GetRepository<MTS_PURCHASED_PRODUCTS>();
             mtsMaterials = Database.GetRepository<MTS_MATERIALS>();
             mtsSpecifications = Database.GetRepository<MTS_SPECIFICATIONS>();
             mtsCustomerOrders = Database.GetRepository<MTS_CUSTOMERORDERS>();
-
-
+            mtsMeasureAdc = Database.GetRepository<MTS_MEASURE>();
+            mtsAdditCalculation = Database.GetRepository<MTS_ADDIT_CALCULATION>();
+            mtsNomenclatures = Database.GetRepository<MTS_NOMENCLATURES>();
+            mtsMeasureAdcс = Database.GetRepository<MTS_MEASURE>();
+            mtsCreatedDetail = Database.GetRepository<MTS_CREATED_DETAILS>();
+            mtsDetailProcessing = Database.GetRepository<MTS_DEATAILS_PROCESSING>();
+            mtsGuage = Database.GetRepository<MTS_GUAGES>();
+            mtsGost = Database.GetRepository<MTS_GOST>();
 
 
         var config = new MapperConfiguration(cfg =>
@@ -120,23 +136,34 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<MTSDetalsProcessing, MTSDetalsProcessingDTO>();
                 cfg.CreateMap<MTSGuagesDTO, MTSGuages>();
                 cfg.CreateMap<MTSGuages, MTSGuagesDTO>();
-                cfg.CreateMap<MTSNomenclaturesOldDTO, MTSNomenclaturesOld>();
-                cfg.CreateMap<MTSNomenclaturesOld, MTSNomenclaturesOldDTO>();
+                cfg.CreateMap<MTSNomenclaturesOldDTO, MTS_NOMENCLATURES>();
+                
                 cfg.CreateMap<MTSMeasureDTO, MTSMeasure>();
                 cfg.CreateMap<MTSMeasure, MTSMeasureDTO>();
                 cfg.CreateMap<MTSPurchasedProductsDTO, MTSPurchasedProducts>();
                 cfg.CreateMap<MTSPurchasedProducts, MTSPurchasedProductsDTO>();
                 cfg.CreateMap<MTSMaterialsDTO, MTSMaterials>();
                 cfg.CreateMap<MTSMaterials, MTSMaterialsDTO>();
-                cfg.CreateMap<MTSNomenclatureGroupsOldDTO, MTSNomenclatureGroupsOld>();
-                cfg.CreateMap<MTSNomenclatureGroupsOld, MTSNomenclatureGroupsOldDTO>();
+                
                 cfg.CreateMap<MTSDetailsDTO, MTSDetails>();
                 cfg.CreateMap<MTSDetails, MTSDetailsDTO>();
                 cfg.CreateMap<MTS_DETAILS, MTSDetailsDTO>();
                 cfg.CreateMap<MTS_MATERIALS, MTSMaterialsDTO>();
                 cfg.CreateMap<MTS_PURCHASED_PRODUCTS, MTSPurchasedProductsDTO>();
-                cfg.CreateMap<MTS_SPECIFICATIONS, MtsSpecificationsDTO>();
+                cfg.CreateMap<MTS_SPECIFICATIONS, MTSSpecificationssDTO>();
                 cfg.CreateMap<MTS_CUSTOMERORDERS, MTSCustomerOrdersDTO>();
+                cfg.CreateMap<MTS_MEASURE, MTSMeasureDTO>();
+                cfg.CreateMap<MTS_ADDIT_CALCULATION, MtsAdditCalculationsDTO>();
+                cfg.CreateMap<MTS_MEASURE, MTSMeasureDTO>();
+                cfg.CreateMap<MTS_ADDIT_CALCULATION, MtsAdditCalculationsDTO>();
+                cfg.CreateMap<MTS_NOMENCLATURES, MTSNomenclaturesOldDTO>();
+                cfg.CreateMap<MTSNomenclatureGroupsOldDTO, MTS_NOMENCLATURE_GROUPS>();
+                cfg.CreateMap<MTS_NOMENCLATURE_GROUPS, MTSNomenclatureGroupsOldDTO>();
+                cfg.CreateMap<MTS_CREATED_DETAILS, MTSCreateDetalsDTO>();
+
+                cfg.CreateMap<MTS_DEATAILS_PROCESSING, MTSDetalsProcessingDTO>();
+                cfg.CreateMap<MTS_GUAGES, MTSGuagesDTO>();
+                cfg.CreateMap<MTS_GOST, MTSGostDTO>();
 
             });
 
@@ -144,6 +171,8 @@ namespace ERP_NEW.BLL.Services
         }
 
         #region Get method's
+
+
 
         public IEnumerable<MtsAssembliesDTO> GetMtsAssembliesByRoot(long rootId)
         {
@@ -217,6 +246,11 @@ namespace ERP_NEW.BLL.Services
         public MtsAssembliesDTO GetMtsAssemblyById(long id)
         {
             return mapper.Map<MtsAssemblies, MtsAssembliesDTO>(mtsAssemblies.GetAll().SingleOrDefault(a => a.Id == id));
+        }
+
+        public MTSSpecificationssDTO  GetMtsSpecificationById(long id)
+        {
+            return mapper.Map<MTS_SPECIFICATIONS, MTSSpecificationssDTO>(mtsSpecifications.GetAll().SingleOrDefault(a => a.ID == id));
         }
 
         public List<MtsSpecificationTreeInfoDTO> GetMtsSpecificationTreeInfoByRootId(long id)
@@ -537,6 +571,7 @@ namespace ERP_NEW.BLL.Services
                                Assembly = mso.ASSEMBLY,
                                 Quantity = mso.QUANTITY,
                                   SpecificationName = mso.NAME,
+                                   Drawing = mso.DRAWING,
                                   
                               DataCreateCustomerOrder = co.DateCreate,
                               ContractorName = con.Name,
@@ -547,78 +582,78 @@ namespace ERP_NEW.BLL.Services
             return result.ToList();
         }
 
-        public IEnumerable<MTSDetailsDTO> GetAllDetailsSpecific(int spesificId)
-        {
-            var result = (
+        //public IEnumerable<MTSDetailsDTO> GetAllDetailsSpecific(int spesificId)
+        //{
+        //    var result = (
 
-                          from mtsDetal in mtsDetails.GetAll()
+        //                  from mtsDetal in mtsDetails.GetAll()
 
-                          join mtsCreateDet in mtsCreateDetals.GetAll() on mtsDetal.CREATED_DETAILS_ID equals mtsCreateDet.ID into mtsCeateDetals
-                          from mtsCreateDet in mtsCeateDetals.DefaultIfEmpty()
+        //                  join mtsCreateDet in mtsCreateDetals.GetAll() on mtsDetal.CREATED_DETAILS_ID equals mtsCreateDet.ID into mtsCeateDetals
+        //                  from mtsCreateDet in mtsCeateDetals.DefaultIfEmpty()
 
-                          join mtsNom in mtsNomenclatures.GetAll() on mtsCreateDet.NOMENCLATURE_ID equals mtsNom.ID into mtsNomen
-                          from mtsNom in mtsNomen.DefaultIfEmpty()
+        //                  join mtsNom in mtsNomenclatures.GetAll() on mtsCreateDet.NOMENCLATURE_ID equals mtsNom.ID into mtsNomen
+        //                  from mtsNom in mtsNomen.DefaultIfEmpty()
 
-                          join mtsG in mtsGost.GetAll() on mtsNom.GOST_ID equals mtsG.ID into mtsGos
-                          from mtsG in mtsGos.DefaultIfEmpty()
+        //                  join mtsG in mtsGost.GetAll() on mtsNom.GOST_ID equals mtsG.ID into mtsGos
+        //                  from mtsG in mtsGos.DefaultIfEmpty()
 
-                          join mtsDetalsProc in mtsDetailsProcessing.GetAll() on mtsCreateDet.PROCESSING_ID equals mtsDetalsProc.ID into mtsDetalsProcces
-                          from mtsDetalsProc in mtsDetalsProcces.DefaultIfEmpty()
+        //                  join mtsDetalsProc in mtsDetailsProcessing.GetAll() on mtsCreateDet.PROCESSING_ID equals mtsDetalsProc.ID into mtsDetalsProcces
+        //                  from mtsDetalsProc in mtsDetalsProcces.DefaultIfEmpty()
 
-                          join mtsGua in mtsGuages.GetAll() on mtsNom.GUAGE_ID equals mtsGua.ID into mtsGuag
-                          from mtsGua in mtsGuag.DefaultIfEmpty()
+        //                  join mtsGua in mtsGuages.GetAll() on mtsNom.GUAGE_ID equals mtsGua.ID into mtsGuag
+        //                  from mtsGua in mtsGuag.DefaultIfEmpty()
 
-                          join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
-                          from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
+        //                  join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
+        //                  from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
 
-                          join mtsMeas in mtsMeasure.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeases
-                          from mtsMeas in mtsMeases.DefaultIfEmpty()
+        //                  join mtsMeas in mtsMeasure.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeases
+        //                  from mtsMeas in mtsMeases.DefaultIfEmpty()
 
-                          where (mtsDetal.SPECIFICATIONS_ID == spesificId /*&& mtsSpec.ID != null*/)
+        //                  where (mtsDetal.SPECIFICATIONS_ID == spesificId /*&& mtsSpec.ID != null*/)
 
-                          select new MTSDetailsDTO()
-                          {
-                              ID = mtsDetal.ID,//mtsDetal.CREATED_DETAILS_ID,//??????????
-                              SPECIFICATIONS_ID = mtsDetal.SPECIFICATIONS_ID,
-                              CREATED_DETAILS_ID = mtsDetal.CREATED_DETAILS_ID,
-                              QUANTITY_OF_BLANKS = mtsDetal.QUANTITY_OF_BLANKS,
-                              CODZAK = mtsDetal.CODZAK,
-                              QUANTITY = mtsDetal.QUANTITY,
-                              CHANGES = mtsDetal.CHANGES,
-                              TIME_OF_ADD = mtsDetal.TIME_OF_ADD,
+        //                  select new MTSDetailsDTO()
+        //                  {
+        //                      ID = mtsDetal.ID,//mtsDetal.CREATED_DETAILS_ID,//??????????
+        //                      SPECIFICATIONS_ID = mtsDetal.SPECIFICATIONS_ID,
+        //                      CREATED_DETAILS_ID = mtsDetal.CREATED_DETAILS_ID,
+        //                      QUANTITY_OF_BLANKS = mtsDetal.QUANTITY_OF_BLANKS,
+        //                      CODZAK = mtsDetal.CODZAK,
+        //                      QUANTITY = mtsDetal.QUANTITY,
+        //                      CHANGES = mtsDetal.CHANGES,
+        //                      TIME_OF_ADD = mtsDetal.TIME_OF_ADD,
 
-                              NOMENCLATURE_ID = mtsCreateDet.NOMENCLATURE_ID,
-                              NOMENCLATURESWEIGHT = mtsNom.WEIGHT,
-                              NOMENCLATURESNAME = mtsNom.NAME,
-                              NOMENCLATURESNOTE = mtsNom.NOTE,
+        //                      NOMENCLATURE_ID = mtsCreateDet.NOMENCLATURE_ID,
+        //                      NOMENCLATURESWEIGHT = mtsNom.WEIGHT,
+        //                      NOMENCLATURESNAME = mtsNom.NAME,
+        //                      NOMENCLATURESNOTE = mtsNom.NOTE,
 
-                              NOM_GROUP_ID = mtsNomGroup.ID,
-                              //NOM_GROUP_ADDIT_CALCULATION_ACTIVE = (bool)mtsNomGroup.ADDIT_CALCULATION_ACTIVE,
-                              NOM_GROUP_ADDIT_CALCULATION_ID = mtsNomGroup.ADDIT_CALCULATION_ID,
-                              NOM_GROUP_CODPROD = mtsNomGroup.CODPROD,
-                              NOM_GROUP_NAME = mtsNomGroup.NAME,
-                              NOM_GROUP_PARENT_ID = mtsNomGroup.PARENT_ID,
-                              NOM_GROUP_RATIO_OF_WASTE = mtsNomGroup.RATIO_OF_WASTE,
-                              NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
+        //                      NOM_GROUP_ID = mtsNomGroup.ID,
+        //                      //NOM_GROUP_ADDIT_CALCULATION_ACTIVE = (bool)mtsNomGroup.ADDIT_CALCULATION_ACTIVE,
+        //                      NOM_GROUP_ADDIT_CALCULATION_ID = mtsNomGroup.ADDIT_CALCULATION_ID,
+        //                      NOM_GROUP_CODPROD = mtsNomGroup.CODPROD,
+        //                      NOM_GROUP_NAME = mtsNomGroup.NAME,
+        //                      NOM_GROUP_PARENT_ID = mtsNomGroup.PARENT_ID,
+        //                      NOM_GROUP_RATIO_OF_WASTE = mtsNomGroup.RATIO_OF_WASTE,
+        //                      NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
 
-                              PROCESSING_ID = mtsCreateDet.PROCESSING_ID,
-                              DETALSPROCESSING = mtsDetalsProc.NAME,
+        //                      PROCESSING_ID = mtsCreateDet.PROCESSING_ID,
+        //                      DETALSPROCESSING = mtsDetalsProc.NAME,
 
-                              GUAEGENAME = mtsNom.GUAGE,
-                               GUAEGESORT = mtsGua.SORTING,
+        //                      GUAEGENAME = mtsNom.GUAGE,
+        //                       GUAEGESORT = mtsGua.SORTING,
 
-                               MEASURE_NAME = mtsMeas.NAME,
+        //                       MEASURE_NAME = mtsMeas.NAME,
 
-                              GOSTID = mtsNom.GOST_ID,
-                              GOSTNAME = mtsG.NAME,
+        //                      GOSTID = mtsNom.GOST_ID,
+        //                      GOSTNAME = mtsG.NAME,
 
-                              NAME = mtsCreateDet.NAME,
-                              DRAWING = mtsCreateDet.DRAWING,
-                              WIDTH = mtsCreateDet.WIDTH,//9++
-                              HEIGHT = mtsCreateDet.HEIGHT
-                          }).ToList();
-            return result;
-        }
+        //                      NAME = mtsCreateDet.NAME,
+        //                      DRAWING = mtsCreateDet.DRAWING,
+        //                      WIDTH = mtsCreateDet.WIDTH,//9++
+        //                      HEIGHT = mtsCreateDet.HEIGHT
+        //                  }).ToList();
+        //    return result;
+        //}
 
         //Nomenclature_id = (int)i.NOMENCLATURES_ID,
         //                                   Quantity = (decimal)(i.QUANTITY * val),
@@ -630,100 +665,100 @@ namespace ERP_NEW.BLL.Services
         //                                   Note = i.MTS_NOMENCLATURES.NOTE,
         //                                   SortPosition = (int)i.MTS_NOMENCLATURES.MTS_NOMENCLATURE_GROUPS.SORTPOSITION
 
-        public IEnumerable<MTSPurchasedProductsDTO> GetBuysDetalSpecific(int spesificId)
-        {
-            var rez = (
+        //public IEnumerable<MTSPurchasedProductsDTO> GetBuysDetalSpecific(int spesificId)
+        //{
+        //    var rez = (
 
-                       from mtsPurc in mtsPurchasedProducts.GetAll()
+        //               from mtsPurc in mtsPurchasedProducts.GetAll()
 
-                       join mtsNom in mtsNomenclatures.GetAll() on mtsPurc.NOMENCLATURES_ID equals mtsNom.ID into mtsNomen
-                       from mtsNom in mtsNomen.DefaultIfEmpty()
+        //               join mtsNom in mtsNomenclatures.GetAll() on mtsPurc.NOMENCLATURES_ID equals mtsNom.ID into mtsNomen
+        //               from mtsNom in mtsNomen.DefaultIfEmpty()
 
-                       join mtsMeas in mtsMeasure.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeasur
-                       from mtsMeas in mtsMeasur.DefaultIfEmpty()
+        //               join mtsMeas in mtsMeasure.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeasur
+        //               from mtsMeas in mtsMeasur.DefaultIfEmpty()
 
-                       join gost in mtsGost.GetAll() on mtsNom.GOST_ID equals gost.ID into gosts
-                       from gost in gosts.DefaultIfEmpty()
+        //               join gost in mtsGost.GetAll() on mtsNom.GOST_ID equals gost.ID into gosts
+        //               from gost in gosts.DefaultIfEmpty()
 
-                       join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
-                       from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
+        //               join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
+        //               from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
 
 
-                       where mtsPurc.SPECIFICATIONS_ID == spesificId
-                       select new MTSPurchasedProductsDTO()
-                       {
-                           ID = mtsPurc.ID,//mtsPurc.ID,
-                            CHANGES = mtsPurc.CHANGES,
+        //               where mtsPurc.SPECIFICATIONS_ID == spesificId
+        //               select new MTSPurchasedProductsDTO()
+        //               {
+        //                   ID = mtsPurc.ID,//mtsPurc.ID,
+        //                    CHANGES = mtsPurc.CHANGES,
                            
-                           GUAEGENAME = mtsNom.GUAGE,
-                           GOSTNAME = gost.NAME,
+        //                   GUAEGENAME = mtsNom.GUAGE,
+        //                   GOSTNAME = gost.NAME,
 
-                           NOMENCLATURESNAME = mtsNom.NAME,
-                           NOMENCLATURESNOTE = mtsNom.NOTE,
-                            NOMENCLATURESPRICE = mtsNom.PRICE,
+        //                   NOMENCLATURESNAME = mtsNom.NAME,
+        //                   NOMENCLATURESNOTE = mtsNom.NOTE,
+        //                    NOMENCLATURESPRICE = mtsNom.PRICE,
 
-                            NOM_GROUP_ID = mtsNomGroup.ID,
-                             NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
+        //                    NOM_GROUP_ID = mtsNomGroup.ID,
+        //                     NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
 
-                           MEASURENAME = mtsMeas.NAME,
-                           WEIGHT = mtsNom.WEIGHT,
-                           QUANTITY = mtsPurc.QUANTITY,
+        //                   MEASURENAME = mtsMeas.NAME,
+        //                   WEIGHT = mtsNom.WEIGHT,
+        //                   QUANTITY = mtsPurc.QUANTITY,
 
-                           NOMENCLATURES_ID = mtsPurc.NOMENCLATURES_ID,
-                           SPECIFICATIONS_ID = mtsPurc.SPECIFICATIONS_ID
-                       }).ToList();
+        //                   NOMENCLATURES_ID = mtsPurc.NOMENCLATURES_ID,
+        //                   SPECIFICATIONS_ID = mtsPurc.SPECIFICATIONS_ID
+        //               }).ToList();
 
-                return rez;
-        }
+        //        return rez;
+        //}
 
 
-           public IEnumerable<MTSMaterialsDTO> GetMaterialsSpecific(int spesificId)
-        {
-            var rez = (//from mtsSpec in mtsSpecificationsOld.GetAll()
+        //   public IEnumerable<MTSMaterialsDTO> GetMaterialsSpecific(int spesificId)
+        //{
+        //    var rez = (//from mtsSpec in mtsSpecificationsOld.GetAll()
                 
-                       from mtsMat in mtsMaterials.GetAll() 
+        //               from mtsMat in mtsMaterials.GetAll() 
                        
-                       join mtsNom in mtsNomenclatures.GetAll() on mtsMat.NOMENCLATURES_ID equals mtsNom.ID into mtsNomen
-                       from mtsNom in mtsNomen.DefaultIfEmpty()
+        //               join mtsNom in mtsNomenclatures.GetAll() on mtsMat.NOMENCLATURES_ID equals mtsNom.ID into mtsNomen
+        //               from mtsNom in mtsNomen.DefaultIfEmpty()
 
-                       join mtsMeas in mtsMeasure.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeasur
-                       from mtsMeas in mtsMeasur.DefaultIfEmpty()
+        //               join mtsMeas in mtsMeasure.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeasur
+        //               from mtsMeas in mtsMeasur.DefaultIfEmpty()
 
-                       join gost in mtsGost.GetAll() on mtsNom.GOST_ID equals gost.ID into gosts
-                       from gost in gosts.DefaultIfEmpty()
+        //               join gost in mtsGost.GetAll() on mtsNom.GOST_ID equals gost.ID into gosts
+        //               from gost in gosts.DefaultIfEmpty()
 
-                       join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
-                       from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
+        //               join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
+        //               from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
 
-                       where mtsMat.SPECIFICATIONS_ID == spesificId 
+        //               where mtsMat.SPECIFICATIONS_ID == spesificId 
 
-                       select new MTSMaterialsDTO()
-                       {
-                           ID = mtsMat.ID,//mtsMat.ID,
-                            CHANGES = mtsMat.CHANGES,
-                           NOMENCLATURES_ID = mtsNom.ID,
-                           NOMENCLATURESNAME = mtsNom.NAME,//1
-                           GUAGENAME = mtsNom.GUAGE,//2
-                           GOSTNAME = gost.NAME,//3
-                           NOMENCLATURESNOTE = mtsNom.NOTE,//4
-                           MEASURENAME = mtsMeas.NAME,//5
+        //               select new MTSMaterialsDTO()
+        //               {
+        //                   ID = mtsMat.ID,//mtsMat.ID,
+        //                    CHANGES = mtsMat.CHANGES,
+        //                   NOMENCLATURES_ID = mtsNom.ID,
+        //                   NOMENCLATURESNAME = mtsNom.NAME,//1
+        //                   GUAGENAME = mtsNom.GUAGE,//2
+        //                   GOSTNAME = gost.NAME,//3
+        //                   NOMENCLATURESNOTE = mtsNom.NOTE,//4
+        //                   MEASURENAME = mtsMeas.NAME,//5
                             
-                            WEIGHT = mtsNom.WEIGHT,//6
-                           QUANTITY = mtsMat.QUANTITY,//7
-                           SPECIFICATIONS_ID = mtsMat.SPECIFICATIONS_ID,
-                            NOM_GROUP_ID = mtsNomGroup.ID,
-                           NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
-                           NOMENCLATURESPRICE = mtsNom.PRICE
+        //                    WEIGHT = mtsNom.WEIGHT,//6
+        //                   QUANTITY = mtsMat.QUANTITY,//7
+        //                   SPECIFICATIONS_ID = mtsMat.SPECIFICATIONS_ID,
+        //                    NOM_GROUP_ID = mtsNomGroup.ID,
+        //                   NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
+        //                   NOMENCLATURESPRICE = mtsNom.PRICE
 
-                       }).ToList();
+        //               }).ToList();
 
-                return rez;
+        //        return rez;
  
-        }
+        //}
 
         public IEnumerable<MTSNomenclatureGroupsOldDTO> GetAllNomenclatureGroupsOld()
         {
-            return mapper.Map<IEnumerable<MTSNomenclatureGroupsOld>, IList<MTSNomenclatureGroupsOldDTO>>(mtsNomenclatureGroups.GetAll());
+            return mapper.Map<IEnumerable<MTS_NOMENCLATURE_GROUPS>, IList<MTSNomenclatureGroupsOldDTO>>(mtsNomenclatureGroups.GetAll());
         }
 
         public IEnumerable<MTSNomenclaturesOldDTO> GetAllNomenclatures(int nomenGroupId)
@@ -859,6 +894,181 @@ namespace ERP_NEW.BLL.Services
 
 
         #endregion
+
+
+
+
+        public IEnumerable<MTSDetailsDTO> GetAllDetailsSpecific(int spesificId)
+        {
+            var result = (
+
+                          from mtsDetal in mtsDetails.GetAll()
+
+                          join mtsCreateDet in mtsCreatedDetail.GetAll() on mtsDetal.CREATED_DETAILS_ID equals mtsCreateDet.ID into mtsCeateDetals
+                          from mtsCreateDet in mtsCeateDetals.DefaultIfEmpty()
+
+                          join mtsNom in mtsNomenclatures.GetAll() on mtsCreateDet.NOMENCLATURE_ID equals mtsNom.ID into mtsNomen
+                          from mtsNom in mtsNomen.DefaultIfEmpty()
+
+                          join mtsG in mtsGost.GetAll() on mtsNom.GOST_ID equals mtsG.ID into mtsGos
+                          from mtsG in mtsGos.DefaultIfEmpty()
+
+                          join mtsDetalsProc in mtsDetailProcessing.GetAll() on mtsCreateDet.PROCESSING_ID equals mtsDetalsProc.ID into mtsDetalsProcces
+                          from mtsDetalsProc in mtsDetalsProcces.DefaultIfEmpty()
+
+                          join mtsGua in mtsGuage.GetAll() on mtsNom.GUAGE_ID equals mtsGua.ID into mtsGuag
+                          from mtsGua in mtsGuag.DefaultIfEmpty()
+
+                          join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
+                          from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
+
+                          join mtsMeas in mtsMeasureAdcс.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeases
+                          from mtsMeas in mtsMeases.DefaultIfEmpty()
+
+                          join mtsAdditCalc in mtsAdditCalculation.GetAll() on mtsNomGroup.ADDIT_CALCULATION_ID equals mtsAdditCalc.ID into mtsAdditCalcen
+                          from mtsAdditCalc in mtsAdditCalcen.DefaultIfEmpty()
+
+                          join mtsMeasAdc in mtsMeasureAdc.GetAll() on mtsAdditCalc.MEASURE_ID equals mtsMeasAdc.ID into mtsMeasAdcen
+                          from mtsMeasAdc in mtsMeasAdcen.DefaultIfEmpty()
+
+                          where (mtsDetal.SPECIFICATIONS_ID == spesificId /*&& mtsSpec.ID != null*/)
+
+                          select new MTSDetailsDTO()
+                          {
+                              ID = mtsDetal.ID,//mtsDetal.CREATED_DETAILS_ID,//??????????
+                              SPECIFICATIONS_ID = mtsDetal.SPECIFICATIONS_ID,
+                              CREATED_DETAILS_ID = mtsDetal.CREATED_DETAILS_ID,
+                              QUANTITY_OF_BLANKS = mtsDetal.QUANTITY_OF_BLANKS,
+                              CODZAK = mtsDetal.CODZAK,
+                              QUANTITY = mtsDetal.QUANTITY,
+                              CHANGES = mtsDetal.CHANGES,
+                              TIME_OF_ADD = mtsDetal.TIME_OF_ADD,
+
+                              NOMENCLATURE_ID = mtsCreateDet.NOMENCLATURE_ID,
+                              NOMENCLATURESWEIGHT = mtsNom.WEIGHT,
+                              NOMENCLATURESNAME = mtsNom.NAME,
+                              NOMENCLATURESNOTE = mtsNom.NOTE,
+
+                              NOM_GROUP_ID = mtsNomGroup.ID,
+                              NOM_GROUP_ADDIT_CALCULATION_ACTIVE = mtsNomGroup.ADDIT_CALCULATION_ACTIVE,
+                              NOM_GROUP_ADDIT_CALCULATION_ID = mtsNomGroup.ADDIT_CALCULATION_ID,
+                              NOM_GROUP_ADDIT_CALCULATION_MEASURE = mtsMeasAdc.NAME,
+                              NOM_GROUP_CODPROD = mtsNomGroup.CODPROD,
+                              NOM_GROUP_NAME = mtsNomGroup.NAME,
+                              NOM_GROUP_PARENT_ID = mtsNomGroup.PARENT_ID,
+                              NOM_GROUP_RATIO_OF_WASTE = mtsNomGroup.RATIO_OF_WASTE,
+                              NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
+
+                              PROCESSING_ID = mtsCreateDet.PROCESSING_ID,
+                              DETALSPROCESSING = mtsDetalsProc.NAME,
+
+                              GUAEGENAME = mtsNom.GUAGE,
+                              GUAEGESORT = mtsGua.SORTING,
+
+                              MEASURE_NAME = mtsMeas.NAME,
+
+                              GOSTID = mtsNom.GOST_ID,
+                              GOSTNAME = mtsG.NAME,
+
+                              NAME = mtsCreateDet.NAME,
+                              DRAWING = mtsCreateDet.DRAWING,
+                              WIDTH = mtsCreateDet.WIDTH,//9++
+                              HEIGHT = mtsCreateDet.HEIGHT,
+                              lastFocusedRov = false
+                          }).ToList();
+            return result;
+        }
+
+
+        public IEnumerable<MTSPurchasedProductsDTO> GetBuysDetalSpecific(int spesificId)
+        {
+            var rez = (
+
+                       from mtsPurc in mtsPurchasedProducts.GetAll()
+
+                       join mtsNom in mtsNomenclatures.GetAll() on mtsPurc.NOMENCLATURES_ID equals mtsNom.ID into mtsNomen
+                       from mtsNom in mtsNomen.DefaultIfEmpty()
+
+                       join mtsMeas in mtsMeasureAdc.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeasur
+                       from mtsMeas in mtsMeasur.DefaultIfEmpty()
+
+                       join gost in mtsGost.GetAll() on mtsNom.GOST_ID equals gost.ID into gosts
+                       from gost in gosts.DefaultIfEmpty()
+
+                       join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
+                       from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
+
+
+                       where mtsPurc.SPECIFICATIONS_ID == spesificId
+                       select new MTSPurchasedProductsDTO()
+                       {
+                           ID = mtsPurc.ID,//mtsPurc.ID,
+                           CHANGES = mtsPurc.CHANGES,
+
+                           GUAEGENAME = mtsNom.GUAGE,
+                           GOSTNAME = gost.NAME,
+
+                           NOMENCLATURESNAME = mtsNom.NAME,
+                           NOMENCLATURESNOTE = mtsNom.NOTE,
+                           NOMENCLATURESPRICE = mtsNom.PRICE,
+
+                           NOM_GROUP_ID = mtsNomGroup.ID,
+                           NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
+
+                           MEASURENAME = mtsMeas.NAME,
+                           WEIGHT = mtsNom.WEIGHT,
+                           QUANTITY = mtsPurc.QUANTITY,
+
+                           NOMENCLATURES_ID = mtsPurc.NOMENCLATURES_ID,
+                           SPECIFICATIONS_ID = mtsPurc.SPECIFICATIONS_ID
+                       }).ToList();
+
+            return rez;
+        }
+
+        public IEnumerable<MTSMaterialsDTO> GetMaterialsSpecific(int spesificId)
+        {
+            var rez = (//from mtsSpec in mtsSpecificationsOld.GetAll()
+
+                       from mtsMat in mtsMaterials.GetAll()
+
+                       join mtsNom in mtsNomenclatures.GetAll() on mtsMat.NOMENCLATURES_ID equals mtsNom.ID into mtsNomen
+                       from mtsNom in mtsNomen.DefaultIfEmpty()
+
+                       join mtsMeas in mtsMeasureAdc.GetAll() on mtsNom.MEASURE_ID equals mtsMeas.ID into mtsMeasur
+                       from mtsMeas in mtsMeasur.DefaultIfEmpty()
+
+                       join gost in mtsGost.GetAll() on mtsNom.GOST_ID equals gost.ID into gosts
+                       from gost in gosts.DefaultIfEmpty()
+
+                       join mtsNomGroup in mtsNomenclatureGroups.GetAll() on mtsNom.NOMENCLATUREGROUPS_ID equals mtsNomGroup.ID into mtsNomGroupen
+                       from mtsNomGroup in mtsNomGroupen.DefaultIfEmpty()
+
+                       where mtsMat.SPECIFICATIONS_ID == spesificId
+
+                       select new MTSMaterialsDTO()
+                       {
+                           ID = mtsMat.ID,//mtsMat.ID,
+                           CHANGES = mtsMat.CHANGES,
+                           NOMENCLATURES_ID = mtsNom.ID,
+                           NOMENCLATURESNAME = mtsNom.NAME,//1
+                           GUAGENAME = mtsNom.GUAGE,//2
+                           GOSTNAME = gost.NAME,//3
+                           NOMENCLATURESNOTE = mtsNom.NOTE,//4
+                           MEASURENAME = mtsMeas.NAME,//5
+
+                           WEIGHT = mtsNom.WEIGHT,//6
+                           QUANTITY = mtsMat.QUANTITY,//7
+                           SPECIFICATIONS_ID = mtsMat.SPECIFICATIONS_ID,
+                           NOM_GROUP_ID = mtsNomGroup.ID,
+                           NOM_GROUP_SORTPOSITION = mtsNomGroup.SORTPOSITION,
+                           NOMENCLATURESPRICE = mtsNom.PRICE
+
+                       }).ToList();
+
+            return rez;
+
+        }
 
         #region MtsAssembies CRUD method's
 

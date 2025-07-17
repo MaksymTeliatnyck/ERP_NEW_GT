@@ -215,7 +215,7 @@ namespace ERP_NEW.DAL.EF
         //M
         //public DbSet<MaterialsForAccountClothes> MaterialsForAccountClothes { get; set; }
 
-        public DbSet<MtsAdditCalculations> MtsAdditCalculations { get; set; }
+        public DbSet<MtsAdditCalculation> MtsAdditCalculations { get; set; }
         public DbSet<MtsAssemblies> MtsAssemblies { get; set; }
         public DbSet<MtsSpecifications> MtsSpecifications { get; set; }
         public DbSet<MtsNomenclatures> MtsNomenclatures { get; set; }
@@ -240,20 +240,27 @@ namespace ERP_NEW.DAL.EF
         public DbSet<MTSAuthorizationUsers> MTSAuthorizationUsers { get; set; }
         public DbSet<MTSCreateDetals> MTSCreateDetals { get; set; }
         public DbSet<MTSGost> MTSGost { get; set; }
-        public DbSet<MTSNomenclaturesOld> MTSNomenclaturesOld { get; set; }
+        
         public DbSet<MTSGuages> MTSGuages { get; set; }
         public DbSet<MTSDetalsProcessing> MTSDetailsProcessing { get; set; }
         public DbSet<MTSDetails> MTSDetails { get; set; }
         public DbSet<MTSMeasure> MTSMeasure { get; set; }
         public DbSet<MTSPurchasedProducts> MTSPurchasedProducts { get; set; }
-        public DbSet<MTSNomenclatureGroupsOld> MTSNomenclatureGroupsOld { get; set; }
+        
 
         public DbSet<MTS_DETAILS> MTS_DETAILS { get; set; }
         public DbSet<MTS_MATERIALS> MTS_MATERIALS { get; set; }
         public DbSet<MTS_PURCHASED_PRODUCTS> MTS_PURCHASED_PRODUCTS { get; set; }
         public DbSet<MTS_CUSTOMERORDERS> MTSCustomerOrders { get; set; }
         public DbSet<MTS_SPECIFICATIONS> MTS_SPECIFICATIONS { get; set; }
-
+        public DbSet<MTS_MEASURE> MTS_MEASURE { get; set; }
+        public DbSet<MTS_ADDIT_CALCULATION> MTS_ADDIT_CALCULATION { get; set; }
+        public DbSet<MTS_NOMENCLATURES> MTS_NOMENCLATURES { get; set; }
+        public DbSet<MTS_NOMENCLATURE_GROUPS> MTS_NOMENCLATURE_GROUPS { get; set; }
+        public DbSet<MTS_CREATED_DETAILS> MTS_CREATED_DETAILS { get; set; }
+        public DbSet<MTS_DEATAILS_PROCESSING> MTS_DEATAILS_PROCESSING { get; set; }
+        public DbSet<MTS_GUAGES> MTS_GUAGES { get; set; }
+        public DbSet<MTS_GOST> MTS_GOST { get; set; }
 
 
         public DbSet<MsTrialBalanceCurrency> MsTrialBalanceCurrency { get; set; }
