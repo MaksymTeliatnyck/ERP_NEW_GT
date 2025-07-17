@@ -383,6 +383,7 @@ namespace ERP_NEW.BLL.Services
                     if (sumPos < 0)
                     {
                         sumPos = currentRow.IndexOf("Зарахування");
+
                         operationLength = 11;
                         operationType = 1;
                     }
