@@ -100,6 +100,7 @@ namespace ERP_NEW.DAL.EF
         public DbSet<CustomerOrderForWelding> CustomerOrderFowWelding { get; set; }
         public DbSet<CustomerOrderSpecifications> CustomerOrderSpecifications { get; set; }
         public DbSet<CustomerOrderAssemblies> CustomerOrderAssemblies { get; set; }
+        public DbSet<CustomerOrderService> CustomerOrderService { get; set; }
         public DbSet<Currency> Currency { get; set; }
         public DbSet<Currency_Rates> Currency_Rates { get; set; }
         public DbSet<ControlChecks> ControlChecks { get; set; }

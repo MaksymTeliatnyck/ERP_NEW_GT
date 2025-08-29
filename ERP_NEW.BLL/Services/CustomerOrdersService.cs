@@ -34,6 +34,7 @@ namespace ERP_NEW.BLL.Services
         private IRepository<ContractPayments> contractPayments;
         private IRepository<CustomerOrderPrepayments> customerOrderPrepayments;
         private IRepository<CustomerOrderPayments> customerOrderPayments;
+        private IRepository<CustomerOrderService> customerOrderService;
         private IRepository<Bank_Payments> bankPayments;
         private IRepository<ReceiptDetails> receiptDetails;
         private IRepository<RECEIPTS> receipt;
@@ -53,6 +54,7 @@ namespace ERP_NEW.BLL.Services
             customerOrders = Database.GetRepository<CustomerOrders>();
             customerOrderSpecifications = Database.GetRepository<CustomerOrderSpecifications>();
             customerOrderAssemblies = Database.GetRepository<CustomerOrderAssemblies>();
+            customerOrderService = Database.GetRepository<CustomerOrderService>();
             contractors = Database.GetRepository<Contractors>();
             currency = Database.GetRepository<Currency>();
             mtsAssemblies = Database.GetRepository<MtsAssemblies>();
@@ -79,6 +81,8 @@ namespace ERP_NEW.BLL.Services
                   cfg.CreateMap<CustomerOrderSpecificationsDTO, CustomerOrderSpecifications>();
                   cfg.CreateMap<CustomerOrderAssemblies, CustomerOrderAssembliesDTO>();
                   cfg.CreateMap<CustomerOrderAssembliesDTO, CustomerOrderAssemblies>();
+                  cfg.CreateMap<CustomerOrderService, CustomerOrderServiceDTO>();
+                  cfg.CreateMap<CustomerOrderServiceDTO, CustomerOrderService>();
                   cfg.CreateMap<CustomerOrderForWelding, CustomerOrderForWeldingDTO>();
                   cfg.CreateMap<ContractPayments, ContractPaymentsDTO>();
                   cfg.CreateMap<CustomerOrderPrepayments, CustomerOrderPrepaymentsDTO>();

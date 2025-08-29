@@ -165,6 +165,7 @@
     <Compile Include="DTO\ModelsDTO\CalculationMaterialsDTO.cs" />
     <Compile Include="DTO\ModelsDTO\CashBooksDTO.cs" />
     <Compile Include="DTO\ModelsDTO\CurencyJSONDTO.cs" />
+    <Compile Include="DTO\ModelsDTO\CustomerOrderServiceDTO.cs" />
     <Compile Include="DTO\ModelsDTO\EmployeesDetailsStandartDTO.cs" />
     <Compile Include="DTO\ModelsDTO\ExpenditureStoreHouseDTO.cs" />
     <Compile Include="DTO\ModelsDTO\FixedAssetsNoAmortDTO.cs" />

@@ -30,13 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreHouseProjectExpendituresEditAdditionalFm));
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.endExpBtn = new DevExpress.XtraEditors.SimpleButton();
             this.periodEditBtn = new DevExpress.XtraEditors.SimpleButton();
             this.nomenclatureEdit = new DevExpress.XtraEditors.ButtonEdit();
@@ -217,9 +217,9 @@
             // 
             // storeHouseProjectGrid
             // 
-            gridLevelNode3.RelationName = "Level1";
+            gridLevelNode1.RelationName = "Level1";
             this.storeHouseProjectGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode3});
+            gridLevelNode1});
             this.storeHouseProjectGrid.Location = new System.Drawing.Point(13, 145);
             this.storeHouseProjectGrid.MainView = this.storeHouseProjectGridView;
             this.storeHouseProjectGrid.Name = "storeHouseProjectGrid";
@@ -791,7 +791,7 @@
             this.orderNumberEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             this.orderNumberEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("orderNumberEdit.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("orderNumberEdit.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, "", null, null, true)});
             this.orderNumberEdit.Properties.PopupFormMinSize = new System.Drawing.Size(850, 0);
             this.orderNumberEdit.Properties.PopupFormSize = new System.Drawing.Size(850, 0);
             this.orderNumberEdit.Properties.View = this.gridLookUpEdit1View;
@@ -849,17 +849,17 @@
             this.employeesEdit.Location = new System.Drawing.Point(425, 30);
             this.employeesEdit.Name = "employeesEdit";
             this.employeesEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
-            serializableAppearanceObject5.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject5.Image")));
-            serializableAppearanceObject5.Options.UseImage = true;
-            serializableAppearanceObject7.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject7.Image")));
-            serializableAppearanceObject7.Options.UseImage = true;
-            serializableAppearanceObject8.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject8.Image")));
-            serializableAppearanceObject8.Options.UseImage = true;
-            serializableAppearanceObject9.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject9.Image")));
-            serializableAppearanceObject9.Options.UseImage = true;
+            serializableAppearanceObject1.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject1.Image")));
+            serializableAppearanceObject1.Options.UseImage = true;
+            serializableAppearanceObject2.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject2.Image")));
+            serializableAppearanceObject2.Options.UseImage = true;
+            serializableAppearanceObject3.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject3.Image")));
+            serializableAppearanceObject3.Options.UseImage = true;
+            serializableAppearanceObject4.Image = ((System.Drawing.Image)(resources.GetObject("serializableAppearanceObject4.Image")));
+            serializableAppearanceObject4.Options.UseImage = true;
             this.employeesEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("employeesEdit.Properties.Buttons"))), "", new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject7, serializableAppearanceObject8, serializableAppearanceObject9, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("employeesEdit.Properties.Buttons"))), "", new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, true)});
             this.employeesEdit.Properties.ImmediatePopup = true;
             this.employeesEdit.Properties.PopupFormSize = new System.Drawing.Size(667, 0);
             this.employeesEdit.Properties.PopupSizeable = false;
@@ -965,7 +965,6 @@
             // 
             // limitPanel
             // 
-            this.limitPanel.Controls.Add(this.customerOrderEnablePanel);
             this.limitPanel.Controls.Add(this.orderLimitCancelLbl);
             this.limitPanel.Controls.Add(this.limitPicture);
             this.limitPanel.Location = new System.Drawing.Point(425, 18);
@@ -978,7 +977,7 @@
             // 
             this.customerOrderEnablePanel.Controls.Add(this.labelControl9);
             this.customerOrderEnablePanel.Controls.Add(this.enableOrderPicture);
-            this.customerOrderEnablePanel.Location = new System.Drawing.Point(0, 0);
+            this.customerOrderEnablePanel.Location = new System.Drawing.Point(425, 9);
             this.customerOrderEnablePanel.Name = "customerOrderEnablePanel";
             this.customerOrderEnablePanel.Size = new System.Drawing.Size(562, 34);
             this.customerOrderEnablePanel.TabIndex = 167;
@@ -1053,9 +1052,9 @@
             // expenditureFullGrid
             // 
             this.expenditureFullGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.RelationName = "Level1";
             this.expenditureFullGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
+            gridLevelNode2});
             this.expenditureFullGrid.Location = new System.Drawing.Point(0, 0);
             this.expenditureFullGrid.MainView = this.expenditureFullGridView;
             this.expenditureFullGrid.Name = "expenditureFullGrid";
@@ -1346,6 +1345,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1470, 814);
+            this.Controls.Add(this.customerOrderEnablePanel);
             this.Controls.Add(this.labelControl8);
             this.Controls.Add(this.labelControl6);
             this.Controls.Add(this.sumEdit);
