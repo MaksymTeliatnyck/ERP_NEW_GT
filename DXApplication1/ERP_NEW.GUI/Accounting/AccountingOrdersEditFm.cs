@@ -29,6 +29,7 @@ namespace ERP_NEW.GUI.Accounting
         private ILogService logService;
         //private IPeriodService periodService;
         private ICurrencyService currencyService;
+        private ICustomerOrdersService customerOrdersService;
 
         private const string NameForm = "AccountingOrdersEditFm";
 
@@ -40,6 +41,7 @@ namespace ERP_NEW.GUI.Accounting
         private BindingSource contractorsBS = new BindingSource();
         private BindingSource accountDebitBS = new BindingSource();
         private BindingSource deliveryOrdersDetailsBS = new BindingSource();
+        private BindingSource customerOrdersServiceBS = new BindingSource();
 
         private Utils.Operation operation;
 
@@ -48,6 +50,9 @@ namespace ERP_NEW.GUI.Accounting
 
         private List<DeliveryOrdersDetailsDTO> deliveryOrdersDetailsList = new List<DeliveryOrdersDetailsDTO>();
         private List<DeliveryOrdersDetailsDTO> deleteDeliveryOrdersDetailsList = new List<DeliveryOrdersDetailsDTO>();
+
+        private List<CustomerOrderServiceDTO> customerOrderServiceList = new List<CustomerOrderServiceDTO>();
+        private List<CustomerOrderServiceDTO> deleteCustomerOrderServiceList = new List<CustomerOrderServiceDTO>();
 
         private List<EmployeesInfoNonPhotoDTO> employeesList = new List<EmployeesInfoNonPhotoDTO>();
         private List<ContractorsDTO> contractorsList = new List<ContractorsDTO>();
@@ -92,7 +97,10 @@ namespace ERP_NEW.GUI.Accounting
             deliveryOrdersDetailsBS.DataSource = deliveryOrdersDetailsList;
             ttnGrid.DataSource = deliveryOrdersDetailsBS;
 
-            if(this.operation == Utils.Operation.Add)
+            customerOrdersServiceBS.DataSource = customerOrderServiceList;
+            customerOrderGrid.DataSource = customerOrdersServiceBS;
+
+            if (this.operation == Utils.Operation.Add)
             {
 
                 //checkBox1.Checked = Properties.Settings.Default.Flag1;
@@ -160,6 +168,7 @@ namespace ERP_NEW.GUI.Accounting
             accountService = Program.kernel.Get<IAccountsService>();
             contractorsService = Program.kernel.Get<IContractorsService>();
             currencyService = Program.kernel.Get<ICurrencyService>();
+            customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
             employeesService = Program.kernel.Get<IEmployeesService>();
             storeHouseService = Program.kernel.Get<IStoreHouseService>();
             unitsService = Program.kernel.Get<IUnitsService>();
@@ -792,6 +801,32 @@ namespace ERP_NEW.GUI.Accounting
 
         }
 
+        private bool AddCustomerOrderService()
+        {
+            try
+            {
+                foreach (var item in customerOrdersServiceBS)
+                {
+                    CustomerOrderServiceDTO newModel = new CustomerOrderServiceDTO();
+
+                    newModel.OrderId = ((OrdersDTO)Item).ID;
+                    newModel.Note = ((CustomerOrderServiceDTO)item).Note;
+                    newModel.CustomerOrderId = ((CustomerOrderServiceDTO)item).CustomerOrderId;
+
+                    customerOrdersService.CustomerOrderServiceCreate(newModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Виникла помилка при записі матеріалу! Помилка " + ex.Message, "Збереження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                logService.CreateLogRecord("Error", BLL.Infrastructure.Utils.Level.Error, userTaskDTO, NameForm);
+                return false;
+            }
+
+            return true;
+
+        }
+
 
         private bool SaveOrder()
         {
@@ -800,6 +835,7 @@ namespace ERP_NEW.GUI.Accounting
             ordersBS.EndEdit();
             receiptsBS.EndEdit();
             deliveryOrdersDetailsBS.EndEdit();
+            customerOrdersServiceBS.EndEdit();
 
             if (receiptsBS.Count == 0)
             {
@@ -812,6 +848,10 @@ namespace ERP_NEW.GUI.Accounting
                 MessageBox.Show("Такий номер надходження вжу існує", "Збереження", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
+
+
+
+
 
             if (!storehouseCheck.Checked && !storehouseAccountCheck.Checked && !account63Check.Checked && !account631Check.Checked)
             {
@@ -836,6 +876,10 @@ namespace ERP_NEW.GUI.Accounting
 
                     if (!AddTtn())
                         return false;
+
+                    if (!AddCustomerOrderService())
+                        return false;
+                    
 
                     OrdersDTO updateOrderItem = new OrdersDTO()
                     {
@@ -990,6 +1034,24 @@ namespace ERP_NEW.GUI.Accounting
                         }
                     }
 
+                    foreach (var item in customerOrderServiceList)
+                    {
+                        if (item.Id == 0)
+                        {
+                            CustomerOrderServiceDTO newModel = new CustomerOrderServiceDTO()
+                            {
+
+                                OrderId = ((OrdersDTO)Item).ID,
+                                Note = item.Note,
+                                CustomerOrderId = ((CustomerOrderServiceDTO)item).CustomerOrderId
+                            };
+
+                            customerOrdersService.CustomerOrderServiceCreate(newModel);
+
+                        }
+                    }
+
+
                     if (deleteReceiptsList.Count > 0)
                     {
                         foreach (var item in deleteReceiptsList)
@@ -1005,6 +1067,15 @@ namespace ERP_NEW.GUI.Accounting
                         {
                             if (item.Id > 0)
                                 storeHouseService.DeliveryOrdersDetailsDelete(item.Id);
+                        }
+                    }
+
+                    if (deleteCustomerOrderServiceList.Count > 0)
+                    {
+                        foreach (var item in deleteCustomerOrderServiceList)
+                        {
+                            if (item.Id > 0)
+                                customerOrdersService.CustomerOrderServiceDelete(item.Id);
                         }
                     }
 
@@ -1052,6 +1123,53 @@ namespace ERP_NEW.GUI.Accounting
                 correctionCheckBox.Checked = !correctionCheckBox.Checked;
                 correctionCheckBox.CheckedChanged += new EventHandler(this.correctionCheckBox_CheckedChanged);
             }
+        }
+
+        private void addServiceBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using (AccountingOrdersServiceEditFm accountingOrdersServiceEditFm = new AccountingOrdersServiceEditFm(new CustomerOrderServiceDTO()))
+            {
+                if (accountingOrdersServiceEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    CustomerOrderServiceDTO customerOrderServiceDTO = accountingOrdersServiceEditFm.Return();
+
+                    customerOrderGridView.BeginDataUpdate();
+
+                    customerOrderServiceList.Add(new CustomerOrderServiceDTO()
+                    {
+                        Id = 0,
+                         CustomerOrderId = customerOrderServiceDTO.CustomerOrderId,
+                          CustomerOrderNumber = customerOrderServiceDTO.CustomerOrderNumber,
+                           Note = customerOrderServiceDTO.Note,
+                            OrderId = ((OrdersDTO)Item).ID,
+                             ReceiptNum = ((OrdersDTO)Item).RECEIPT_NUM
+                    });
+
+                    customerOrdersServiceBS.DataSource = customerOrderServiceList;
+
+                    customerOrderGridView.EndDataUpdate();
+                }
+            }
+        }
+
+        private void deleteServiceBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (customerOrdersServiceBS.Count > 0)
+            {
+                customerOrderGridView.PostEditor();
+                customerOrderGridView.BeginDataUpdate();
+                var checkItems = customerOrderServiceList.Where(t => t.Selected && t.Id != 0);
+                deleteCustomerOrderServiceList.AddRange(checkItems);
+                customerOrderServiceList.RemoveAll(s => s.Selected);
+                customerOrdersServiceBS.DataSource = customerOrderServiceList;
+                customerOrderGrid.DataSource = customerOrdersServiceBS;
+                customerOrderGridView.EndDataUpdate();
+            }
+        }
+
+        private void xtraTabControl1_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void AccountingOrdersEditFm_Load(object sender, EventArgs e)

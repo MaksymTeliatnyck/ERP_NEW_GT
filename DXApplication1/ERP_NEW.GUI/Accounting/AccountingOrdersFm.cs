@@ -714,7 +714,10 @@ namespace ERP_NEW.GUI.Accounting
             }
         }
 
-
-   
+        private void showServiceBtn_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            AccountingOrderServicesFm accountingOrderServicesFm = new AccountingOrderServicesFm(userTasksDTO,beginDate, endDate);
+            accountingOrderServicesFm.Show();
+        }
     }
 }

@@ -279,6 +279,60 @@ namespace ERP_NEW.BLL.Services
                               UserName = eu.LastName
                           });
 
+
+
+            return result.ToList();
+        }
+
+
+        public IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceFull()
+        {
+            var result = (from co in customerOrderService.GetAll()
+                          join c in customerOrders.GetAll() on co.CustomerOrderId equals c.Id into coc
+                          from c in coc.DefaultIfEmpty()
+                          join ord in orders.GetAll() on co.OrderId equals ord.ID into ordd
+                          from ord in ordd.DefaultIfEmpty()
+                          orderby ord.ORDER_DATE, ord.RECEIPT_NUM
+
+
+
+
+                          select new CustomerOrderServiceDTO
+                          {
+                              Id = co.Id,
+                              CustomerOrderNumber = c.OrderNumber,
+                               CustomerOrderId = c.Id,
+                                OrderId = ord.ID,
+                                 Note = co.Note,
+                                  ReceiptDate = ord.ORDER_DATE,
+                                   ReceiptNum = ord.RECEIPT_NUM
+                          });
+            return result.ToList();
+        }
+
+        public IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceByOrderId(int orderId)
+        {
+            var result = (from co in customerOrderService.GetAll()
+                          join c in customerOrders.GetAll() on co.CustomerOrderId equals c.Id into coc
+                          from c in coc.DefaultIfEmpty()
+                          join ord in orders.GetAll() on co.OrderId equals ord.ID into ordd
+                          from ord in ordd.DefaultIfEmpty()
+                          where (co.OrderId == orderId)
+                          orderby ord.ORDER_DATE, ord.RECEIPT_NUM
+
+
+
+
+                          select new CustomerOrderServiceDTO
+                          {
+                              Id = co.Id,
+                              CustomerOrderNumber = c.OrderNumber,
+                              CustomerOrderId = c.Id,
+                              OrderId = ord.ID,
+                              Note = co.Note,
+                              ReceiptDate = ord.ORDER_DATE,
+                              ReceiptNum = ord.RECEIPT_NUM
+                          });
             return result.ToList();
         }
 
@@ -839,5 +893,29 @@ namespace ERP_NEW.BLL.Services
         }
 
         #endregion
+
+        #region CustomerOrderService CRUD method's
+
+        public int CustomerOrderServiceCreate(CustomerOrderServiceDTO copDTO)
+        {
+            var createrecord = customerOrderService.Create(mapper.Map<CustomerOrderService>(copDTO));
+            return (int)createrecord.Id;
+        }
+
+        public bool CustomerOrderServiceDelete(int id)
+        {
+            try
+            {
+                customerOrderService.Delete(customerOrderService.GetAll().FirstOrDefault(c => c.Id == id));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
     }
 }

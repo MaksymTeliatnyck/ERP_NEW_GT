@@ -145,6 +145,7 @@
             this.barDockControl2 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl3 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl4 = new DevExpress.XtraBars.BarDockControl();
+            this.standaloneBarDockControl1 = new DevExpress.XtraBars.StandaloneBarDockControl();
             this.barSubItem4 = new DevExpress.XtraBars.BarSubItem();
             this.barManagerMaterialBtn = new DevExpress.XtraBars.BarManager(this.components);
             this.bar3 = new DevExpress.XtraBars.Bar();
@@ -159,6 +160,25 @@
             this.addBeforeItem = new DevExpress.XtraBars.BarButtonItem();
             this.addAfterItem = new DevExpress.XtraBars.BarButtonItem();
             this.barLargeButtonItem1 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
+            this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
+            this.customerOrderGrid = new DevExpress.XtraGrid.GridControl();
+            this.customerOrderGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.barManagerServiceBtn = new DevExpress.XtraBars.BarManager(this.components);
+            this.bar2 = new DevExpress.XtraBars.Bar();
+            this.addServiceBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.deleteServiceBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.bar4 = new DevExpress.XtraBars.Bar();
+            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.accountNumEdit.Properties)).BeginInit();
@@ -210,6 +230,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.currencyValidationProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManagerTTNBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManagerMaterialBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
+            this.xtraTabControl1.SuspendLayout();
+            this.xtraTabPage1.SuspendLayout();
+            this.xtraTabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManagerServiceBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl2
@@ -525,7 +553,6 @@
             this.gridColumn22});
             this.gridView6.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView6.Name = "gridView6";
-            this.gridView6.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView6.OptionsFind.AlwaysVisible = true;
             this.gridView6.OptionsFind.SearchInPreview = true;
             this.gridView6.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -608,7 +635,6 @@
             this.gridColumn18});
             this.gridView5.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView5.Name = "gridView5";
-            this.gridView5.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView5.OptionsFind.AlwaysVisible = true;
             this.gridView5.OptionsFind.SearchInPreview = true;
             this.gridView5.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -828,7 +854,6 @@
             this.gridColumn6});
             this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView3.Name = "gridView3";
-            this.gridView3.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView3.OptionsFind.AlwaysVisible = true;
             this.gridView3.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             this.gridView3.OptionsFind.SearchInPreview = true;
@@ -920,7 +945,6 @@
             this.gridColumn16});
             this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView1.OptionsFind.AlwaysVisible = true;
             this.gridView1.OptionsFind.SearchInPreview = true;
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -1048,7 +1072,7 @@
             this.groupControl1.AppearanceCaption.Options.UseForeColor = true;
             this.groupControl1.Controls.Add(this.receiptsGrid);
             this.groupControl1.Controls.Add(this.standaloneBarDockControl2);
-            this.groupControl1.Location = new System.Drawing.Point(12, 224);
+            this.groupControl1.Location = new System.Drawing.Point(14, 225);
             this.groupControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.Size = new System.Drawing.Size(1296, 272);
@@ -1057,6 +1081,7 @@
             // 
             // receiptsGrid
             // 
+            this.receiptsGrid.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.receiptsGrid.Location = new System.Drawing.Point(0, 50);
             this.receiptsGrid.MainView = this.receiptsGridView;
             this.receiptsGrid.Name = "receiptsGrid";
@@ -1084,7 +1109,6 @@
             this.totalCurrencyCol});
             this.receiptsGridView.GridControl = this.receiptsGrid;
             this.receiptsGridView.Name = "receiptsGridView";
-            this.receiptsGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.receiptsGridView.OptionsView.ShowAutoFilterRow = true;
             this.receiptsGridView.OptionsView.ShowFooter = true;
             this.receiptsGridView.OptionsView.ShowGroupPanel = false;
@@ -1260,12 +1284,12 @@
             this.groupControl3.AppearanceCaption.Options.UseForeColor = true;
             this.groupControl3.Controls.Add(this.standaloneBarDockControl4);
             this.groupControl3.Controls.Add(this.ttnGrid);
-            this.groupControl3.Location = new System.Drawing.Point(12, 501);
+            this.groupControl3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupControl3.Location = new System.Drawing.Point(0, 0);
             this.groupControl3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupControl3.Name = "groupControl3";
-            this.groupControl3.Size = new System.Drawing.Size(1294, 177);
+            this.groupControl3.Size = new System.Drawing.Size(1292, 197);
             this.groupControl3.TabIndex = 110;
-            this.groupControl3.Text = "ТТН";
             // 
             // standaloneBarDockControl4
             // 
@@ -1274,17 +1298,17 @@
             this.standaloneBarDockControl4.Location = new System.Drawing.Point(2, 20);
             this.standaloneBarDockControl4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.standaloneBarDockControl4.Name = "standaloneBarDockControl4";
-            this.standaloneBarDockControl4.Size = new System.Drawing.Size(1290, 32);
+            this.standaloneBarDockControl4.Size = new System.Drawing.Size(1288, 32);
             this.standaloneBarDockControl4.Text = "standaloneBarDockControl4";
             // 
             // ttnGrid
             // 
-            this.ttnGrid.Location = new System.Drawing.Point(0, 51);
+            this.ttnGrid.Location = new System.Drawing.Point(1, 57);
             this.ttnGrid.MainView = this.ttnGridView;
             this.ttnGrid.Name = "ttnGrid";
             this.ttnGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.ttnRepositoryItemCheckEdit});
-            this.ttnGrid.Size = new System.Drawing.Size(1293, 126);
+            this.ttnGrid.Size = new System.Drawing.Size(1289, 137);
             this.ttnGrid.TabIndex = 8;
             this.ttnGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.ttnGridView,
@@ -1304,7 +1328,6 @@
             this.paymentTypeCol});
             this.ttnGridView.GridControl = this.ttnGrid;
             this.ttnGridView.Name = "ttnGridView";
-            this.ttnGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.ttnGridView.OptionsView.ShowGroupPanel = false;
             // 
             // checkCol
@@ -1401,17 +1424,15 @@
             // 
             this.gridView7.GridControl = this.ttnGrid;
             this.gridView7.Name = "gridView7";
-            this.gridView7.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             // 
             // gridView4
             // 
             this.gridView4.GridControl = this.ttnGrid;
             this.gridView4.Name = "gridView4";
-            this.gridView4.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(1047, 683);
+            this.saveBtn.Location = new System.Drawing.Point(1046, 734);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(135, 23);
             this.saveBtn.TabIndex = 111;
@@ -1421,7 +1442,7 @@
             // cancelBtn
             // 
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBtn.Location = new System.Drawing.Point(1189, 683);
+            this.cancelBtn.Location = new System.Drawing.Point(1188, 734);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(119, 23);
             this.cancelBtn.TabIndex = 112;
@@ -1432,7 +1453,7 @@
             // 
             this.validateLbl.Appearance.BackColor = System.Drawing.SystemColors.Info;
             this.validateLbl.Appearance.ForeColor = System.Drawing.Color.OrangeRed;
-            this.validateLbl.Location = new System.Drawing.Point(12, 688);
+            this.validateLbl.Location = new System.Drawing.Point(17, 734);
             this.validateLbl.Name = "validateLbl";
             this.validateLbl.Size = new System.Drawing.Size(249, 13);
             this.validateLbl.TabIndex = 113;
@@ -1472,6 +1493,7 @@
             this.barManagerTTNBtn.DockControls.Add(this.barDockControl4);
             this.barManagerTTNBtn.DockControls.Add(this.standaloneBarDockControl4);
             this.barManagerTTNBtn.DockControls.Add(this.standaloneBarDockControl2);
+            this.barManagerTTNBtn.DockControls.Add(this.standaloneBarDockControl1);
             this.barManagerTTNBtn.Form = this;
             this.barManagerTTNBtn.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.addTTNBtn,
@@ -1522,7 +1544,7 @@
             // 
             this.barDockControl2.CausesValidation = false;
             this.barDockControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControl2.Location = new System.Drawing.Point(0, 710);
+            this.barDockControl2.Location = new System.Drawing.Point(0, 769);
             this.barDockControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.barDockControl2.Size = new System.Drawing.Size(1310, 0);
             // 
@@ -1532,7 +1554,7 @@
             this.barDockControl3.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControl3.Location = new System.Drawing.Point(0, 0);
             this.barDockControl3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControl3.Size = new System.Drawing.Size(0, 710);
+            this.barDockControl3.Size = new System.Drawing.Size(0, 769);
             // 
             // barDockControl4
             // 
@@ -1540,7 +1562,17 @@
             this.barDockControl4.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControl4.Location = new System.Drawing.Point(1310, 0);
             this.barDockControl4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControl4.Size = new System.Drawing.Size(0, 710);
+            this.barDockControl4.Size = new System.Drawing.Size(0, 769);
+            // 
+            // standaloneBarDockControl1
+            // 
+            this.standaloneBarDockControl1.CausesValidation = false;
+            this.standaloneBarDockControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.standaloneBarDockControl1.Location = new System.Drawing.Point(0, 0);
+            this.standaloneBarDockControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
+            this.standaloneBarDockControl1.Size = new System.Drawing.Size(1292, 32);
+            this.standaloneBarDockControl1.Text = "standaloneBarDockControl1";
             // 
             // barSubItem4
             // 
@@ -1620,7 +1652,7 @@
             // 
             this.barDockControl10.CausesValidation = false;
             this.barDockControl10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControl10.Location = new System.Drawing.Point(0, 710);
+            this.barDockControl10.Location = new System.Drawing.Point(0, 769);
             this.barDockControl10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.barDockControl10.Size = new System.Drawing.Size(1310, 0);
             // 
@@ -1630,7 +1662,7 @@
             this.barDockControl11.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControl11.Location = new System.Drawing.Point(0, 0);
             this.barDockControl11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControl11.Size = new System.Drawing.Size(0, 710);
+            this.barDockControl11.Size = new System.Drawing.Size(0, 769);
             // 
             // barDockControl12
             // 
@@ -1638,7 +1670,7 @@
             this.barDockControl12.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControl12.Location = new System.Drawing.Point(1310, 0);
             this.barDockControl12.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControl12.Size = new System.Drawing.Size(0, 710);
+            this.barDockControl12.Size = new System.Drawing.Size(0, 769);
             // 
             // barSubItem6
             // 
@@ -1666,15 +1698,220 @@
             this.barLargeButtonItem1.Id = 5;
             this.barLargeButtonItem1.Name = "barLargeButtonItem1";
             // 
+            // xtraTabControl1
+            // 
+            this.xtraTabControl1.Location = new System.Drawing.Point(12, 503);
+            this.xtraTabControl1.Name = "xtraTabControl1";
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
+            this.xtraTabControl1.Size = new System.Drawing.Size(1298, 225);
+            this.xtraTabControl1.TabIndex = 122;
+            this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.xtraTabPage1,
+            this.xtraTabPage2});
+            this.xtraTabControl1.Click += new System.EventHandler(this.xtraTabControl1_Click);
+            // 
+            // xtraTabPage1
+            // 
+            this.xtraTabPage1.Appearance.Header.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xtraTabPage1.Appearance.Header.ForeColor = System.Drawing.Color.Navy;
+            this.xtraTabPage1.Appearance.Header.Options.UseFont = true;
+            this.xtraTabPage1.Appearance.Header.Options.UseForeColor = true;
+            this.xtraTabPage1.Appearance.HeaderActive.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xtraTabPage1.Appearance.HeaderActive.ForeColor = System.Drawing.Color.Navy;
+            this.xtraTabPage1.Appearance.HeaderActive.Options.UseFont = true;
+            this.xtraTabPage1.Appearance.HeaderActive.Options.UseForeColor = true;
+            this.xtraTabPage1.Controls.Add(this.groupControl3);
+            this.xtraTabPage1.Name = "xtraTabPage1";
+            this.xtraTabPage1.Size = new System.Drawing.Size(1292, 197);
+            this.xtraTabPage1.Text = "ТТН";
+            // 
+            // xtraTabPage2
+            // 
+            this.xtraTabPage2.Appearance.Header.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xtraTabPage2.Appearance.Header.ForeColor = System.Drawing.Color.Navy;
+            this.xtraTabPage2.Appearance.Header.Options.UseFont = true;
+            this.xtraTabPage2.Appearance.Header.Options.UseForeColor = true;
+            this.xtraTabPage2.Appearance.HeaderActive.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xtraTabPage2.Appearance.HeaderActive.ForeColor = System.Drawing.Color.Navy;
+            this.xtraTabPage2.Appearance.HeaderActive.Options.UseFont = true;
+            this.xtraTabPage2.Appearance.HeaderActive.Options.UseForeColor = true;
+            this.xtraTabPage2.Appearance.PageClient.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xtraTabPage2.Appearance.PageClient.Options.UseFont = true;
+            this.xtraTabPage2.Controls.Add(this.customerOrderGrid);
+            this.xtraTabPage2.Controls.Add(this.standaloneBarDockControl1);
+            this.xtraTabPage2.Name = "xtraTabPage2";
+            this.xtraTabPage2.Size = new System.Drawing.Size(1292, 197);
+            this.xtraTabPage2.Text = "Послуги";
+            // 
+            // customerOrderGrid
+            // 
+            this.customerOrderGrid.Location = new System.Drawing.Point(8, 37);
+            this.customerOrderGrid.MainView = this.customerOrderGridView;
+            this.customerOrderGrid.Name = "customerOrderGrid";
+            this.customerOrderGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemCheckEdit1});
+            this.customerOrderGrid.Size = new System.Drawing.Size(1281, 157);
+            this.customerOrderGrid.TabIndex = 5;
+            this.customerOrderGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.customerOrderGridView});
+            // 
+            // customerOrderGridView
+            // 
+            this.customerOrderGridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn3,
+            this.gridColumn4,
+            this.gridColumn1,
+            this.gridColumn2});
+            this.customerOrderGridView.GridControl = this.customerOrderGrid;
+            this.customerOrderGridView.Name = "customerOrderGridView";
+            this.customerOrderGridView.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn3
+            // 
+            this.gridColumn3.Caption = "Номер заказу";
+            this.gridColumn3.FieldName = "CustomerOrderNumber";
+            this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.Visible = true;
+            this.gridColumn3.VisibleIndex = 0;
+            this.gridColumn3.Width = 315;
+            // 
+            // gridColumn4
+            // 
+            this.gridColumn4.Caption = "Коментар";
+            this.gridColumn4.FieldName = "Note";
+            this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.Visible = true;
+            this.gridColumn4.VisibleIndex = 1;
+            this.gridColumn4.Width = 315;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.Caption = "Номер надходження";
+            this.gridColumn1.FieldName = "ReceiptNum";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 2;
+            this.gridColumn1.Width = 571;
+            // 
+            // barManagerServiceBtn
+            // 
+            this.barManagerServiceBtn.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar2,
+            this.bar4});
+            this.barManagerServiceBtn.DockControls.Add(this.barDockControlTop);
+            this.barManagerServiceBtn.DockControls.Add(this.barDockControlBottom);
+            this.barManagerServiceBtn.DockControls.Add(this.barDockControlLeft);
+            this.barManagerServiceBtn.DockControls.Add(this.barDockControlRight);
+            this.barManagerServiceBtn.Form = this;
+            this.barManagerServiceBtn.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.addServiceBtn,
+            this.deleteServiceBtn});
+            this.barManagerServiceBtn.MainMenu = this.bar4;
+            this.barManagerServiceBtn.MaxItemId = 2;
+            // 
+            // bar2
+            // 
+            this.bar2.BarName = "Tools";
+            this.bar2.DockCol = 0;
+            this.bar2.DockRow = 0;
+            this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
+            this.bar2.FloatLocation = new System.Drawing.Point(319, 472);
+            this.bar2.FloatSize = new System.Drawing.Size(46, 29);
+            this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.addServiceBtn),
+            new DevExpress.XtraBars.LinkPersistInfo(this.deleteServiceBtn)});
+            this.bar2.OptionsBar.DrawBorder = false;
+            this.bar2.OptionsBar.DrawDragBorder = false;
+            this.bar2.StandaloneBarDockControl = this.standaloneBarDockControl1;
+            this.bar2.Text = "Tools";
+            // 
+            // addServiceBtn
+            // 
+            this.addServiceBtn.Caption = "Додати";
+            this.addServiceBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("addServiceBtn.Glyph")));
+            this.addServiceBtn.Id = 0;
+            this.addServiceBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("addServiceBtn.LargeGlyph")));
+            this.addServiceBtn.Name = "addServiceBtn";
+            this.addServiceBtn.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.addServiceBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addServiceBtn_ItemClick);
+            // 
+            // deleteServiceBtn
+            // 
+            this.deleteServiceBtn.Caption = "Видалити";
+            this.deleteServiceBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("deleteServiceBtn.Glyph")));
+            this.deleteServiceBtn.Id = 1;
+            this.deleteServiceBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("deleteServiceBtn.LargeGlyph")));
+            this.deleteServiceBtn.Name = "deleteServiceBtn";
+            this.deleteServiceBtn.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.deleteServiceBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.deleteServiceBtn_ItemClick);
+            // 
+            // bar4
+            // 
+            this.bar4.BarName = "Main menu";
+            this.bar4.DockCol = 0;
+            this.bar4.DockRow = 1;
+            this.bar4.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
+            this.bar4.FloatLocation = new System.Drawing.Point(322, 489);
+            this.bar4.OptionsBar.MultiLine = true;
+            this.bar4.OptionsBar.UseWholeRow = true;
+            this.bar4.StandaloneBarDockControl = this.standaloneBarDockControl4;
+            this.bar4.Text = "Main menu";
+            // 
+            // barDockControlTop
+            // 
+            this.barDockControlTop.CausesValidation = false;
+            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(1310, 0);
+            // 
+            // barDockControlBottom
+            // 
+            this.barDockControlBottom.CausesValidation = false;
+            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 769);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1310, 0);
+            // 
+            // barDockControlLeft
+            // 
+            this.barDockControlLeft.CausesValidation = false;
+            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 769);
+            // 
+            // barDockControlRight
+            // 
+            this.barDockControlRight.CausesValidation = false;
+            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControlRight.Location = new System.Drawing.Point(1310, 0);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 769);
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gridColumn2.Caption = " ";
+            this.gridColumn2.ColumnEdit = this.repositoryItemCheckEdit1;
+            this.gridColumn2.FieldName = "Selected";
+            this.gridColumn2.Image = ((System.Drawing.Image)(resources.GetObject("gridColumn2.Image")));
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 3;
+            this.gridColumn2.Width = 62;
+            // 
+            // repositoryItemCheckEdit1
+            // 
+            this.repositoryItemCheckEdit1.AutoHeight = false;
+            this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
+            // 
             // AccountingOrdersEditFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1310, 710);
+            this.ClientSize = new System.Drawing.Size(1310, 769);
+            this.Controls.Add(this.xtraTabControl1);
             this.Controls.Add(this.validateLbl);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.saveBtn);
-            this.Controls.Add(this.groupControl3);
             this.Controls.Add(this.groupControl1);
             this.Controls.Add(this.groupControl2);
             this.Controls.Add(this.barDockControl3);
@@ -1685,6 +1922,10 @@
             this.Controls.Add(this.barDockControl12);
             this.Controls.Add(this.barDockControl10);
             this.Controls.Add(this.barDockControl9);
+            this.Controls.Add(this.barDockControlLeft);
+            this.Controls.Add(this.barDockControlRight);
+            this.Controls.Add(this.barDockControlBottom);
+            this.Controls.Add(this.barDockControlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -1745,6 +1986,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.currencyValidationProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManagerTTNBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManagerMaterialBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
+            this.xtraTabControl1.ResumeLayout(false);
+            this.xtraTabPage1.ResumeLayout(false);
+            this.xtraTabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManagerServiceBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1874,5 +2123,25 @@
         private DevExpress.XtraBars.BarButtonItem editMaterialBtn;
         private DevExpress.XtraEditors.LabelControl labelControl8;
         private DevExpress.XtraEditors.TextEdit accountNumEdit;
+        private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage2;
+        private DevExpress.XtraBars.StandaloneBarDockControl standaloneBarDockControl1;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlTop;
+        private DevExpress.XtraBars.BarManager barManagerServiceBtn;
+        private DevExpress.XtraBars.Bar bar2;
+        private DevExpress.XtraBars.BarButtonItem addServiceBtn;
+        private DevExpress.XtraBars.BarButtonItem deleteServiceBtn;
+        private DevExpress.XtraBars.Bar bar4;
+        private DevExpress.XtraGrid.GridControl customerOrderGrid;
+        private DevExpress.XtraGrid.Views.Grid.GridView customerOrderGridView;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
     }
 }

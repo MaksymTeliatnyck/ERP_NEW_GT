@@ -21,7 +21,10 @@ namespace ERP_NEW.BLL.Interfaces
          IEnumerable<CustomerOrderPaymentsDTO> GetCustomerOrderPaymentsById(int customerOrderId);
          IEnumerable<CustomerOrderForWeldingDTO> GetCustomerOrderForWelding(DateTime beginDate, DateTime endDate);
          IEnumerable<CustomerOrdersDTO> GetCustomerOrdersFullWithReceipt();
-         
+        IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceFull();
+        IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceByOrderId(int orderId);
+
+
 
          int CustomerOrderCreate(CustomerOrdersDTO customerOrder);
          void CustomerOrderUpdate(CustomerOrdersDTO customerOrder);
@@ -41,5 +44,9 @@ namespace ERP_NEW.BLL.Interfaces
 
          int CustomerOrderPaymentCreate(CustomerOrderPaymentsDTO copDTO);
          bool CustomerOrderPaymentDelete(int id);
+
+        int CustomerOrderServiceCreate(CustomerOrderServiceDTO copDTO);
+
+        bool CustomerOrderServiceDelete(int id);
     }
 }

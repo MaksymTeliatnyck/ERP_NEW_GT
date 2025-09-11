@@ -1449,6 +1449,12 @@ namespace ERP_NEW.BLL.Services
         }
 
 
+        //public IEnumerable<OrdersDTO> GetOrders()
+        //{
+        //    return mapper.Map<IEnumerable<ORDERS>, List<OrdersDTO>>(orders.GetAll());
+        //}
+
+
         #endregion
 
 

@@ -60,6 +60,7 @@
             this.printBtn = new DevExpress.XtraBars.BarButtonItem();
             this.showReceiptBtn = new DevExpress.XtraBars.BarButtonItem();
             this.showTTNBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.showServiceBtn = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -122,7 +123,6 @@
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
             this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.showServiceBtn = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
@@ -532,6 +532,16 @@
             this.showTTNBtn.Name = "showTTNBtn";
             this.showTTNBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.showTTNBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showTTNBtn_ItemClick);
+            // 
+            // showServiceBtn
+            // 
+            this.showServiceBtn.Caption = "Послуги";
+            this.showServiceBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("showServiceBtn.Glyph")));
+            this.showServiceBtn.Id = 28;
+            this.showServiceBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showServiceBtn.LargeGlyph")));
+            this.showServiceBtn.Name = "showServiceBtn";
+            this.showServiceBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.showServiceBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showServiceBtn_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -1384,15 +1394,6 @@
             this.imageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection.ImageStream")));
             this.imageCollection.Images.SetKeyName(0, "if_lock.png");
             this.imageCollection.Images.SetKeyName(1, "if_lock_open.png");
-            // 
-            // showServiceBtn
-            // 
-            this.showServiceBtn.Caption = "Послуги";
-            this.showServiceBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("showServiceBtn.Glyph")));
-            this.showServiceBtn.Id = 28;
-            this.showServiceBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showServiceBtn.LargeGlyph")));
-            this.showServiceBtn.Name = "showServiceBtn";
-            this.showServiceBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             // 
             // AccountingOrdersFm
             // 
