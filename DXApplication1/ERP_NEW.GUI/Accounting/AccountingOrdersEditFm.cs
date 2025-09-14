@@ -136,6 +136,7 @@ namespace ERP_NEW.GUI.Accounting
                 }
 
                 LoadDeliveryOrderDetails(model.ID);
+                LoadCustomerOrderService(model.ID);
             }
 
             if (isCurrencyReceipt)
@@ -264,6 +265,15 @@ namespace ERP_NEW.GUI.Accounting
             deliveryOrdersDetailsList = storeHouseService.GetDeliveryOrdersDetailsByOrderid(orderId).ToList();
             deliveryOrdersDetailsBS.DataSource = deliveryOrdersDetailsList;
             ttnGrid.DataSource = deliveryOrdersDetailsBS;
+
+        }
+
+        public void LoadCustomerOrderService(long orderId)
+        {
+            customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
+            customerOrderServiceList = customerOrdersService.GetCustomerServiceByOrderId((int)orderId).ToList();
+            customerOrdersServiceBS.DataSource = customerOrderServiceList;
+            customerOrderGrid.DataSource = customerOrdersServiceBS;
 
         }
 
@@ -1135,15 +1145,25 @@ namespace ERP_NEW.GUI.Accounting
 
                     customerOrderGridView.BeginDataUpdate();
 
-                    customerOrderServiceList.Add(new CustomerOrderServiceDTO()
+                    if(!customerOrderServiceList.Any(srch=>srch.CustomerOrderId == customerOrderServiceDTO.CustomerOrderId && srch.ReceiptNum == ((OrdersDTO)Item).RECEIPT_NUM))
                     {
-                        Id = 0,
-                         CustomerOrderId = customerOrderServiceDTO.CustomerOrderId,
-                          CustomerOrderNumber = customerOrderServiceDTO.CustomerOrderNumber,
-                           Note = customerOrderServiceDTO.Note,
+                        customerOrderServiceList.Add(new CustomerOrderServiceDTO()
+                        {
+                            Id = 0,
+                            CustomerOrderId = customerOrderServiceDTO.CustomerOrderId,
+                            CustomerOrderNumber = customerOrderServiceDTO.CustomerOrderNumber,
+                            Note = customerOrderServiceDTO.Note,
                             OrderId = ((OrdersDTO)Item).ID,
-                             ReceiptNum = ((OrdersDTO)Item).RECEIPT_NUM
-                    });
+                            ReceiptNum = ((OrdersDTO)Item).RECEIPT_NUM
+                        });
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Такий заказ вже додано", "Повыдомлення", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    
+                    
 
                     customerOrdersServiceBS.DataSource = customerOrderServiceList;
 

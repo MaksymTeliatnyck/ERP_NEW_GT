@@ -168,6 +168,8 @@
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.specificGrid = new DevExpress.XtraGrid.GridControl();
+            this.specificContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showSpecificMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.specificGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.specNameRepository = new DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit();
@@ -205,8 +207,7 @@
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
-            this.specificContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.showSpecificMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -262,6 +263,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.xtraTabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.specificGrid)).BeginInit();
+            this.specificContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.specificGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.specNameRepository)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl4)).BeginInit();
@@ -270,7 +272,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
-            this.specificContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splashScreenManager
@@ -940,7 +941,8 @@
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
-            this.xtraTabPage2});
+            this.xtraTabPage2,
+            this.xtraTabPage5});
             // 
             // xtraTabPage1
             // 
@@ -2141,6 +2143,21 @@
             this.specificGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.specificGridView});
             // 
+            // specificContextMenu
+            // 
+            this.specificContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showSpecificMenuItem});
+            this.specificContextMenu.Name = "specificContextMenu";
+            this.specificContextMenu.Size = new System.Drawing.Size(222, 26);
+            this.specificContextMenu.Text = " ";
+            // 
+            // showSpecificMenuItem
+            // 
+            this.showSpecificMenuItem.Name = "showSpecificMenuItem";
+            this.showSpecificMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.showSpecificMenuItem.Text = "Відобразити специфікацію";
+            this.showSpecificMenuItem.Click += new System.EventHandler(this.showSpecificMenuItem_Click);
+            // 
             // specificGridView
             // 
             this.specificGridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
@@ -2608,20 +2625,15 @@
             this.imageCollection1.InsertGalleryImage("delete_32x32.png", "grayscaleimages/edit/delete_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("grayscaleimages/edit/delete_32x32.png"), 1);
             this.imageCollection1.Images.SetKeyName(1, "delete_32x32.png");
             // 
-            // specificContextMenu
+            // xtraTabPage5
             // 
-            this.specificContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showSpecificMenuItem});
-            this.specificContextMenu.Name = "specificContextMenu";
-            this.specificContextMenu.Size = new System.Drawing.Size(222, 48);
-            this.specificContextMenu.Text = " ";
-            // 
-            // showSpecificMenuItem
-            // 
-            this.showSpecificMenuItem.Name = "showSpecificMenuItem";
-            this.showSpecificMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.showSpecificMenuItem.Text = "Відобразити специфікацію";
-            this.showSpecificMenuItem.Click += new System.EventHandler(this.showSpecificMenuItem_Click);
+            this.xtraTabPage5.Appearance.Header.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xtraTabPage5.Appearance.Header.ForeColor = System.Drawing.Color.Navy;
+            this.xtraTabPage5.Appearance.Header.Options.UseFont = true;
+            this.xtraTabPage5.Appearance.Header.Options.UseForeColor = true;
+            this.xtraTabPage5.Name = "xtraTabPage5";
+            this.xtraTabPage5.Size = new System.Drawing.Size(803, 149);
+            this.xtraTabPage5.Text = "Послуги";
             // 
             // CustomerOrdersFm
             // 
@@ -2693,6 +2705,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).EndInit();
             this.xtraTabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.specificGrid)).EndInit();
+            this.specificContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.specificGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.specNameRepository)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl4)).EndInit();
@@ -2701,7 +2714,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
-            this.specificContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2884,5 +2896,6 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit repositoryItemMemoEdit1;
         private System.Windows.Forms.ContextMenuStrip specificContextMenu;
         private System.Windows.Forms.ToolStripMenuItem showSpecificMenuItem;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage5;
     }
 }

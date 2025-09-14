@@ -168,6 +168,8 @@
             this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.barManagerServiceBtn = new DevExpress.XtraBars.BarManager(this.components);
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.addServiceBtn = new DevExpress.XtraBars.BarButtonItem();
@@ -177,8 +179,6 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.accountNumEdit.Properties)).BeginInit();
@@ -236,8 +236,8 @@
             this.xtraTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.customerOrderGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customerOrderGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barManagerServiceBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManagerServiceBtn)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl2
@@ -1745,12 +1745,12 @@
             // 
             // customerOrderGrid
             // 
-            this.customerOrderGrid.Location = new System.Drawing.Point(8, 37);
+            this.customerOrderGrid.Location = new System.Drawing.Point(-1, 28);
             this.customerOrderGrid.MainView = this.customerOrderGridView;
             this.customerOrderGrid.Name = "customerOrderGrid";
             this.customerOrderGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit1});
-            this.customerOrderGrid.Size = new System.Drawing.Size(1281, 157);
+            this.customerOrderGrid.Size = new System.Drawing.Size(1295, 169);
             this.customerOrderGrid.TabIndex = 5;
             this.customerOrderGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.customerOrderGridView});
@@ -1768,30 +1768,67 @@
             // 
             // gridColumn3
             // 
+            this.gridColumn3.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn3.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn3.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn3.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridColumn3.Caption = "Номер заказу";
             this.gridColumn3.FieldName = "CustomerOrderNumber";
             this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.OptionsColumn.AllowEdit = false;
+            this.gridColumn3.OptionsColumn.AllowFocus = false;
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 0;
-            this.gridColumn3.Width = 315;
+            this.gridColumn3.Width = 318;
             // 
             // gridColumn4
             // 
+            this.gridColumn4.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn4.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn4.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn4.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridColumn4.Caption = "Коментар";
             this.gridColumn4.FieldName = "Note";
             this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.OptionsColumn.AllowEdit = false;
+            this.gridColumn4.OptionsColumn.AllowFocus = false;
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 1;
-            this.gridColumn4.Width = 315;
+            this.gridColumn4.Width = 318;
             // 
             // gridColumn1
             // 
+            this.gridColumn1.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn1.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn1.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn1.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridColumn1.Caption = "Номер надходження";
             this.gridColumn1.FieldName = "ReceiptNum";
             this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsColumn.AllowEdit = false;
+            this.gridColumn1.OptionsColumn.AllowFocus = false;
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 2;
-            this.gridColumn1.Width = 571;
+            this.gridColumn1.Width = 600;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gridColumn2.Caption = " ";
+            this.gridColumn2.ColumnEdit = this.repositoryItemCheckEdit1;
+            this.gridColumn2.FieldName = "Selected";
+            this.gridColumn2.Image = ((System.Drawing.Image)(resources.GetObject("gridColumn2.Image")));
+            this.gridColumn2.ImageAlignment = System.Drawing.StringAlignment.Center;
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 3;
+            this.gridColumn2.Width = 41;
+            // 
+            // repositoryItemCheckEdit1
+            // 
+            this.repositoryItemCheckEdit1.AutoHeight = false;
+            this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
             // 
             // barManagerServiceBtn
             // 
@@ -1885,24 +1922,6 @@
             this.barDockControlRight.Location = new System.Drawing.Point(1310, 0);
             this.barDockControlRight.Size = new System.Drawing.Size(0, 769);
             // 
-            // gridColumn2
-            // 
-            this.gridColumn2.AppearanceHeader.Options.UseTextOptions = true;
-            this.gridColumn2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn2.Caption = " ";
-            this.gridColumn2.ColumnEdit = this.repositoryItemCheckEdit1;
-            this.gridColumn2.FieldName = "Selected";
-            this.gridColumn2.Image = ((System.Drawing.Image)(resources.GetObject("gridColumn2.Image")));
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 3;
-            this.gridColumn2.Width = 62;
-            // 
-            // repositoryItemCheckEdit1
-            // 
-            this.repositoryItemCheckEdit1.AutoHeight = false;
-            this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
-            // 
             // AccountingOrdersEditFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1992,8 +2011,8 @@
             this.xtraTabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.customerOrderGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.customerOrderGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barManagerServiceBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManagerServiceBtn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

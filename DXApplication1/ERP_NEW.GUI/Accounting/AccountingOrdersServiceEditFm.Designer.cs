@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountingOrdersServiceEditFm));
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule1 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
             this.orderNumberEdit = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -40,9 +42,12 @@
             this.endExpBtn = new DevExpress.XtraEditors.SimpleButton();
             this.noteEdit = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.dxValidationProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
+            this.validateLbl = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.orderNumberEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.noteEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxValidationProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // orderNumberEdit
@@ -59,6 +64,11 @@
             this.orderNumberEdit.Properties.View = this.gridView1;
             this.orderNumberEdit.Size = new System.Drawing.Size(306, 22);
             this.orderNumberEdit.TabIndex = 169;
+            conditionValidationRule1.ConditionOperator = DevExpress.XtraEditors.DXErrorProvider.ConditionOperator.Greater;
+            conditionValidationRule1.ErrorText = "Не вказано номер заказу";
+            conditionValidationRule1.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+            conditionValidationRule1.Value1 = 0;
+            this.dxValidationProvider1.SetValidationRule(this.orderNumberEdit, conditionValidationRule1);
             this.orderNumberEdit.EditValueChanged += new System.EventHandler(this.orderNumberEdit_EditValueChanged);
             // 
             // gridView1
@@ -127,7 +137,7 @@
             // cancelBtn
             // 
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBtn.Location = new System.Drawing.Point(178, 87);
+            this.cancelBtn.Location = new System.Drawing.Point(178, 91);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(90, 23);
             this.cancelBtn.TabIndex = 171;
@@ -137,7 +147,7 @@
             // 
             // endExpBtn
             // 
-            this.endExpBtn.Location = new System.Drawing.Point(274, 87);
+            this.endExpBtn.Location = new System.Drawing.Point(274, 91);
             this.endExpBtn.Name = "endExpBtn";
             this.endExpBtn.Size = new System.Drawing.Size(99, 23);
             this.endExpBtn.TabIndex = 172;
@@ -159,11 +169,28 @@
             this.labelControl1.TabIndex = 174;
             this.labelControl1.Text = "Примітка";
             // 
+            // dxValidationProvider1
+            // 
+            this.dxValidationProvider1.ValidationFailed += new DevExpress.XtraEditors.DXErrorProvider.ValidationFailedEventHandler(this.dxValidationProvider1_ValidationFailed);
+            this.dxValidationProvider1.ValidationSucceeded += new DevExpress.XtraEditors.DXErrorProvider.ValidationSucceededEventHandler(this.dxValidationProvider1_ValidationSucceeded);
+            // 
+            // validateLbl
+            // 
+            this.validateLbl.Appearance.BackColor = System.Drawing.SystemColors.Info;
+            this.validateLbl.Appearance.ForeColor = System.Drawing.Color.OrangeRed;
+            this.validateLbl.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
+            this.validateLbl.Location = new System.Drawing.Point(12, 88);
+            this.validateLbl.Name = "validateLbl";
+            this.validateLbl.Size = new System.Drawing.Size(160, 26);
+            this.validateLbl.TabIndex = 175;
+            this.validateLbl.Text = "*Для збереження, заповніть \r\nвсі обов\'язкові поля";
+            // 
             // AccountingOrdersServiceEditFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(383, 126);
+            this.Controls.Add(this.validateLbl);
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.noteEdit);
             this.Controls.Add(this.endExpBtn);
@@ -175,10 +202,12 @@
             this.MinimizeBox = false;
             this.Name = "AccountingOrdersServiceEditFm";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Вибір заказу";
             ((System.ComponentModel.ISupportInitialize)(this.orderNumberEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.noteEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxValidationProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,5 +225,7 @@
         private DevExpress.XtraEditors.SimpleButton endExpBtn;
         private DevExpress.XtraEditors.TextEdit noteEdit;
         private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider dxValidationProvider1;
+        private DevExpress.XtraEditors.LabelControl validateLbl;
     }
 }

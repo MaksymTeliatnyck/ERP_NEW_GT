@@ -69,6 +69,19 @@ namespace ERP_NEW.GUI.Accounting
         private void orderNumberEdit_EditValueChanged(object sender, EventArgs e)
         {
             ((CustomerOrderServiceDTO)Item).CustomerOrderNumber = orderNumberEdit.Text;
+            dxValidationProvider1.Validate((Control)sender);
+        }
+
+        private void dxValidationProvider1_ValidationSucceeded(object sender, DevExpress.XtraEditors.DXErrorProvider.ValidationSucceededEventArgs e)
+        {
+            bool isValidate = (dxValidationProvider1.GetInvalidControls().Count == 0);
+            this.endExpBtn.Enabled = isValidate;
+            this.validateLbl.Visible = !isValidate;
+        }
+
+        private void dxValidationProvider1_ValidationFailed(object sender, DevExpress.XtraEditors.DXErrorProvider.ValidationFailedEventArgs e)
+        {
+            this.endExpBtn.Enabled = false;
         }
     }
 }
