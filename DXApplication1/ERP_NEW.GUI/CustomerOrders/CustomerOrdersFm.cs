@@ -45,7 +45,8 @@ namespace ERP_NEW.GUI.CustomerOrders
         private BindingSource detalsSpecificBS = new BindingSource();
         private BindingSource byusDetalsSpecificBS = new BindingSource();
         private BindingSource materialsSpecificBS = new BindingSource();
-        
+        private BindingSource customerOrderServiceBS = new BindingSource();
+
         private CustomerOrderPaymentsInfoDTO paymentsInfo = new CustomerOrderPaymentsInfoDTO();
 
         private UserTasksDTO userTasksDTO;
@@ -88,6 +89,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 LoadCustomerOrderPrepaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderMaterialExpenditure(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderMtsSpecification(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
+                LoadCustomerOrderService(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCurrencyInformation();
 
                 SetCustomerOrderSummary();
@@ -100,6 +102,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 paymentsGrid.DataSource = null;
                 paymentsVGrid.DataSource = null;
                 expendituresGrid.DataSource = null;
+                customerOrderServiceGrid.DataSource = null;
             }
 
             splashScreenManager.CloseWaitForm();
@@ -152,6 +155,13 @@ namespace ERP_NEW.GUI.CustomerOrders
             storeHouseService = Program.kernel.Get<IStoreHouseService>();
             expenditureMaterialBS.DataSource = storeHouseService.GetExpenditureByCustomerOrder(customerOrderId).Where(srch => srch.CreditAccountId!=null).ToList();
             expendituresGrid.DataSource = expenditureMaterialBS;
+        }
+
+        private void LoadCustomerOrderService(int customerOrderId)
+        {
+            customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
+            customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderId(customerOrderId).ToList();
+            customerOrderServiceGrid.DataSource = customerOrderServiceBS;
         }
 
         private void LoadCurrencyInformation()

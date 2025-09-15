@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerOrdersFm));
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode4 = new DevExpress.XtraGrid.GridLevelNode();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
@@ -128,6 +128,12 @@
             this.storeHouseExpCustomerOrderCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.storeHouseExpDateCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.storeHouseExpPriceCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
+            this.customerOrderServiceGrid = new DevExpress.XtraGrid.GridControl();
+            this.customerOrderServiceGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemCheckEdit4 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.groupControl5 = new DevExpress.XtraEditors.GroupControl();
             this.informationTab = new DevExpress.XtraTab.XtraTabControl();
@@ -207,7 +213,6 @@
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
-            this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -240,6 +245,10 @@
             this.xtraTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.expendituresGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.expenditureBandedGridView)).BeginInit();
+            this.xtraTabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderServiceGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderServiceGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).BeginInit();
             this.groupControl5.SuspendLayout();
@@ -1569,6 +1578,74 @@
             this.storeHouseExpPriceCol.OptionsColumn.AllowFocus = false;
             this.storeHouseExpPriceCol.Visible = true;
             // 
+            // xtraTabPage5
+            // 
+            this.xtraTabPage5.Appearance.Header.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xtraTabPage5.Appearance.Header.ForeColor = System.Drawing.Color.Navy;
+            this.xtraTabPage5.Appearance.Header.Options.UseFont = true;
+            this.xtraTabPage5.Appearance.Header.Options.UseForeColor = true;
+            this.xtraTabPage5.Controls.Add(this.customerOrderServiceGrid);
+            this.xtraTabPage5.Name = "xtraTabPage5";
+            this.xtraTabPage5.Size = new System.Drawing.Size(803, 149);
+            this.xtraTabPage5.Text = "Послуги";
+            // 
+            // customerOrderServiceGrid
+            // 
+            this.customerOrderServiceGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.customerOrderServiceGrid.Location = new System.Drawing.Point(0, 0);
+            this.customerOrderServiceGrid.MainView = this.customerOrderServiceGridView;
+            this.customerOrderServiceGrid.Name = "customerOrderServiceGrid";
+            this.customerOrderServiceGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemCheckEdit4});
+            this.customerOrderServiceGrid.Size = new System.Drawing.Size(803, 149);
+            this.customerOrderServiceGrid.TabIndex = 6;
+            this.customerOrderServiceGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.customerOrderServiceGridView});
+            // 
+            // customerOrderServiceGridView
+            // 
+            this.customerOrderServiceGridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn5,
+            this.gridColumn7});
+            this.customerOrderServiceGridView.GridControl = this.customerOrderServiceGrid;
+            this.customerOrderServiceGridView.Name = "customerOrderServiceGridView";
+            this.customerOrderServiceGridView.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn5
+            // 
+            this.gridColumn5.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn5.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn5.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn5.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gridColumn5.Caption = "Коментар";
+            this.gridColumn5.FieldName = "Note";
+            this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.OptionsColumn.AllowEdit = false;
+            this.gridColumn5.OptionsColumn.AllowFocus = false;
+            this.gridColumn5.Visible = true;
+            this.gridColumn5.VisibleIndex = 0;
+            this.gridColumn5.Width = 318;
+            // 
+            // gridColumn7
+            // 
+            this.gridColumn7.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn7.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn7.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn7.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gridColumn7.Caption = "Номер надходження";
+            this.gridColumn7.FieldName = "ReceiptNum";
+            this.gridColumn7.Name = "gridColumn7";
+            this.gridColumn7.OptionsColumn.AllowEdit = false;
+            this.gridColumn7.OptionsColumn.AllowFocus = false;
+            this.gridColumn7.Visible = true;
+            this.gridColumn7.VisibleIndex = 1;
+            this.gridColumn7.Width = 600;
+            // 
+            // repositoryItemCheckEdit4
+            // 
+            this.repositoryItemCheckEdit4.AutoHeight = false;
+            this.repositoryItemCheckEdit4.Name = "repositoryItemCheckEdit4";
+            // 
             // groupControl2
             // 
             this.groupControl2.AppearanceCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -2127,11 +2204,11 @@
             this.specificGrid.ContextMenuStrip = this.specificContextMenu;
             this.specificGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.specificGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(2);
-            gridLevelNode1.RelationName = "Level1";
-            gridLevelNode2.RelationName = "Level2";
+            gridLevelNode3.RelationName = "Level1";
+            gridLevelNode4.RelationName = "Level2";
             this.specificGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1,
-            gridLevelNode2});
+            gridLevelNode3,
+            gridLevelNode4});
             this.specificGrid.Location = new System.Drawing.Point(0, 0);
             this.specificGrid.MainView = this.specificGridView;
             this.specificGrid.Margin = new System.Windows.Forms.Padding(4);
@@ -2625,16 +2702,6 @@
             this.imageCollection1.InsertGalleryImage("delete_32x32.png", "grayscaleimages/edit/delete_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("grayscaleimages/edit/delete_32x32.png"), 1);
             this.imageCollection1.Images.SetKeyName(1, "delete_32x32.png");
             // 
-            // xtraTabPage5
-            // 
-            this.xtraTabPage5.Appearance.Header.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.xtraTabPage5.Appearance.Header.ForeColor = System.Drawing.Color.Navy;
-            this.xtraTabPage5.Appearance.Header.Options.UseFont = true;
-            this.xtraTabPage5.Appearance.Header.Options.UseForeColor = true;
-            this.xtraTabPage5.Name = "xtraTabPage5";
-            this.xtraTabPage5.Size = new System.Drawing.Size(803, 149);
-            this.xtraTabPage5.Text = "Послуги";
-            // 
             // CustomerOrdersFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2682,6 +2749,10 @@
             this.xtraTabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.expendituresGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.expenditureBandedGridView)).EndInit();
+            this.xtraTabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderServiceGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerOrderServiceGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).EndInit();
             this.groupControl5.ResumeLayout(false);
@@ -2897,5 +2968,10 @@
         private System.Windows.Forms.ContextMenuStrip specificContextMenu;
         private System.Windows.Forms.ToolStripMenuItem showSpecificMenuItem;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage5;
+        private DevExpress.XtraGrid.GridControl customerOrderServiceGrid;
+        private DevExpress.XtraGrid.Views.Grid.GridView customerOrderServiceGridView;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit4;
     }
 }

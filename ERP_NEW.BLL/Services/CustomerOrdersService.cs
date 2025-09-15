@@ -336,6 +336,32 @@ namespace ERP_NEW.BLL.Services
             return result.ToList();
         }
 
+        public IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceByCustomerOrderId(int customerOrderId)
+        {
+            var result = (from co in customerOrderService.GetAll()
+                          join c in customerOrders.GetAll() on co.CustomerOrderId equals c.Id into coc
+                          from c in coc.DefaultIfEmpty()
+                          join ord in orders.GetAll() on co.OrderId equals ord.ID into ordd
+                          from ord in ordd.DefaultIfEmpty()
+                          where (co.CustomerOrderId == customerOrderId)
+                          orderby ord.ORDER_DATE, ord.RECEIPT_NUM
+
+
+
+
+                          select new CustomerOrderServiceDTO
+                          {
+                              Id = co.Id,
+                              CustomerOrderNumber = c.OrderNumber,
+                              CustomerOrderId = c.Id,
+                              OrderId = ord.ID,
+                              Note = co.Note,
+                              ReceiptDate = ord.ORDER_DATE,
+                              ReceiptNum = ord.RECEIPT_NUM
+                          });
+            return result.ToList();
+        }
+
         public CustomerOrdersDTO GetCustomerOrdersFullById(int customerOrderId)
         {
             var result = (from co in customerOrders.GetAll()
