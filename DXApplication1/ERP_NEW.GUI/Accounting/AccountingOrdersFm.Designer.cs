@@ -60,12 +60,15 @@
             this.printBtn = new DevExpress.XtraBars.BarButtonItem();
             this.showReceiptBtn = new DevExpress.XtraBars.BarButtonItem();
             this.showTTNBtn = new DevExpress.XtraBars.BarButtonItem();
-            this.showServiceBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.showCustomerCheck = new DevExpress.XtraBars.BarCheckItem();
+            this.barCheckItem2 = new DevExpress.XtraBars.BarCheckItem();
+            this.editCustomerOrderBtn = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.splitContainerControl = new DevExpress.XtraEditors.SplitContainerControl();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.ordersGrid = new DevExpress.XtraGrid.GridControl();
@@ -75,10 +78,13 @@
             this.gridBand1 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.vendorSrnCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.vendorNameCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.customerOrderCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.repositoryItemMemoEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit();
             this.gridBand2 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.receiptNumCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.invoiceNumCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.accountNumCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.gridBand8 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.gridBand3 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.currencyNameCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.rateCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
@@ -106,6 +112,7 @@
             this.typeCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.totalCurrencyCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colorNameCol = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.receiptsGrid = new DevExpress.XtraGrid.GridControl();
             this.receiptsGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -137,10 +144,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ordersGrid)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ordersGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.taxInvoiceRepository)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transportInvoiceRepository)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.correctionRepository)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkRepository)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.receiptsGrid)).BeginInit();
@@ -176,9 +185,11 @@
             this.printBtn,
             this.showReceiptBtn,
             this.showTTNBtn,
-            this.showServiceBtn});
+            this.showCustomerCheck,
+            this.barCheckItem2,
+            this.editCustomerOrderBtn});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 29;
+            this.ribbonControl.MaxItemId = 34;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -189,7 +200,7 @@
             this.repositoryItemMonth2});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2007;
             this.ribbonControl.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl.Size = new System.Drawing.Size(1536, 95);
+            this.ribbonControl.Size = new System.Drawing.Size(1581, 95);
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // barStaticItem1
@@ -533,15 +544,29 @@
             this.showTTNBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.showTTNBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showTTNBtn_ItemClick);
             // 
-            // showServiceBtn
+            // showCustomerCheck
             // 
-            this.showServiceBtn.Caption = "Послуги";
-            this.showServiceBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("showServiceBtn.Glyph")));
-            this.showServiceBtn.Id = 28;
-            this.showServiceBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showServiceBtn.LargeGlyph")));
-            this.showServiceBtn.Name = "showServiceBtn";
-            this.showServiceBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.showServiceBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showServiceBtn_ItemClick);
+            this.showCustomerCheck.Caption = "Відображати заказ";
+            this.showCustomerCheck.CheckBoxVisibility = DevExpress.XtraBars.CheckBoxVisibility.AfterText;
+            this.showCustomerCheck.Id = 29;
+            this.showCustomerCheck.ItemAppearance.Normal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.showCustomerCheck.ItemAppearance.Normal.Options.UseFont = true;
+            this.showCustomerCheck.Name = "showCustomerCheck";
+            this.showCustomerCheck.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.showCustomerCheck_CheckedChanged);
+            // 
+            // barCheckItem2
+            // 
+            this.barCheckItem2.Caption = "barCheckItem2";
+            this.barCheckItem2.Id = 30;
+            this.barCheckItem2.Name = "barCheckItem2";
+            // 
+            // editCustomerOrderBtn
+            // 
+            this.editCustomerOrderBtn.Caption = "Редагувати заказ";
+            this.editCustomerOrderBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("editCustomerOrderBtn.Glyph")));
+            this.editCustomerOrderBtn.Id = 31;
+            this.editCustomerOrderBtn.Name = "editCustomerOrderBtn";
+            this.editCustomerOrderBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.editCustomerOrderBtn_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -549,7 +574,8 @@
             this.ribbonPageGroup1,
             this.ribbonPageGroup2,
             this.ribbonPageGroup4,
-            this.ribbonPageGroup3});
+            this.ribbonPageGroup3,
+            this.ribbonPageGroup5});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "ribbonPage1";
             // 
@@ -583,7 +609,6 @@
             this.ribbonPageGroup4.ItemLinks.Add(this.printBtn);
             this.ribbonPageGroup4.ItemLinks.Add(this.showReceiptBtn);
             this.ribbonPageGroup4.ItemLinks.Add(this.showTTNBtn);
-            this.ribbonPageGroup4.ItemLinks.Add(this.showServiceBtn);
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
             this.ribbonPageGroup4.Text = "Функції";
             // 
@@ -599,6 +624,13 @@
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.ShowCaptionButton = false;
             // 
+            // ribbonPageGroup5
+            // 
+            this.ribbonPageGroup5.ItemLinks.Add(this.showCustomerCheck);
+            this.ribbonPageGroup5.ItemLinks.Add(this.editCustomerOrderBtn);
+            this.ribbonPageGroup5.Name = "ribbonPageGroup5";
+            this.ribbonPageGroup5.Text = "Послуги";
+            // 
             // splitContainerControl
             // 
             this.splitContainerControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -607,7 +639,7 @@
             this.splitContainerControl.Name = "splitContainerControl";
             this.splitContainerControl.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl.Panel2.Controls.Add(this.groupControl2);
-            this.splitContainerControl.Size = new System.Drawing.Size(1536, 605);
+            this.splitContainerControl.Size = new System.Drawing.Size(1581, 605);
             this.splitContainerControl.SplitterPosition = 273;
             this.splitContainerControl.TabIndex = 2;
             // 
@@ -621,7 +653,7 @@
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl1.Location = new System.Drawing.Point(0, 0);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1536, 273);
+            this.groupControl1.Size = new System.Drawing.Size(1581, 273);
             this.groupControl1.TabIndex = 0;
             this.groupControl1.Text = "Надходження";
             // 
@@ -636,8 +668,10 @@
             this.taxInvoiceRepository,
             this.transportInvoiceRepository,
             this.correctionRepository,
-            this.checkRepository});
-            this.ordersGrid.Size = new System.Drawing.Size(1532, 251);
+            this.checkRepository,
+            this.repositoryItemTextEdit1,
+            this.repositoryItemMemoEdit1});
+            this.ordersGrid.Size = new System.Drawing.Size(1577, 251);
             this.ordersGrid.TabIndex = 0;
             this.ordersGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.ordersGridView});
@@ -666,6 +700,7 @@
             this.ordersGridView.Bands.AddRange(new DevExpress.XtraGrid.Views.BandedGrid.GridBand[] {
             this.gridBand1,
             this.gridBand2,
+            this.gridBand8,
             this.gridBand3,
             this.gridBand4,
             this.gridBand5,
@@ -694,9 +729,11 @@
             this.checktdCol,
             this.typeCol,
             this.colorNameCol,
-            this.accountNumCol});
+            this.accountNumCol,
+            this.customerOrderCol});
             this.ordersGridView.GridControl = this.ordersGrid;
             this.ordersGridView.Name = "ordersGridView";
+            this.ordersGridView.OptionsView.RowAutoHeight = true;
             this.ordersGridView.OptionsView.ShowAutoFilterRow = true;
             this.ordersGridView.OptionsView.ShowFooter = true;
             this.ordersGridView.OptionsView.ShowGroupPanel = false;
@@ -713,9 +750,10 @@
             this.gridBand1.Caption = "Контрагент";
             this.gridBand1.Columns.Add(this.vendorSrnCol);
             this.gridBand1.Columns.Add(this.vendorNameCol);
+            this.gridBand1.Columns.Add(this.customerOrderCol);
             this.gridBand1.Name = "gridBand1";
             this.gridBand1.VisibleIndex = 0;
-            this.gridBand1.Width = 278;
+            this.gridBand1.Width = 305;
             // 
             // vendorSrnCol
             // 
@@ -732,7 +770,7 @@
             this.vendorSrnCol.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "VendorSrn", "Всього: {0}")});
             this.vendorSrnCol.Visible = true;
-            this.vendorSrnCol.Width = 80;
+            this.vendorSrnCol.Width = 65;
             // 
             // vendorNameCol
             // 
@@ -747,7 +785,32 @@
             this.vendorNameCol.OptionsColumn.AllowFocus = false;
             this.vendorNameCol.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.vendorNameCol.Visible = true;
-            this.vendorNameCol.Width = 198;
+            this.vendorNameCol.Width = 160;
+            // 
+            // customerOrderCol
+            // 
+            this.customerOrderCol.AppearanceCell.Options.UseTextOptions = true;
+            this.customerOrderCol.AppearanceCell.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            this.customerOrderCol.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.customerOrderCol.AppearanceHeader.Options.UseFont = true;
+            this.customerOrderCol.AppearanceHeader.Options.UseTextOptions = true;
+            this.customerOrderCol.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.customerOrderCol.Caption = "Закази";
+            this.customerOrderCol.ColumnEdit = this.repositoryItemMemoEdit1;
+            this.customerOrderCol.FieldName = "CustomerOrders";
+            this.customerOrderCol.Name = "customerOrderCol";
+            this.customerOrderCol.OptionsColumn.AllowEdit = false;
+            this.customerOrderCol.OptionsColumn.AllowFocus = false;
+            this.customerOrderCol.OptionsColumn.AllowMove = false;
+            this.customerOrderCol.OptionsColumn.AllowSize = false;
+            this.customerOrderCol.Visible = true;
+            this.customerOrderCol.Width = 80;
+            // 
+            // repositoryItemMemoEdit1
+            // 
+            this.repositoryItemMemoEdit1.Appearance.Options.UseTextOptions = true;
+            this.repositoryItemMemoEdit1.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            this.repositoryItemMemoEdit1.Name = "repositoryItemMemoEdit1";
             // 
             // gridBand2
             // 
@@ -761,7 +824,7 @@
             this.gridBand2.Columns.Add(this.accountNumCol);
             this.gridBand2.Name = "gridBand2";
             this.gridBand2.VisibleIndex = 1;
-            this.gridBand2.Width = 347;
+            this.gridBand2.Width = 278;
             // 
             // receiptNumCol
             // 
@@ -776,7 +839,7 @@
             this.receiptNumCol.OptionsColumn.AllowFocus = false;
             this.receiptNumCol.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.receiptNumCol.Visible = true;
-            this.receiptNumCol.Width = 98;
+            this.receiptNumCol.Width = 77;
             // 
             // invoiceNumCol
             // 
@@ -791,7 +854,7 @@
             this.invoiceNumCol.OptionsColumn.AllowFocus = false;
             this.invoiceNumCol.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.invoiceNumCol.Visible = true;
-            this.invoiceNumCol.Width = 149;
+            this.invoiceNumCol.Width = 119;
             // 
             // accountNumCol
             // 
@@ -804,7 +867,17 @@
             this.accountNumCol.OptionsColumn.AllowFocus = false;
             this.accountNumCol.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.accountNumCol.Visible = true;
-            this.accountNumCol.Width = 100;
+            this.accountNumCol.Width = 82;
+            // 
+            // gridBand8
+            // 
+            this.gridBand8.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridBand8.AppearanceHeader.Options.UseFont = true;
+            this.gridBand8.Caption = "Послуги";
+            this.gridBand8.Name = "gridBand8";
+            this.gridBand8.Visible = false;
+            this.gridBand8.VisibleIndex = -1;
+            this.gridBand8.Width = 75;
             // 
             // gridBand3
             // 
@@ -821,7 +894,7 @@
             this.gridBand3.Columns.Add(this.vatAccountCol);
             this.gridBand3.Name = "gridBand3";
             this.gridBand3.VisibleIndex = 2;
-            this.gridBand3.Width = 464;
+            this.gridBand3.Width = 371;
             // 
             // currencyNameCol
             // 
@@ -835,7 +908,7 @@
             this.currencyNameCol.OptionsColumn.AllowEdit = false;
             this.currencyNameCol.OptionsColumn.AllowFocus = false;
             this.currencyNameCol.Visible = true;
-            this.currencyNameCol.Width = 61;
+            this.currencyNameCol.Width = 48;
             // 
             // rateCol
             // 
@@ -849,7 +922,7 @@
             this.rateCol.OptionsColumn.AllowEdit = false;
             this.rateCol.OptionsColumn.AllowFocus = false;
             this.rateCol.Visible = true;
-            this.rateCol.Width = 61;
+            this.rateCol.Width = 48;
             // 
             // totalPriceCol
             // 
@@ -867,7 +940,7 @@
             this.totalPriceCol.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPrice", "{0:### ### ##0.00}")});
             this.totalPriceCol.Visible = true;
-            this.totalPriceCol.Width = 79;
+            this.totalPriceCol.Width = 62;
             // 
             // vatCol
             // 
@@ -885,6 +958,7 @@
             this.vatCol.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Vat", "{0:### ### ##0.00}")});
             this.vatCol.Visible = true;
+            this.vatCol.Width = 59;
             // 
             // totalWithVatCol
             // 
@@ -902,7 +976,7 @@
             this.totalWithVatCol.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalWithVat", "{0:### ### ##0.00}")});
             this.totalWithVatCol.Visible = true;
-            this.totalWithVatCol.Width = 87;
+            this.totalWithVatCol.Width = 68;
             // 
             // vatAccountCol
             // 
@@ -916,7 +990,7 @@
             this.vatAccountCol.OptionsColumn.AllowEdit = false;
             this.vatAccountCol.OptionsColumn.AllowFocus = false;
             this.vatAccountCol.Visible = true;
-            this.vatAccountCol.Width = 101;
+            this.vatAccountCol.Width = 86;
             // 
             // gridBand4
             // 
@@ -929,7 +1003,7 @@
             this.gridBand4.Columns.Add(this.supplierProxyCol);
             this.gridBand4.Name = "gridBand4";
             this.gridBand4.VisibleIndex = 3;
-            this.gridBand4.Width = 301;
+            this.gridBand4.Width = 241;
             // 
             // supplierCol
             // 
@@ -943,7 +1017,7 @@
             this.supplierCol.OptionsColumn.AllowEdit = false;
             this.supplierCol.OptionsColumn.AllowFocus = false;
             this.supplierCol.Visible = true;
-            this.supplierCol.Width = 205;
+            this.supplierCol.Width = 163;
             // 
             // supplierProxyCol
             // 
@@ -958,7 +1032,7 @@
             this.supplierProxyCol.OptionsColumn.AllowFocus = false;
             this.supplierProxyCol.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.supplierProxyCol.Visible = true;
-            this.supplierProxyCol.Width = 96;
+            this.supplierProxyCol.Width = 78;
             // 
             // gridBand5
             // 
@@ -971,7 +1045,7 @@
             this.gridBand5.Columns.Add(this.invoiceDateCol);
             this.gridBand5.Name = "gridBand5";
             this.gridBand5.VisibleIndex = 4;
-            this.gridBand5.Width = 186;
+            this.gridBand5.Width = 148;
             // 
             // orderDateCol
             // 
@@ -985,7 +1059,7 @@
             this.orderDateCol.OptionsColumn.AllowEdit = false;
             this.orderDateCol.OptionsColumn.AllowFocus = false;
             this.orderDateCol.Visible = true;
-            this.orderDateCol.Width = 106;
+            this.orderDateCol.Width = 84;
             // 
             // invoiceDateCol
             // 
@@ -999,7 +1073,7 @@
             this.invoiceDateCol.OptionsColumn.AllowEdit = false;
             this.invoiceDateCol.OptionsColumn.AllowFocus = false;
             this.invoiceDateCol.Visible = true;
-            this.invoiceDateCol.Width = 80;
+            this.invoiceDateCol.Width = 64;
             // 
             // gridBand7
             // 
@@ -1012,7 +1086,7 @@
             this.gridBand7.Columns.Add(this.transportInvoiceStatusCol);
             this.gridBand7.Name = "gridBand7";
             this.gridBand7.VisibleIndex = 5;
-            this.gridBand7.Width = 75;
+            this.gridBand7.Width = 60;
             // 
             // taxInvoiceStatusCol
             // 
@@ -1027,7 +1101,7 @@
             this.taxInvoiceStatusCol.OptionsColumn.AllowEdit = false;
             this.taxInvoiceStatusCol.OptionsColumn.AllowFocus = false;
             this.taxInvoiceStatusCol.Visible = true;
-            this.taxInvoiceStatusCol.Width = 29;
+            this.taxInvoiceStatusCol.Width = 22;
             // 
             // taxInvoiceRepository
             // 
@@ -1047,7 +1121,7 @@
             this.transportInvoiceStatusCol.OptionsColumn.AllowEdit = false;
             this.transportInvoiceStatusCol.OptionsColumn.AllowFocus = false;
             this.transportInvoiceStatusCol.Visible = true;
-            this.transportInvoiceStatusCol.Width = 46;
+            this.transportInvoiceStatusCol.Width = 38;
             // 
             // transportInvoiceRepository
             // 
@@ -1062,7 +1136,7 @@
             this.gridBand6.Columns.Add(this.typeCol);
             this.gridBand6.Name = "gridBand6";
             this.gridBand6.VisibleIndex = 6;
-            this.gridBand6.Width = 189;
+            this.gridBand6.Width = 156;
             // 
             // debitNumCol
             // 
@@ -1076,7 +1150,7 @@
             this.debitNumCol.OptionsColumn.AllowEdit = false;
             this.debitNumCol.OptionsColumn.AllowFocus = false;
             this.debitNumCol.Visible = true;
-            this.debitNumCol.Width = 56;
+            this.debitNumCol.Width = 46;
             // 
             // correctionCol
             // 
@@ -1091,7 +1165,7 @@
             this.correctionCol.OptionsColumn.AllowEdit = false;
             this.correctionCol.OptionsColumn.AllowFocus = false;
             this.correctionCol.Visible = true;
-            this.correctionCol.Width = 47;
+            this.correctionCol.Width = 38;
             // 
             // correctionRepository
             // 
@@ -1111,7 +1185,7 @@
             this.checktdCol.OptionsColumn.AllowEdit = false;
             this.checktdCol.OptionsColumn.AllowFocus = false;
             this.checktdCol.Visible = true;
-            this.checktdCol.Width = 27;
+            this.checktdCol.Width = 22;
             // 
             // checkRepository
             // 
@@ -1130,7 +1204,7 @@
             this.typeCol.OptionsColumn.AllowEdit = false;
             this.typeCol.OptionsColumn.AllowFocus = false;
             this.typeCol.Visible = true;
-            this.typeCol.Width = 59;
+            this.typeCol.Width = 50;
             // 
             // totalCurrencyCol
             // 
@@ -1150,6 +1224,13 @@
             this.colorNameCol.Name = "colorNameCol";
             this.colorNameCol.Visible = true;
             // 
+            // repositoryItemTextEdit1
+            // 
+            this.repositoryItemTextEdit1.Appearance.Options.UseTextOptions = true;
+            this.repositoryItemTextEdit1.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            this.repositoryItemTextEdit1.AutoHeight = false;
+            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            // 
             // groupControl2
             // 
             this.groupControl2.AppearanceCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -1160,7 +1241,7 @@
             this.groupControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl2.Location = new System.Drawing.Point(0, 0);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(1536, 327);
+            this.groupControl2.Size = new System.Drawing.Size(1581, 327);
             this.groupControl2.TabIndex = 0;
             this.groupControl2.Text = "Матеріали";
             // 
@@ -1172,7 +1253,7 @@
             this.receiptsGrid.MainView = this.receiptsGridView;
             this.receiptsGrid.MenuManager = this.ribbonControl;
             this.receiptsGrid.Name = "receiptsGrid";
-            this.receiptsGrid.Size = new System.Drawing.Size(1532, 305);
+            this.receiptsGrid.Size = new System.Drawing.Size(1577, 305);
             this.receiptsGrid.TabIndex = 0;
             this.receiptsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.receiptsGridView});
@@ -1399,7 +1480,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1536, 700);
+            this.ClientSize = new System.Drawing.Size(1581, 700);
             this.Controls.Add(this.splitContainerControl);
             this.Controls.Add(this.ribbonControl);
             this.Name = "AccountingOrdersFm";
@@ -1419,10 +1500,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ordersGrid)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ordersGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.taxInvoiceRepository)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transportInvoiceRepository)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.correctionRepository)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkRepository)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             this.groupControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.receiptsGrid)).EndInit();
@@ -1514,18 +1597,25 @@
         private DevExpress.XtraBars.BarButtonItem periodBtn;
         private DevExpress.Utils.WorkspaceManager workspaceManager1;
         private DevExpress.XtraBars.BarButtonItem printBtn;
+        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn accountNumCol;
+        private DevExpress.XtraBars.BarButtonItem showReceiptBtn;
+        private DevExpress.XtraBars.BarButtonItem showTTNBtn;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.ToolStripMenuItem AddColorToolStripMenuItem;
+        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn customerOrderCol;
+        private DevExpress.XtraBars.BarCheckItem showCustomerCheck;
+        private DevExpress.XtraBars.BarCheckItem barCheckItem2;
+        private DevExpress.XtraBars.BarButtonItem editCustomerOrderBtn;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand2;
-        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn accountNumCol;
+        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand8;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand3;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand4;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand5;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand7;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand6;
-        private DevExpress.XtraBars.BarButtonItem showReceiptBtn;
-        private DevExpress.XtraBars.BarButtonItem showTTNBtn;
-        private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.ToolStripMenuItem AddColorToolStripMenuItem;
-        private DevExpress.XtraBars.BarButtonItem showServiceBtn;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit repositoryItemMemoEdit1;
     }
 }

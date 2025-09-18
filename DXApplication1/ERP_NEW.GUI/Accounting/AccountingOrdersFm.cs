@@ -36,6 +36,7 @@ namespace ERP_NEW.GUI.Accounting
         private IPeriodService periodService;
         private IBusinessTripsService businessTripsService;
         private ILogService logService;
+        private ICustomerOrdersService customerOrdersService;
 
         private List<AccountOrdersDTO> orderJournalList = new List<AccountOrdersDTO>();
         private List<ReceiptJournalDTO> receiptsJournalList = new List<ReceiptJournalDTO>();
@@ -77,9 +78,11 @@ namespace ERP_NEW.GUI.Accounting
             storehouseAccountingCheckItem.CheckedChanged -= storehouseCheckItem_CheckedChanged;
             account63CheckItem.CheckedChanged -= storehouseCheckItem_CheckedChanged;
             account631CheckItem.CheckedChanged -= storehouseCheckItem_CheckedChanged;
+            showCustomerCheck.CheckedChanged -= showCustomerCheck_CheckedChanged;
 
             storehouseCheckItem.Checked = Properties.Settings.Default.Flag1;
             storehouseAccountingCheckItem.Checked = Properties.Settings.Default.Flag2;
+            showCustomerCheck.Checked = Properties.Settings.Default.AccountingOrderFmCustomerOrders;
 
             if (isCurrencyOrder)
             {
@@ -102,10 +105,16 @@ namespace ERP_NEW.GUI.Accounting
                 receiptsGridView.Columns[7].Visible = false;
             }
 
+            if (showCustomerCheck.Checked)
+                ordersGridView.Columns[23].Visible = true;
+            else
+                ordersGridView.Columns[23].Visible = false;
+
             storehouseCheckItem.CheckedChanged += storehouseCheckItem_CheckedChanged;
             storehouseAccountingCheckItem.CheckedChanged += storehouseCheckItem_CheckedChanged;
             account63CheckItem.CheckedChanged += storehouseCheckItem_CheckedChanged;
             account631CheckItem.CheckedChanged += storehouseCheckItem_CheckedChanged;
+            showCustomerCheck.CheckedChanged += showCustomerCheck_CheckedChanged;
 
             this.Text = (isCurrencyOrder) ? "Надходження (валюта)" : "Надходження";
 
@@ -116,6 +125,8 @@ namespace ERP_NEW.GUI.Accounting
             LoadColorsPallete();
 
             splitContainerControl.SplitterPosition = (this.Height - ribbonControl.Height);
+
+           
         }
 
 
@@ -142,6 +153,7 @@ namespace ERP_NEW.GUI.Accounting
         {
             splashScreenManager.ShowWaitForm();
             storeHouseService = Program.kernel.Get<IStoreHouseService>();
+            customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
             periodService = Program.kernel.Get<IPeriodService>();
             logService = Program.kernel.Get<ILogService>();
 
@@ -151,6 +163,19 @@ namespace ERP_NEW.GUI.Accounting
             short? fl4 = Properties.Settings.Default.Flag4 ? Convert.ToInt16(Properties.Settings.Default.Flag4) : (short?)null;
 
             orderJournalList = storeHouseService.GetAccountOrderJournal(beginDate, endDate,fl1, fl2, fl3, fl4).ToList();
+
+            foreach (var item in orderJournalList)
+            {
+                List<CustomerOrderServiceDTO> customerOrderServiceList = new List<CustomerOrderServiceDTO>();
+                var temp = customerOrdersService.GetCustomerServiceByOrderId(item.Id);
+                string customerOrderConcat = "";
+                foreach (var itemService in temp)
+                {
+                    customerOrderConcat+=itemService.CustomerOrderNumber + " ";
+
+                }
+                item.CustomerOrders = customerOrderConcat;
+            }
 
             if (isCurrencyOrder)
                 ordersBS.DataSource = orderJournalList.Where(sort => sort.DebitAccountId == 60).ToList();
@@ -199,6 +224,33 @@ namespace ERP_NEW.GUI.Accounting
             // Не модальное окно
             Cursor = Cursors.WaitCursor;
             AccountingOrdersEditFm accountingOrderEditFm = new AccountingOrdersEditFm(isCurrencyOrder, operation, model, source, userTaskDTO);
+            accountingOrderEditFm.FormClosing += new FormClosingEventHandler(accountingOrderEditFm_FormClosing);
+            //accountingOrderEditFm.MdiParent = this;
+            accountingOrderEditFm.Show();
+            Cursor = Cursors.Default;
+
+        }
+
+
+        private void EditService(UserTasksDTO userTaskDTO, Utils.Operation operation, int receiptId)
+        {
+            // Модальное окно
+            //using (AccountingOrdersEditFm accountingOrderEditFm = new AccountingOrdersEditFm(isCurrencyOrder, operation, model, source, userTaskDTO))
+            //{
+            //    if (accountingOrderEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //    {
+            //        OrdersDTO returnItem = accountingOrderEditFm.Return();
+            //        ordersGridView.BeginDataUpdate();
+            //        LoadOrdersDataByPeriod(beginDate, endDate);
+            //        ordersGridView.EndDataUpdate();
+            //        int rowHandle = ordersGridView.LocateByValue("Id", returnItem.ID);
+            //        ordersGridView.FocusedRowHandle = rowHandle;
+            //    }
+            //}
+
+            // Не модальное окно
+            Cursor = Cursors.WaitCursor;
+            AccountingOrderServicesEditFm accountingOrderEditFm = new AccountingOrderServicesEditFm(userTaskDTO, operation, receiptId);
             accountingOrderEditFm.FormClosing += new FormClosingEventHandler(accountingOrderEditFm_FormClosing);
             //accountingOrderEditFm.MdiParent = this;
             accountingOrderEditFm.Show();
@@ -718,6 +770,25 @@ namespace ERP_NEW.GUI.Accounting
         {
             AccountingOrderServicesFm accountingOrderServicesFm = new AccountingOrderServicesFm(userTasksDTO,beginDate, endDate);
             accountingOrderServicesFm.Show();
+        }
+
+        private void showCustomerCheck_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+
+
+            Properties.Settings.Default.AccountingOrderFmCustomerOrders = showCustomerCheck.Checked;
+            Properties.Settings.Default.Save();
+
+            if (showCustomerCheck.Checked)
+                ordersGridView.Columns[23].Visible = true;
+            else
+                ordersGridView.Columns[23].Visible = false;
+        }
+
+        private void editCustomerOrderBtn_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (ordersBS.Count != 0)
+                EditService(userTasksDTO, Utils.Operation.Update, ((AccountOrdersDTO)ordersBS.Current).Id);
         }
     }
 }

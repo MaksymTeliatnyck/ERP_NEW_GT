@@ -369,5 +369,17 @@ namespace ERP_NEW.GUI.Properties {
                 this["AccountingOperationsFmEndYear"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AccountingOrderFmCustomerOrders {
+            get {
+                return ((bool)(this["AccountingOrderFmCustomerOrders"]));
+            }
+            set {
+                this["AccountingOrderFmCustomerOrders"] = value;
+            }
+        }
     }
 }

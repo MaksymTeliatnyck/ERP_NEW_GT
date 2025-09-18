@@ -16,6 +16,9 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
         public string ReceiptNum { get; set; }
         public DateTime? ReceiptDate { get; set; }
         public string Note { get; set; }
+        public string ContractorName { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public decimal? TotalPrice { get; set; }
         public bool Selected { get; set; }
     }
 }

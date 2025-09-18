@@ -53,5 +53,6 @@ namespace ERP_NEW.BLL.DTO.SelectedDTO
         public bool IsSelect { get; set; }
         public string AccountNum { get; set; }
         public string Flag { get; set; }
+        public string CustomerOrders { get; set; }
     }
 }

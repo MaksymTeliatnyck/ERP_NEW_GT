@@ -47,19 +47,6 @@ namespace ERP_NEW.GUI.Accounting
 
         private void EditCustomerOrdersService(UserTasksDTO userTasksDTO, Utils.Operation operation, CustomerOrderServiceDTO model)
         {
-            using (AccountingOrderServicesEditFm accountingOrderServicesEditFm = new AccountingOrderServicesEditFm(userTasksDTO, operation, model))
-            {
-                if (accountingOrderServicesEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    //BusinessTripsDTO return_Id = businessTripsEditFm.Return();
-                    //businessTripsGridView.BeginDataUpdate();
-                    //LoadData((DateTime)firstDateBusinessTripEdit.EditValue, (DateTime)lastDateBusinessTripEdit.EditValue);
-                    //businessTripsGridView.EndDataUpdate();
-                    //int rowHandle = businessTripsGridView.LocateByValue("BusinessTripsID", return_Id.ID);
-                    //businessTripsGridView.FocusedRowHandle = rowHandle;
-
-                }
-            }
         }
 
         private void addServiceBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
