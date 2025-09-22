@@ -341,18 +341,21 @@ namespace ERP_NEW.BLL.Services
             var result = (from co in customerOrderService.GetAll()
                           join c in customerOrders.GetAll() on co.CustomerOrderId equals c.Id into coc
                           from c in coc.DefaultIfEmpty()
+
                           join ord in orders.GetAll() on co.OrderId equals ord.ID into ordd
                           from ord in ordd.DefaultIfEmpty()
+                          join con in contractors.GetAll() on ord.VENDOR_ID equals con.Id into conn
+                          from con in conn.DefaultIfEmpty()
                           where (co.CustomerOrderId == customerOrderId)
                           orderby ord.ORDER_DATE, ord.RECEIPT_NUM
-
-
-
 
                           select new CustomerOrderServiceDTO
                           {
                               Id = co.Id,
                               CustomerOrderNumber = c.OrderNumber,
+                               ContractorName = con.Name,
+                                OrderDate = ord.ORDER_DATE,
+                                 TotalPrice = ord.TOTAL_WITH_VAT,
                               CustomerOrderId = c.Id,
                               OrderId = ord.ID,
                               Note = co.Note,

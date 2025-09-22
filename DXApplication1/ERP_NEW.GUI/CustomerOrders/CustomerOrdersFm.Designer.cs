@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerOrdersFm));
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode4 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
@@ -133,6 +133,9 @@
             this.customerOrderServiceGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit4 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.groupControl5 = new DevExpress.XtraEditors.GroupControl();
@@ -1606,7 +1609,10 @@
             // 
             this.customerOrderServiceGridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn5,
-            this.gridColumn7});
+            this.gridColumn7,
+            this.gridColumn1,
+            this.gridColumn8,
+            this.gridColumn9});
             this.customerOrderServiceGridView.GridControl = this.customerOrderServiceGrid;
             this.customerOrderServiceGridView.Name = "customerOrderServiceGridView";
             this.customerOrderServiceGridView.OptionsView.ShowGroupPanel = false;
@@ -1623,8 +1629,8 @@
             this.gridColumn5.OptionsColumn.AllowEdit = false;
             this.gridColumn5.OptionsColumn.AllowFocus = false;
             this.gridColumn5.Visible = true;
-            this.gridColumn5.VisibleIndex = 0;
-            this.gridColumn5.Width = 318;
+            this.gridColumn5.VisibleIndex = 3;
+            this.gridColumn5.Width = 217;
             // 
             // gridColumn7
             // 
@@ -1638,8 +1644,49 @@
             this.gridColumn7.OptionsColumn.AllowEdit = false;
             this.gridColumn7.OptionsColumn.AllowFocus = false;
             this.gridColumn7.Visible = true;
-            this.gridColumn7.VisibleIndex = 1;
-            this.gridColumn7.Width = 600;
+            this.gridColumn7.VisibleIndex = 4;
+            this.gridColumn7.Width = 140;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn1.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn1.Caption = "Контрагент";
+            this.gridColumn1.FieldName = "ContractorName";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsColumn.AllowEdit = false;
+            this.gridColumn1.OptionsColumn.AllowFocus = false;
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 0;
+            this.gridColumn1.Width = 214;
+            // 
+            // gridColumn8
+            // 
+            this.gridColumn8.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn8.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn8.Caption = "Вартість";
+            this.gridColumn8.DisplayFormat.FormatString = "{0:### ### ##0.00}";
+            this.gridColumn8.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
+            this.gridColumn8.FieldName = "TotalPrice";
+            this.gridColumn8.Name = "gridColumn8";
+            this.gridColumn8.OptionsColumn.AllowEdit = false;
+            this.gridColumn8.OptionsColumn.AllowFocus = false;
+            this.gridColumn8.Visible = true;
+            this.gridColumn8.VisibleIndex = 1;
+            this.gridColumn8.Width = 149;
+            // 
+            // gridColumn9
+            // 
+            this.gridColumn9.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn9.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn9.Caption = "Дата";
+            this.gridColumn9.FieldName = "OrderDate";
+            this.gridColumn9.Name = "gridColumn9";
+            this.gridColumn9.OptionsColumn.AllowEdit = false;
+            this.gridColumn9.OptionsColumn.AllowFocus = false;
+            this.gridColumn9.Visible = true;
+            this.gridColumn9.VisibleIndex = 2;
+            this.gridColumn9.Width = 65;
             // 
             // repositoryItemCheckEdit4
             // 
@@ -2204,11 +2251,11 @@
             this.specificGrid.ContextMenuStrip = this.specificContextMenu;
             this.specificGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.specificGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(2);
-            gridLevelNode3.RelationName = "Level1";
-            gridLevelNode4.RelationName = "Level2";
+            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.RelationName = "Level2";
             this.specificGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode3,
-            gridLevelNode4});
+            gridLevelNode1,
+            gridLevelNode2});
             this.specificGrid.Location = new System.Drawing.Point(0, 0);
             this.specificGrid.MainView = this.specificGridView;
             this.specificGrid.Margin = new System.Windows.Forms.Padding(4);
@@ -2973,5 +3020,8 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
     }
 }
