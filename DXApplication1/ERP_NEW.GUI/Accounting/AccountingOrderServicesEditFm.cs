@@ -143,7 +143,17 @@ namespace ERP_NEW.GUI.Accounting
 
         private void deleteCustomerOrdersBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            if (customerOrderServiceBS.Count > 0)
+            {
+                customerOrderGridView.PostEditor();
+                customerOrderGridView.BeginDataUpdate();
+                var checkItems = customerOrderServiceList.Where(t => t.Selected && t.Id != 0);
+                deleteCustomerOrderServiceList.AddRange(checkItems);
+                customerOrderServiceList.RemoveAll(s => s.Selected);
+                customerOrderServiceBS.DataSource = customerOrderServiceList;
+                customerOrderGrid.DataSource = customerOrderServiceBS;
+                customerOrderGridView.EndDataUpdate();
+            }
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
@@ -178,6 +188,9 @@ namespace ERP_NEW.GUI.Accounting
                         customerOrderService.CustomerOrderServiceDelete(item.Id);
                 }
             }
+
+            DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }
