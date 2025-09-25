@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerOrdersFm));
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode4 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
@@ -213,6 +213,8 @@
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
+            this.category4 = new DevExpress.XtraVerticalGrid.Rows.CategoryRow();
+            this.row8 = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -2079,7 +2081,7 @@
             this.splitContainerControl4.Panel2.Controls.Add(this.groupControl4);
             this.splitContainerControl4.Panel2.Text = "Panel2";
             this.splitContainerControl4.Size = new System.Drawing.Size(713, 307);
-            this.splitContainerControl4.SplitterPosition = 261;
+            this.splitContainerControl4.SplitterPosition = 176;
             this.splitContainerControl4.TabIndex = 0;
             this.splitContainerControl4.Text = "splitContainerControl4";
             // 
@@ -2089,7 +2091,7 @@
             this.xtraTabControl2.Location = new System.Drawing.Point(0, 0);
             this.xtraTabControl2.Name = "xtraTabControl2";
             this.xtraTabControl2.SelectedTabPage = this.xtraTabPage3;
-            this.xtraTabControl2.Size = new System.Drawing.Size(713, 261);
+            this.xtraTabControl2.Size = new System.Drawing.Size(713, 176);
             this.xtraTabControl2.TabIndex = 1;
             this.xtraTabControl2.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage3,
@@ -2109,7 +2111,7 @@
             this.xtraTabPage3.Controls.Add(this.assembliesGrid);
             this.xtraTabPage3.Controls.Add(this.groupControl3);
             this.xtraTabPage3.Name = "xtraTabPage3";
-            this.xtraTabPage3.Size = new System.Drawing.Size(707, 233);
+            this.xtraTabPage3.Size = new System.Drawing.Size(707, 148);
             this.xtraTabPage3.Text = "Вироби/складальні одиниці";
             // 
             // standaloneBarDockControl1
@@ -2127,7 +2129,7 @@
             this.assembliesGrid.Location = new System.Drawing.Point(0, 0);
             this.assembliesGrid.MainView = this.assembliesGridView;
             this.assembliesGrid.Name = "assembliesGrid";
-            this.assembliesGrid.Size = new System.Drawing.Size(707, 233);
+            this.assembliesGrid.Size = new System.Drawing.Size(707, 148);
             this.assembliesGrid.TabIndex = 8;
             this.assembliesGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.assembliesGridView});
@@ -2204,11 +2206,11 @@
             this.specificGrid.ContextMenuStrip = this.specificContextMenu;
             this.specificGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.specificGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(2);
-            gridLevelNode3.RelationName = "Level1";
-            gridLevelNode4.RelationName = "Level2";
+            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.RelationName = "Level2";
             this.specificGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode3,
-            gridLevelNode4});
+            gridLevelNode1,
+            gridLevelNode2});
             this.specificGrid.Location = new System.Drawing.Point(0, 0);
             this.specificGrid.MainView = this.specificGridView;
             this.specificGrid.Margin = new System.Windows.Forms.Padding(4);
@@ -2336,7 +2338,7 @@
             this.groupControl4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl4.Location = new System.Drawing.Point(0, 0);
             this.groupControl4.Name = "groupControl4";
-            this.groupControl4.Size = new System.Drawing.Size(713, 41);
+            this.groupControl4.Size = new System.Drawing.Size(713, 126);
             this.groupControl4.TabIndex = 0;
             this.groupControl4.Text = "Разом по заказу";
             // 
@@ -2362,8 +2364,9 @@
             this.category,
             this.category1,
             this.category2,
-            this.category3});
-            this.paymentsVGrid.Size = new System.Drawing.Size(709, 19);
+            this.category3,
+            this.category4});
+            this.paymentsVGrid.Size = new System.Drawing.Size(709, 104);
             this.paymentsVGrid.TabIndex = 4;
             // 
             // imageCollection
@@ -2702,6 +2705,22 @@
             this.imageCollection1.InsertGalleryImage("delete_32x32.png", "grayscaleimages/edit/delete_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("grayscaleimages/edit/delete_32x32.png"), 1);
             this.imageCollection1.Images.SetKeyName(1, "delete_32x32.png");
             // 
+            // category4
+            // 
+            this.category4.ChildRows.AddRange(new DevExpress.XtraVerticalGrid.Rows.BaseRow[] {
+            this.row8});
+            this.category4.Name = "category4";
+            this.category4.Properties.Caption = "Витрати на послуги";
+            this.category4.Properties.Padding = new System.Windows.Forms.Padding(0);
+            // 
+            // row8
+            // 
+            this.row8.Name = "row8";
+            this.row8.Properties.Caption = "Гривня (з ПДВ)";
+            this.row8.Properties.Format.FormatString = "### ### ##0.00";
+            this.row8.Properties.Format.FormatType = DevExpress.Utils.FormatType.Custom;
+            this.row8.Properties.Padding = new System.Windows.Forms.Padding(0);
+            // 
             // CustomerOrdersFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2973,5 +2992,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit4;
+        private DevExpress.XtraVerticalGrid.Rows.CategoryRow category4;
+        private DevExpress.XtraVerticalGrid.Rows.EditorRow row8;
     }
 }
