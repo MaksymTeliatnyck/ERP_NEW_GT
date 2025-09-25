@@ -355,7 +355,6 @@ namespace ERP_NEW.BLL.Services
                               CustomerOrderNumber = c.OrderNumber,
                                ContractorName = con.Name,
                                 OrderDate = ord.ORDER_DATE,
-                                 TotalPrice = ord.TOTAL_WITH_VAT,
                               CustomerOrderId = c.Id,
                               OrderId = ord.ID,
                               Note = co.Note,

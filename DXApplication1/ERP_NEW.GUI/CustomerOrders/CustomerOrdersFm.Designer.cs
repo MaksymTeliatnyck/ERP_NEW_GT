@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerOrdersFm));
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
@@ -174,7 +173,7 @@
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.specificGrid = new DevExpress.XtraGrid.GridControl();
-            this.specificContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.specificContextMenu = new System.Windows.Forms.ContextMenuStrip();
             this.showSpecificMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.specificGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -184,7 +183,7 @@
             this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.groupControl4 = new DevExpress.XtraEditors.GroupControl();
             this.paymentsVGrid = new DevExpress.XtraVerticalGrid.VGridControl();
-            this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
+            this.imageCollection = new DevExpress.Utils.ImageCollection();
             this.category = new DevExpress.XtraVerticalGrid.Rows.CategoryRow();
             this.row1 = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.row2 = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
@@ -197,7 +196,9 @@
             this.category3 = new DevExpress.XtraVerticalGrid.Rows.CategoryRow();
             this.row = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.row7 = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
-            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+            this.category4 = new DevExpress.XtraVerticalGrid.Rows.CategoryRow();
+            this.row8 = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
+            this.barManager1 = new DevExpress.XtraBars.BarManager();
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.addAssBtn = new DevExpress.XtraBars.BarButtonItem();
             this.editAssBtn = new DevExpress.XtraBars.BarButtonItem();
@@ -212,9 +213,8 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
-            this.category4 = new DevExpress.XtraVerticalGrid.Rows.CategoryRow();
-            this.row8 = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
+            this.imageCollection1 = new DevExpress.Utils.ImageCollection();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -1608,7 +1608,8 @@
             // 
             this.customerOrderServiceGridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn5,
-            this.gridColumn7});
+            this.gridColumn7,
+            this.gridColumn1});
             this.customerOrderServiceGridView.GridControl = this.customerOrderServiceGrid;
             this.customerOrderServiceGridView.Name = "customerOrderServiceGridView";
             this.customerOrderServiceGridView.OptionsView.ShowGroupPanel = false;
@@ -2198,7 +2199,7 @@
             this.xtraTabPage4.Appearance.HeaderActive.Options.UseFont = true;
             this.xtraTabPage4.Controls.Add(this.specificGrid);
             this.xtraTabPage4.Name = "xtraTabPage4";
-            this.xtraTabPage4.Size = new System.Drawing.Size(707, 233);
+            this.xtraTabPage4.Size = new System.Drawing.Size(707, 148);
             this.xtraTabPage4.Text = "Матеріальні специфікації";
             // 
             // specificGrid
@@ -2217,7 +2218,7 @@
             this.specificGrid.Name = "specificGrid";
             this.specificGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.specNameRepository});
-            this.specificGrid.Size = new System.Drawing.Size(707, 233);
+            this.specificGrid.Size = new System.Drawing.Size(707, 148);
             this.specificGrid.TabIndex = 3;
             this.specificGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.specificGridView});
@@ -2538,6 +2539,22 @@
             this.row7.Properties.Format.FormatType = DevExpress.Utils.FormatType.Custom;
             this.row7.Properties.Padding = new System.Windows.Forms.Padding(0);
             // 
+            // category4
+            // 
+            this.category4.ChildRows.AddRange(new DevExpress.XtraVerticalGrid.Rows.BaseRow[] {
+            this.row8});
+            this.category4.Name = "category4";
+            this.category4.Properties.Caption = "Витрати на послуги";
+            this.category4.Properties.Padding = new System.Windows.Forms.Padding(0);
+            // 
+            // row8
+            // 
+            this.row8.Name = "row8";
+            this.row8.Properties.Caption = "Гривня (з ПДВ)";
+            this.row8.Properties.Format.FormatString = "### ### ##0.00";
+            this.row8.Properties.Format.FormatType = DevExpress.Utils.FormatType.Custom;
+            this.row8.Properties.Padding = new System.Windows.Forms.Padding(0);
+            // 
             // barManager1
             // 
             this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
@@ -2705,21 +2722,13 @@
             this.imageCollection1.InsertGalleryImage("delete_32x32.png", "grayscaleimages/edit/delete_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("grayscaleimages/edit/delete_32x32.png"), 1);
             this.imageCollection1.Images.SetKeyName(1, "delete_32x32.png");
             // 
-            // category4
+            // gridColumn1
             // 
-            this.category4.ChildRows.AddRange(new DevExpress.XtraVerticalGrid.Rows.BaseRow[] {
-            this.row8});
-            this.category4.Name = "category4";
-            this.category4.Properties.Caption = "Витрати на послуги";
-            this.category4.Properties.Padding = new System.Windows.Forms.Padding(0);
-            // 
-            // row8
-            // 
-            this.row8.Name = "row8";
-            this.row8.Properties.Caption = "Гривня (з ПДВ)";
-            this.row8.Properties.Format.FormatString = "### ### ##0.00";
-            this.row8.Properties.Format.FormatType = DevExpress.Utils.FormatType.Custom;
-            this.row8.Properties.Padding = new System.Windows.Forms.Padding(0);
+            this.gridColumn1.Caption = "gridColumn1";
+            this.gridColumn1.FieldName = "TotalPrice";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 2;
             // 
             // CustomerOrdersFm
             // 
@@ -2994,5 +3003,6 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit4;
         private DevExpress.XtraVerticalGrid.Rows.CategoryRow category4;
         private DevExpress.XtraVerticalGrid.Rows.EditorRow row8;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
     }
 }
