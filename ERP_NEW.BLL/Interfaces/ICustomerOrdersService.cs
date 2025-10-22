@@ -24,6 +24,7 @@ namespace ERP_NEW.BLL.Interfaces
         IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceFull();
         IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceByOrderId(int orderId);
         IEnumerable<CustomerOrderServiceDTO> GetCustomerServiceByCustomerOrderId(int customerOrderId);
+        IEnumerable<CustomerOrderServiceProcDTO> GetCustomerServiceByCustomerOrderIdProc(int customerOrderId);
 
 
 

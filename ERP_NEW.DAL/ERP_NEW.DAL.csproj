@@ -313,6 +313,7 @@
     <Compile Include="Entities\QueryModels\CashBookRecordJournal.cs" />
     <Compile Include="Entities\QueryModels\CashPaymentsInfo.cs" />
     <Compile Include="Entities\QueryModels\CashPrepaymentsInfo.cs" />
+    <Compile Include="Entities\QueryModels\CustomerOrderServiceProc.cs" />
     <Compile Include="Entities\QueryModels\OrderReceipFromQuery.cs" />
     <Compile Include="Entities\QueryModels\ContractPayments.cs" />
     <Compile Include="Entities\QueryModels\CustomerOrderForWelding.cs" />

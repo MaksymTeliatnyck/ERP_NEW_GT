@@ -160,7 +160,8 @@ namespace ERP_NEW.GUI.CustomerOrders
         private void LoadCustomerOrderService(int customerOrderId)
         {
             customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
-            customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderId(customerOrderId).ToList();
+            //customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderId(customerOrderId).ToList();
+            customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderIdProc(customerOrderId).ToList();
             customerOrderServiceGrid.DataSource = customerOrderServiceBS;
         }
 

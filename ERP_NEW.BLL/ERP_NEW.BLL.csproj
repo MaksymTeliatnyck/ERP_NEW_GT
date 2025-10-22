@@ -329,6 +329,7 @@
     <Compile Include="DTO\ModelsDTO\AgreementTypeDocumentsDTO.cs" />
     <Compile Include="DTO\SelectedDTO\AgreementOrderJournalDTO.cs" />
     <Compile Include="DTO\SelectedDTO\CustomerOrderForWeldingDTO.cs" />
+    <Compile Include="DTO\SelectedDTO\CustomerOrderServiceProcDTO.cs" />
     <Compile Include="DTO\SelectedDTO\DeliveryStoreRemainsReceiptDTO.cs" />
     <Compile Include="DTO\SelectedDTO\ExpenditureForProjectReportByContractorDTO.cs" />
     <Compile Include="DTO\SelectedDTO\ExpenditureForProjectReportDTO.cs" />
