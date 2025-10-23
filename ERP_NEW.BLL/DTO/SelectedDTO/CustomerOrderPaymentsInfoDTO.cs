@@ -16,5 +16,6 @@ namespace ERP_NEW.BLL.DTO.SelectedDTO
         public decimal PrepaymentPriceCurrency { get; set; }
         public decimal ExpenditureMaterialPrice { get; set; }
         public decimal ExpenditureMaterialPricePercent { get; set; }
+        public decimal CustomerOrderServicePrice { get; set; }
     }
 }
