@@ -101,6 +101,7 @@ namespace ERP_NEW.DAL.EF
         public DbSet<CustomerOrderSpecifications> CustomerOrderSpecifications { get; set; }
         public DbSet<CustomerOrderAssemblies> CustomerOrderAssemblies { get; set; }
         public DbSet<CustomerOrderService> CustomerOrderService { get; set; }
+        public DbSet<CustomerOrderServiceProc> CustomerOrderServiceProc { get; set; }
         public DbSet<Currency> Currency { get; set; }
         public DbSet<Currency_Rates> Currency_Rates { get; set; }
         public DbSet<ControlChecks> ControlChecks { get; set; }
@@ -360,14 +361,14 @@ namespace ERP_NEW.DAL.EF
 
             csb = new FbConnectionStringBuilder()
             {
-                //DataSource = "localhost",
+                DataSource = "localhost",
                 //Database = "TVM_DB",
                 //UserID = "sysdba",
                 //Password = "masterkey",
                 //Charset = "UTF8",
                 //Pooling = true,
                 //ConnectionLifeTime = 900,
-                DataSource = "10.0.0.50",
+                //DataSource = "10.0.0.50",
                 Database = "TVM_DB",
                 UserID = "sysdba",
                 Password = "masterkey",

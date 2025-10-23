@@ -35,6 +35,7 @@ namespace ERP_NEW.BLL.Services
         private IRepository<CustomerOrderPrepayments> customerOrderPrepayments;
         private IRepository<CustomerOrderPayments> customerOrderPayments;
         private IRepository<CustomerOrderService> customerOrderService;
+        private IRepository<CustomerOrderServiceProc> customerOrderServiceProc;
         private IRepository<Bank_Payments> bankPayments;
         private IRepository<ReceiptDetails> receiptDetails;
         private IRepository<RECEIPTS> receipt;
@@ -55,6 +56,7 @@ namespace ERP_NEW.BLL.Services
             customerOrderSpecifications = Database.GetRepository<CustomerOrderSpecifications>();
             customerOrderAssemblies = Database.GetRepository<CustomerOrderAssemblies>();
             customerOrderService = Database.GetRepository<CustomerOrderService>();
+            customerOrderServiceProc = Database.GetRepository<CustomerOrderServiceProc>();
             contractors = Database.GetRepository<Contractors>();
             currency = Database.GetRepository<Currency>();
             mtsAssemblies = Database.GetRepository<MtsAssemblies>();
@@ -82,6 +84,7 @@ namespace ERP_NEW.BLL.Services
                   cfg.CreateMap<CustomerOrderAssemblies, CustomerOrderAssembliesDTO>();
                   cfg.CreateMap<CustomerOrderAssembliesDTO, CustomerOrderAssemblies>();
                   cfg.CreateMap<CustomerOrderService, CustomerOrderServiceDTO>();
+                  cfg.CreateMap<CustomerOrderServiceProc, CustomerOrderServiceProcDTO>();
                   cfg.CreateMap<CustomerOrderServiceDTO, CustomerOrderService>();
                   cfg.CreateMap<CustomerOrderForWelding, CustomerOrderForWeldingDTO>();
                   cfg.CreateMap<ContractPayments, ContractPaymentsDTO>();
@@ -355,7 +358,6 @@ namespace ERP_NEW.BLL.Services
                               CustomerOrderNumber = c.OrderNumber,
                                ContractorName = con.Name,
                                 OrderDate = ord.ORDER_DATE,
-                                 TotalPrice = ord.TOTAL_WITH_VAT,
                               CustomerOrderId = c.Id,
                               OrderId = ord.ID,
                               Note = co.Note,
@@ -363,6 +365,19 @@ namespace ERP_NEW.BLL.Services
                               ReceiptNum = ord.RECEIPT_NUM
                           });
             return result.ToList();
+        }
+
+        public IEnumerable<CustomerOrderServiceProcDTO> GetCustomerServiceByCustomerOrderIdProc(int customerOrderId)
+        {
+
+            FbParameter[] Parameters =
+                {
+                    new FbParameter("customerOrderId", customerOrderId)
+                };
+
+            string procName = @"select * from ""GetCustomerOrderServiceProc""(@customerOrderId)";
+
+            return mapper.Map<IEnumerable<CustomerOrderServiceProc>, List<CustomerOrderServiceProcDTO>>(customerOrderServiceProc.SQLExecuteProc(procName, Parameters));
         }
 
         public CustomerOrdersDTO GetCustomerOrdersFullById(int customerOrderId)
