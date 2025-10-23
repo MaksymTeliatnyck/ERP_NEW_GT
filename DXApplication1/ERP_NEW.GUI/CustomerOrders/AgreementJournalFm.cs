@@ -304,6 +304,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 byte[] scan = ((AgreementDocumentsDTO)documentsBS.Current).Scan;
                 string path = Utils.HomePath + @"\Temp\";
                 System.IO.File.WriteAllBytes(path + ((AgreementDocumentsDTO)documentsBS.Current).NameDocument, scan);
+
                 System.Diagnostics.Process.Start(path + ((AgreementDocumentsDTO)documentsBS.Current).NameDocument);
             }
 
