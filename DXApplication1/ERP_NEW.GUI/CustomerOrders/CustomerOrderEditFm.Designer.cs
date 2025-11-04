@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerOrderEditFm));
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -65,7 +66,7 @@
             this.orderDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.orderNumberTBox = new DevExpress.XtraEditors.TextEdit();
-            this.orderValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider();
+            this.orderValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
             this.validateLbl = new DevExpress.XtraEditors.LabelControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.standaloneBarDockControl1 = new DevExpress.XtraBars.StandaloneBarDockControl();
@@ -77,7 +78,7 @@
             this.sumPriceCol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.singleCurrencyPriceCol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.sumCurrencyPriceCol = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.barMenu = new DevExpress.XtraBars.BarManager();
+            this.barMenu = new DevExpress.XtraBars.BarManager(this.components);
             this.specificationBar = new DevExpress.XtraBars.Bar();
             this.addSpecBtn = new DevExpress.XtraBars.BarButtonItem();
             this.editSpecBtn = new DevExpress.XtraBars.BarButtonItem();
@@ -89,7 +90,7 @@
             this.addAssBrn = new DevExpress.XtraBars.BarButtonItem();
             this.deleteAssBtn = new DevExpress.XtraBars.BarButtonItem();
             this.editAssBtn = new DevExpress.XtraBars.BarButtonItem();
-            this.projectBarManager = new DevExpress.XtraBars.BarManager();
+            this.projectBarManager = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl2 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl3 = new DevExpress.XtraBars.BarDockControl();
@@ -517,7 +518,7 @@
             this.orderNumberTBox.Name = "orderNumberTBox";
             this.orderNumberTBox.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.orderNumberTBox.Properties.Appearance.Options.UseFont = true;
-            this.orderNumberTBox.Properties.Mask.EditMask = "([1-9])(\\.([0-9][0-9]|[0-9][0-9][0-9]|[0-9][0-9][0-9][0-9])){2}\\.?([0-9])";
+            this.orderNumberTBox.Properties.Mask.EditMask = "[1-9](\\.[0-9]{2,4})(\\.[0-9]{2,4}(\\([А-Яа-яЁё]+\\))?)?";
             this.orderNumberTBox.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             this.orderNumberTBox.Properties.Mask.ShowPlaceHolders = false;
             this.orderNumberTBox.Size = new System.Drawing.Size(226, 20);
@@ -559,7 +560,7 @@
             // 
             this.standaloneBarDockControl1.CausesValidation = false;
             this.standaloneBarDockControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.standaloneBarDockControl1.Location = new System.Drawing.Point(2, 22);
+            this.standaloneBarDockControl1.Location = new System.Drawing.Point(2, 20);
             this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
             this.standaloneBarDockControl1.Size = new System.Drawing.Size(941, 26);
             this.standaloneBarDockControl1.Text = "standaloneBarDockControl1";

@@ -16,7 +16,7 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
 
         public string OrderNumber { get; set; }
         public string SpecificationName { get; set; }
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         public string Drawing { get; set; }
         public int? Assembly { get; set; }
         public string ContractorName { get; set; }
