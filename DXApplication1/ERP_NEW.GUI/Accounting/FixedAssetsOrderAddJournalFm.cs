@@ -89,8 +89,8 @@ namespace ERP_NEW.GUI.Accounting
 
             fixedAssetsOrderService = Program.kernel.Get<IFixedAssetsOrderService>();
             fixedAssetsOrderRegJournalBS.DataSource = fixedAssetsOrderService.GetFixedAssetsOrderRegistration((DateTime)beginDate, (DateTime)endDate)
-                .FirstOrDefault(a => a.InventoryNumber == InvNumber && a.StatusTypeOrder == rezRadioBtn);
-            if (fixedAssetsOrderRegJournalBS.Count == 0)
+                .FirstOrDefault(a => a.InventoryNumber == InvNumber && a.StatusTypeOrder == rezRadioBtn && a.NumberOrder == numberOrderEdit.Text);
+             if (fixedAssetsOrderRegJournalBS.Count == 0)
             {
                 if (numberOrderEdit.Text.Length != 0)
                 {
