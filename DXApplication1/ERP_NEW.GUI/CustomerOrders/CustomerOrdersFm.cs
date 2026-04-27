@@ -369,6 +369,8 @@ namespace ERP_NEW.GUI.CustomerOrders
             paymentsInfo.PrepaymentPrice = ((List<CustomerOrderPrepaymentsDTO>)customerOrderPrepaymentsBS.DataSource).Sum(s => s.Prepayment) ?? 0.00m;
             paymentsInfo.PrepaymentPriceCurrency = ((List<CustomerOrderPrepaymentsDTO>)customerOrderPrepaymentsBS.DataSource).Sum(s => s.PrepaymentCurrency) ?? 0.00m;
             paymentsInfo.ExpenditureMaterialPrice = ((List<ExpenditureInfoDTO>)expenditureMaterialBS.DataSource).Sum(s => s.ExpPrice) ?? 0.00m;
+            paymentsInfo.CustomerOrderServicePrice = ((List<CustomerOrderServiceProcDTO>)customerOrderServiceBS.DataSource).Sum(s => s.TotalPrice) ?? 0.00m;
+
             if (((CustomerOrdersDTO)customerOrdersBS.Current).CurrencyId > 1)
             {
                 if (paymentsInfo.ExpenditureMaterialPrice != 0 && ((CustomerOrdersDTO)customerOrdersBS.Current).CurrencyPrice != 0)
@@ -479,6 +481,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 LoadCustomerOrderPrepaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderMaterialExpenditure(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderMtsSpecification(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
+                LoadCustomerOrderService(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCurrencyInformation();
 
 

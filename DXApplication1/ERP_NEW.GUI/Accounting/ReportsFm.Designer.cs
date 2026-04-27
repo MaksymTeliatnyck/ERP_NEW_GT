@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportsFm));
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -55,7 +54,7 @@
             this.repositoryItemGridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.supplierItem = new DevExpress.XtraBars.BarListItem();
             this.inventoryFixedAssetsBtn = new DevExpress.XtraEditors.DropDownButton();
-            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.leftUpSplitContainerControl = new DevExpress.XtraEditors.SplitContainerControl();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
@@ -433,7 +432,7 @@
             this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl1.ShowPageHeadersInFormCaption = DevExpress.Utils.DefaultBoolean.True;
             this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl1.Size = new System.Drawing.Size(1879, 95);
+            this.ribbonControl1.Size = new System.Drawing.Size(1879, 96);
             this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // barButtonItem3
@@ -496,14 +495,14 @@
             this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerControl1.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.None;
             this.splitContainerControl1.Horizontal = false;
-            this.splitContainerControl1.Location = new System.Drawing.Point(0, 95);
+            this.splitContainerControl1.Location = new System.Drawing.Point(0, 96);
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
             this.splitContainerControl1.Panel1.Controls.Add(this.leftUpSplitContainerControl);
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.leftDownSplitContainerControl);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1879, 734);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1879, 733);
             this.splitContainerControl1.SplitterPosition = 377;
             this.splitContainerControl1.TabIndex = 15;
             this.splitContainerControl1.Text = "splitContainerControl1";
@@ -1418,7 +1417,7 @@
             this.leftDownSplitContainerControl.Panel1.Text = "Panel1";
             this.leftDownSplitContainerControl.Panel2.Controls.Add(this.rightDownSplitContainerControl);
             this.leftDownSplitContainerControl.Panel2.Text = "Panel2";
-            this.leftDownSplitContainerControl.Size = new System.Drawing.Size(1879, 353);
+            this.leftDownSplitContainerControl.Size = new System.Drawing.Size(1879, 352);
             this.leftDownSplitContainerControl.SplitterPosition = 634;
             this.leftDownSplitContainerControl.TabIndex = 0;
             this.leftDownSplitContainerControl.Text = "splitContainerControl";
@@ -1434,7 +1433,7 @@
             this.groupControl4.Location = new System.Drawing.Point(0, 0);
             this.groupControl4.LookAndFeel.UseDefaultLookAndFeel = false;
             this.groupControl4.Name = "groupControl4";
-            this.groupControl4.Size = new System.Drawing.Size(634, 353);
+            this.groupControl4.Size = new System.Drawing.Size(634, 352);
             this.groupControl4.TabIndex = 0;
             this.groupControl4.Text = "Основні засоби";
             // 
@@ -1450,7 +1449,7 @@
             this.panelControl5.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
             this.panelControl5.LookAndFeel.UseDefaultLookAndFeel = false;
             this.panelControl5.Name = "panelControl5";
-            this.panelControl5.Size = new System.Drawing.Size(630, 327);
+            this.panelControl5.Size = new System.Drawing.Size(630, 326);
             this.panelControl5.TabIndex = 2;
             // 
             // splitContainer3
@@ -1479,7 +1478,7 @@
             this.splitContainer3.Panel2.Controls.Add(this.inputFixedForGroupBtn);
             this.splitContainer3.Panel2.Controls.Add(this.fixedAssetsOrderJournalSecondBtn);
             this.splitContainer3.Panel2.Padding = new System.Windows.Forms.Padding(5);
-            this.splitContainer3.Size = new System.Drawing.Size(624, 321);
+            this.splitContainer3.Size = new System.Drawing.Size(624, 320);
             this.splitContainer3.SplitterDistance = 317;
             this.splitContainer3.TabIndex = 2;
             // 
@@ -1669,7 +1668,7 @@
             this.rightDownSplitContainerControl.Panel1.Text = "Panel1";
             this.rightDownSplitContainerControl.Panel2.Controls.Add(this.groupControl6);
             this.rightDownSplitContainerControl.Panel2.Text = "Panel2";
-            this.rightDownSplitContainerControl.Size = new System.Drawing.Size(1241, 353);
+            this.rightDownSplitContainerControl.Size = new System.Drawing.Size(1241, 352);
             this.rightDownSplitContainerControl.SplitterPosition = 625;
             this.rightDownSplitContainerControl.TabIndex = 0;
             this.rightDownSplitContainerControl.Text = "splitContainerControl5";
@@ -1687,7 +1686,7 @@
             this.groupControl5.Location = new System.Drawing.Point(0, 0);
             this.groupControl5.LookAndFeel.UseDefaultLookAndFeel = false;
             this.groupControl5.Name = "groupControl5";
-            this.groupControl5.Size = new System.Drawing.Size(625, 353);
+            this.groupControl5.Size = new System.Drawing.Size(625, 352);
             this.groupControl5.TabIndex = 0;
             this.groupControl5.Text = "Покупці та замовники";
             // 
@@ -1710,7 +1709,7 @@
             this.xtraTabControl2.Name = "xtraTabControl2";
             this.xtraTabControl2.SelectedTabPage = this.xtraTabPage4;
             this.xtraTabControl2.ShowTabHeader = DevExpress.Utils.DefaultBoolean.True;
-            this.xtraTabControl2.Size = new System.Drawing.Size(621, 327);
+            this.xtraTabControl2.Size = new System.Drawing.Size(621, 326);
             this.xtraTabControl2.TabIndex = 2;
             this.xtraTabControl2.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage4,
@@ -1721,7 +1720,7 @@
             this.xtraTabPage4.Controls.Add(this.panelControl3);
             this.xtraTabPage4.Name = "xtraTabPage4";
             this.xtraTabPage4.Padding = new System.Windows.Forms.Padding(5);
-            this.xtraTabPage4.Size = new System.Drawing.Size(615, 299);
+            this.xtraTabPage4.Size = new System.Drawing.Size(615, 298);
             this.xtraTabPage4.Text = "Покупці та замовники";
             // 
             // panelControl3
@@ -1740,7 +1739,7 @@
             this.panelControl3.LookAndFeel.UseDefaultLookAndFeel = false;
             this.panelControl3.Name = "panelControl3";
             this.panelControl3.Padding = new System.Windows.Forms.Padding(5);
-            this.panelControl3.Size = new System.Drawing.Size(605, 289);
+            this.panelControl3.Size = new System.Drawing.Size(605, 288);
             this.panelControl3.TabIndex = 1;
             // 
             // calcWithBuyersByAccountReportBtn
@@ -1918,7 +1917,7 @@
             this.groupControl6.Location = new System.Drawing.Point(0, 0);
             this.groupControl6.LookAndFeel.UseDefaultLookAndFeel = false;
             this.groupControl6.Name = "groupControl6";
-            this.groupControl6.Size = new System.Drawing.Size(612, 353);
+            this.groupControl6.Size = new System.Drawing.Size(612, 352);
             this.groupControl6.TabIndex = 1;
             this.groupControl6.Text = "Відрядження";
             // 
@@ -1934,7 +1933,7 @@
             this.panelControl4.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
             this.panelControl4.LookAndFeel.UseDefaultLookAndFeel = false;
             this.panelControl4.Name = "panelControl4";
-            this.panelControl4.Size = new System.Drawing.Size(608, 327);
+            this.panelControl4.Size = new System.Drawing.Size(608, 326);
             this.panelControl4.TabIndex = 1;
             // 
             // splitContainer2
@@ -1959,7 +1958,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.bstReportPaymentsBy23);
             this.splitContainer2.Panel2.Controls.Add(this.bstEmployeesReportBtn);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(5);
-            this.splitContainer2.Size = new System.Drawing.Size(602, 321);
+            this.splitContainer2.Size = new System.Drawing.Size(602, 320);
             this.splitContainer2.SplitterDistance = 306;
             this.splitContainer2.TabIndex = 1;
             // 
