@@ -125,6 +125,7 @@
             this.fixedAssetsOrderByGroupShortBtn = new System.Windows.Forms.Button();
             this.fixedAssetsOrderByGroupAmortizationBtn = new System.Windows.Forms.Button();
             this.fixedAssetsOrderByGroupBtn = new System.Windows.Forms.Button();
+            this.servicesByNomenclatureBtn = new System.Windows.Forms.Button();
             this.inventoryFixedAssetsForGroupsBtn = new System.Windows.Forms.Button();
             this.invoicesForFixedAssetsBtn = new System.Windows.Forms.Button();
             this.inputFixedForQuarterBtn = new System.Windows.Forms.Button();
@@ -1471,6 +1472,7 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.servicesByNomenclatureBtn);
             this.splitContainer3.Panel2.Controls.Add(this.inventoryFixedAssetsForGroupsBtn);
             this.splitContainer3.Panel2.Controls.Add(this.invoicesForFixedAssetsBtn);
             this.splitContainer3.Panel2.Controls.Add(this.inputFixedForQuarterBtn);
@@ -1566,6 +1568,21 @@
             this.fixedAssetsOrderByGroupBtn.Text = "Відомість основних засобів по групам";
             this.fixedAssetsOrderByGroupBtn.UseVisualStyleBackColor = false;
             this.fixedAssetsOrderByGroupBtn.Click += new System.EventHandler(this.fixedAssetsOrderByGroupBtn_Click);
+            // 
+            // servicesByNomenclatureBtn
+            // 
+            this.servicesByNomenclatureBtn.AutoSize = true;
+            this.servicesByNomenclatureBtn.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.servicesByNomenclatureBtn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.servicesByNomenclatureBtn.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.servicesByNomenclatureBtn.ForeColor = System.Drawing.Color.Black;
+            this.servicesByNomenclatureBtn.Location = new System.Drawing.Point(5, 215);
+            this.servicesByNomenclatureBtn.Name = "servicesByNomenclatureBtn";
+            this.servicesByNomenclatureBtn.Size = new System.Drawing.Size(293, 42);
+            this.servicesByNomenclatureBtn.TabIndex = 6;
+            this.servicesByNomenclatureBtn.Text = "Відомість по групам послуг";
+            this.servicesByNomenclatureBtn.UseVisualStyleBackColor = false;
+            this.servicesByNomenclatureBtn.Click += new System.EventHandler(this.servicesByNomenclatureBtn_Click);
             // 
             // inventoryFixedAssetsForGroupsBtn
             // 
@@ -2317,5 +2334,6 @@
         private System.Windows.Forms.Button cashbookTrialBalanceBtn;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private System.Windows.Forms.Button expenditureByContractorsReportBtn;
+        private System.Windows.Forms.Button servicesByNomenclatureBtn;
     }
 }

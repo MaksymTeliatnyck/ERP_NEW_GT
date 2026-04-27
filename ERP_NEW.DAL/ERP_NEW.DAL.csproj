@@ -154,6 +154,7 @@
     <Compile Include="Entities\Models\ExpendituresStoreHouses.cs" />
     <Compile Include="Entities\Models\ExpenditureStoreHouse.cs" />
     <Compile Include="Entities\Models\Expenditures_Accountant.cs" />
+    <Compile Include="Entities\Models\FixedAssetsCapital.cs" />
     <Compile Include="Entities\Models\FixedAssetsMaterials.cs" />
     <Compile Include="Entities\Models\FixedAssetsNoAmort.cs" />
     <Compile Include="Entities\Models\FixedAssetsOrderRegistration.cs" />

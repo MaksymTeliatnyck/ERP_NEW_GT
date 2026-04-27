@@ -89,6 +89,7 @@ namespace ERP_NEW.BLL.Services
         private IRepository<ExpenditureForProjectReport> expenditureForProjectReport;
         private IRepository<ExpenditureForProjectReportByContractor> expenditureForProjectReportByContractor;
         private IRepository<ORDERS> orders;
+        private IRepository<OrderReceipFromQuery> orderReceipFromQuery;
         private IRepository<OrdersInfo> ordersInfo;
         private IRepository<AccountOrders> accountOrders;
         private IRepository<VAT> vat;
@@ -152,6 +153,7 @@ namespace ERP_NEW.BLL.Services
             storeHouseInventory = Database.GetRepository<StoreHouseInventory>();
             trialBalanceByAccountsReport = Database.GetRepository<TrialBalanceByAccountsReport>();
             orders = Database.GetRepository<ORDERS>();
+            orderReceipFromQuery = Database.GetRepository<OrderReceipFromQuery>();
             ordersInfo = Database.GetRepository<OrdersInfo>();
             vat = Database.GetRepository<VAT>();
             accountOrders = Database.GetRepository<AccountOrders>();
@@ -198,6 +200,7 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<ContractorVat, ContractorVatDTO>();
                 cfg.CreateMap<ContractorVatDTO, ContractorVat>();
                 cfg.CreateMap<ORDERS, OrdersDTO>();
+                cfg.CreateMap<OrderReceipFromQuery, OrderReceipFromQueryDTO>();
                 cfg.CreateMap<ExpenditureForProjectReport, ExpenditureForProjectReportDTO>();
                 cfg.CreateMap<ExpenditureForProjectReportByContractor, ExpenditureForProjectReportByContractorDTO>();
                 cfg.CreateMap<MsTrialBalanceCurrency, MsTrialBalanceCurrencyDTO>();
@@ -7103,7 +7106,180 @@ namespace ERP_NEW.BLL.Services
         }
 
         #endregion
-        
+
+
+        #region OrdersServices report's
+
+        public bool GetOrderReceipFromQueryProc(DateTime beginDate, DateTime endDate, short? flag1, short? flag2, short? flag3, short? flag4)
+        {
+            FbParameter[] Parameters =
+            {
+                new FbParameter("StartDate", beginDate),
+                new FbParameter("EndDate", endDate),
+                new FbParameter("FLAG1", flag1),
+                new FbParameter("FLAG2", flag2),
+                new FbParameter("FLAG3", flag3),
+                new FbParameter("FLAG4", flag4)
+            };
+            string procName = @"select * from ""AccountingOrderReceiptProc""(@StartDate,@EndDate,@FLAG1, @FLAG2, @FLAG3, @FLAG4)";
+
+            
+
+            List<OrderReceipFromQueryDTO> dataSource = mapper.Map<IEnumerable<OrderReceipFromQuery>, List<OrderReceipFromQueryDTO>>(orderReceipFromQuery.SQLExecuteProc(procName, Parameters).ToList());
+            return true;
+        }
+
+        public bool PrintServicesOrderReceipt(List<OrderReceipFromQueryDTO> source, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            var Workbook = Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
+            var Worksheet = Workbook.Worksheets[0];
+            var Cells = Worksheet.Cells;
+
+            int captionPosition = 10;
+            int startWith1 = captionPosition + 1;
+            int fontSize = 12;
+            int startWith = captionPosition + 1;
+
+
+
+            List<string> nomanclatureList = source.Select(bdsm => bdsm.Nomenclature).Distinct().ToList();
+
+            //foreach (var item in nomanclatureList)
+            //{
+                //var customerOrders = source.Where(srt => srt.CustomerOrderId == item.Value).ToList();
+                //List <OrderReceipFromQueryDTO> currentNomenclatureList = source.Where(srt => srt.Nomenclature == item.ToString()).ToList();
+                int a = 0;
+
+
+                //
+                startWith++;
+                Cells["A" + startWith + ":" + "F" + startWith].Merge();
+                Cells["A" + startWith + ":" + "F" + startWith].Value = "Відомість по групам послуг за період з " + startDate.ToShortDateString() + " по " + endDate.ToShortDateString();
+                Cells["A" + startWith + ":" + "F" + startWith].Font.Size = 16;
+                Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                //
+           
+                //
+                //startWith++;
+                //Cells["A" + startWith + ":" + "G" + startWith].Merge();
+                //Cells["A" + startWith + ":" + "G" + startWith].Value = "за замовленням " + source.First(srt => srt.CustomerOrderId == item.Value).CustomerOrderNumber + " за період " + startDate.ToShortDateString() + " по " + endDate.ToShortDateString();
+                //Cells["A" + startWith].Font.Size = 14;
+                //Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                //startWith++;
+                //Cells["A" + startWith + ":" + "G" + startWith].Merge();
+                //Cells["A" + startWith + ":" + "G" + startWith].Value = "за замовленням " + source.First(srt => srt.CustomerOrderNumber == item).CustomerOrderNumber + " за період " + startDate.ToShortDateString() + " по " + endDate.ToShortDateString();
+                //Cells["A" + startWith].Font.Size = 14;
+                //Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                //
+                //
+                startWith++;
+                Cells["A" + startWith].Value = "Код";
+                Cells["A" + startWith].HorizontalAlignment = HAlign.Center;
+                Cells["A" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["A" + startWith].ColumnWidth = 3.14;
+                Cells["A" + startWith].Font.Bold = true;
+                //
+                Cells["B" + startWith].Value = "Постачальник";
+                Cells["B" + startWith].HorizontalAlignment = HAlign.Center;
+                Cells["B" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["B" + startWith].ColumnWidth = 50;
+                Cells["B" + startWith].Font.Bold = true;
+                //
+                Cells["C" + startWith].Value = "Ном номер";
+                Cells["C" + startWith].HorizontalAlignment = HAlign.Center;
+                Cells["C" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["C" + startWith].ColumnWidth = 20;
+                Cells["C" + startWith].Font.Bold = true;
+                //
+                Cells["D" + startWith].Value = "Послуга";
+                Cells["D" + startWith].HorizontalAlignment = HAlign.Center;
+                Cells["D" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["D" + startWith].ColumnWidth = 40;
+                Cells["D" + startWith].Font.Bold = true;
+                //
+                Cells["E" + startWith].Value = "Рахунок";
+                Cells["E" + startWith].HorizontalAlignment = HAlign.Center;
+                Cells["E" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["E" + startWith].ColumnWidth = 15.43;
+                Cells["E" + startWith].Font.Bold = true;
+                ////
+                Cells["F" + startWith].Value = "Сума (грн)";
+                Cells["F" + startWith].HorizontalAlignment = HAlign.Center;
+                Cells["F" + startWith].Borders.LineStyle = LineStyle.Continous;
+                Cells["F" + startWith].ColumnWidth = 15.86;
+                Cells["F" + startWith].Font.Bold = true;
+
+                
+
+                foreach (var item in nomanclatureList)
+                {
+                    OrderReceipFromQueryDTO bufer = source.FirstOrDefault(srch => srch.Nomenclature == item);
+
+
+
+                    a++;
+                    startWith++;
+                    Cells["A" + startWith].Value = bufer.Srn;
+                    Cells["A" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["A" + startWith].Font.Size = fontSize;
+
+                    Cells["B" + startWith].Value = bufer.ContractorName;
+                    Cells["B" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["B" + startWith].Font.Size = fontSize;
+
+                    Cells["C" + startWith].Value = bufer.Nomenclature;
+                    Cells["C" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["C" + startWith].Font.Size = fontSize;
+
+                    Cells["D" + startWith].Value = bufer.NomenclatureName;
+                    Cells["D" + startWith].HorizontalAlignment = HAlign.Center;
+                    Cells["D" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["D" + startWith].Font.Size = fontSize;
+
+                    Cells["E" + startWith].Value = bufer.BalansNum;
+                    
+                    Cells["E" + startWith].HorizontalAlignment = HAlign.Right;
+                    Cells["E" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["E" + startWith].Font.Size = fontSize;
+
+                    Cells["F" + startWith].Value = source.Where(smm => smm.Nomenclature == item).Sum(srch => srch.TotalPrice);
+                    Cells["F" + startWith].NumberFormat = "### ##0.0##";
+                    Cells["F" + startWith].HorizontalAlignment = HAlign.Right;
+                    Cells["F" + startWith].Borders.LineStyle = LineStyle.Continous;
+                    Cells["F" + startWith].Font.Size = fontSize;
+
+                }
+
+                startWith++;
+            //}
+
+            try
+            {
+                Workbook.SaveAs(GeneratedReportsDir + "Реєстр на списання за період з " + startDate.ToShortDateString() + " по " + endDate.ToShortDateString() + ".xls", FileFormat.Excel8);
+
+                Process process = new Process();
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "Реєстр на списання за період з " + startDate.ToShortDateString() + " по " + endDate.ToShortDateString() + ".xls" + "\"";
+                process.StartInfo.FileName = "Excel.exe";
+                process.Start();
+            }
+            catch (System.IO.IOException) { MessageBox.Show("Документ вже відкритий!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            catch (System.ComponentModel.Win32Exception) { MessageBox.Show("Не знайдено програму Microsoft Excel!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+
+            return true;
+        }
+
+
+        #endregion
+
         #region Production report's
 
         public bool ExpendituresForProject(List<ExpedinturesAccountantDTO> source, DateTime startDate, DateTime endDate)

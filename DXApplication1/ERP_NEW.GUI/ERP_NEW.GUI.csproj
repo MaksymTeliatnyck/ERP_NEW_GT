@@ -583,6 +583,12 @@
     <Compile Include="Accounting\ExpendituresJournalFm.Designer.cs">
       <DependentUpon>ExpendituresJournalFm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Accounting\FixedAssetsCapitalFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\FixedAssetsCapitalFm.Designer.cs">
+      <DependentUpon>FixedAssetsCapitalFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Accounting\FixedAssetsOrderAddJournalFm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1946,6 +1952,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\ExpendituresJournalFm.resx">
       <DependentUpon>ExpendituresJournalFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\FixedAssetsCapitalFm.resx">
+      <DependentUpon>FixedAssetsCapitalFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\FixedAssetsOrderAddJournalFm.resx">
       <DependentUpon>FixedAssetsOrderAddJournalFm.cs</DependentUpon>
