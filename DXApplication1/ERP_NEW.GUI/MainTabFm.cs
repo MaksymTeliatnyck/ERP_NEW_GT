@@ -787,6 +787,12 @@ namespace ERP_NEW.GUI
                     accountingTransferFm.MdiParent = this;
                     accountingTransferFm.Show();
                     break;
+                case "fixadAssetsCapitalItem":
+                    FixedAssetsCapitalFm fixedAssetsCapitalFm = new FixedAssetsCapitalFm(userTasksDTO);
+                    fixedAssetsCapitalFm.Text = "Необоротні активи";
+                    fixedAssetsCapitalFm.MdiParent = this;
+                    fixedAssetsCapitalFm.Show();
+                    break;
 
 
 

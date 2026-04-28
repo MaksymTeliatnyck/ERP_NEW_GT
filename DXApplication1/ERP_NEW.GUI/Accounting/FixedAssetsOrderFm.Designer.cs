@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FixedAssetsOrderFm));
             DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
@@ -139,13 +140,13 @@
             this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.repositoryItemDateEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.repositoryItemDateEdit3 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
-            this.amortisationMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.amortisationMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.додатиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dateMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.dateMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.видалитиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.decreeItemMenu = new DevExpress.XtraBars.PopupMenu();
+            this.decreeItemMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.imageCollection = new DevExpress.Utils.ImageCollection();
+            this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.fixedAssessOrderTab)).BeginInit();
             this.fixedAssessOrderTab.SuspendLayout();
             this.fixedAssestsTabPage.SuspendLayout();
@@ -208,7 +209,7 @@
             this.fixedAssestsTabPage.AlwaysScrollActiveControlIntoView = false;
             this.fixedAssestsTabPage.Controls.Add(this.splitContainerControl1);
             this.fixedAssestsTabPage.Name = "fixedAssestsTabPage";
-            this.fixedAssestsTabPage.Size = new System.Drawing.Size(1373, 656);
+            this.fixedAssestsTabPage.Size = new System.Drawing.Size(1372, 654);
             this.fixedAssestsTabPage.Tag = "0";
             this.fixedAssestsTabPage.Text = "Основні засоби";
             // 
@@ -222,7 +223,7 @@
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1373, 656);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1372, 654);
             this.splitContainerControl1.SplitterPosition = 98;
             this.splitContainerControl1.TabIndex = 0;
             this.splitContainerControl1.Text = "splitContainerControl1";
@@ -261,7 +262,7 @@
             this.repositoryItemCheckEdit1});
             this.ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2007;
             this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl1.Size = new System.Drawing.Size(1373, 95);
+            this.ribbonControl1.Size = new System.Drawing.Size(1372, 95);
             this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // yearEdit
@@ -527,7 +528,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.96124F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.03876F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1373, 552);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1372, 551);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panelControl1
@@ -542,7 +543,7 @@
             this.panelControl1.Controls.Add(this.pictureBox2);
             this.panelControl1.Controls.Add(this.pictureBox1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelControl1.Location = new System.Drawing.Point(3, 520);
+            this.panelControl1.Location = new System.Drawing.Point(3, 519);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(1367, 29);
             this.panelControl1.TabIndex = 2;
@@ -629,7 +630,7 @@
             this.fixedAssetsOrderGrid.Location = new System.Drawing.Point(3, 3);
             this.fixedAssetsOrderGrid.MainView = this.fixedAssetsOrderGridView;
             this.fixedAssetsOrderGrid.Name = "fixedAssetsOrderGrid";
-            this.fixedAssetsOrderGrid.Size = new System.Drawing.Size(1367, 356);
+            this.fixedAssetsOrderGrid.Size = new System.Drawing.Size(1367, 355);
             this.fixedAssetsOrderGrid.TabIndex = 0;
             this.fixedAssetsOrderGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.fixedAssetsOrderGridView});
@@ -971,7 +972,7 @@
             // fixedAssetsMaterialsGrid
             // 
             this.fixedAssetsMaterialsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fixedAssetsMaterialsGrid.Location = new System.Drawing.Point(3, 365);
+            this.fixedAssetsMaterialsGrid.Location = new System.Drawing.Point(3, 364);
             this.fixedAssetsMaterialsGrid.MainView = this.fixedAssetsMaterialsGridView;
             this.fixedAssetsMaterialsGrid.Name = "fixedAssetsMaterialsGrid";
             this.fixedAssetsMaterialsGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -1258,7 +1259,7 @@
             this.arhivTabPage.Controls.Add(this.fixedAssetsArchiveGrid);
             this.arhivTabPage.Controls.Add(this.ribbonControl2);
             this.arhivTabPage.Name = "arhivTabPage";
-            this.arhivTabPage.Size = new System.Drawing.Size(1373, 656);
+            this.arhivTabPage.Size = new System.Drawing.Size(1372, 654);
             this.arhivTabPage.Tag = "1";
             this.arhivTabPage.Text = "Архів";
             // 
@@ -1269,7 +1270,7 @@
             this.fixedAssetsArchiveGrid.MainView = this.fixedAssetsArchiveGridView;
             this.fixedAssetsArchiveGrid.MenuManager = this.ribbonControl1;
             this.fixedAssetsArchiveGrid.Name = "fixedAssetsArchiveGrid";
-            this.fixedAssetsArchiveGrid.Size = new System.Drawing.Size(1373, 561);
+            this.fixedAssetsArchiveGrid.Size = new System.Drawing.Size(1372, 559);
             this.fixedAssetsArchiveGrid.TabIndex = 1;
             this.fixedAssetsArchiveGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.fixedAssetsArchiveGridView});
@@ -1525,7 +1526,7 @@
             this.repositoryItemDateEdit4,
             this.repositoryItemDateEdit5});
             this.ribbonControl2.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl2.Size = new System.Drawing.Size(1373, 95);
+            this.ribbonControl2.Size = new System.Drawing.Size(1372, 95);
             this.ribbonControl2.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // showArchivBtn

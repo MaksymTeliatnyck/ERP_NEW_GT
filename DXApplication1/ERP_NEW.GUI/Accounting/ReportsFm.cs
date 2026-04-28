@@ -1318,7 +1318,7 @@ namespace ERP_NEW.GUI.Accounting
                 return;
             }
         
-    }
+        }
 
         private void ReportsFm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -1327,6 +1327,21 @@ namespace ERP_NEW.GUI.Accounting
             Properties.Settings.Default.ReportFmEndMonth = (int)endMonthEdit.EditValue;
             Properties.Settings.Default.ReportFmEndYear = (DateTime)endYearEdit.EditValue;
             Properties.Settings.Default.Save();
+        }
+
+        private void servicesByNomenclatureBtn_Click(object sender, EventArgs e)
+        {
+            splashScreenManager.ShowWaitForm();
+
+            storeHouseService = Program.kernel.Get<IStoreHouseService>();
+            reportService = Program.kernel.Get<IReportService>();
+            List<OrderReceipFromQueryDTO> servicesReceiptOrder = storeHouseService.GetOrderReceipFromQuery(_beginDate, _endDate, 1, 1, 0, 0).ToList();
+
+            servicesReceiptOrder = servicesReceiptOrder.Where(x => !string.IsNullOrEmpty(x.Nomenclature) && x.Nomenclature.StartsWith("9"))
+            .OrderBy(x => x.Nomenclature)
+            .ToList();
+            reportService.PrintServicesOrderReceipt(servicesReceiptOrder, _beginDate, _endDate);
+            splashScreenManager.CloseWaitForm();
         }
 
         private void chessBtn_Click(object sender, EventArgs e)
