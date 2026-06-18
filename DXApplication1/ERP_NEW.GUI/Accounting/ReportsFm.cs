@@ -501,7 +501,7 @@ namespace ERP_NEW.GUI.Accounting
 
                 reportService = Program.kernel.Get<IReportService>();
 
-                if (!reportService.GetContractorVat(_beginDate, _endDate))
+                if (!reportService.м(_beginDate, _endDate))
                     MessageBox.Show("За вибраний період немає даних.", "Формування звіту", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 splashScreenManager.CloseWaitForm();

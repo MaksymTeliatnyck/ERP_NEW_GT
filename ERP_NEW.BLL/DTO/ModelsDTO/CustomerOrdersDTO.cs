@@ -52,6 +52,8 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
 
         public bool Selected { get; set; }
         public string OrderNumberParse { get; set; }
+
+        public string SpecificationReport { get; set; }
         public int Enable { get; set; }
     }
 }

@@ -69,6 +69,7 @@
             this.repositoryItemCheckEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.customerOrdersGrid = new DevExpress.XtraGrid.GridControl();
             this.customerOrdersGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.specCustomCol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.orderNumberCol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.orderDateCol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.detailsCol = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -334,7 +335,7 @@
             this.expenditureByCustomerOrderRepBtn,
             this.exportToXlsBtn});
             this.ribbonControl1.Location = new System.Drawing.Point(2, -2);
-            this.ribbonControl1.MaxItemId = 7;
+            this.ribbonControl1.MaxItemId = 8;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -639,6 +640,7 @@
             this.customerOrdersGridView.Appearance.FooterPanel.Options.UseTextOptions = true;
             this.customerOrdersGridView.Appearance.FooterPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             this.customerOrdersGridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.specCustomCol,
             this.orderNumberCol,
             this.orderDateCol,
             this.detailsCol,
@@ -663,6 +665,14 @@
             this.customerOrdersGridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.customerOrdersGridView_FocusedRowChanged);
             this.customerOrdersGridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.customerOrdersGridView_CustomUnboundColumnData);
             this.customerOrdersGridView.DoubleClick += new System.EventHandler(this.customerOrdersGridView_DoubleClick);
+            // 
+            // specCustomCol
+            // 
+            this.specCustomCol.Caption = "Специфікація";
+            this.specCustomCol.FieldName = "SpecificationReport";
+            this.specCustomCol.Name = "specCustomCol";
+            this.specCustomCol.Visible = true;
+            this.specCustomCol.VisibleIndex = 9;
             // 
             // orderNumberCol
             // 
@@ -807,7 +817,7 @@
             this.dateCreateCol.OptionsColumn.AllowEdit = false;
             this.dateCreateCol.OptionsColumn.AllowFocus = false;
             this.dateCreateCol.Visible = true;
-            this.dateCreateCol.VisibleIndex = 9;
+            this.dateCreateCol.VisibleIndex = 10;
             this.dateCreateCol.Width = 80;
             // 
             // dateUpdateCol
@@ -822,7 +832,7 @@
             this.dateUpdateCol.OptionsColumn.AllowEdit = false;
             this.dateUpdateCol.OptionsColumn.AllowFocus = false;
             this.dateUpdateCol.Visible = true;
-            this.dateUpdateCol.VisibleIndex = 10;
+            this.dateUpdateCol.VisibleIndex = 11;
             this.dateUpdateCol.Width = 80;
             // 
             // userNameCol
@@ -837,7 +847,7 @@
             this.userNameCol.OptionsColumn.AllowEdit = false;
             this.userNameCol.OptionsColumn.AllowFocus = false;
             this.userNameCol.Visible = true;
-            this.userNameCol.VisibleIndex = 11;
+            this.userNameCol.VisibleIndex = 12;
             this.userNameCol.Width = 80;
             // 
             // dateShippingCol
@@ -852,7 +862,7 @@
             this.dateShippingCol.OptionsColumn.AllowEdit = false;
             this.dateShippingCol.OptionsColumn.AllowFocus = false;
             this.dateShippingCol.Visible = true;
-            this.dateShippingCol.VisibleIndex = 12;
+            this.dateShippingCol.VisibleIndex = 13;
             this.dateShippingCol.Width = 80;
             // 
             // enableColumn
@@ -876,7 +886,7 @@
             this.enableColumn.OptionsFilter.ShowBlanksFilterItems = DevExpress.Utils.DefaultBoolean.False;
             this.enableColumn.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.enableColumn.Visible = true;
-            this.enableColumn.VisibleIndex = 13;
+            this.enableColumn.VisibleIndex = 14;
             this.enableColumn.Width = 50;
             // 
             // enablePictureEdit
@@ -3019,5 +3029,6 @@
         private DevExpress.XtraVerticalGrid.Rows.CategoryRow category4;
         private DevExpress.XtraVerticalGrid.Rows.EditorRow row8;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn specCustomCol;
     }
 }
