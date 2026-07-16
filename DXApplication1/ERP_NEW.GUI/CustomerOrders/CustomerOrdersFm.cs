@@ -22,6 +22,7 @@ using System.Diagnostics;
 using ERP_NEW.BLL.Infrastructure;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.Export;
+using DevExpress.XtraGrid.Columns;
 
 namespace ERP_NEW.GUI.CustomerOrders
 {
@@ -81,6 +82,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 customerOrdersService.GetCustomerOrdersByPeriod(beginDate, endDate):
                 customerOrdersService.GetCustomerOrdersWithoutSign();
             customerOrdersGrid.DataSource = customerOrdersBS;
+            specCustomCol.Visible = false;
 
             if (customerOrdersBS.Count > 0)
             {
@@ -724,13 +726,14 @@ namespace ERP_NEW.GUI.CustomerOrders
 
         private void exportToXlsBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string exportFilePath = Utils.HomePath + @"\Temp\Закази за період з "+ ((DateTime)beginDateEditItem.EditValue).ToShortDateString() + " по "+ ((DateTime)endDateEditItem.EditValue).ToShortDateString() + ".xls";
+            string exportFilePath = Utils.HomePath + @"\Temp\Закази за період з " + ((DateTime)beginDateEditItem.EditValue).ToShortDateString() + " по " + ((DateTime)endDateEditItem.EditValue).ToShortDateString() + ".xls";
             var optionXls = new XlsExportOptionsEx();
 
             optionXls.SheetName = "Закази";
             optionXls.TextExportMode = DevExpress.XtraPrinting.TextExportMode.Value;
             optionXls.ShowColumnHeaders = DevExpress.Utils.DefaultBoolean.True;
             optionXls.ExportType = ExportType.WYSIWYG;
+            specCustomCol.Visible = true;
             customerOrdersGridView.OptionsPrint.AutoWidth = false;
             customerOrdersGridView.BestFitColumns();
 
@@ -738,13 +741,16 @@ namespace ERP_NEW.GUI.CustomerOrders
 
             try
             {
+
                 customerOrdersGrid.ExportToXls(exportFilePath, optionXls);
 
                 if (File.Exists(exportFilePath))
                 {
                     try
                     {
+                        
                         System.Diagnostics.Process.Start(exportFilePath);
+                        
                     }
                     catch
                     {
@@ -763,6 +769,11 @@ namespace ERP_NEW.GUI.CustomerOrders
             {
                 MessageBox.Show("Файл вже відкрито! Закрийте файл!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                specCustomCol.Visible = false;
+            }
+
         }
 
         private void showSpecificMenuItem_Click(object sender, EventArgs e)

@@ -144,6 +144,8 @@ namespace ERP_NEW.BLL.Services
                           from mts in mtss.DefaultIfEmpty()
                           join e in employeesDetails.GetAll() on mts.DesignerId equals e.EmployeeID into coe
                           from e in coe.DefaultIfEmpty()
+                          join spec in customerOrderSpecifications.GetAll() on co.Id equals spec.CustomerOrderId into specc
+                          from spec in specc.DefaultIfEmpty()
                           where (co.OrderDate >= beginDate && co.OrderDate <= endDate)
 
 
@@ -170,6 +172,7 @@ namespace ERP_NEW.BLL.Services
                               UserId = co.UserId,
                               UserName = eu.LastName,
                               DateShipping = cwb.DocumentDate,
+                              SpecificationReport = spec.Name
                               Enable = co.Enable,
                               ExpenditureTotalPercent = co.ExpenditureTotalPercent,
                                
@@ -221,7 +224,8 @@ namespace ERP_NEW.BLL.Services
                 Enable=g.Key.Enable,
                  ExpenditureTotalPercent = g.Key.ExpenditureTotalPercent,
                 DesignerName = string.Join(", ", g.Select(md => md.DesignerName).ToList()) != "" ? string.Join(", ", g.Select(md => md.DesignerName).ToList()) : "До заказу не додано проект",
-                Drawing = string.Join(",", g.Select(md => md.Drawing).ToList()) != "" ? string.Join(",", g.Select(md => md.Drawing).ToList()) : "До заказу не додано проект"
+                Drawing = string.Join(",", g.Select(md => md.Drawing).ToList()) != "" ? string.Join(",", g.Select(md => md.Drawing).ToList()) : "До заказу не додано проект",
+                SpecificationReport = string.Join(",", g.Select(md => md.SpecificationReport).ToList()) != "" ? string.Join(",", g.Select(md => md.SpecificationReport).ToList()) : "",
             });
 
             List<CustomerOrdersDTO> returnSortList = new List<CustomerOrdersDTO>();
