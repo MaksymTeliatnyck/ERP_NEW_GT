@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERP_NEW.BLL.DTO.SelectedDTO
 {
-    public class ExpenditureTotalPriceDTO
+    public class  ExpenditureTotalPriceDTO
     {
         public int Id { get; set; }
         public DateTime? CustomerOrderDate { get; set; }
@@ -14,5 +14,6 @@ namespace ERP_NEW.BLL.DTO.SelectedDTO
         public decimal? CustomerOrderPrice { get; set; }
         public decimal? CustomerOrderCurrencyPrice { get; set; }
         public string CurrencyCode { get; set; }
+        public int CustomerOrderPricePercent { get; set; }
     }
 }

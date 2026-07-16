@@ -298,7 +298,6 @@
             this.responsiblePersonFullNameCol});
             this.toolActGridView.GridControl = this.toolActGrid;
             this.toolActGridView.Name = "toolActGridView";
-            this.toolActGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.toolActGridView.OptionsView.ShowAutoFilterRow = true;
             this.toolActGridView.OptionsView.ShowGroupPanel = false;
             this.toolActGridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.toolActGridView_FocusedRowChanged);
@@ -388,7 +387,6 @@
             this.totalPriceQuantityCol});
             this.bandedGridView1.GridControl = this.toolMaterialGrid;
             this.bandedGridView1.Name = "bandedGridView1";
-            this.bandedGridView1.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.bandedGridView1.OptionsView.ShowAutoFilterRow = true;
             this.bandedGridView1.OptionsView.ShowFooter = true;
             this.bandedGridView1.OptionsView.ShowGroupPanel = false;
@@ -670,7 +668,7 @@
             this.Name = "ToolActsFm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "Акти списання інструментів";
+            this.Text = " ";
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).EndInit();

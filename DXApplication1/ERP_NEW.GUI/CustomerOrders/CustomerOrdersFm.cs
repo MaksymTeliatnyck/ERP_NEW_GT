@@ -160,8 +160,8 @@ namespace ERP_NEW.GUI.CustomerOrders
         private void LoadCustomerOrderService(int customerOrderId)
         {
             customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
-            //customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderId(customerOrderId).ToList();
-            customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderIdProc(customerOrderId).ToList();
+            customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderId(customerOrderId).ToList();
+            //customerOrderServiceBS.DataSource = customerOrdersService.GetCustomerServiceByCustomerOrderIdProc(customerOrderId).ToList();
             customerOrderServiceGrid.DataSource = customerOrderServiceBS;
         }
 
@@ -324,6 +324,21 @@ namespace ERP_NEW.GUI.CustomerOrders
             }
         }
 
+
+        private void EditCustomerOrderPercentValue(CustomerOrdersDTO model)
+        {
+            using (CustomerOrdersPricePercentEditFm customerOrdersPricePercentEditFm = new CustomerOrdersPricePercentEditFm(model))
+            {
+                if (customerOrdersPricePercentEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    //prepaymentsGridView.BeginDataUpdate();
+                    //LoadCustomerOrderPrepaymentsData(customerOrderId);
+                    //SetCustomerOrderSummary();
+                    //prepaymentsGridView.EndDataUpdate();
+                }
+            }
+        }
+
         private void DeleteCustomerOrderPrepayments(List<CustomerOrderPrepaymentsDTO> source)
         {
             if (MessageBox.Show("Видалити надходження?", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -369,7 +384,7 @@ namespace ERP_NEW.GUI.CustomerOrders
             paymentsInfo.PrepaymentPrice = ((List<CustomerOrderPrepaymentsDTO>)customerOrderPrepaymentsBS.DataSource).Sum(s => s.Prepayment) ?? 0.00m;
             paymentsInfo.PrepaymentPriceCurrency = ((List<CustomerOrderPrepaymentsDTO>)customerOrderPrepaymentsBS.DataSource).Sum(s => s.PrepaymentCurrency) ?? 0.00m;
             paymentsInfo.ExpenditureMaterialPrice = ((List<ExpenditureInfoDTO>)expenditureMaterialBS.DataSource).Sum(s => s.ExpPrice) ?? 0.00m;
-            paymentsInfo.CustomerOrderServicePrice = ((List<CustomerOrderServiceProcDTO>)customerOrderServiceBS.DataSource).Sum(s => s.TotalPrice) ?? 0.00m;
+            //paymentsInfo.CustomerOrderServicePrice = ((List<CustomerOrderServiceProcDTO>)customerOrderServiceBS.DataSource).Sum(s => s.TotalPrice) ?? 0.00m;
 
             if (((CustomerOrdersDTO)customerOrdersBS.Current).CurrencyId > 1)
             {
@@ -398,7 +413,7 @@ namespace ERP_NEW.GUI.CustomerOrders
 
         private void addItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            EditCustomerOrder(Utils.Operation.Add, new CustomerOrdersDTO() { UserId = userTasksDTO.UserId, DateCreate = DateTime.Now});
+            EditCustomerOrder(Utils.Operation.Add, new CustomerOrdersDTO() { UserId = userTasksDTO.UserId, DateCreate = DateTime.Now, ExpenditureTotalPercent = 45});
         }
 
         private void editItem_ItemClick(object sender, ItemClickEventArgs e)
@@ -445,6 +460,8 @@ namespace ERP_NEW.GUI.CustomerOrders
         
         private void customerOrdersGridView_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
+
+
             //--
             if (((CustomerOrdersDTO)customerOrdersBS.Current).Enable == 1)
             {
@@ -452,6 +469,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 deleteItem.Enabled = false;
                 editAssBtn.Enabled = false;
                 addAssBtn.Enabled = false;
+                editPercentValue.Enabled = false;
                // addPaymentBtn.Enabled = false;
                // deletePaymentBtn.Enabled = false;
 
@@ -466,8 +484,9 @@ namespace ERP_NEW.GUI.CustomerOrders
                 deleteItem.Enabled = (userTasksDTO.AccessRightId == 2);
                 editAssBtn.Enabled = (userTasksDTO.AccessRightId == 2);
                 addAssBtn.Enabled = (userTasksDTO.AccessRightId == 2);
-              //  addPaymentBtn.Enabled = true;
-              //  deletePaymentBtn.Enabled = true;
+                editPercentValue.Enabled = (userTasksDTO.AccessRightId == 2);
+                //  addPaymentBtn.Enabled = true;
+                //  deletePaymentBtn.Enabled = true;
 
                 //editOrderBtn.Glyph = imageCollection.Images[5];
                 editOrderBtn.LargeGlyph = imageCollection1.Images[0];
@@ -476,6 +495,8 @@ namespace ERP_NEW.GUI.CustomerOrders
             //---
             if (customerOrdersBS.Count > 0)
             {
+
+                expenditurePercentLbl.EditValue = ((CustomerOrdersDTO)customerOrdersBS.Current).ExpenditureTotalPercent +" %";
                 LoadCustomerOrderSpecificationsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderPaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
                 LoadCustomerOrderPrepaymentsData(((CustomerOrdersDTO)customerOrdersBS.Current).Id);
@@ -490,6 +511,7 @@ namespace ERP_NEW.GUI.CustomerOrders
             }
             else
             {
+                expenditurePercentLbl.EditValue = 0;
                 specificationGrid.DataSource = null;
                 paymentsGrid.DataSource = null;
                 prepaymentsGrid.DataSource = null;
@@ -781,5 +803,19 @@ namespace ERP_NEW.GUI.CustomerOrders
             materialsSpecificBS.DataSource = mtsSpecificationsService.GetMaterialsSpecific(detailId).OrderByDescending(ord => ord.ID).ToList();
         }
 
+        private void editPercentValue_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (customerOrdersBS.Count > 0)
+            {
+                if (userTasksDTO.UserRoleId != 9)
+                    ((CustomerOrdersDTO)customerOrdersBS.Current).UserId = userTasksDTO.UserId;
+                customerOrdersBS.EndEdit();
+
+                EditCustomerOrderPercentValue((CustomerOrdersDTO)customerOrdersBS.Current);
+
+
+
+            }
+        }
     }
 }

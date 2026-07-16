@@ -16,5 +16,6 @@ namespace ERP_NEW.DAL.Entities.QueryModels
         public decimal? CustomerOrderPrice { get; set; }
         public decimal? CustomerOrderCurrencyPrice { get; set; }
         public string CurrencyCode { get; set; }
+        public int CustomerOrderPricePercent { get; set; }
     }
 }

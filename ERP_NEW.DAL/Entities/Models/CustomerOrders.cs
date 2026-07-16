@@ -20,5 +20,7 @@ namespace ERP_NEW.DAL.Entities.Models
         public DateTime? DateUpdate { get; set; }
         public int UserId { get; set; }
         public int Enable { get; set; }
+        public int ExpenditureTotalPercent { get; set; }
+        
     }
 }

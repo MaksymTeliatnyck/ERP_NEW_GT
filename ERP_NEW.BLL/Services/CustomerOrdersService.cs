@@ -170,8 +170,10 @@ namespace ERP_NEW.BLL.Services
                               UserId = co.UserId,
                               UserName = eu.LastName,
                               DateShipping = cwb.DocumentDate,
-                              Enable = co.Enable
-                          });
+                              Enable = co.Enable,
+                              ExpenditureTotalPercent = co.ExpenditureTotalPercent,
+                               
+    });
 
             // Групировка и конкатенация поля: Чертеж и Разработчик
             var groupByRezult = result.AsEnumerable()
@@ -194,7 +196,8 @@ namespace ERP_NEW.BLL.Services
                 l.ContractorName,
                 l.AgreementName,
                 l.UserName,
-                l.Enable
+                l.Enable,
+                l.ExpenditureTotalPercent
             }).Select(g => new CustomerOrdersDTO
             {
                 Id = g.Key.Id,
@@ -216,6 +219,7 @@ namespace ERP_NEW.BLL.Services
                 AgreementName = g.Key.AgreementName,
                 UserName = g.Key.UserName,
                 Enable=g.Key.Enable,
+                 ExpenditureTotalPercent = g.Key.ExpenditureTotalPercent,
                 DesignerName = string.Join(", ", g.Select(md => md.DesignerName).ToList()) != "" ? string.Join(", ", g.Select(md => md.DesignerName).ToList()) : "До заказу не додано проект",
                 Drawing = string.Join(",", g.Select(md => md.Drawing).ToList()) != "" ? string.Join(",", g.Select(md => md.Drawing).ToList()) : "До заказу не додано проект"
             });
@@ -279,7 +283,8 @@ namespace ERP_NEW.BLL.Services
                               DateCreate = co.DateCreate,
                               DateUpdate = co.DateUpdate,
                               UserId = co.UserId,
-                              UserName = eu.LastName
+                              UserName = eu.LastName,
+                               ExpenditureTotalPercent = co.ExpenditureTotalPercent
                           });
 
 
@@ -367,18 +372,18 @@ namespace ERP_NEW.BLL.Services
             return result.ToList();
         }
 
-        public IEnumerable<CustomerOrderServiceProcDTO> GetCustomerServiceByCustomerOrderIdProc(int customerOrderId)
-        {
+        //public IEnumerable<CustomerOrderServiceProcDTO> GetCustomerServiceByCustomerOrderIdProc(int customerOrderId)
+        //{
 
-            FbParameter[] Parameters =
-                {
-                    new FbParameter("customerOrderId", customerOrderId)
-                };
+        //    FbParameter[] Parameters =
+        //        {
+        //            new FbParameter("customerOrderId", customerOrderId)
+        //        };
 
-            string procName = @"select * from ""GetCustomerOrderServiceProc""(@customerOrderId)";
+        //    string procName = @"select * from ""GetCustomerOrderServiceProc""(@customerOrderId)";
 
-            return mapper.Map<IEnumerable<CustomerOrderServiceProc>, List<CustomerOrderServiceProcDTO>>(customerOrderServiceProc.SQLExecuteProc(procName, Parameters));
-        }
+        //    return mapper.Map<IEnumerable<CustomerOrderServiceProc>, List<CustomerOrderServiceProcDTO>>(customerOrderServiceProc.SQLExecuteProc(procName, Parameters));
+        //}
 
         public CustomerOrdersDTO GetCustomerOrdersFullById(int customerOrderId)
         {
@@ -421,7 +426,8 @@ namespace ERP_NEW.BLL.Services
                               DateCreate = co.DateCreate,
                               DateUpdate = co.DateUpdate,
                               UserId = co.UserId,
-                              UserName = eu.LastName
+                              UserName = eu.LastName,
+                               ExpenditureTotalPercent = co.ExpenditureTotalPercent
                           });
 
             return result.FirstOrDefault();
@@ -492,7 +498,8 @@ namespace ERP_NEW.BLL.Services
                               ReceiptNum = ord.RECEIPT_NUM,
                               TotalPrice = rec.TOTAL_PRICE,
                               UnitLocalName = unt.UnitLocalName,
-                              Quantity = rec.QUANTITY
+                              Quantity = rec.QUANTITY,
+                               ExpenditureTotalPercent = co.ExpenditureTotalPercent
                           });
 
             var groupByRezult = result.AsEnumerable()
@@ -520,7 +527,8 @@ namespace ERP_NEW.BLL.Services
                    l.ReceiptNum,
                    l.TotalPrice,
                    l.UnitLocalName,
-                   l.Quantity
+                   l.Quantity,
+                   l.ExpenditureTotalPercent
                }).Select(g => new CustomerOrdersDTO
                {
                    Id = g.Key.Id,
@@ -546,6 +554,7 @@ namespace ERP_NEW.BLL.Services
                    TotalPrice = g.Key.TotalPrice,
                    UnitLocalName = g.Key.UnitLocalName,
                    Quantity = g.Key.Quantity,
+                   ExpenditureTotalPercent = g.Key.ExpenditureTotalPercent,
                    DesignerName = string.Join(", ", g.Select(md => md.DesignerName).ToList()) != "" ? string.Join(", ", g.Select(md => md.DesignerName).ToList()) : "До заказу не додано проект",
                    Drawing = string.Join(",", g.Select(md => md.Drawing).ToList()) != "" ? string.Join(",\n", g.Select(md => md.Drawing).ToList()) : "До заказу не додано проект"
                });
@@ -645,7 +654,8 @@ namespace ERP_NEW.BLL.Services
                               DateUpdate = co.DateUpdate,
                               UserId = co.UserId,
                               UserName = eu.LastName,
-                              Enable = co.Enable
+                              Enable = co.Enable,
+                               ExpenditureTotalPercent = co.ExpenditureTotalPercent
                           });
 
             return result.ToList();

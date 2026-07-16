@@ -657,7 +657,7 @@ namespace ERP_NEW.GUI.Accounting
 
                 splashScreenManager.CloseWaitForm();
 
-                if (expenditurePercentTotalPrice > 45)
+                if (expenditurePercentTotalPrice > expenditureTotalPrice.CustomerOrderPricePercent )
                     ShowLimitPanel(true);
                 else
                     ShowLimitPanel(false);
