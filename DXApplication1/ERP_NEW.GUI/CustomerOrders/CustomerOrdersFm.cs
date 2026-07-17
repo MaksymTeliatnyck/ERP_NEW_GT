@@ -82,7 +82,7 @@ namespace ERP_NEW.GUI.CustomerOrders
                 customerOrdersService.GetCustomerOrdersByPeriod(beginDate, endDate):
                 customerOrdersService.GetCustomerOrdersWithoutSign();
             customerOrdersGrid.DataSource = customerOrdersBS;
-            specCustomCol.Visible = false;
+            //specCustomCol.Visible = false;
 
             if (customerOrdersBS.Count > 0)
             {
@@ -733,7 +733,7 @@ namespace ERP_NEW.GUI.CustomerOrders
             optionXls.TextExportMode = DevExpress.XtraPrinting.TextExportMode.Value;
             optionXls.ShowColumnHeaders = DevExpress.Utils.DefaultBoolean.True;
             optionXls.ExportType = ExportType.WYSIWYG;
-            specCustomCol.Visible = true;
+            //specCustomCol.Visible = true;
             customerOrdersGridView.OptionsPrint.AutoWidth = false;
             customerOrdersGridView.BestFitColumns();
 
@@ -771,7 +771,7 @@ namespace ERP_NEW.GUI.CustomerOrders
             }
             finally
             {
-                specCustomCol.Visible = false;
+                //specCustomCol.Visible = false;
             }
 
         }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExpendituresEditFm));
             DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule1 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
             DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule2 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
@@ -76,10 +77,10 @@
             this.quantityRBtn = new System.Windows.Forms.RadioButton();
             this.sumRBtn = new System.Windows.Forms.RadioButton();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
-            this.dxErrorProvider = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider();
-            this.dateValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider();
-            this.generalDataValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider();
-            this.imageCollection = new DevExpress.Utils.ImageCollection();
+            this.dxErrorProvider = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
+            this.dateValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
+            this.generalDataValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
+            this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
             this.expPriceGeneralEdit = new DevExpress.XtraEditors.TextEdit();
@@ -97,7 +98,7 @@
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
-            this.limitTimer = new System.Windows.Forms.Timer();
+            this.limitTimer = new System.Windows.Forms.Timer(this.components);
             this.expenditureTypeCheck = new DevExpress.XtraEditors.CheckEdit();
             this.prodOrderLbl = new DevExpress.XtraEditors.LabelControl();
             this.employeesLbl = new DevExpress.XtraEditors.LabelControl();
@@ -317,7 +318,6 @@
             this.correctionCol});
             this.remainsGridView.GridControl = this.remainsGrid;
             this.remainsGridView.Name = "remainsGridView";
-            this.remainsGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.remainsGridView.OptionsView.ShowFooter = true;
             this.remainsGridView.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.remainsGridView_RowClick);
             this.remainsGridView.CustomSummaryCalculate += new DevExpress.Data.CustomSummaryEventHandler(this.remainsGridView_CustomSummaryCalculate);
@@ -608,7 +608,6 @@
             this.gridColumn3});
             this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView1.OptionsFind.AlwaysVisible = true;
             this.gridView1.OptionsFind.SearchInPreview = true;
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -705,7 +704,6 @@
             this.gridColumn13});
             this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView3.Name = "gridView3";
-            this.gridView3.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView3.OptionsFind.AlwaysVisible = true;
             this.gridView3.OptionsFind.SearchInPreview = true;
             this.gridView3.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -766,7 +764,6 @@
             this.gridColumn10});
             this.gridView4.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridView4.Name = "gridView4";
-            this.gridView4.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridView4.OptionsFind.AlwaysVisible = true;
             this.gridView4.OptionsFind.SearchInPreview = true;
             this.gridView4.OptionsSelection.EnableAppearanceFocusedCell = false;

@@ -172,7 +172,7 @@ namespace ERP_NEW.BLL.Services
                               UserId = co.UserId,
                               UserName = eu.LastName,
                               DateShipping = cwb.DocumentDate,
-                              SpecificationReport = spec.Name
+                              SpecificationReport = spec.Name,
                               Enable = co.Enable,
                               ExpenditureTotalPercent = co.ExpenditureTotalPercent,
                                
