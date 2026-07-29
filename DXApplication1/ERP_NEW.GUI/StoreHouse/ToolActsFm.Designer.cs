@@ -117,7 +117,7 @@
             this.repositoryItemDateEdit2});
             this.ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2007;
             this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl1.Size = new System.Drawing.Size(913, 95);
+            this.ribbonControl1.Size = new System.Drawing.Size(1145, 95);
             this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // startDateEdit
@@ -257,7 +257,7 @@
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl1.Panel2.Controls.Add(this.groupControl2);
-            this.splitContainerControl1.Size = new System.Drawing.Size(913, 343);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1145, 343);
             this.splitContainerControl1.SplitterPosition = 213;
             this.splitContainerControl1.TabIndex = 1;
             // 
@@ -272,7 +272,7 @@
             this.groupControl1.Location = new System.Drawing.Point(0, 0);
             this.groupControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(913, 213);
+            this.groupControl1.Size = new System.Drawing.Size(1145, 213);
             this.groupControl1.TabIndex = 1;
             this.groupControl1.Text = "Акти списання";
             // 
@@ -285,7 +285,7 @@
             this.toolActGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.toolActGrid.MenuManager = this.ribbonControl1;
             this.toolActGrid.Name = "toolActGrid";
-            this.toolActGrid.Size = new System.Drawing.Size(909, 191);
+            this.toolActGrid.Size = new System.Drawing.Size(1141, 191);
             this.toolActGrid.TabIndex = 0;
             this.toolActGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.toolActGridView});
@@ -344,7 +344,7 @@
             this.groupControl2.Location = new System.Drawing.Point(0, 0);
             this.groupControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(913, 125);
+            this.groupControl2.Size = new System.Drawing.Size(1145, 125);
             this.groupControl2.TabIndex = 1;
             this.groupControl2.Text = "Матеріали";
             // 
@@ -357,7 +357,7 @@
             this.toolMaterialGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.toolMaterialGrid.MenuManager = this.ribbonControl1;
             this.toolMaterialGrid.Name = "toolMaterialGrid";
-            this.toolMaterialGrid.Size = new System.Drawing.Size(909, 103);
+            this.toolMaterialGrid.Size = new System.Drawing.Size(1141, 103);
             this.toolMaterialGrid.TabIndex = 0;
             this.toolMaterialGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.bandedGridView1});
@@ -659,7 +659,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(913, 438);
+            this.ClientSize = new System.Drawing.Size(1145, 438);
             this.Controls.Add(this.splitContainerControl1);
             this.Controls.Add(this.ribbonControl1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);

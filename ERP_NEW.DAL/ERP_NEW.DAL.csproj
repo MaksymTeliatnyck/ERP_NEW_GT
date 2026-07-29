@@ -181,6 +181,7 @@
     <Compile Include="Entities\Models\MTS_MEASURE.cs" />
     <Compile Include="Entities\Models\MTS_PURCHASED_PRODUCTS.cs" />
     <Compile Include="Entities\Models\MTS_SPECIFICATIONS.cs" />
+    <Compile Include="Entities\Models\NocurrentAssets.cs" />
     <Compile Include="Entities\Models\PaintingWorks.cs" />
     <Compile Include="Entities\Models\ReceiptCertificateDetail.cs" />
     <Compile Include="Entities\Models\ReceiptDetails.cs" />

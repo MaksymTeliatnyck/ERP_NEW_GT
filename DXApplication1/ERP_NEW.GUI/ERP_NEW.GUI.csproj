@@ -73,10 +73,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>3EC67ADBFA7C133F6E8C5C5114BBC2CA345EBC76</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1F1CB77FE93B75D32AF4A71EFD3463019385ADDD</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ERP_NEW.GUI_4_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ERP_NEW.GUI_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -258,13 +258,13 @@
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ERP_NEW.BLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="ERP_NEW.BLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ERP_NEW.BLL\bin\Release\ERP_NEW.BLL.dll</HintPath>
+      <HintPath>..\..\ERP_NEW.BLL\bin\Debug\ERP_NEW.BLL.dll</HintPath>
     </Reference>
     <Reference Include="ERP_NEW.DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ERP_NEW.DAL\bin\Release\ERP_NEW.DAL.dll</HintPath>
+      <HintPath>..\..\ERP_NEW.DAL\bin\Debug\ERP_NEW.DAL.dll</HintPath>
     </Reference>
     <Reference Include="FirebirdSql.Data.FirebirdClient, Version=5.7.0.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FirebirdSql.Data.FirebirdClient.5.7.0\lib\net40-client\FirebirdSql.Data.FirebirdClient.dll</HintPath>
@@ -684,6 +684,12 @@
     </Compile>
     <Compile Include="Accounting\FixedAssetsOrderTransferFm.Designer.cs">
       <DependentUpon>FixedAssetsOrderTransferFm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Accounting\NocurrentAssetsEditFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\NocurrentAssetsEditFm.Designer.cs">
+      <DependentUpon>NocurrentAssetsEditFm.cs</DependentUpon>
     </Compile>
     <Compile Include="Accounting\NocurrentAssetsFm.cs">
       <SubType>Form</SubType>
@@ -2015,6 +2021,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\FixedAssetsOrderTransferFm.resx">
       <DependentUpon>FixedAssetsOrderTransferFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\NocurrentAssetsEditFm.resx">
+      <DependentUpon>NocurrentAssetsEditFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\NocurrentAssetsFm.resx">
       <DependentUpon>NocurrentAssetsFm.cs</DependentUpon>
