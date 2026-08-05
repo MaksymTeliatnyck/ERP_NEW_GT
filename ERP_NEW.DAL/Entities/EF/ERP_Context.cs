@@ -277,8 +277,12 @@ namespace ERP_NEW.DAL.EF
         public DbSet<NOMENCLATURES> Nomenclatures { get; set; }
         public DbSet<Nomenclature_Groups> Nomenclature_Groups { get; set; }
         public DbSet<NocurrentAssets> NocurrentAssets { get; set; }
+        public DbSet<NocurrentAsetsMaterial> NocurrentAsetsMaterial { get; set; }
+        public DbSet<NocurrentAssetsMaterialJournal> NocurrentAssetsMaterialJournal { get; set; }
 
         
+
+
 
         //O
         public DbSet<ORDERS> Orders { get; set; }

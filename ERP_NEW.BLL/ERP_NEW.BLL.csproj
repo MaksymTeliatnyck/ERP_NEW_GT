@@ -172,6 +172,7 @@
     <Compile Include="DTO\ModelsDTO\GetOSVkvartal_ForChessDTO.cs" />
     <Compile Include="DTO\ModelsDTO\LogDTO.cs" />
     <Compile Include="DTO\ModelsDTO\MTSCustomerOrdersDTO.cs" />
+    <Compile Include="DTO\ModelsDTO\NocurrentAsetsMaterialDTO.cs" />
     <Compile Include="DTO\ModelsDTO\NocurrentAssetsDTO.cs" />
     <Compile Include="DTO\ModelsDTO\PaintingWorksDTO.cs" />
     <Compile Include="DTO\ModelsDTO\ReceiptCertificateDetailDTO.cs" />
@@ -357,6 +358,7 @@
     <Compile Include="DTO\SelectedDTO\MonthDetailsDTO.cs" />
     <Compile Include="DTO\SelectedDTO\MSTrialBalanceByAccountsDTO.cs" />
     <Compile Include="DTO\SelectedDTO\MtsAssembliesCustomerInfoDTO.cs" />
+    <Compile Include="DTO\SelectedDTO\NocurrentAssetsMaterialJournalDTO.cs" />
     <Compile Include="DTO\SelectedDTO\OrderForDetalsContractorDTO.cs" />
     <Compile Include="DTO\SelectedDTO\OrderReceipFromQueryDTO.cs" />
     <Compile Include="DTO\SelectedDTO\PaintingWorksJournalDTO.cs" />

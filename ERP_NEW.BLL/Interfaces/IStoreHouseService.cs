@@ -125,7 +125,13 @@ namespace ERP_NEW.BLL.Interfaces
         int GetUserIdByReceiptCertId(int recCertId);
 
         IEnumerable<NocurrentAssetsDTO> GetNocurrentAssets();
+        IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialById(int nocurrentAssetsId);
+        IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialDetailById(int nocurrentAssetsId);
         IEnumerable<NocurrentAssetsDTO> GetNoCurrentAssetsDetail();
+        //IEnumerable<NocurrentAsetsMaterialDTO> GetNoCurrentAssetsDetail();
+        IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial();
+
+        
 
         int AccountClothesCreate(AccountClothesDTO accountClothesDTO);
         void AccountClothesUpdate(AccountClothesDTO accountClothesDTO);
@@ -222,6 +228,10 @@ namespace ERP_NEW.BLL.Interfaces
         int NocurrentAssetsCreate(NocurrentAssetsDTO acDTO);
         void NocurrentAssetsUpdate(NocurrentAssetsDTO acDTO);
         bool NocurrentAssetsDelete(int id);
+
+        int NocurrentAssetsMaterialCreate(NocurrentAsetsMaterialDTO acDTO);
+        void NocurrentAssetsUpdate(NocurrentAsetsMaterialDTO acDTO);
+        bool NocurrentAssetsMaterialDelete(int id);
 
         void Dispose();
 

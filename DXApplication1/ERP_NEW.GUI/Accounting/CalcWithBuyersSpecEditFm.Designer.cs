@@ -109,7 +109,6 @@
             this.sumCurrencyPriceCol});
             this.gridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridLookUpEdit1View.Name = "gridLookUpEdit1View";
-            this.gridLookUpEdit1View.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.gridLookUpEdit1View.OptionsFind.AlwaysVisible = true;
             this.gridLookUpEdit1View.OptionsFind.SearchInPreview = true;
             this.gridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -354,6 +353,7 @@
             this.dkppCodeEdit.Properties.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.dkppCodeEdit_Properties_ButtonClick);
             this.dkppCodeEdit.Size = new System.Drawing.Size(142, 22);
             this.dkppCodeEdit.TabIndex = 9;
+            this.dkppCodeEdit.EditValueChanged += new System.EventHandler(this.dkppCodeEdit_EditValueChanged);
             // 
             // cancelBtn
             // 

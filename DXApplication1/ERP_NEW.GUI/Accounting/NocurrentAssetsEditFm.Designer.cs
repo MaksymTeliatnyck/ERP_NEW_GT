@@ -28,6 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule1 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
+            DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule2 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
+            DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule3 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
+            DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule conditionValidationRule4 = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.responsiblePersonEdit = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -50,6 +55,8 @@
             this.validateLbl = new DevExpress.XtraEditors.LabelControl();
             this.cancelBtn = new DevExpress.XtraEditors.SimpleButton();
             this.saveBtn = new DevExpress.XtraEditors.SimpleButton();
+            this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
+            this.dxValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.groupControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.responsiblePersonEdit.Properties)).BeginInit();
@@ -59,6 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.docDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.docDateEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.docNumberEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxValidationProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl3
@@ -96,6 +104,12 @@
             this.responsiblePersonEdit.Size = new System.Drawing.Size(473, 20);
             this.responsiblePersonEdit.TabIndex = 1;
             this.responsiblePersonEdit.ToolTip = "П.І.Б працівника";
+            conditionValidationRule1.ConditionOperator = DevExpress.XtraEditors.DXErrorProvider.ConditionOperator.Greater;
+            conditionValidationRule1.ErrorText = "Не вказано відповідальну особу";
+            conditionValidationRule1.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+            conditionValidationRule1.Value1 = 0;
+            this.dxValidationProvider.SetValidationRule(this.responsiblePersonEdit, conditionValidationRule1);
+            this.responsiblePersonEdit.EditValueChanged += new System.EventHandler(this.responsiblePersonEdit_EditValueChanged);
             // 
             // gridView1
             // 
@@ -170,6 +184,12 @@
             this.employeeEdit.Size = new System.Drawing.Size(473, 20);
             this.employeeEdit.TabIndex = 3;
             this.employeeEdit.ToolTip = "П.І.Б працівника";
+            conditionValidationRule2.ConditionOperator = DevExpress.XtraEditors.DXErrorProvider.ConditionOperator.Greater;
+            conditionValidationRule2.ErrorText = "Не вказано підзвітну особу";
+            conditionValidationRule2.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+            conditionValidationRule2.Value1 = "0";
+            this.dxValidationProvider.SetValidationRule(this.employeeEdit, conditionValidationRule2);
+            this.employeeEdit.EditValueChanged += new System.EventHandler(this.employeeEdit_EditValueChanged);
             // 
             // gridView2
             // 
@@ -277,6 +297,11 @@
             this.docDateEdit.Size = new System.Drawing.Size(197, 20);
             this.docDateEdit.TabIndex = 2;
             this.docDateEdit.ToolTip = "Дата створення заявки";
+            conditionValidationRule3.ConditionOperator = DevExpress.XtraEditors.DXErrorProvider.ConditionOperator.IsNotBlank;
+            conditionValidationRule3.ErrorText = "Не вказано дату";
+            conditionValidationRule3.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+            this.dxValidationProvider.SetValidationRule(this.docDateEdit, conditionValidationRule3);
+            this.docDateEdit.EditValueChanged += new System.EventHandler(this.docDateEdit_EditValueChanged);
             // 
             // docNumberEdit
             // 
@@ -287,6 +312,12 @@
             this.docNumberEdit.Size = new System.Drawing.Size(238, 20);
             this.docNumberEdit.TabIndex = 0;
             this.docNumberEdit.ToolTip = "Номер заявки";
+            conditionValidationRule4.ConditionOperator = DevExpress.XtraEditors.DXErrorProvider.ConditionOperator.IsNotBlank;
+            conditionValidationRule4.ErrorText = "Не вказано номер";
+            conditionValidationRule4.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+            conditionValidationRule4.Value1 = "";
+            this.dxValidationProvider.SetValidationRule(this.docNumberEdit, conditionValidationRule4);
+            this.docNumberEdit.TextChanged += new System.EventHandler(this.docNumberEdit_TextChanged);
             // 
             // validateLbl
             // 
@@ -301,25 +332,36 @@
             // cancelBtn
             // 
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBtn.Location = new System.Drawing.Point(602, 171);
+            this.cancelBtn.Location = new System.Drawing.Point(602, 161);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(75, 23);
             this.cancelBtn.TabIndex = 41;
             this.cancelBtn.Text = "Відміна";
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(522, 171);
+            this.saveBtn.Location = new System.Drawing.Point(521, 161);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.TabIndex = 40;
             this.saveBtn.Text = "Зберегти";
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            // 
+            // splashScreenManager
+            // 
+            this.splashScreenManager.ClosingDelay = 500;
+            // 
+            // dxValidationProvider
+            // 
+            this.dxValidationProvider.ValidationFailed += new DevExpress.XtraEditors.DXErrorProvider.ValidationFailedEventHandler(this.dxValidationProvider_ValidationFailed);
+            this.dxValidationProvider.ValidationSucceeded += new DevExpress.XtraEditors.DXErrorProvider.ValidationSucceededEventHandler(this.dxValidationProvider_ValidationSucceeded);
             // 
             // NocurrentAssetsEditFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 206);
+            this.ClientSize = new System.Drawing.Size(689, 189);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.validateLbl);
@@ -337,6 +379,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.docDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.docDateEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.docNumberEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxValidationProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,5 +409,7 @@
         private DevExpress.XtraEditors.LabelControl validateLbl;
         private DevExpress.XtraEditors.SimpleButton cancelBtn;
         private DevExpress.XtraEditors.SimpleButton saveBtn;
+        private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager;
+        private DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider dxValidationProvider;
     }
 }

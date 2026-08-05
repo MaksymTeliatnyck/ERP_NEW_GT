@@ -53,6 +53,10 @@ namespace ERP_NEW.BLL.Services
         private IRepository<NOMENCLATURES> nomenclatures;
         private IRepository<Nomenclature_Groups> nomenclaturesGroups;
         private IRepository<NocurrentAssets> nocurrentAssets;
+        private IRepository<NocurrentAsetsMaterial> nocurrentAsetsMaterial;
+        private IRepository<NocurrentAssetsMaterialJournal> nocurrentAsetsMaterialJournal;
+
+        
         private IRepository<ACCOUNTS> accounts;
         private IRepository<ACCOUNTS> accountss;
         private IRepository<Units> units;
@@ -124,6 +128,8 @@ namespace ERP_NEW.BLL.Services
             nomenclatures = Database.GetRepository<NOMENCLATURES>();
             nomenclaturesGroups = Database.GetRepository<Nomenclature_Groups>();
             nocurrentAssets = Database.GetRepository<NocurrentAssets>();
+            nocurrentAsetsMaterial = Database.GetRepository<NocurrentAsetsMaterial>();
+            nocurrentAsetsMaterialJournal = Database.GetRepository<NocurrentAssetsMaterialJournal>();
             units = Database.GetRepository<Units>();
             invoiceRequirementOrders = Database.GetRepository<Invoice_Requirement_Orders>();
             invoiceRequirementMaterialsInfo = Database.GetRepository<InvoiceRequirementMaterialsInfo>();
@@ -222,6 +228,11 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<NomenclatureGroupsDTO, Nomenclature_Groups>();
                 cfg.CreateMap<NocurrentAssets, NocurrentAssetsDTO>();
                 cfg.CreateMap<NocurrentAssetsDTO, NocurrentAssets>();
+                cfg.CreateMap<NocurrentAsetsMaterial, NocurrentAsetsMaterialDTO>();
+                cfg.CreateMap<NocurrentAsetsMaterialDTO, NocurrentAsetsMaterial>();
+                cfg.CreateMap<NocurrentAssetsMaterialJournal, NocurrentAssetsMaterialJournalDTO>();
+
+                
                 cfg.CreateMap<ReceiptOrders, ReceiptOrdersDTO>();
                 cfg.CreateMap<ReceiptCertificates, ReceiptCertificatesDTO>();
                 cfg.CreateMap<ReceiptCertificateDetail, ReceiptCertificateDetailDTO>();
@@ -1443,6 +1454,7 @@ namespace ERP_NEW.BLL.Services
         public int GetUserIdByReceiptCertId(int recCertId)
         {
             var query = (from recC in receiptCertificate.GetAll()
+
                          join recCertD in receiptCertificateDetail.GetAll() on recC.ReceiptCertificateId equals recCertD.ReceiptCertificateId into recCertt
                          from recCertD in recCertt.DefaultIfEmpty()
                          join rec in receipts.GetAll() on recCertD.ReceiptId equals rec.ID into recc
@@ -1466,6 +1478,54 @@ namespace ERP_NEW.BLL.Services
         {
             return mapper.Map<IEnumerable<NocurrentAssets>, List<NocurrentAssetsDTO>>(nocurrentAssets.GetAll());
         }
+
+        public IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialById(int nocurrentAssetsId)
+        {
+            var allNocurrentAsetsMaterial = mapper.Map<IEnumerable<NocurrentAsetsMaterial>, List<NocurrentAsetsMaterialDTO>>(nocurrentAsetsMaterial.GetAll()).ToList();
+
+            var searchNocurrentAsetsMaterial = allNocurrentAsetsMaterial.Where(whr => whr.NocurrentAsetsId == nocurrentAssetsId);
+
+            return searchNocurrentAsetsMaterial;
+        }
+
+
+        public IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialDetailById(int nocurrentAssetsId)
+        {
+            var query = (from nam in nocurrentAsetsMaterial.GetAll()
+
+                         join rec in receipts.GetAll() on nam.ReceiptId equals rec.ID into recc
+                         from rec in recc.DefaultIfEmpty()
+                         join ord in orders.GetAll() on rec.ORDER_ID equals ord.ID into ordd
+                         from ord in ordd.DefaultIfEmpty()
+                         join nom in nomenclatures.GetAll() on rec.NOMENCLATURE_ID equals nom.ID into nomm
+                         from nom in nomm.DefaultIfEmpty()
+                         
+                         where (nam.NocurrentAsetsId == nocurrentAssetsId && nam.Status == 1)
+
+                         //(Ord."Flag1" = :Flag1 OR Ord."Flag2" = :Flag2 OR Ord."Flag3" = :Flag3 OR Ord."Flag4" = :Flag4)
+
+                         select new NocurrentAsetsMaterialDTO()
+                         {
+                             Id = nam.Id,
+                             Quantity = nam.Quantity,
+                              Status = nam.Status,
+                               BeginDate = nam.BeginDate,
+                                EndDate = nam.EndDate,
+                                 Nomenclature = nom.NOMENCLATURE,
+                                  NomenclatureId =nom.ID,
+                                   NomenclatureName=nom.NAME,
+                                    ParentId = nam.ParentId,
+                                     Percentage = nam.Percentage,
+                                      ReceiptId = nam.ReceiptId,
+                                       ReceiptNum = ord.RECEIPT_NUM,
+                                        NocurrentAsetsId = nam.NocurrentAsetsId
+                             //UnitPrice = rec.UNIT_PRICE,
+                            
+
+                         });
+            return query.ToList();
+        }
+
 
         //public IEnumerable<NocurrentAssetsDTO> GetNoCurrentAssetsDetail() { 
         //    return mapper.Map<IEnumerable<NocurrentAssets>, List<NocurrentAssetsDTO>>(nocurrentAssets.GetAll().Where(bdsm=>bdsm.Id!=0).ToList());
@@ -1514,7 +1574,11 @@ namespace ERP_NEW.BLL.Services
           }
 
 
-
+        public IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial()
+        {
+            string procName = @"select * from ""GetNocurrentRamainsMaterial""";
+            return mapper.Map<IEnumerable<NocurrentAssetsMaterialJournal>, List<NocurrentAssetsMaterialJournalDTO>>(nocurrentAsetsMaterialJournal.SQLExecuteProc(procName));
+        }
 
 
         #endregion
@@ -2274,6 +2338,35 @@ namespace ERP_NEW.BLL.Services
             try
             {
                 nocurrentAssets.Delete(nocurrentAssets.GetAll().FirstOrDefault(c => c.Id == id));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region NocurrentAsetsMaterial CRUD method's
+
+        public int NocurrentAssetsMaterialCreate(NocurrentAsetsMaterialDTO acDTO)
+        {
+            var createAC = nocurrentAsetsMaterial.Create(mapper.Map<NocurrentAsetsMaterial>(acDTO));
+            return (int)createAC.Id;
+        }
+
+        public void NocurrentAssetsUpdate(NocurrentAsetsMaterialDTO acDTO)
+        {
+            var updateAC = nocurrentAsetsMaterial.GetAll().SingleOrDefault(c => c.Id == acDTO.Id);
+            nocurrentAsetsMaterial.Update((mapper.Map<NocurrentAsetsMaterialDTO, NocurrentAsetsMaterial>(acDTO, updateAC)));
+        }
+
+        public bool NocurrentAssetsMaterialDelete(int id)
+        {
+            try
+            {
+                nocurrentAsetsMaterial.Delete(nocurrentAsetsMaterial.GetAll().FirstOrDefault(c => c.Id == id));
                 return true;
             }
             catch (Exception)

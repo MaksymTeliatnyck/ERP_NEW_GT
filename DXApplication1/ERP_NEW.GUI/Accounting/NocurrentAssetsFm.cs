@@ -86,24 +86,75 @@ namespace ERP_NEW.GUI.Accounting
 
         private void deleteCardBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            try
+            {
+                DeleteAccountClothes();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("При видаленні виникла помилка. " + ex.Message, "Видалення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void DeleteAccountClothes()
         {
-            if (accountClothesBS.Count != 0)
+            if (noCurrentAssetsBS.Count != 0)
             {
                 if (MessageBox.Show("Видалити картку?", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     storeHouseService = Program.kernel.Get<IStoreHouseService>();
-                    int rowHandle = accountClothesGridView.FocusedRowHandle - 1;
-                    accountClothesGridView.BeginDataUpdate();
-                    storeHouseService.AccountClothesDelete(((AccountClothesInfoDTO)accountClothesBS.Current).Id);
-                    LoadDataAccountClothes();
-                    accountClothesGridView.EndDataUpdate();
-                    accountClothesGridView.FocusedRowHandle = (accountClothesGridView.IsValidRowHandle(rowHandle)) ? rowHandle : -1;
+                    int rowHandle = noCurrentAssetsGridView.FocusedRowHandle - 1;
+                    noCurrentAssetsGridView.BeginDataUpdate();
+                    storeHouseService.NocurrentAssetsDelete(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
+                    LoadDataNocurrentAssets();
+                    noCurrentAssetsGridView.EndDataUpdate();
+                    noCurrentAssetsGridView.FocusedRowHandle = (noCurrentAssetsGridView.IsValidRowHandle(rowHandle)) ? rowHandle : -1;
                 }
             }
+        }
+
+        private void addMaterialBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using (NocurrentAssetsMaterialSelectFm nocurrentAssetsMaterialSelectFm = new NocurrentAssetsMaterialSelectFm(((NocurrentAssetsDTO)noCurrentAssetsBS.Current)))
+            {
+                if (nocurrentAssetsMaterialSelectFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    var returnModel = nocurrentAssetsMaterialSelectFm.Return();
+                    noCurrentAssetsGridView.BeginDataUpdate();
+
+                    LoadDataNocurrentAssets(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
+
+                    noCurrentAssetsGridView.EndDataUpdate();
+
+                    int rowHandle = noCurrentAssetsGridView.LocateByValue("Id", returnModel.NocurrentAsetsId);
+
+                    noCurrentAssetsGridView.FocusedRowHandle = rowHandle;
+
+
+                    //var returnModel = nocurrentAssetsMaterialSelectFm.Return();
+
+                    //dkppCodeEdit.EditValue = returnModel.CodeDKPP;
+                    //((CalcWithBuyersSpecDTO)Item).DkppId = returnModel.Id;
+                }
+            }
+        }
+
+        private void noCurrentAssetsGridView_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
+            //splashScreenManager.ShowWaitForm();
+            if(noCurrentAssetsBS.Count>0)
+            {
+                LoadDataNocurrentAssets(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
+            }
+            //splashScreenManager.CloseWaitForm();
+        }
+
+
+        private void LoadDataNocurrentAssets(int nocurrentAssetId)
+        {
+            storeHouseService = Program.kernel.Get<IStoreHouseService>();
+            noCurrentAssetsMaterialsBS.DataSource = storeHouseService.GetNocurrentsAssetsMaterialDetailById(nocurrentAssetId);
+            noCurrentAssetsMaterialsGrid.DataSource = noCurrentAssetsMaterialsBS;
         }
     }
 }

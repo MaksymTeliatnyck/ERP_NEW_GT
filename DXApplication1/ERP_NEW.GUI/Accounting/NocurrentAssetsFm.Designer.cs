@@ -39,9 +39,13 @@
             this.addCardBtn = new DevExpress.XtraBars.BarButtonItem();
             this.editCardBtn = new DevExpress.XtraBars.BarButtonItem();
             this.deleteCardBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.addMaterialBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.transferMaterialBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.storehouseMaterialBtn = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.noCurrentAssetsGrid = new DevExpress.XtraGrid.GridControl();
             this.noCurrentAssetsGridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -90,9 +94,12 @@
             this.searchBtn,
             this.addCardBtn,
             this.editCardBtn,
-            this.deleteCardBtn});
+            this.deleteCardBtn,
+            this.addMaterialBtn,
+            this.transferMaterialBtn,
+            this.storehouseMaterialBtn});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 7;
+            this.ribbonControl1.MaxItemId = 10;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -183,11 +190,40 @@
             this.deleteCardBtn.Name = "deleteCardBtn";
             this.deleteCardBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.deleteCardBtn_ItemClick);
             // 
+            // addMaterialBtn
+            // 
+            this.addMaterialBtn.Caption = "Додати";
+            this.addMaterialBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("addMaterialBtn.Glyph")));
+            this.addMaterialBtn.Id = 7;
+            this.addMaterialBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("addMaterialBtn.LargeGlyph")));
+            this.addMaterialBtn.Name = "addMaterialBtn";
+            this.addMaterialBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.addMaterialBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addMaterialBtn_ItemClick);
+            // 
+            // transferMaterialBtn
+            // 
+            this.transferMaterialBtn.Caption = "Перемістити";
+            this.transferMaterialBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("transferMaterialBtn.Glyph")));
+            this.transferMaterialBtn.Id = 8;
+            this.transferMaterialBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("transferMaterialBtn.LargeGlyph")));
+            this.transferMaterialBtn.Name = "transferMaterialBtn";
+            this.transferMaterialBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            // 
+            // storehouseMaterialBtn
+            // 
+            this.storehouseMaterialBtn.Caption = "Перемістити на склад";
+            this.storehouseMaterialBtn.Glyph = ((System.Drawing.Image)(resources.GetObject("storehouseMaterialBtn.Glyph")));
+            this.storehouseMaterialBtn.Id = 9;
+            this.storehouseMaterialBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("storehouseMaterialBtn.LargeGlyph")));
+            this.storehouseMaterialBtn.Name = "storehouseMaterialBtn";
+            this.storehouseMaterialBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup3});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "ribbonPage1";
             // 
@@ -205,7 +241,15 @@
             this.ribbonPageGroup2.ItemLinks.Add(this.editCardBtn);
             this.ribbonPageGroup2.ItemLinks.Add(this.deleteCardBtn);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "Керування";
+            this.ribbonPageGroup2.Text = "Картку";
+            // 
+            // ribbonPageGroup3
+            // 
+            this.ribbonPageGroup3.ItemLinks.Add(this.addMaterialBtn);
+            this.ribbonPageGroup3.ItemLinks.Add(this.transferMaterialBtn);
+            this.ribbonPageGroup3.ItemLinks.Add(this.storehouseMaterialBtn);
+            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+            this.ribbonPageGroup3.Text = "Матеріал";
             // 
             // noCurrentAssetsGrid
             // 
@@ -229,6 +273,7 @@
             this.noCurrentAssetsGridView.GridControl = this.noCurrentAssetsGrid;
             this.noCurrentAssetsGridView.Name = "noCurrentAssetsGridView";
             this.noCurrentAssetsGridView.OptionsView.ShowGroupPanel = false;
+            this.noCurrentAssetsGridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.noCurrentAssetsGridView_FocusedRowChanged);
             // 
             // gridColumn5
             // 
@@ -352,6 +397,7 @@
             this.gridColumn6.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.gridColumn6.AppearanceHeader.Options.UseFont = true;
             this.gridColumn6.Caption = "Назва";
+            this.gridColumn6.FieldName = "NomenclatureName";
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 0;
@@ -361,6 +407,7 @@
             this.gridColumn7.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.gridColumn7.AppearanceHeader.Options.UseFont = true;
             this.gridColumn7.Caption = "Номенклатура";
+            this.gridColumn7.FieldName = "Nomenclature";
             this.gridColumn7.Name = "gridColumn7";
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 1;
@@ -370,6 +417,7 @@
             this.gridColumn8.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.gridColumn8.AppearanceHeader.Options.UseFont = true;
             this.gridColumn8.Caption = "Кількість";
+            this.gridColumn8.FieldName = "Quantity";
             this.gridColumn8.Name = "gridColumn8";
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 2;
@@ -379,6 +427,7 @@
             this.gridColumn9.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.gridColumn9.AppearanceHeader.Options.UseFont = true;
             this.gridColumn9.Caption = "Статус";
+            this.gridColumn9.FieldName = "Status";
             this.gridColumn9.Name = "gridColumn9";
             this.gridColumn9.Visible = true;
             this.gridColumn9.VisibleIndex = 3;
@@ -388,6 +437,7 @@
             this.gridColumn10.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.gridColumn10.AppearanceHeader.Options.UseFont = true;
             this.gridColumn10.Caption = "Дата отримання";
+            this.gridColumn10.FieldName = "BeginDate";
             this.gridColumn10.Name = "gridColumn10";
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 4;
@@ -459,5 +509,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn10;
         private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager;
+        private DevExpress.XtraBars.BarButtonItem addMaterialBtn;
+        private DevExpress.XtraBars.BarButtonItem transferMaterialBtn;
+        private DevExpress.XtraBars.BarButtonItem storehouseMaterialBtn;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
     }
 }
