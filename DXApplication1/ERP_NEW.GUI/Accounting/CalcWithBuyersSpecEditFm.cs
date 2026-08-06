@@ -207,5 +207,10 @@ namespace ERP_NEW.GUI.Accounting
                     }
             }
         }
+
+        private void dkppCodeEdit_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

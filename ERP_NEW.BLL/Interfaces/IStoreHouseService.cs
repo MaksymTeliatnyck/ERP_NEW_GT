@@ -124,6 +124,15 @@ namespace ERP_NEW.BLL.Interfaces
         bool GetReceiptsByStoreHouseId(int id);
         int GetUserIdByReceiptCertId(int recCertId);
 
+        IEnumerable<NocurrentAssetsDTO> GetNocurrentAssets();
+        IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialById(int nocurrentAssetsId);
+        IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialDetailById(int nocurrentAssetsId);
+        IEnumerable<NocurrentAssetsDTO> GetNoCurrentAssetsDetail();
+        //IEnumerable<NocurrentAsetsMaterialDTO> GetNoCurrentAssetsDetail();
+        IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial();
+
+        
+
         int AccountClothesCreate(AccountClothesDTO accountClothesDTO);
         void AccountClothesUpdate(AccountClothesDTO accountClothesDTO);
         bool AccountClothesDelete(int id);
@@ -214,6 +223,15 @@ namespace ERP_NEW.BLL.Interfaces
         int ExpenditureStoreHouseCreate(ExpenditureStoreHouseDTO eaDTO);
         void ExpenditureStoreHouseUpdate(ExpenditureStoreHouseDTO eaDTO);
         bool ExpenditureStoreHouseDelete(int id);
+
+
+        int NocurrentAssetsCreate(NocurrentAssetsDTO acDTO);
+        void NocurrentAssetsUpdate(NocurrentAssetsDTO acDTO);
+        bool NocurrentAssetsDelete(int id);
+
+        int NocurrentAssetsMaterialCreate(NocurrentAsetsMaterialDTO acDTO);
+        void NocurrentAssetsUpdate(NocurrentAsetsMaterialDTO acDTO);
+        bool NocurrentAssetsMaterialDelete(int id);
 
         void Dispose();
 

@@ -34,7 +34,9 @@ namespace ERP_NEW.BLL.Services
         private IRepository<DeliveryOrdersDetails> deliveryOrdersDetails;
         private IRepository<DeliveryPaymentType> deliveryPaymentType;
         private IRepository<EmployeesDetails> employeesDetails;
+        private IRepository<EmployeesDetails> employeesDetailsResponsible;
         private IRepository<Employees> employees;
+        private IRepository<Employees> employeesResponsible;
         private IRepository<EXPENDITURES_ACCOUNTANT> expenditureAccountant;
         private IRepository<ExpenditureStoreHouse> expenditureStoreHouse;
         private IRepository<ExpendituresStoreHouses> expendituresStoreHouses;
@@ -50,6 +52,11 @@ namespace ERP_NEW.BLL.Services
         private IRepository<RemainsNomenclature> remainsNomenclature;
         private IRepository<NOMENCLATURES> nomenclatures;
         private IRepository<Nomenclature_Groups> nomenclaturesGroups;
+        private IRepository<NocurrentAssets> nocurrentAssets;
+        private IRepository<NocurrentAsetsMaterial> nocurrentAsetsMaterial;
+        private IRepository<NocurrentAssetsMaterialJournal> nocurrentAsetsMaterialJournal;
+
+        
         private IRepository<ACCOUNTS> accounts;
         private IRepository<ACCOUNTS> accountss;
         private IRepository<Units> units;
@@ -86,7 +93,7 @@ namespace ERP_NEW.BLL.Services
         public StoreHouseService(IUnitOfWork uow)
         {
             #region Repository
-            
+
             Database = uow;
             accounts = Database.GetRepository<ACCOUNTS>();
             accountss = Database.GetRepository<ACCOUNTS>();
@@ -97,7 +104,9 @@ namespace ERP_NEW.BLL.Services
             accountClothesMaterials = Database.GetRepository<AccountClothesMaterials>();
             customerOrders = Database.GetRepository<CustomerOrders>();
             employeesDetails = Database.GetRepository<EmployeesDetails>();
+            employeesDetailsResponsible = Database.GetRepository<EmployeesDetails>();
             employees = Database.GetRepository<Employees>();
+            employeesResponsible = Database.GetRepository<Employees>();
             expenditureAccountant = Database.GetRepository<EXPENDITURES_ACCOUNTANT>();
             expenditureStoreHouse = Database.GetRepository<ExpenditureStoreHouse>();
             expendituresStoreHouses = Database.GetRepository<ExpendituresStoreHouses>();
@@ -118,6 +127,9 @@ namespace ERP_NEW.BLL.Services
             remainsNomenclature = Database.GetRepository<RemainsNomenclature>();
             nomenclatures = Database.GetRepository<NOMENCLATURES>();
             nomenclaturesGroups = Database.GetRepository<Nomenclature_Groups>();
+            nocurrentAssets = Database.GetRepository<NocurrentAssets>();
+            nocurrentAsetsMaterial = Database.GetRepository<NocurrentAsetsMaterial>();
+            nocurrentAsetsMaterialJournal = Database.GetRepository<NocurrentAssetsMaterialJournal>();
             units = Database.GetRepository<Units>();
             invoiceRequirementOrders = Database.GetRepository<Invoice_Requirement_Orders>();
             invoiceRequirementMaterialsInfo = Database.GetRepository<InvoiceRequirementMaterialsInfo>();
@@ -147,7 +159,7 @@ namespace ERP_NEW.BLL.Services
             #endregion
 
             #region Mapper's
-            
+
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<AccountClothes, AccountClothesDTO>();
@@ -214,12 +226,19 @@ namespace ERP_NEW.BLL.Services
                 cfg.CreateMap<RemainsNomenclature, RemainsNomenclatureDTO>();
                 cfg.CreateMap<Nomenclature_Groups, NomenclatureGroupsDTO>();
                 cfg.CreateMap<NomenclatureGroupsDTO, Nomenclature_Groups>();
+                cfg.CreateMap<NocurrentAssets, NocurrentAssetsDTO>();
+                cfg.CreateMap<NocurrentAssetsDTO, NocurrentAssets>();
+                cfg.CreateMap<NocurrentAsetsMaterial, NocurrentAsetsMaterialDTO>();
+                cfg.CreateMap<NocurrentAsetsMaterialDTO, NocurrentAsetsMaterial>();
+                cfg.CreateMap<NocurrentAssetsMaterialJournal, NocurrentAssetsMaterialJournalDTO>();
+
+                
                 cfg.CreateMap<ReceiptOrders, ReceiptOrdersDTO>();
                 cfg.CreateMap<ReceiptCertificates, ReceiptCertificatesDTO>();
                 cfg.CreateMap<ReceiptCertificateDetail, ReceiptCertificateDetailDTO>();
                 cfg.CreateMap<ToolActs, ToolActsDTO>();
                 cfg.CreateMap<ToolActsDTO, ToolActs>();
-                cfg.CreateMap<ToolActMaterials,ToolActMaterialsDTO>();
+                cfg.CreateMap<ToolActMaterials, ToolActMaterialsDTO>();
                 cfg.CreateMap<ToolActMaterialsDTO, ToolActMaterials>();
                 cfg.CreateMap<ToolActMaterialsJournal, ToolActMaterialsJournalDTO>();
                 cfg.CreateMap<ToolActMaterialsJournalDTO, ToolActMaterialsJournal>();
@@ -248,7 +267,7 @@ namespace ERP_NEW.BLL.Services
         }
 
         #region Method's
-        
+
         public IEnumerable<AccountClothesDTO> GetAllAccountClothes()
         {
             return mapper.Map<IEnumerable<AccountClothes>, List<AccountClothesDTO>>(accountClothes.GetAll());
@@ -273,7 +292,7 @@ namespace ERP_NEW.BLL.Services
                           join n in nomenclatures.GetAll() on r.NOMENCLATURE_ID equals n.ID
                           join a in accounts.GetAll() on n.BALANCE_ACCOUNT_ID equals a.ID
                           where acm.AccountClothesId == id
-                          
+
                           select new AccountClothesMaterialsDTO()
                           {
                               Id = acm.Id,
@@ -293,7 +312,7 @@ namespace ERP_NEW.BLL.Services
                               //UnitPrice = r.UNIT_PRICE,
                               //TotalPrice = r.UNIT_PRICE * acm.QuantityOutput,
                               TotalPrice = ((decimal)r.TOTAL_PRICE / (decimal)r.QUANTITY) * (decimal)acm.QuantityOutput,
-                              UnitPrice = ((decimal)r.TOTAL_PRICE / (decimal)r.QUANTITY) 
+                              UnitPrice = ((decimal)r.TOTAL_PRICE / (decimal)r.QUANTITY)
 
                           });
             return result.ToList();
@@ -383,7 +402,7 @@ namespace ERP_NEW.BLL.Services
                               DocDate = ac.DocDate,
                               AccountNumber = e.AccountNumber,
                               EmployeeId = ac.EmployeeId,
-                              EmployeeFullName = ed.LastName + " " + ed.FirstName + " " +  ed.MiddleName,
+                              EmployeeFullName = ed.LastName + " " + ed.FirstName + " " + ed.MiddleName,
                               AccountClothesId = acm.AccountClothesId,
                               InvoiceRequirementMaterialId = irm.Id,
                               QuantityOutput = acm.QuantityOutput,
@@ -408,7 +427,7 @@ namespace ERP_NEW.BLL.Services
             return result.ToList();
         }
 
-       
+
 
         public IEnumerable<AccountClothesJournalDTO> GetAccountClothesByDateOutput(DateTime beginDate, DateTime endDate)
         {
@@ -592,7 +611,7 @@ namespace ERP_NEW.BLL.Services
             string procName = @"select * from ""GetInvoiceMaterialsByOrderId""(@OrderId)";
 
             return mapper.Map<IEnumerable<InvoiceRequirementMaterialsInfo>, List<InvoiceRequirementMaterialsInfoDTO>>(invoiceRequirementMaterialsInfo.SQLExecuteProc(procName, Parameters).
-                Where(zxc => zxc.CreditAccountId !=18 || zxc.CreditAccountId == null).ToList());
+                Where(zxc => zxc.CreditAccountId != 18 || zxc.CreditAccountId == null).ToList());
 
 
             //""Invoice_Requirement_Materials"".""Credit_Account_Id"" != 18 OR ""Invoice_Requirement_Materials"".""Credit_Account_Id"" is NULL
@@ -627,23 +646,23 @@ namespace ERP_NEW.BLL.Services
         {
             //if (mapper.Map<IEnumerable<CustomerOrders>, List<CustomerOrdersDTO>>(customerOrders.GetAll()).Any(srch => srch.Id == customerOrderId))
             //{
-                string customerOrderNumber = mapper.Map<IEnumerable<CustomerOrders>, List<CustomerOrdersDTO>>(customerOrders.GetAll()).First(srch => srch.Id == customerOrderId).OrderNumber;
+            string customerOrderNumber = mapper.Map<IEnumerable<CustomerOrders>, List<CustomerOrdersDTO>>(customerOrders.GetAll()).First(srch => srch.Id == customerOrderId).OrderNumber;
 
 
-                if (customerOrderNumber != "" && customerOrderNumber != null)
-                {
-                    customerOrderNumber = customerOrderNumber.Replace(".", "");
-                    FbParameter[] Parameters =
-                {
+            if (customerOrderNumber != "" && customerOrderNumber != null)
+            {
+                customerOrderNumber = customerOrderNumber.Replace(".", "");
+                FbParameter[] Parameters =
+            {
                     new FbParameter("CustomerOrderIdParam", customerOrderId)
                 };
-                    string procName = @"select * from ""GetExpenditureByCustomerOrder""(@CustomerOrderIdParam)";
-                    return mapper.Map<IEnumerable<ExpenditureInfo>, List<ExpenditureInfoDTO>>(expenditureInfo.SQLExecuteProc(procName, Parameters));
-                }
-                else
-                    return new List<ExpenditureInfoDTO>();
+                string procName = @"select * from ""GetExpenditureByCustomerOrder""(@CustomerOrderIdParam)";
+                return mapper.Map<IEnumerable<ExpenditureInfo>, List<ExpenditureInfoDTO>>(expenditureInfo.SQLExecuteProc(procName, Parameters));
+            }
+            else
+                return new List<ExpenditureInfoDTO>();
             //}
-            
+
         }
 
         public IEnumerable<ExpenditureInfoDTO> GetExpenditureByCustomerOrder(string customerOrderNumber)
@@ -682,7 +701,7 @@ namespace ERP_NEW.BLL.Services
 
             return mapper.Map<IEnumerable<StoreHouseRemains>, List<StoreHouseRemainsDTO>>(storeHouseRemains.SQLExecuteProc(procName, Parameters));
         }
-        
+
         public IEnumerable<NomenclaturesDTO> GetAllNomenclatures()
         {
             return mapper.Map<IEnumerable<NOMENCLATURES>, List<NomenclaturesDTO>>(nomenclatures.GetAll());
@@ -810,11 +829,11 @@ namespace ERP_NEW.BLL.Services
 
             if (list.Count > 0)
             {
-                lastNumber = list.Select(n => (n.Nomenclature.Length > 0) ? Convert.ToInt64(n.Nomenclature.Replace('/'.ToString(), String.Empty)) : 0).Max();  
-                return lastNumber.ToString(); 
+                lastNumber = list.Select(n => (n.Nomenclature.Length > 0) ? Convert.ToInt64(n.Nomenclature.Replace('/'.ToString(), String.Empty)) : 0).Max();
+                return lastNumber.ToString();
             }
             else
-            { 
+            {
                 return name + "0000";
             }
         }
@@ -871,7 +890,7 @@ namespace ERP_NEW.BLL.Services
 
         public IEnumerable<DeliveryOrderDTO> GetDeliveryOrder(DateTime beginDate, DateTime endDate)
         {
-            
+
             var query = (from dord in deliveryOrder.GetAll()
                          join dpt in deliveryPaymentType.GetAll() on dord.DeliveryPriceTypeId equals dpt.Id into dptt
                          from dpt in dptt.DefaultIfEmpty()
@@ -897,7 +916,7 @@ namespace ERP_NEW.BLL.Services
                              DeliveryName = de.DeliveryName,
                              DeliveryPaymentName = dpt.DeliveryPaymentName,
                              DeliveryOrderId = dod.DeliveryOrderId
-                              
+
                          }
                 );
             return query.ToList();
@@ -907,7 +926,7 @@ namespace ERP_NEW.BLL.Services
         }
 
 
-    
+
 
         public IEnumerable<DeliveryDTO> GetDelivery()
         {
@@ -1041,7 +1060,7 @@ namespace ERP_NEW.BLL.Services
                              StoreHouseName = s.Name,
                              OrderDate = o.ORDER_DATE
                          }).OrderByDescending(o => o.OrderDate);
-            
+
             return query.ToList();
         }
 
@@ -1215,7 +1234,7 @@ namespace ERP_NEW.BLL.Services
             return query.ToList();
         }
 
-        
+
 
         public IEnumerable<ExpendituresStoreHousesDTO> GetExpendituresAllWithCustomerOrder()
         {
@@ -1226,21 +1245,21 @@ namespace ERP_NEW.BLL.Services
                          select new ExpendituresStoreHousesDTO()
                          {
                              Id = esh.Id,
-                              ReceiptId = esh.ReceiptId,
+                             ReceiptId = esh.ReceiptId,
                              CustomerOrderId = esh.CustomerOrderId,
-                             CustomerOrderNumber = esh.CustomerOrderId!=null?cus.OrderNumber.Replace(".", ""): "0",
+                             CustomerOrderNumber = esh.CustomerOrderId != null ? cus.OrderNumber.Replace(".", "") : "0",
                              ExpDate = esh.ExpDate,
                              Quantity = esh.Quantity,
                              EmployeeId = esh.EmployeeId,
-                              ExpenditureId = esh.ExpenditureId
-                              
+                             ExpenditureId = esh.ExpenditureId
+
                          });
 
             return query.ToList();
         }
 
 
-        
+
 
 
         public IEnumerable<ExpendituresStoreHousesDTO> GetExpendituresStoreHousesMaterial(int receiptId, decimal quantity, string customerOrderNumber)
@@ -1287,7 +1306,7 @@ namespace ERP_NEW.BLL.Services
 
             string procName = @"select * from ""GetExpTotPriceByCO""(@CustomerOrderId)";
 
-            return mapper.Map <IEnumerable<ExpenditureTotalPrice>, List<ExpenditureTotalPriceDTO>>(expenditureTotalPrice.SQLExecuteProc(procName, Parameters));
+            return mapper.Map<IEnumerable<ExpenditureTotalPrice>, List<ExpenditureTotalPriceDTO>>(expenditureTotalPrice.SQLExecuteProc(procName, Parameters));
         }
 
 
@@ -1356,16 +1375,16 @@ namespace ERP_NEW.BLL.Services
                          //(Ord."Flag1" = :Flag1 OR Ord."Flag2" = :Flag2 OR Ord."Flag3" = :Flag3 OR Ord."Flag4" = :Flag4)
 
                          select new OrderReceipFromQueryDTO()
-                         {      
+                         {
                              Id = rec.ID,
-                            Quantity = rec.QUANTITY,
+                             Quantity = rec.QUANTITY,
                              //UnitPrice = rec.UNIT_PRICE,
                              TotalPrice = rec.TOTAL_PRICE,
                              UnitPrice = rec.QUANTITY > 0 ? Math.Round((decimal)((decimal?)rec.TOTAL_PRICE / (decimal)rec.QUANTITY), 2) : rec.TOTAL_PRICE,
-                             
+
                              ReceiptNum = ord.RECEIPT_NUM,
                              //UnitCurrency = rec.UNIT_CURRENCY,
-                             
+
                              TotalCurrency = rec.TOTAL_CURRENCY,
                              UnitCurrency = rec.QUANTITY > 0 ? Math.Round((decimal)((decimal?)rec.TOTAL_CURRENCY / (decimal)rec.QUANTITY), 2) : rec.TOTAL_CURRENCY,
                              CurrencyRate = ord.CURRENCY_RATE,
@@ -1435,6 +1454,7 @@ namespace ERP_NEW.BLL.Services
         public int GetUserIdByReceiptCertId(int recCertId)
         {
             var query = (from recC in receiptCertificate.GetAll()
+
                          join recCertD in receiptCertificateDetail.GetAll() on recC.ReceiptCertificateId equals recCertD.ReceiptCertificateId into recCertt
                          from recCertD in recCertt.DefaultIfEmpty()
                          join rec in receipts.GetAll() on recCertD.ReceiptId equals rec.ID into recc
@@ -1453,6 +1473,112 @@ namespace ERP_NEW.BLL.Services
         //{
         //    return mapper.Map<IEnumerable<ORDERS>, List<OrdersDTO>>(orders.GetAll());
         //}
+
+        public IEnumerable<NocurrentAssetsDTO> GetNocurrentAssets()
+        {
+            return mapper.Map<IEnumerable<NocurrentAssets>, List<NocurrentAssetsDTO>>(nocurrentAssets.GetAll());
+        }
+
+        public IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialById(int nocurrentAssetsId)
+        {
+            var allNocurrentAsetsMaterial = mapper.Map<IEnumerable<NocurrentAsetsMaterial>, List<NocurrentAsetsMaterialDTO>>(nocurrentAsetsMaterial.GetAll()).ToList();
+
+            var searchNocurrentAsetsMaterial = allNocurrentAsetsMaterial.Where(whr => whr.NocurrentAsetsId == nocurrentAssetsId);
+
+            return searchNocurrentAsetsMaterial;
+        }
+
+
+        public IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialDetailById(int nocurrentAssetsId)
+        {
+            var query = (from nam in nocurrentAsetsMaterial.GetAll()
+
+                         join rec in receipts.GetAll() on nam.ReceiptId equals rec.ID into recc
+                         from rec in recc.DefaultIfEmpty()
+                         join ord in orders.GetAll() on rec.ORDER_ID equals ord.ID into ordd
+                         from ord in ordd.DefaultIfEmpty()
+                         join nom in nomenclatures.GetAll() on rec.NOMENCLATURE_ID equals nom.ID into nomm
+                         from nom in nomm.DefaultIfEmpty()
+                         
+                         where (nam.NocurrentAsetsId == nocurrentAssetsId && nam.Status == 1)
+
+                         //(Ord."Flag1" = :Flag1 OR Ord."Flag2" = :Flag2 OR Ord."Flag3" = :Flag3 OR Ord."Flag4" = :Flag4)
+
+                         select new NocurrentAsetsMaterialDTO()
+                         {
+                             Id = nam.Id,
+                             Quantity = nam.Quantity,
+                              Status = nam.Status,
+                               BeginDate = nam.BeginDate,
+                                EndDate = nam.EndDate,
+                                 Nomenclature = nom.NOMENCLATURE,
+                                  NomenclatureId =nom.ID,
+                                   NomenclatureName=nom.NAME,
+                                    ParentId = nam.ParentId,
+                                     Percentage = nam.Percentage,
+                                      ReceiptId = nam.ReceiptId,
+                                       ReceiptNum = ord.RECEIPT_NUM,
+                                        NocurrentAsetsId = nam.NocurrentAsetsId
+                             //UnitPrice = rec.UNIT_PRICE,
+                            
+
+                         });
+            return query.ToList();
+        }
+
+
+        //public IEnumerable<NocurrentAssetsDTO> GetNoCurrentAssetsDetail() { 
+        //    return mapper.Map<IEnumerable<NocurrentAssets>, List<NocurrentAssetsDTO>>(nocurrentAssets.GetAll().Where(bdsm=>bdsm.Id!=0).ToList());
+        //}
+
+        public IEnumerable<NocurrentAssetsDTO> GetNoCurrentAssetsDetail()
+        {
+            var result = (from na in nocurrentAssets.GetAll()
+                          join empRes in employeesResponsible.GetAll() on na.ResponsiblePersonId equals empRes.EmployeeID into empRess
+                          from empRes in empRess.DefaultIfEmpty()
+                          join empDetRes in employeesDetailsResponsible.GetAll() on empRes.EmployeeID equals empDetRes.EmployeeID into emDetRess
+                          from empDetRes in emDetRess.DefaultIfEmpty()
+
+
+                          join emp in employees.GetAll() on na.EmployeeId equals emp.EmployeeID into empp
+                          from emp in empp.DefaultIfEmpty()
+                          join empDet in employeesDetails.GetAll() on emp.EmployeeID equals empDet.EmployeeID into empDett
+                          from empDet in empDett.DefaultIfEmpty()
+                          join prod in professions.GetAll() on empDet.ProfessionID equals prod.ProfessionID into prodd
+                          from prod in prodd.DefaultIfEmpty()
+                          join dep in departments.GetAll() on empDet.DepartmentID equals dep.DepartmentID into depp
+                          from dep in depp.DefaultIfEmpty()
+
+                          select new
+                          {
+                              na,
+                              empDetRes,
+                              empDet,
+                              prod,
+                              dep
+                          })
+                          .AsEnumerable()
+                          .Select(x => new NocurrentAssetsDTO
+                          {
+                              Id = x.na.Id,
+                              EmployeeFullName = x.empDet.LastName + " " + x.empDet.FirstName + " " + x.empDet.MiddleName,
+                              ResponsiblePersonId=x.na.ResponsiblePersonId, //empDetRes.EmployeeID,
+                              ResponsibleFullName= x.empDetRes.LastName + " " + x.empDetRes.FirstName + " " + x.empDetRes.MiddleName, //empDetRes.LastName+" "+empDetRes.FirstName+" "+empDetRes.MiddleName,
+                              EmployeeId=x.na.EmployeeId,//empDet.EmployeeID,
+                              DocDate=x.na.DocDate,//na.DocDate,
+                              DocNumber=x.na.DocNumber,//na.DocNumber
+                              Department =x.dep.Name,
+                              Profession =x.prod.Name
+                          }).ToList();
+            return result.ToList();
+          }
+
+
+        public IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial()
+        {
+            string procName = @"select * from ""GetNocurrentRamainsMaterial""";
+            return mapper.Map<IEnumerable<NocurrentAssetsMaterialJournal>, List<NocurrentAssetsMaterialJournalDTO>>(nocurrentAsetsMaterialJournal.SQLExecuteProc(procName));
+        }
 
 
         #endregion
@@ -1684,6 +1810,8 @@ namespace ERP_NEW.BLL.Services
         }
 
         #endregion
+
+
 
         #region NomenclatureGroups CRUD method's              
 
@@ -2190,6 +2318,65 @@ namespace ERP_NEW.BLL.Services
         }
 
         #endregion
+
+        #region NocurrentAssets CRUD method's
+
+        public int NocurrentAssetsCreate(NocurrentAssetsDTO acDTO)
+        {
+            var createAC = nocurrentAssets.Create(mapper.Map<NocurrentAssets>(acDTO));
+            return (int)createAC.Id;
+        }
+
+        public void NocurrentAssetsUpdate(NocurrentAssetsDTO acDTO)
+        {
+            var updateAC = nocurrentAssets.GetAll().SingleOrDefault(c => c.Id == acDTO.Id);
+            nocurrentAssets.Update((mapper.Map<NocurrentAssetsDTO, NocurrentAssets>(acDTO, updateAC)));
+        }
+
+        public bool NocurrentAssetsDelete(int id)
+        {
+            try
+            {
+                nocurrentAssets.Delete(nocurrentAssets.GetAll().FirstOrDefault(c => c.Id == id));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region NocurrentAsetsMaterial CRUD method's
+
+        public int NocurrentAssetsMaterialCreate(NocurrentAsetsMaterialDTO acDTO)
+        {
+            var createAC = nocurrentAsetsMaterial.Create(mapper.Map<NocurrentAsetsMaterial>(acDTO));
+            return (int)createAC.Id;
+        }
+
+        public void NocurrentAssetsUpdate(NocurrentAsetsMaterialDTO acDTO)
+        {
+            var updateAC = nocurrentAsetsMaterial.GetAll().SingleOrDefault(c => c.Id == acDTO.Id);
+            nocurrentAsetsMaterial.Update((mapper.Map<NocurrentAsetsMaterialDTO, NocurrentAsetsMaterial>(acDTO, updateAC)));
+        }
+
+        public bool NocurrentAssetsMaterialDelete(int id)
+        {
+            try
+            {
+                nocurrentAsetsMaterial.Delete(nocurrentAsetsMaterial.GetAll().FirstOrDefault(c => c.Id == id));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
 
         public void Dispose()
         {
