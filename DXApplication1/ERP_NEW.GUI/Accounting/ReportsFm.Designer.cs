@@ -677,7 +677,7 @@
             this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(10);
             this.xtraTabPage2.Name = "xtraTabPage2";
             this.xtraTabPage2.Padding = new System.Windows.Forms.Padding(5);
-            this.xtraTabPage2.Size = new System.Drawing.Size(619, 318);
+            this.xtraTabPage2.Size = new System.Drawing.Size(619, 317);
             this.xtraTabPage2.Text = "Надходження";
             // 
             // button12
@@ -735,7 +735,7 @@
             this.xtraTabPage3.Controls.Add(this.labelControl13);
             this.xtraTabPage3.Name = "xtraTabPage3";
             this.xtraTabPage3.Padding = new System.Windows.Forms.Padding(5);
-            this.xtraTabPage3.Size = new System.Drawing.Size(619, 318);
+            this.xtraTabPage3.Size = new System.Drawing.Size(619, 317);
             this.xtraTabPage3.Text = "Постачальники";
             // 
             // button14
@@ -1809,7 +1809,7 @@
             this.xtraTabPage5.Margin = new System.Windows.Forms.Padding(10);
             this.xtraTabPage5.Name = "xtraTabPage5";
             this.xtraTabPage5.Padding = new System.Windows.Forms.Padding(5);
-            this.xtraTabPage5.Size = new System.Drawing.Size(615, 298);
+            this.xtraTabPage5.Size = new System.Drawing.Size(615, 299);
             this.xtraTabPage5.Text = "Закази";
             // 
             // button6
