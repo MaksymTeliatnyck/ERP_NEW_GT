@@ -282,6 +282,9 @@
             this.gridColumn5.Caption = "Номер картки";
             this.gridColumn5.FieldName = "DocNumber";
             this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.OptionsColumn.AllowEdit = false;
+            this.gridColumn5.OptionsColumn.AllowFocus = false;
+            this.gridColumn5.OptionsColumn.AllowMove = false;
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 0;
             // 
@@ -292,6 +295,9 @@
             this.gridColumn1.Caption = "Дата оформлення";
             this.gridColumn1.FieldName = "DocDate";
             this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsColumn.AllowEdit = false;
+            this.gridColumn1.OptionsColumn.AllowFocus = false;
+            this.gridColumn1.OptionsColumn.AllowMove = false;
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 1;
             // 
@@ -302,6 +308,9 @@
             this.gridColumn2.Caption = "Ф.І.О";
             this.gridColumn2.FieldName = "EmployeeFullName";
             this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.OptionsColumn.AllowEdit = false;
+            this.gridColumn2.OptionsColumn.AllowFocus = false;
+            this.gridColumn2.OptionsColumn.AllowMove = false;
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 2;
             // 
@@ -312,6 +321,9 @@
             this.gridColumn3.Caption = "Професія";
             this.gridColumn3.FieldName = "Profession";
             this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.OptionsColumn.AllowEdit = false;
+            this.gridColumn3.OptionsColumn.AllowFocus = false;
+            this.gridColumn3.OptionsColumn.AllowMove = false;
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 3;
             // 
@@ -322,6 +334,9 @@
             this.gridColumn4.Caption = "Відповідальна особа";
             this.gridColumn4.FieldName = "ResponsibleFullName";
             this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.OptionsColumn.AllowEdit = false;
+            this.gridColumn4.OptionsColumn.AllowFocus = false;
+            this.gridColumn4.OptionsColumn.AllowMove = false;
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 4;
             // 
@@ -399,6 +414,9 @@
             this.gridColumn6.Caption = "Назва";
             this.gridColumn6.FieldName = "NomenclatureName";
             this.gridColumn6.Name = "gridColumn6";
+            this.gridColumn6.OptionsColumn.AllowEdit = false;
+            this.gridColumn6.OptionsColumn.AllowFocus = false;
+            this.gridColumn6.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 0;
             // 
@@ -409,6 +427,9 @@
             this.gridColumn7.Caption = "Номенклатура";
             this.gridColumn7.FieldName = "Nomenclature";
             this.gridColumn7.Name = "gridColumn7";
+            this.gridColumn7.OptionsColumn.AllowEdit = false;
+            this.gridColumn7.OptionsColumn.AllowFocus = false;
+            this.gridColumn7.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 1;
             // 
@@ -419,6 +440,9 @@
             this.gridColumn8.Caption = "Кількість";
             this.gridColumn8.FieldName = "Quantity";
             this.gridColumn8.Name = "gridColumn8";
+            this.gridColumn8.OptionsColumn.AllowEdit = false;
+            this.gridColumn8.OptionsColumn.AllowFocus = false;
+            this.gridColumn8.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 2;
             // 
@@ -429,6 +453,9 @@
             this.gridColumn9.Caption = "Статус";
             this.gridColumn9.FieldName = "Status";
             this.gridColumn9.Name = "gridColumn9";
+            this.gridColumn9.OptionsColumn.AllowEdit = false;
+            this.gridColumn9.OptionsColumn.AllowFocus = false;
+            this.gridColumn9.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn9.Visible = true;
             this.gridColumn9.VisibleIndex = 3;
             // 
@@ -439,6 +466,9 @@
             this.gridColumn10.Caption = "Дата отримання";
             this.gridColumn10.FieldName = "BeginDate";
             this.gridColumn10.Name = "gridColumn10";
+            this.gridColumn10.OptionsColumn.AllowEdit = false;
+            this.gridColumn10.OptionsColumn.AllowFocus = false;
+            this.gridColumn10.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 4;
             // 

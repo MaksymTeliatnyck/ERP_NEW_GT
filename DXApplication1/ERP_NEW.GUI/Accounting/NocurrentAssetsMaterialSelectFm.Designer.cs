@@ -76,6 +76,8 @@
             this.nomenclatureNameCol.Caption = "Найменування";
             this.nomenclatureNameCol.FieldName = "NomenclatureName";
             this.nomenclatureNameCol.Name = "nomenclatureNameCol";
+            this.nomenclatureNameCol.OptionsColumn.AllowEdit = false;
+            this.nomenclatureNameCol.OptionsColumn.AllowFocus = false;
             this.nomenclatureNameCol.Visible = true;
             this.nomenclatureNameCol.VisibleIndex = 0;
             // 
@@ -84,6 +86,8 @@
             this.nomenclatureCol.Caption = "Ном. номер";
             this.nomenclatureCol.FieldName = "Nomenclature";
             this.nomenclatureCol.Name = "nomenclatureCol";
+            this.nomenclatureCol.OptionsColumn.AllowEdit = false;
+            this.nomenclatureCol.OptionsColumn.AllowFocus = false;
             this.nomenclatureCol.Visible = true;
             this.nomenclatureCol.VisibleIndex = 1;
             // 
@@ -92,6 +96,8 @@
             this.orderDateCol.Caption = "Дата Надходження";
             this.orderDateCol.FieldName = "OrderDate";
             this.orderDateCol.Name = "orderDateCol";
+            this.orderDateCol.OptionsColumn.AllowEdit = false;
+            this.orderDateCol.OptionsColumn.AllowFocus = false;
             this.orderDateCol.Visible = true;
             this.orderDateCol.VisibleIndex = 2;
             // 
@@ -100,6 +106,8 @@
             this.receiptNumCol.Caption = "Номер надходження";
             this.receiptNumCol.FieldName = "ReceiptNum";
             this.receiptNumCol.Name = "receiptNumCol";
+            this.receiptNumCol.OptionsColumn.AllowEdit = false;
+            this.receiptNumCol.OptionsColumn.AllowFocus = false;
             this.receiptNumCol.Visible = true;
             this.receiptNumCol.VisibleIndex = 3;
             // 
@@ -108,6 +116,8 @@
             this.remainsQuantityCol.Caption = "Залишок";
             this.remainsQuantityCol.FieldName = "RemainsQuantity";
             this.remainsQuantityCol.Name = "remainsQuantityCol";
+            this.remainsQuantityCol.OptionsColumn.AllowEdit = false;
+            this.remainsQuantityCol.OptionsColumn.AllowFocus = false;
             this.remainsQuantityCol.Visible = true;
             this.remainsQuantityCol.VisibleIndex = 4;
             // 
