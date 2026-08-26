@@ -248,7 +248,7 @@
             this.customerOrderAtachEdit,
             this.customerOrderEdit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 37;
+            this.ribbonControl1.MaxItemId = 38;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -755,7 +755,6 @@
             this.orderNumberCol});
             this.repositoryItemGridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.repositoryItemGridLookUpEdit1View.Name = "repositoryItemGridLookUpEdit1View";
-            this.repositoryItemGridLookUpEdit1View.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.repositoryItemGridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.repositoryItemGridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
@@ -886,7 +885,6 @@
             this.selectionCol});
             this.businessTripsGridView.GridControl = this.За;
             this.businessTripsGridView.Name = "businessTripsGridView";
-            this.businessTripsGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.businessTripsGridView.OptionsSelection.MultiSelect = true;
             this.businessTripsGridView.OptionsView.AllowCellMerge = true;
             this.businessTripsGridView.OptionsView.ShowAutoFilterRow = true;
@@ -1276,7 +1274,6 @@
             this.checkCol});
             this.prepaymentsGridView.GridControl = this.prepaymentsGrid;
             this.prepaymentsGridView.Name = "prepaymentsGridView";
-            this.prepaymentsGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.prepaymentsGridView.OptionsView.ShowAutoFilterRow = true;
             this.prepaymentsGridView.OptionsView.ShowFooter = true;
             this.prepaymentsGridView.CustomDrawCell += new DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventHandler(this.prepaymentsGridView_CustomDrawCell);
@@ -1417,7 +1414,6 @@
             this.paymentSumCol});
             this.paymentsGridView.GridControl = this.paymentsGrid;
             this.paymentsGridView.Name = "paymentsGridView";
-            this.paymentsGridView.OptionsDetail.DetailMode = DevExpress.XtraGrid.Views.Grid.DetailMode.Default;
             this.paymentsGridView.OptionsView.ShowAutoFilterRow = true;
             this.paymentsGridView.OptionsView.ShowFooter = true;
             this.paymentsGridView.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.paymentsGridView_RowCellStyle);

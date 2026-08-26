@@ -6145,6 +6145,295 @@ namespace ERP_NEW.BLL.Services
             catch (System.ComponentModel.Win32Exception) { MessageBox.Show("Не знайдена програма Microsoft Excel!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
         }
 
+
+        public bool PrintCWBSFullReportByCustomerOrder(List<CustomerOrdersDTO> customerOrdersFullList, DateTime startDate, DateTime endDate)
+        {
+            if (customerOrdersFullList.Count() == 0)
+            {
+                MessageBox.Show("За вибраний період немає даних!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
+            IWorksheet worksheet = workbook.Worksheets[0];
+            IRange cells = worksheet.Cells;
+
+
+            int captionPosition = 6;
+            int startPosition = captionPosition;
+            int currentPosition = 3;
+            cells = worksheet.Cells;
+            cells["A" + (captionPosition + 1) + ":" + "M" + (captionPosition + 1)].Font.Bold = true;
+            cells["A" + (captionPosition + 1) + ":" + "M" + (captionPosition + 1)].Merge();
+            cells["A" + (captionPosition + 1) + ":" + "M" + (captionPosition + 1)].HorizontalAlignment = HAlign.Center;
+            cells["A" + (captionPosition + 1)].Value = string.Format("Розрахунки з контрагентом {0}  за період {1} - {2}", customerOrdersFullList.First().ContractorName, startDate.ToShortDateString(), endDate.ToShortDateString());
+            cells["A:A"].ColumnWidth = 15;
+            cells["B:B"].ColumnWidth = 15;
+            cells["C:C"].ColumnWidth = 15;
+            cells["D:D"].ColumnWidth = 15;
+            cells["E:E"].ColumnWidth = 15;
+            cells["F:F"].ColumnWidth = 20;
+            cells["G:G"].ColumnWidth = 60;
+            cells["H:H"].ColumnWidth = 50;
+            cells["I:I"].ColumnWidth = 50;
+            cells["J:J"].ColumnWidth = 15;
+            cells["K:K"].ColumnWidth = 15;
+            cells["L:L"].ColumnWidth = 15;
+            cells["M:M"].ColumnWidth = 15;
+
+
+
+            cells["A" + (startPosition + 2)].Value = "Номер заказу";
+            cells["B" + (startPosition + 2)].Value = "Дата";
+            cells["C" + (startPosition + 2)].Value = "Сума (грн)";
+            cells["D" + (startPosition + 2)].Value = "Сума (вал)";
+            cells["E" + (startPosition + 2)].Value = "Валюта";
+            cells["F" + (startPosition + 2)].Value = "Номер виробу/проєкту";
+            cells["G" + (startPosition + 2)].Value = "Контрагент";
+            cells["H" + (startPosition + 2)].Value = "Номер Договору";
+            cells["I" + (startPosition + 2)].Value = "Примітки";
+            cells["J" + (startPosition + 2)].Value = "Дата створення";
+            cells["K" + (startPosition + 2)].Value = "Дата редагування";
+            cells["L" + (startPosition + 2)].Value = "Відповідальна особа";
+            cells["M" + (startPosition + 2)].Value = "Дата відвантаження";
+            cells["A" + (startPosition + 2) + ":" + "M" + (startPosition + 2)].HorizontalAlignment = HAlign.Center;
+            cells["A" + (startPosition + 2) + ":" + "M" + (startPosition + 2)].Font.Bold = true;
+            cells["A" + (startPosition + 2) + ":" + "M" + (startPosition + 2)].Interior.Color = Color.LightGreen;
+
+
+            worksheet.WindowInfo.FreezePanes = true;
+            //worksheet.WindowInfo.ScrollRow = startPosition + 2;
+            //worksheet.WindowInfo.SplitRows = startPosition + 2;
+
+            //worksheet.WindowInfo.ScrollRow = 0;
+            //worksheet.WindowInfo.SplitRows = startPosition + 2;
+            decimal orderPriceFull = 0;
+            decimal curencyPriceFull = 0;
+            foreach (var item in customerOrdersFullList)
+            {
+                cells["A" + (startPosition + currentPosition)].Value = item.OrderNumber;
+                cells["B" + (startPosition + currentPosition)].NumberFormat = "dd.MM.yyyy";
+                cells["B" + (startPosition + currentPosition)].Value = item.OrderDate;
+                cells["C" + (startPosition + currentPosition)].NumberFormat = "### ### ##0.00";
+                cells["C" + (startPosition + currentPosition)].Value = item.OrderPrice;
+                cells["D" + (startPosition + currentPosition)].NumberFormat = "### ### ##0.00";
+                cells["D" + (startPosition + currentPosition)].Value = item.CurrencyPrice;
+                cells["E" + (startPosition + currentPosition)].Value = item.CurrencyName;
+                cells["F" + (startPosition + currentPosition)].Value = item.Drawing;
+                cells["G" + (startPosition + currentPosition)].Value = item.ContractorName;
+                cells["H" + (startPosition + currentPosition)].Value = item.AgreementName;
+                cells["I" + (startPosition + currentPosition)].Value = item.Details;
+                cells["J" + (startPosition + currentPosition)].NumberFormat = "dd.MM.yyyy";
+                cells["J" + (startPosition + currentPosition)].Value = item.DateCreate;
+                cells["K" + (startPosition + currentPosition)].NumberFormat = "dd.MM.yyyy";
+                cells["K" + (startPosition + currentPosition)].Value = item.DateUpdate;
+                cells["L" + (startPosition + currentPosition)].Value = item.UserName;
+                cells["M" + (startPosition + currentPosition)].NumberFormat = "dd.MM.yyyy";
+                cells["M" + (startPosition + currentPosition)].Value = item.DateShipping;
+                orderPriceFull += (decimal)item.OrderPrice;
+                curencyPriceFull += (decimal)item.CurrencyPrice;
+                ++currentPosition;
+            }
+            cells["A" + (startPosition + 2) + ":" + "M" + (startPosition + (currentPosition - 1))].Borders.LineStyle = LineStyle.Continous;
+            cells["A" + (startPosition + 2) + ":" + "M" + (startPosition + (currentPosition - 1))].WrapText = true;
+            cells["A" + (startPosition + 3) + ":" + "M" + (startPosition + (currentPosition - 1))].VerticalAlignment = VAlign.Center;
+            cells["A" + (startPosition + 3) + ":" + "M" + (startPosition + (currentPosition - 1))].WrapText = true;
+
+            worksheet.Range["A" + (startPosition + 2) + ":" + "M" + (startPosition + (currentPosition - 1))].AutoFilter();
+
+            cells["A" + (startPosition + currentPosition) + ":" + "M" + (startPosition + currentPosition)].Merge();
+            
+            cells["A" + (startPosition + currentPosition)].Value = string.Format("Всього заказів: {0}     Всього сума у гривні: {1}      Всього сума у валюті: {2}", customerOrdersFullList.Count, orderPriceFull, curencyPriceFull);
+
+
+            
+            try
+            {
+                workbook.SaveAs(GeneratedReportsDir + string.Format("Розрахунки з контрагентом {0}  за період {1} - {2}", Utils.RemoveInvalidFileNameChars(customerOrdersFullList.First().ContractorName), startDate.ToShortDateString(), endDate.ToShortDateString()) + ".xls", FileFormat.Excel8);
+
+                Process process = new Process();
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + string.Format("Розрахунки з контрагентом {0}  за період {1} - {2}", Utils.RemoveInvalidFileNameChars(customerOrdersFullList.First().ContractorName), startDate.ToShortDateString(), endDate.ToShortDateString()) + ".xls" + "\"";
+                process.StartInfo.FileName = "Excel.exe";
+                process.Start();
+                return true;
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Документ вже відкритий!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                MessageBox.Show("Не знайдена програма Microsoft Excel!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
+
+        public bool PrintCWBSFullReport(List<CalcWithBuyersInfoDTO> calcWithBuyersInfoPeriodFullList, List<CalcWithBuyersSpecDTO> calcWithBuyersSpecPeriodFullList, DateTime startDate, DateTime endDate)
+        {
+            if (calcWithBuyersInfoPeriodFullList.Count() == 0)
+            {
+                MessageBox.Show("За вибраний період немає даних!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            SpreadsheetGear.IWorkbook workbook = Factory.GetWorkbook(GeneratedReportsDir + @"\Templates\TemplateWithStamp.xls");
+            IWorksheet worksheet = workbook.Worksheets[0];
+            IRange cells = worksheet.Cells;
+
+
+            int captionPosition = 6;
+            int startPosition = captionPosition + 4;
+            int currentPosition =0;
+            cells = worksheet.Cells;
+            cells["A" + (captionPosition + 1) + ":" + "P" + (captionPosition + 1)].Font.Bold = true;
+            cells["A" + (captionPosition + 1) + ":" + "P" + (captionPosition + 1)].Merge();
+            cells["A" + (captionPosition + 1) + ":" + "P" + (captionPosition + 1)].HorizontalAlignment = HAlign.Center;
+            cells["A" + (captionPosition + 1)].Value = string.Format("Розрахунки з покупцями та замовниками  за період {0} - {1}", startDate.ToShortDateString(), endDate.ToShortDateString());
+            cells["A:A"].ColumnWidth = 15;
+            cells["B:B"].ColumnWidth = 30;
+            cells["C:C"].ColumnWidth = 15;
+            cells["D:D"].ColumnWidth = 15;
+            cells["E:E"].ColumnWidth = 15;
+            cells["F:F"].ColumnWidth = 20;
+            cells["G:G"].ColumnWidth = 20;
+            cells["H:H"].ColumnWidth = 15;
+            cells["I:I"].ColumnWidth = 15;
+            cells["J:J"].ColumnWidth = 15;
+            cells["K:K"].ColumnWidth = 15;
+
+
+            foreach (var item in calcWithBuyersInfoPeriodFullList)
+            {
+
+
+                cells["A" + (startPosition + 1) + ":" + "P" + (startPosition + 1)].Font.Bold = true;
+                cells["A" + (startPosition + 1) + ":" + "P" + (startPosition + 1)].Merge();
+                cells["A" + (startPosition + 1) + ":" + "P" + (startPosition + 1)].HorizontalAlignment = HAlign.Center;
+                cells["A" + (startPosition + 1)].Value = item.ContractorName;
+                cells["A" + (startPosition + 2) + ":" + "C" + (startPosition + 2)].Merge();
+                cells["A" + (startPosition + 2)].Value = "Покупці/ Замовники";
+                cells["D" + (startPosition + 2) + ":" + "E" + (startPosition + 2)].Merge();
+                cells["D" + (startPosition + 2)].Value = "Документ";
+                cells["F" + (startPosition + 2) + ":" + "G" + (startPosition + 2)].Merge();
+                cells["F" + (startPosition + 2)].Value = "Рахунок";
+                cells["H" + (startPosition + 2) + ":" + "I" + (startPosition + 2)].Merge();
+                cells["H" + (startPosition + 2)].Value = "Дебет";
+                cells["J" + (startPosition + 2) + ":" + "K" + (startPosition + 2)].Merge();
+                cells["J" + (startPosition + 2)].Value = "Кредит";
+
+
+                cells["A" + (startPosition + 3)].Value = "Едрпоу/Таб. номер";
+                cells["A" + (startPosition + 4)].Value = item.ContractorSrn;
+                cells["B" + (startPosition + 3)].Value = "Найменування";
+                cells["B" + (startPosition + 4)].Value = item.ContractorName;
+                cells["C" + (startPosition + 3)].Value = "Заказ";
+                cells["C" + (startPosition + 4)].Value = item.OrderNumber;
+                cells["D" + (startPosition + 3)].Value = "Дата";
+                cells["D" + (startPosition + 4)].Value = item.DocumentDate;
+                cells["E" + (startPosition + 3)].Value = "Номер";
+                cells["E" + (startPosition + 4)].Value = item.DocumentName;
+                cells["F" + (startPosition + 3)].Value = "Балансовий рах.";
+                cells["F" + (startPosition + 4)].Value = item.BalanceNum;
+                cells["G" + (startPosition + 3)].Value = "Рах. призначення";
+                cells["G" + (startPosition + 4)].Value = item.PurposeNum;
+                cells["H" + (startPosition + 3)].Value = "Сума у грн";
+                cells["H" + (startPosition + 4)].NumberFormat = "### ### ##0.00";
+                cells["H" + (startPosition + 4)].Value = item.PaymentDebit;
+                cells["I" + (startPosition + 3)].Value = "Сума у валюті";
+                cells["I" + (startPosition + 4)].NumberFormat = "### ### ##0.00";
+                cells["I" + (startPosition + 4)].Value = item.PaymentDebitCurrency;
+
+                cells["J" + (startPosition + 3)].Value = "Сума у грн";
+                cells["J" + (startPosition + 4)].NumberFormat = "### ### ##0.00";
+                cells["J" + (startPosition + 4)].Value = item.PaymentCredit;
+                cells["K" + (startPosition + 3)].Value = "Сума у валюті";
+                cells["K" + (startPosition + 4)].NumberFormat = "### ### ##0.00";
+                cells["K" + (startPosition + 4)].Value = item.PaymentCreditCurrency;
+
+                cells["A" + (startPosition + 2) + ":" + "K" + (startPosition + 3)].Borders.LineStyle = LineStyle.Continous;
+                cells["A" + (startPosition + 2) + ":" + "K" + (startPosition + 3)].HorizontalAlignment = HAlign.Center;
+
+
+                cells["A" + (startPosition + 5) + ":" + "P" + (startPosition + 5)].Font.Bold = true;
+                cells["A" + (startPosition + 5) + ":" + "P" + (startPosition + 5)].Merge();
+                cells["A" + (startPosition + 5) + ":" + "P" + (startPosition + 5)].HorizontalAlignment = HAlign.Center;
+                cells["A" + (startPosition + 5)].Value = "Специфікація";
+
+                cells["A" + (startPosition + 6)].Value = "Заказ";
+                cells["B" + (startPosition + 6)].Value = "Найменування";
+                cells["C" + (startPosition + 6)].Value = "Сума у грн";
+                cells["D" + (startPosition + 6)].Value = "Сума у валюті";
+                cells["E" + (startPosition + 6)].Value = "Кількість";
+                cells["F" + (startPosition + 6)].Value = "641/2";
+                cells["G" + (startPosition + 6)].Value = "643";
+                cells["H" + (startPosition + 6)].Value = "Сума ПДВ";
+                cells["I" + (startPosition + 6)].Value = "Разом з ПДВ";
+                cells["J" + (startPosition + 6)].Value = "Дк 016:2010";
+                cells["K" + (startPosition + 6)].Value = "УКТЗЕД 2016";
+                cells["M" + (startPosition + 6)].Value = "ДК 021:2015";
+                cells["N" + (startPosition + 6) + ":" + "O" + (startPosition + 6)].Merge();
+                cells["N" + (startPosition + 6)].Value = "Примітки";
+
+                currentPosition = 0;
+                foreach (var spec in calcWithBuyersSpecPeriodFullList.Where(srch=>srch.CalcWithBuyerId == item.Id))
+                {
+                    currentPosition++;
+                    cells["A" + (startPosition + 6 + currentPosition)].Value = spec.CustomerOrderNumber;
+                    cells["B" + (startPosition + 6 + currentPosition)].Value = spec.SpecificationName;
+                    cells["C" + (startPosition + 6 + currentPosition)].NumberFormat = "### ### ##0.00";
+                    cells["C" + (startPosition + 6 + currentPosition)].Value = spec.PaymentPrice;
+                    cells["D" + (startPosition + 6 + currentPosition)].NumberFormat = "### ### ##0.00";
+                    cells["D" + (startPosition + 6 + currentPosition)].Value = spec.PaymentPriceCurrency;
+                    cells["E" + (startPosition + 6 + currentPosition)].NumberFormat = "### ### ##0.00";
+                    cells["E" + (startPosition + 6 + currentPosition)].Value = spec.Quantity;
+                    cells["F" + (startPosition + 6) + currentPosition].NumberFormat = "### ### ##0.00";
+                    cells["F" + (startPosition + 6) + currentPosition].Value = spec.VatPayment6412;
+                    cells["G" + (startPosition + 6) + currentPosition].NumberFormat = "### ### ##0.00";
+                    cells["G" + (startPosition + 6) + currentPosition].Value = spec.VatPayment643;
+                    cells["H" + (startPosition + 6) + currentPosition].NumberFormat = "### ### ##0.00";
+                    cells["H" + (startPosition + 6) + currentPosition].Value = spec.VatSum;
+                    cells["I" + (startPosition + 6) + currentPosition].NumberFormat = "### ### ##0.00";
+                    cells["I" + (startPosition + 6) + currentPosition].Value = spec.TotalPrice;
+                    cells["J" + (startPosition + 6) + currentPosition].Value = spec.CpvCode;
+                    cells["K" + (startPosition + 6) + currentPosition].Value = spec.UktvCode;
+                    cells["M" + (startPosition + 6) + currentPosition].Value = spec.DkppCode;
+                    cells["N" + (startPosition + 6) + currentPosition].Value = spec.Details;
+                }
+                cells["A" + (startPosition + 6) + ":" + "O" + (startPosition + 6)+ currentPosition].Borders.LineStyle = LineStyle.Continous;
+
+
+
+
+
+                startPosition = startPosition + 10 + currentPosition;
+
+            }
+
+
+
+            try
+            {
+                workbook.SaveAs(GeneratedReportsDir + "ДКЗ на кінець " + endDate.ToShortDateString() + ".xls", FileFormat.Excel8);
+
+                Process process = new Process();
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "ДКЗ на кінець " + endDate.ToShortDateString() + ".xls" + "\"";
+                process.StartInfo.FileName = "Excel.exe";
+                process.Start();
+                return true;
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Документ вже відкритий!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                MessageBox.Show("Не знайдена програма Microsoft Excel!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
+
         #endregion
 
         #region Expenditures report's

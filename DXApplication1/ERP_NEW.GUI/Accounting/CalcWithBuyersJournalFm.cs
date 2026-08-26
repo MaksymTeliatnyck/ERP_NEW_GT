@@ -26,11 +26,15 @@ namespace ERP_NEW.GUI.Accounting
         private IReportService reportService;
         private IAccountsService accountsService;
         private ILogService logService;
+        private IContractorsService contractorsService;
+        private ICustomerOrdersService customerOrdersService;
 
         private const string NameForm = "CalcWithBuyersJournalFm";
 
         private BindingSource calcWithBuyersBS = new BindingSource();
         private BindingSource calcWithBuyersSpecBS = new BindingSource();
+
+        public List<CustomerOrdersDTO> customerOrdersList = new List<CustomerOrdersDTO>();
 
         private UserTasksDTO _userTasksDTO;
         private DateTime _beginDate;
@@ -62,14 +66,25 @@ namespace ERP_NEW.GUI.Accounting
             beginReportDateEdit.EditValue = _beginDate;
             endReportDateEdit.EditValue = _endDate;
 
+            beginDateEdit.EditValue = _beginDate;
+            endDateEdit.EditValue = _endDate;
+
             AuthorizatedUserAccess();
             
             LoadDataByPeriod(_beginDate, _endDate);
+
+            contractorsService = Program.kernel.Get<IContractorsService>();
+            repositoryItemGridLookUpEdit1.DataSource = contractorsService.GetContractors(1);
+            repositoryItemGridLookUpEdit1.ValueMember = "Id";
+            repositoryItemGridLookUpEdit1.DisplayMember = "Name";
+
+
 
             accountsService = Program.kernel.Get<IAccountsService>();
             balanceAccountsRepository.DataSource = accountsService.GetCalcWithBuyerAccounts();
             balanceAccountsRepository.ValueMember = "Id";
             balanceAccountsRepository.DisplayMember = "Num";
+
         }
 
         #region Method's
@@ -88,8 +103,7 @@ namespace ERP_NEW.GUI.Accounting
 
             calcWithBuyersService = Program.kernel.Get<ICalcWithBuyersService>();
             logService = Program.kernel.Get<ILogService>();
-
-            calcWithBuyersBS.DataSource = calcWithBuyersService.GetCalcWithBuyersJournal(_beginDate, _endDate);
+            calcWithBuyersBS.DataSource = calcWithBuyersService.GetCalcWithBuyersJournal(_beginDate, _endDate).ToList(); ;
             calcWithBuyersGrid.DataSource = calcWithBuyersBS;
 
             if (calcWithBuyersBS.Count > 0)
@@ -477,6 +491,60 @@ namespace ERP_NEW.GUI.Accounting
                         break;
                 }
             }
+
+        }
+
+        private void reportBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void calcWithBuyersPeriodFullReport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            customerOrdersService = Program.kernel.Get<ICustomerOrdersService>();
+            reportService = Program.kernel.Get<IReportService>();
+            splashScreenManager.ShowWaitForm();
+
+
+            customerOrdersList = customerOrdersService.GetCustomerOrdersByPeriod((DateTime)beginDateEdit.EditValue, (DateTime)endDateEdit.EditValue).Where(srch=>srch.ContractorId == (int)contractorEdit.EditValue).ToList();
+
+
+            List<CustomerOrdersDTO> reportCustomerOrdersList = new List<CustomerOrdersDTO>();
+            List<CustomerOrderSpecificationsDTO> сustomerOrderSpecificationsList = new List<CustomerOrderSpecificationsDTO>();
+            foreach (var item in customerOrdersList)
+            {
+
+                //сustomerOrderSpecificationsList.AddRange(customerOrdersService.GetCustomerOrderSpecificationsByOrderId(item.Id));
+
+                foreach (var spec in customerOrdersService.GetCustomerOrderSpecificationsByOrderId(item.Id))
+                {
+                    reportCustomerOrdersList.Add(new CustomerOrdersDTO()
+                    {
+                        OrderNumber = item.OrderNumber,
+                         OrderDate = item.OrderDate,
+                           CurrencyPrice = item.CurrencyPrice,
+                            OrderPrice = item.OrderPrice,
+                              CurrencyName = item.CurrencyName,
+                                Drawing = item.Drawing,
+                                 ContractorName = item.ContractorName,
+                                   AgreementName = item.AgreementName,
+                                     Details = spec.Name,
+                                      DateCreate = item.DateCreate,
+                                       DateUpdate = item.DateUpdate,
+                                        DateShipping = item.DateShipping,
+                                         UserName = item.UserName
+
+                    });
+                }
+            }
+
+
+            reportService.PrintCWBSFullReportByCustomerOrder(reportCustomerOrdersList, (DateTime)beginDateEdit.EditValue, (DateTime)endDateEdit.EditValue);
+            splashScreenManager.CloseWaitForm();
+        }
+
+        private void barEditItem3_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
 
         }
     }

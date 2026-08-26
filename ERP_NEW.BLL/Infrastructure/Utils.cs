@@ -117,6 +117,16 @@ namespace ERP_NEW.BLL.Infrastructure
             return Provider;
         }
 
+        public static string RemoveInvalidFileNameChars(string fileName)
+        {
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                fileName = fileName.Replace(c.ToString(), "-");
+            }
+
+            return fileName;
+        }
+
         //ковенртировать размер, результат в виде дейсвительного числа
         public static double ToSize(Int64 value, SizeUnits unit)
         {

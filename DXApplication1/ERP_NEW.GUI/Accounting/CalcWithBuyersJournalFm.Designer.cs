@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalcWithBuyersJournalFm));
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.beginYearEdit = new DevExpress.XtraBars.BarEditItem();
-            this.repositoryItemDateEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+            this.contractorRepositiryEdit = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.beginMonthEdit = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemMonth1 = new DevExpress.XtraScheduler.UI.RepositoryItemMonth();
             this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
@@ -50,17 +51,32 @@
             this.endReportDateEdit = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemDateEdit4 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.reportBtn = new DevExpress.XtraBars.BarButtonItem();
-            this.reportMenu = new DevExpress.XtraBars.PopupMenu();
+            this.reportMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.calcWithBuyersReportBtn = new DevExpress.XtraBars.BarButtonItem();
             this.calcWithBuyersByAccountReportBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.calcWithBuyersPeriodFullReport = new DevExpress.XtraBars.BarButtonItem();
             this.periodBtn = new DevExpress.XtraBars.BarButtonItem();
             this.balanceAccountEdit = new DevExpress.XtraBars.BarEditItem();
             this.balanceAccountsRepository = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            this.beginDateEdit = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemDateEdit5 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+            this.endDateEdit = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemDateEdit6 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+            this.barEditItem4 = new DevExpress.XtraBars.BarEditItem();
+            this.contractorRepository = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
+            this.repositoryItemGridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.contractorEdit = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemGridLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.contractorRepositoryEdit = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            this.repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.calcWithBuyersGrid = new DevExpress.XtraGrid.GridControl();
@@ -106,10 +122,11 @@
             this.detailsCol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.selectedPaymentRepository = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
-            this.imageCollection = new DevExpress.Utils.ImageCollection();
+            this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
+            this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepositiryEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepositiryEdit.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMonth1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2.CalendarTimeProperties)).BeginInit();
@@ -120,6 +137,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit4.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.balanceAccountsRepository)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit5.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit6.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepository)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepositoryEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
             this.splitContainerControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
@@ -156,22 +183,33 @@
             this.periodBtn,
             this.balanceAccountEdit,
             this.calcWithBuyersReportBtn,
-            this.calcWithBuyersByAccountReportBtn});
+            this.calcWithBuyersByAccountReportBtn,
+            this.calcWithBuyersPeriodFullReport,
+            this.beginDateEdit,
+            this.endDateEdit,
+            this.barEditItem4,
+            this.contractorEdit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 19;
+            this.ribbonControl1.MaxItemId = 29;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemDateEdit1,
+            this.contractorRepositiryEdit,
             this.repositoryItemMonth1,
             this.repositoryItemDateEdit2,
             this.repositoryItemMonth2,
             this.repositoryItemDateEdit3,
             this.repositoryItemDateEdit4,
-            this.balanceAccountsRepository});
+            this.balanceAccountsRepository,
+            this.repositoryItemDateEdit5,
+            this.repositoryItemDateEdit6,
+            this.contractorRepository,
+            this.contractorRepositoryEdit,
+            this.repositoryItemLookUpEdit1,
+            this.repositoryItemGridLookUpEdit1});
             this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-            this.ribbonControl1.Size = new System.Drawing.Size(1362, 95);
+            this.ribbonControl1.Size = new System.Drawing.Size(1549, 95);
             this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // barStaticItem1
@@ -191,7 +229,7 @@
             // beginYearEdit
             // 
             this.beginYearEdit.Caption = "рік       ";
-            this.beginYearEdit.Edit = this.repositoryItemDateEdit1;
+            this.beginYearEdit.Edit = this.contractorRepositiryEdit;
             this.beginYearEdit.EditWidth = 100;
             this.beginYearEdit.Id = 2;
             this.beginYearEdit.ItemAppearance.Hovered.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -200,19 +238,19 @@
             this.beginYearEdit.ItemAppearance.Normal.Options.UseFont = true;
             this.beginYearEdit.Name = "beginYearEdit";
             // 
-            // repositoryItemDateEdit1
+            // contractorRepositiryEdit
             // 
-            this.repositoryItemDateEdit1.AutoHeight = false;
-            this.repositoryItemDateEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.contractorRepositiryEdit.AutoHeight = false;
+            this.contractorRepositiryEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemDateEdit1.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.contractorRepositiryEdit.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemDateEdit1.Mask.EditMask = "yyyy";
-            this.repositoryItemDateEdit1.Mask.UseMaskAsDisplayFormat = true;
-            this.repositoryItemDateEdit1.Name = "repositoryItemDateEdit1";
-            this.repositoryItemDateEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.repositoryItemDateEdit1.VistaCalendarInitialViewStyle = DevExpress.XtraEditors.VistaCalendarInitialViewStyle.YearView;
-            this.repositoryItemDateEdit1.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearsGroupView;
+            this.contractorRepositiryEdit.Mask.EditMask = "yyyy";
+            this.contractorRepositiryEdit.Mask.UseMaskAsDisplayFormat = true;
+            this.contractorRepositiryEdit.Name = "contractorRepositiryEdit";
+            this.contractorRepositiryEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.contractorRepositiryEdit.VistaCalendarInitialViewStyle = DevExpress.XtraEditors.VistaCalendarInitialViewStyle.YearView;
+            this.contractorRepositiryEdit.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearsGroupView;
             // 
             // beginMonthEdit
             // 
@@ -384,11 +422,13 @@
             this.reportBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("reportBtn.LargeGlyph")));
             this.reportBtn.Name = "reportBtn";
             this.reportBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.reportBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.reportBtn_ItemClick);
             // 
             // reportMenu
             // 
             this.reportMenu.ItemLinks.Add(this.calcWithBuyersReportBtn);
             this.reportMenu.ItemLinks.Add(this.calcWithBuyersByAccountReportBtn);
+            this.reportMenu.ItemLinks.Add(this.calcWithBuyersPeriodFullReport);
             this.reportMenu.Name = "reportMenu";
             this.reportMenu.Ribbon = this.ribbonControl1;
             // 
@@ -405,6 +445,13 @@
             this.calcWithBuyersByAccountReportBtn.Id = 18;
             this.calcWithBuyersByAccountReportBtn.Name = "calcWithBuyersByAccountReportBtn";
             this.calcWithBuyersByAccountReportBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.calcWithBuyersByAccountReportBtn_ItemClick);
+            // 
+            // calcWithBuyersPeriodFullReport
+            // 
+            this.calcWithBuyersPeriodFullReport.Caption = "Повний звіт за період по контрагенту";
+            this.calcWithBuyersPeriodFullReport.Id = 19;
+            this.calcWithBuyersPeriodFullReport.Name = "calcWithBuyersPeriodFullReport";
+            this.calcWithBuyersPeriodFullReport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.calcWithBuyersPeriodFullReport_ItemClick);
             // 
             // periodBtn
             // 
@@ -432,6 +479,109 @@
             this.balanceAccountsRepository.Name = "balanceAccountsRepository";
             this.balanceAccountsRepository.NullText = " ";
             this.balanceAccountsRepository.ShowHeader = false;
+            // 
+            // beginDateEdit
+            // 
+            this.beginDateEdit.Caption = "З   ";
+            this.beginDateEdit.Edit = this.repositoryItemDateEdit5;
+            this.beginDateEdit.EditWidth = 165;
+            this.beginDateEdit.Id = 20;
+            this.beginDateEdit.Name = "beginDateEdit";
+            // 
+            // repositoryItemDateEdit5
+            // 
+            this.repositoryItemDateEdit5.AutoHeight = false;
+            this.repositoryItemDateEdit5.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemDateEdit5.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemDateEdit5.Name = "repositoryItemDateEdit5";
+            // 
+            // endDateEdit
+            // 
+            this.endDateEdit.Caption = "По ";
+            this.endDateEdit.Edit = this.repositoryItemDateEdit6;
+            this.endDateEdit.EditWidth = 165;
+            this.endDateEdit.Id = 21;
+            this.endDateEdit.Name = "endDateEdit";
+            // 
+            // repositoryItemDateEdit6
+            // 
+            this.repositoryItemDateEdit6.AutoHeight = false;
+            this.repositoryItemDateEdit6.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemDateEdit6.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemDateEdit6.Name = "repositoryItemDateEdit6";
+            // 
+            // barEditItem4
+            // 
+            this.barEditItem4.Caption = "Контрагент";
+            this.barEditItem4.Edit = this.contractorRepository;
+            this.barEditItem4.EditWidth = 121;
+            this.barEditItem4.Id = 22;
+            this.barEditItem4.Name = "barEditItem4";
+            // 
+            // contractorRepository
+            // 
+            this.contractorRepository.AutoHeight = false;
+            this.contractorRepository.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.contractorRepository.Name = "contractorRepository";
+            this.contractorRepository.View = this.repositoryItemGridLookUpEdit1View;
+            // 
+            // repositoryItemGridLookUpEdit1View
+            // 
+            this.repositoryItemGridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.repositoryItemGridLookUpEdit1View.Name = "repositoryItemGridLookUpEdit1View";
+            this.repositoryItemGridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.repositoryItemGridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            // 
+            // contractorEdit
+            // 
+            this.contractorEdit.Caption = "Контрагент";
+            this.contractorEdit.Edit = this.repositoryItemGridLookUpEdit1;
+            this.contractorEdit.EditWidth = 120;
+            this.contractorEdit.Id = 25;
+            this.contractorEdit.Name = "contractorEdit";
+            this.contractorEdit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barEditItem3_ItemClick);
+            // 
+            // repositoryItemGridLookUpEdit1
+            // 
+            this.repositoryItemGridLookUpEdit1.AutoHeight = false;
+            this.repositoryItemGridLookUpEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemGridLookUpEdit1.Name = "repositoryItemGridLookUpEdit1";
+            this.repositoryItemGridLookUpEdit1.View = this.gridView1;
+            // 
+            // gridView1
+            // 
+            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn1,
+            this.gridColumn2});
+            this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsView.ShowAutoFilterRow = true;
+            this.gridView1.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.Caption = "Назва";
+            this.gridColumn1.FieldName = "Name";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 0;
+            this.gridColumn1.Width = 150;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "ЄДРПОУ";
+            this.gridColumn2.FieldName = "Srn";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 1;
+            this.gridColumn2.Width = 70;
             // 
             // ribbonPage1
             // 
@@ -475,9 +625,28 @@
             this.ribbonPageGroup4.ItemLinks.Add(this.beginReportDateEdit);
             this.ribbonPageGroup4.ItemLinks.Add(this.endReportDateEdit);
             this.ribbonPageGroup4.ItemLinks.Add(this.balanceAccountEdit);
-            this.ribbonPageGroup4.ItemLinks.Add(this.reportBtn);
+            this.ribbonPageGroup4.ItemLinks.Add(this.beginDateEdit);
+            this.ribbonPageGroup4.ItemLinks.Add(this.endDateEdit);
+            this.ribbonPageGroup4.ItemLinks.Add(this.contractorEdit);
+            this.ribbonPageGroup4.ItemLinks.Add(this.reportBtn, true);
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
             this.ribbonPageGroup4.Text = "Звіти";
+            // 
+            // contractorRepositoryEdit
+            // 
+            this.contractorRepositoryEdit.AutoHeight = false;
+            this.contractorRepositoryEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.contractorRepositoryEdit.Name = "contractorRepositoryEdit";
+            // 
+            // repositoryItemLookUpEdit1
+            // 
+            this.repositoryItemLookUpEdit1.AutoHeight = false;
+            this.repositoryItemLookUpEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemLookUpEdit1.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Назва контрагента", 200, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near)});
+            this.repositoryItemLookUpEdit1.Name = "repositoryItemLookUpEdit1";
             // 
             // splitContainerControl1
             // 
@@ -487,7 +656,7 @@
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl1.Panel2.Controls.Add(this.groupControl2);
-            this.splitContainerControl1.Size = new System.Drawing.Size(1362, 589);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1549, 589);
             this.splitContainerControl1.SplitterPosition = 332;
             this.splitContainerControl1.TabIndex = 1;
             // 
@@ -501,18 +670,18 @@
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl1.Location = new System.Drawing.Point(0, 0);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1362, 332);
+            this.groupControl1.Size = new System.Drawing.Size(1549, 332);
             this.groupControl1.TabIndex = 1;
             this.groupControl1.Text = "Журнал розрахунків";
             // 
             // calcWithBuyersGrid
             // 
             this.calcWithBuyersGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.calcWithBuyersGrid.Location = new System.Drawing.Point(2, 22);
+            this.calcWithBuyersGrid.Location = new System.Drawing.Point(2, 20);
             this.calcWithBuyersGrid.MainView = this.calcWithBuyersGridView;
             this.calcWithBuyersGrid.MenuManager = this.ribbonControl1;
             this.calcWithBuyersGrid.Name = "calcWithBuyersGrid";
-            this.calcWithBuyersGrid.Size = new System.Drawing.Size(1358, 308);
+            this.calcWithBuyersGrid.Size = new System.Drawing.Size(1545, 310);
             this.calcWithBuyersGrid.TabIndex = 0;
             this.calcWithBuyersGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.calcWithBuyersGridView});
@@ -879,20 +1048,20 @@
             this.groupControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl2.Location = new System.Drawing.Point(0, 0);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(1362, 251);
+            this.groupControl2.Size = new System.Drawing.Size(1549, 252);
             this.groupControl2.TabIndex = 1;
             this.groupControl2.Text = "Специфікація";
             // 
             // calcWithBuyersSpecGrid
             // 
             this.calcWithBuyersSpecGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.calcWithBuyersSpecGrid.Location = new System.Drawing.Point(2, 22);
+            this.calcWithBuyersSpecGrid.Location = new System.Drawing.Point(2, 20);
             this.calcWithBuyersSpecGrid.MainView = this.calcWithBuyersSpecGridView;
             this.calcWithBuyersSpecGrid.MenuManager = this.ribbonControl1;
             this.calcWithBuyersSpecGrid.Name = "calcWithBuyersSpecGrid";
             this.calcWithBuyersSpecGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.selectedPaymentRepository});
-            this.calcWithBuyersSpecGrid.Size = new System.Drawing.Size(1358, 227);
+            this.calcWithBuyersSpecGrid.Size = new System.Drawing.Size(1545, 230);
             this.calcWithBuyersSpecGrid.TabIndex = 0;
             this.calcWithBuyersSpecGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.calcWithBuyersSpecGridView});
@@ -1168,19 +1337,27 @@
             this.imageCollection.Images.SetKeyName(0, "if_lock.png");
             this.imageCollection.Images.SetKeyName(1, "if_lock_open.png");
             // 
+            // barEditItem1
+            // 
+            this.barEditItem1.Caption = "З  ";
+            this.barEditItem1.Edit = this.repositoryItemDateEdit3;
+            this.barEditItem1.EditWidth = 152;
+            this.barEditItem1.Id = 12;
+            this.barEditItem1.Name = "barEditItem1";
+            // 
             // CalcWithBuyersJournalFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1362, 684);
+            this.ClientSize = new System.Drawing.Size(1549, 684);
             this.Controls.Add(this.splitContainerControl1);
             this.Controls.Add(this.ribbonControl1);
             this.Name = "CalcWithBuyersJournalFm";
             this.ShowIcon = false;
             this.Text = "CalcWithBuyersJournalFm";
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepositiryEdit.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepositiryEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMonth1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2)).EndInit();
@@ -1191,6 +1368,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportMenu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.balanceAccountsRepository)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit5.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit6.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepository)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractorRepositoryEdit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
             this.splitContainerControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
@@ -1222,7 +1409,7 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit selectedPaymentRepository;
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
         private DevExpress.XtraBars.BarEditItem beginYearEdit;
-        private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit contractorRepositiryEdit;
         private DevExpress.XtraBars.BarEditItem beginMonthEdit;
         private DevExpress.XtraScheduler.UI.RepositoryItemMonth repositoryItemMonth1;
         private DevExpress.XtraBars.BarStaticItem barStaticItem2;
@@ -1288,5 +1475,21 @@
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand4;
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn totalPriceWithVatCol;
         private DevExpress.XtraGrid.Columns.GridColumn customerOrderNumberCol;
+        private DevExpress.XtraBars.BarButtonItem calcWithBuyersPeriodFullReport;
+        private DevExpress.XtraBars.BarEditItem beginDateEdit;
+        private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit5;
+        private DevExpress.XtraBars.BarEditItem endDateEdit;
+        private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit6;
+        private DevExpress.XtraBars.BarEditItem barEditItem1;
+        private DevExpress.XtraBars.BarEditItem barEditItem4;
+        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit contractorRepository;
+        private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemGridLookUpEdit1View;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit contractorRepositoryEdit;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
+        private DevExpress.XtraBars.BarEditItem contractorEdit;
+        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repositoryItemGridLookUpEdit1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
     }
 }

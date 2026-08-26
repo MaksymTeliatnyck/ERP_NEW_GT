@@ -179,6 +179,9 @@ namespace ERP_NEW.BLL.Interfaces
 
         bool GetMSDebitCredit(DateTime startDate, DateTime endDate, string flag1, string flag3, string flag4, string pflag3, string pflag4);
         bool PrintMSDebitCredit(List<MsDebitCreditDTO> reportTable, DateTime EndDate);
+
+        bool PrintCWBSFullReport(List<CalcWithBuyersInfoDTO> calcWithBuyersInfoPeriodFullList, List<CalcWithBuyersSpecDTO> calcWithBuyersSpecPeriodFullList, DateTime startDate, DateTime endDate);
+        bool PrintCWBSFullReportByCustomerOrder(List<CustomerOrdersDTO> customerOrdersFullList, DateTime startDate, DateTime endDate);
         void Dispose();
 
 
