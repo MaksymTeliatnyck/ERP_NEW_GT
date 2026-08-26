@@ -6248,10 +6248,10 @@ namespace ERP_NEW.BLL.Services
             
             try
             {
-                workbook.SaveAs(GeneratedReportsDir + string.Format("Розрахунки з контрагентом {0}  за період {1} - {2}", Utils.RemoveInvalidFileNameChars(customerOrdersFullList.First().ContractorName), startDate.ToShortDateString(), endDate.ToShortDateString()) + ".xls", FileFormat.Excel8);
+                workbook.SaveAs(GeneratedReportsDir + "Розрахунки з контрагентом" + ".xls", FileFormat.Excel8);
 
                 Process process = new Process();
-                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + string.Format("Розрахунки з контрагентом {0}  за період {1} - {2}", Utils.RemoveInvalidFileNameChars(customerOrdersFullList.First().ContractorName), startDate.ToShortDateString(), endDate.ToShortDateString()) + ".xls" + "\"";
+                process.StartInfo.Arguments = "\"" + GeneratedReportsDir + "Розрахунки з контрагентом" + ".xls" + "\"";
                 process.StartInfo.FileName = "Excel.exe";
                 process.Start();
                 return true;
