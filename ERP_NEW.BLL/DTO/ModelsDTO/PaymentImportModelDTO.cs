@@ -13,7 +13,7 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
         public int PaymentCurrencyCode; //3 ushort
         public uint PayerBankCode; //4 
         public uint RecipientBankCode; //5 
-        public ulong RecipientBankAccountNum; //6
+        public decimal RecipientBankAccountNum; //6
         public byte OperationType; //7
         public DateTime BankApplyDate; //8
         public string PaymentCurrencyName; //9
