@@ -51,7 +51,7 @@ namespace ERP_NEW.BLL.DTO.SelectedDTO
         public bool PaymentExists { get; set; }
         public uint? RecipientBankMfo { get; set; }
         public string RecipientBankName { get; set; }
-        public ulong? RecipientAccountNum { get; set; }
+        public decimal? RecipientAccountNum { get; set; }
 
         //property for check
         public bool Check { get; set; }

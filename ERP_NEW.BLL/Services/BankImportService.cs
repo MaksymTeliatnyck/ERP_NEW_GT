@@ -60,7 +60,7 @@ namespace ERP_NEW.BLL.Services
                         Sum = Math.Abs(decimal.TryParse(items[11].Replace('.', ','), out d) ? d : 0), // сумма
                         PaymentCurrencyName = items[3], // тип валюты
                         RecipientSrn = items[0], // МФО банка
-                        RecipientBankAccountNum = ulong.Parse(modoficateBancAccount),
+                        RecipientBankAccountNum = decimal.Parse(modoficateBancAccount),
                         RecipientBankCode = uint.Parse(items[6]),
                         RecipientName = items[10].Replace("&quot", "\""),
                         PaymentPurpose = items[12],

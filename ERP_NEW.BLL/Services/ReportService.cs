@@ -25,8 +25,7 @@ using AutoMapper;
 using ERP_NEW.DAL.Entities.Models;
 using ERP_NEW.DAL.Entities.QueryModels;
 using ERP_NEW.BLL.DTO;
-
-
+using System.Runtime.InteropServices;
 
 namespace ERP_NEW.BLL.Services
 {
@@ -1826,27 +1825,222 @@ namespace ERP_NEW.BLL.Services
             
         }
 //----------------------------------------------------------------------------        
+        //public void PrintBusinessTripDecreeCancel(List<BusinessTripsJournalDTO> source)
+        //{
+        //    Object missingObj = System.Reflection.Missing.Value;
+        //    Object trueObj = true;
+        //    Object falseObj = false;
+
+        //    word = new Words.Application { CheckLanguage = true };
+
+        //    string reportname = "Наказ про відрядження №" + source[0].DecreeNumber.Replace("/", "_") + " від " + source[0].DecreeDate.Value.ToShortDateString();
+
+        //    try
+        //    {
+
+        //        const Words.WdParagraphAlignment alignCenter = Words.WdParagraphAlignment.wdAlignParagraphCenter;
+        //        const Words.WdParagraphAlignment alignLeft = Words.WdParagraphAlignment.wdAlignParagraphLeft;
+        //        document = word.Documents.Add();
+        //        document.Select();
+
+        //        var str = word.Selection;
+        //        str.TypeText("ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ");
+        //        var rng = document.Paragraphs[1].Range;
+        //        rng.LanguageID = Words.WdLanguageID.wdUkrainian;
+        //        rng.NoProofing = 0;
+        //        rng.Font.Size = 12;
+        //        rng.Font.Bold = 1;
+        //        rng.Font.Name = "Times New Roman";
+        //        rng.ParagraphFormat.Alignment = alignCenter;
+
+        //        InsertLines(1);
+        //        str.TypeText("НАУКОВО-ВИРОБНИЧА ФІРМА «ТЕХВАГОНМАШ»");
+        //        rng = document.Paragraphs[2].Range;
+        //        rng.Font.Size = 12;
+        //        rng.Font.Bold = 1;
+        //        rng.Font.Name = "Times New Roman";
+        //        rng.ParagraphFormat.Alignment = alignCenter;
+
+        //        InsertLines(1);
+
+        //        str.TypeText("НАКАЗ № " + source[0].DecreeNumber);
+                
+        //        rng = document.Paragraphs[3].Range;
+        //        rng.Font.Bold = 0;
+        //        // подчеркивание ниже
+        //        //rng.Underline = Microsoft.Office.Interop.Word.WdUnderline.wdUnderlineSingle; 
+        //        str.ParagraphFormat.Alignment = alignCenter;
+
+        //        InsertLines(1);
+        //        str.TypeText("про відміну відрядження ");
+        //        str.ParagraphFormat.Alignment = alignCenter;
+
+        //        InsertLines(1);
+        //        var dat = source[0].DecreeDate.Value.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("uk-UA"));
+        //        str.TypeText("м. Кременчук                                                                                                " + dat);
+        //        str.ParagraphFormat.Alignment = alignCenter;
+
+        //        InsertLines(2);
+        //        rng = document.Paragraphs[6].Range;
+        //        rng.ParagraphFormat.LeftIndent = 12;
+        //        str.TypeText("В зв'язку зі зміною обставин");
+        //        str.ParagraphFormat.Alignment = alignLeft;
+
+        //        InsertLines(2);
+        //        str.TypeText("НАКАЗУЮ:");
+        //        str.ParagraphFormat.Alignment = alignCenter;
+
+        //        InsertLines(1);
+        //        str.TypeText("Відмінити відрядження:");
+        //        str.ParagraphFormat.Alignment = alignLeft;
+        //        var pad = new Ua();
+        //        var i = 1;
+
+        //        foreach (var item in source)
+        //        {
+        //            InsertLines(1);
+
+        //            var proffdative = (item.ProfessionNameGenitive != null) ? char.ToUpper(item.ProfessionNameGenitive[0]) + item.ProfessionNameGenitive.Substring(1) : String.Empty;
+
+        //            var fio = pad.Q(item.Fio);
+
+        //            //string lastName = pad.QSecondName("Ведмідь", NameCaseLib.NCL.Gender.Man)[3];
+        //            //string firstName = pad.QFirstName("Василь", NameCaseLib.NCL.Gender.Man)[3];
+        //            //string middleName = pad.QFirstName("Юрійович", NameCaseLib.NCL.Gender.Man)[3];
+
+        //            //string fio = lastName + " " + firstName + " " + middleName;
+
+        //            str.TypeText(i + ". " + proffdative + " " + fio[3] + " до " + item.FullCityName + ", " +
+        //                (item.ContractorsID == 0 ? "" : item.ContractorName) + " з " + item.StartDate.Value.ToShortDateString() + "р. по " + item.EndDate.Value.ToShortDateString() + "р. з метою " + item.PurposeName + ".");
+        //            str.ParagraphFormat.Alignment = alignLeft;
+        //            i++;
+        //        }
+
+        //        InsertLines(4);
+        //        const string boss = "Іван Шалаєвський";
+        //        str.TypeText("Директор виконавчий                                                                  " + boss);
+        //        str.ParagraphFormat.Alignment = alignCenter;
+
+        //        if (SaveAsDoc(@"\Приказы о командировках\" + source[0].DecreeDate.Value.Year + @"\", reportname))
+        //            word.Visible = true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        // MessageBox.Show("Документ уже открыт!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        document.Close(ref falseObj, ref  missingObj, ref missingObj);
+        //        word.Quit(ref missingObj, ref  missingObj, ref missingObj);
+        //        document = null;
+        //        word = null;
+        //    }
+        //}
+
+
+
+
+
         public void PrintBusinessTripDecreeCancel(List<BusinessTripsJournalDTO> source)
         {
-            Object missingObj = System.Reflection.Missing.Value;
-            Object trueObj = true;
-            Object falseObj = false;
+            Words.Application word = null;
+            Words.Document document = null;
+            Words.Selection str = null;
+            Words.Range rng = null;
 
-            word = new Words.Application { CheckLanguage = true };
-
-            string reportname = "Наказ про відрядження №" + source[0].DecreeNumber.Replace("/", "_") + " від " + source[0].DecreeDate.Value.ToShortDateString();
+            object missingObj = System.Reflection.Missing.Value;
 
             try
             {
+                if (source == null || source.Count == 0)
+                {
+                    MessageBox.Show(
+                        "Немає даних для формування наказу.",
+                        "Увага",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
 
-                const Words.WdParagraphAlignment alignCenter = Words.WdParagraphAlignment.wdAlignParagraphCenter;
-                const Words.WdParagraphAlignment alignLeft = Words.WdParagraphAlignment.wdAlignParagraphLeft;
+                    return;
+                }
+
+                string reportname =
+                    "Наказ про відрядження №" +
+                    source[0].DecreeNumber.Replace("/", "_") +
+                    " від " +
+                    source[0].DecreeDate.Value.ToShortDateString();
+
+                // ---------------------------------------------------------
+                // Запуск Microsoft Word
+                // ---------------------------------------------------------
+
+                int attempts = 0;
+
+                while (word == null && attempts < 5)
+                {
+                    try
+                    {
+                        attempts++;
+
+                        word = new Words.Application();
+
+                        word.Visible = false;
+                        word.DisplayAlerts = Words.WdAlertLevel.wdAlertsNone;
+                        word.CheckLanguage = true;
+                    }
+                    catch (COMException ex)
+                    {
+                        // RPC_E_CALL_REJECTED = 0x80010001
+                        if ((uint)ex.ErrorCode == 0x80010001)
+                        {
+                            if (word != null)
+                            {
+                                try
+                                {
+                                    Marshal.ReleaseComObject(word);
+                                }
+                                catch
+                                {
+                                }
+
+                                word = null;
+                            }
+
+                            System.Threading.Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+
+                if (word == null)
+                {
+                    throw new Exception(
+                        "Не вдалося запустити Microsoft Word. " +
+                        "Word відхиляє COM-запит.");
+                }
+
+                // ---------------------------------------------------------
+                // Создание документа
+                // ---------------------------------------------------------
+
                 document = word.Documents.Add();
-                document.Select();
 
-                var str = word.Selection;
-                str.TypeText("ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ");
-                var rng = document.Paragraphs[1].Range;
+                str = word.Selection;
+
+                const Words.WdParagraphAlignment alignCenter =
+                    Words.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                const Words.WdParagraphAlignment alignLeft =
+                    Words.WdParagraphAlignment.wdAlignParagraphLeft;
+
+                // ---------------------------------------------------------
+                // Заголовок
+                // ---------------------------------------------------------
+
+                str.TypeText(
+                    "ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ");
+
+                rng = document.Paragraphs[1].Range;
+
                 rng.LanguageID = Words.WdLanguageID.wdUkrainian;
                 rng.NoProofing = 0;
                 rng.Font.Size = 12;
@@ -1855,8 +2049,16 @@ namespace ERP_NEW.BLL.Services
                 rng.ParagraphFormat.Alignment = alignCenter;
 
                 InsertLines(1);
-                str.TypeText("НАУКОВО-ВИРОБНИЧА ФІРМА «ТЕХВАГОНМАШ»");
+
+                // ---------------------------------------------------------
+                // Название предприятия
+                // ---------------------------------------------------------
+
+                str.TypeText(
+                    "НАУКОВО-ВИРОБНИЧА ФІРМА «ТЕХВАГОНМАШ»");
+
                 rng = document.Paragraphs[2].Range;
+
                 rng.Font.Size = 12;
                 rng.Font.Bold = 1;
                 rng.Font.Name = "Times New Roman";
@@ -1864,89 +2066,316 @@ namespace ERP_NEW.BLL.Services
 
                 InsertLines(1);
 
-                str.TypeText("НАКАЗ № " + source[0].DecreeNumber);
-                
+                // ---------------------------------------------------------
+                // Номер приказа
+                // ---------------------------------------------------------
+
+                str.TypeText(
+                    "НАКАЗ № " + source[0].DecreeNumber);
+
                 rng = document.Paragraphs[3].Range;
+
+                rng.Font.Size = 12;
                 rng.Font.Bold = 0;
-                // подчеркивание ниже
-                //rng.Underline = Microsoft.Office.Interop.Word.WdUnderline.wdUnderlineSingle; 
+                rng.Font.Name = "Times New Roman";
+                rng.ParagraphFormat.Alignment = alignCenter;
+
+                InsertLines(1);
+
+                // ---------------------------------------------------------
+                // Заголовок
+                // ---------------------------------------------------------
+
+                str.TypeText(
+                    "про зміну терміну відрядження");
+
                 str.ParagraphFormat.Alignment = alignCenter;
 
                 InsertLines(1);
-                str.TypeText("про відміну відрядження ");
-                str.ParagraphFormat.Alignment = alignCenter;
 
-                InsertLines(1);
-                var dat = source[0].DecreeDate.Value.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("uk-UA"));
-                str.TypeText("м. Кременчук                                                                                                " + dat);
+                // ---------------------------------------------------------
+                // Город и дата
+                // ---------------------------------------------------------
+
+                string dat =
+                    source[0].DecreeDate.Value.ToString(
+                        "dd MMMM yyyy",
+                        CultureInfo.CreateSpecificCulture("uk-UA"));
+
+                str.TypeText(
+                    "м. Кременчук                                                                                                " +
+                    dat);
+
                 str.ParagraphFormat.Alignment = alignCenter;
 
                 InsertLines(2);
+
+                // ---------------------------------------------------------
+                // Основание
+                // ---------------------------------------------------------
+
                 rng = document.Paragraphs[6].Range;
+
                 rng.ParagraphFormat.LeftIndent = 12;
-                str.TypeText("В зв'язку зі зміною обставин");
+
+                str.TypeText(
+                    "В зв'язку з виробничою необхідністю");
+
                 str.ParagraphFormat.Alignment = alignLeft;
 
                 InsertLines(2);
+
+                // ---------------------------------------------------------
+                // НАКАЗУЮ
+                // ---------------------------------------------------------
+
                 str.TypeText("НАКАЗУЮ:");
+
                 str.ParagraphFormat.Alignment = alignCenter;
 
                 InsertLines(1);
-                str.TypeText("Відмінити відрядження:");
+
+                // ---------------------------------------------------------
+                // Основной текст
+                // ---------------------------------------------------------
+
+                str.TypeText("Змінити термін відрядження:");
+
                 str.ParagraphFormat.Alignment = alignLeft;
+
                 var pad = new Ua();
-                var i = 1;
+
+                int i = 1;
 
                 foreach (var item in source)
                 {
                     InsertLines(1);
 
-                    var proffdative = (item.ProfessionNameGenitive != null) ? char.ToUpper(item.ProfessionNameGenitive[0]) + item.ProfessionNameGenitive.Substring(1) : String.Empty;
+                    string proffdative =
+                        item.ProfessionNameGenitive != null
+                            ? char.ToUpper(item.ProfessionNameGenitive[0]) +
+                              item.ProfessionNameGenitive.Substring(1)
+                            : String.Empty;
 
                     var fio = pad.Q(item.Fio);
 
-                    //string lastName = pad.QSecondName("Ведмідь", NameCaseLib.NCL.Gender.Man)[3];
-                    //string firstName = pad.QFirstName("Василь", NameCaseLib.NCL.Gender.Man)[3];
-                    //string middleName = pad.QFirstName("Юрійович", NameCaseLib.NCL.Gender.Man)[3];
+                    string contractor =
+                        item.ContractorsID == 0
+                            ? ""
+                            : item.ContractorName;
 
-                    //string fio = lastName + " " + firstName + " " + middleName;
+                    string text =
+                        i + ". " +
+                        proffdative + " " +
+                        fio[3] +
+                        " до " +
+                        item.FullCityName +
+                        ", " +
+                        contractor +
+                        " з " +
+                        item.StartDate.Value.ToShortDateString() +
+                        "р. по " +
+                        item.EndDate.Value.ToShortDateString() +
+                        "р. з метою " +
+                        item.PurposeName +
+                        ".";
 
-                    str.TypeText(i + ". " + proffdative + " " + fio[3] + " до " + item.FullCityName + ", " +
-                        (item.ContractorsID == 0 ? "" : item.ContractorName) + " з " + item.StartDate.Value.ToShortDateString() + "р. по " + item.EndDate.Value.ToShortDateString() + "р. з метою " + item.PurposeName + ".");
+                    str.TypeText(text);
+
                     str.ParagraphFormat.Alignment = alignLeft;
+
                     i++;
                 }
 
+                // ---------------------------------------------------------
+                // Подпись
+                // ---------------------------------------------------------
+
                 InsertLines(4);
+
                 const string boss = "Іван Шалаєвський";
-                str.TypeText("Директор виконавчий                                                                  " + boss);
+
+                str.TypeText(
+                    "Директор підприємства                                                                  " +
+                    boss);
+
                 str.ParagraphFormat.Alignment = alignCenter;
 
-                if (SaveAsDoc(@"\Приказы о командировках\" + source[0].DecreeDate.Value.Year + @"\", reportname))
+                // ---------------------------------------------------------
+                // Сохранение
+                // ---------------------------------------------------------
+
+                string folder =
+                    @"\Приказы о командировках\" +
+                    source[0].DecreeDate.Value.Year +
+                    @"\";
+
+                bool result = SaveAsDoc(folder, reportname);
+
+                if (result)
+                {
+                    // Документ сохранен.
+                    // Оставляем Word открытым.
+
                     word.Visible = true;
+
+                    return;
+                }
+
+                return;
             }
-            catch (Exception)
+            catch (COMException ex)
             {
-                // MessageBox.Show("Документ уже открыт!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                document.Close(ref falseObj, ref  missingObj, ref missingObj);
-                word.Quit(ref missingObj, ref  missingObj, ref missingObj);
-                document = null;
-                word = null;
+                MessageBox.Show(
+                    "Помилка Microsoft Word:\r\n\r\n" +
+                    ex.Message +
+                    "\r\n\r\nКод: 0x" +
+                    ((uint)ex.ErrorCode).ToString("X8"),
+                    "Увага",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Помилка при формуванні наказу:\r\n\r\n" +
+                    ex.Message,
+                    "Увага",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+            finally
+            {
+                // ---------------------------------------------------------
+                // Освобождение Selection
+                // ---------------------------------------------------------
+
+                try
+                {
+                    if (str != null)
+                    {
+                        Marshal.ReleaseComObject(str);
+                        str = null;
+                    }
+                }
+                catch
+                {
+                }
+
+                // ---------------------------------------------------------
+                // Освобождение Range
+                // ---------------------------------------------------------
+
+                try
+                {
+                    if (rng != null)
+                    {
+                        Marshal.ReleaseComObject(rng);
+                        rng = null;
+                    }
+                }
+                catch
+                {
+                }
+
+                // ---------------------------------------------------------
+                // Если Word НЕ был успешно передан пользователю,
+                // закрываем документ и Word.
+                // ---------------------------------------------------------
+
+                try
+                {
+                    if (document != null && word != null && !word.Visible)
+                    {
+                        document.Close(
+                            Words.WdSaveOptions.wdDoNotSaveChanges,
+                            missingObj,
+                            missingObj);
+                    }
+                }
+                catch
+                {
+                }
+
+                try
+                {
+                    if (word != null && !word.Visible)
+                    {
+                        word.Quit(
+                            Words.WdSaveOptions.wdDoNotSaveChanges,
+                            missingObj,
+                            missingObj);
+                    }
+                }
+                catch
+                {
+                }
+
+                // ---------------------------------------------------------
+                // Освобождение Document
+                // ---------------------------------------------------------
+
+                try
+                {
+                    if (document != null)
+                    {
+                        Marshal.ReleaseComObject(document);
+                        document = null;
+                    }
+                }
+                catch
+                {
+                }
+
+                // ---------------------------------------------------------
+                // Освобождение Word
+                // ---------------------------------------------------------
+
+                try
+                {
+                    if (word != null)
+                    {
+                        Marshal.ReleaseComObject(word);
+                        word = null;
+                    }
+                }
+                catch
+                {
+                }
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
         }
+
 
         public void PrintBusinessTripDecreeProlong(List<BusinessTripsJournalDTO> source)
         {
             Object missingObj = System.Reflection.Missing.Value;
             Object trueObj = true;
             Object falseObj = false;
+            //document.Close(false);
+            //word.Quit();
+            //Marshal.ReleaseComObject(document);
+            //Marshal.ReleaseComObject(word);
+
 
             word = new Words.Application { CheckLanguage = true };
-
+            //word.CheckLanguage = true;
             string reportname = "Наказ про відрядження №" + source[0].DecreeNumber.Replace("/", "_") + " від " + source[0].DecreeDate.Value.ToShortDateString();
 
             try
             {
+
+
+
+
                 const Words.WdParagraphAlignment alignCenter = Words.WdParagraphAlignment.wdAlignParagraphCenter;
                 const Words.WdParagraphAlignment alignLeft = Words.WdParagraphAlignment.wdAlignParagraphLeft;
                 document = word.Documents.Add();
@@ -2024,17 +2453,17 @@ namespace ERP_NEW.BLL.Services
 
                 InsertLines(4);
                 const string boss = "Іван Шалаєвський";
-                str.TypeText("Директор виконавчий                                                                  " + boss);
+                str.TypeText("Директор підприємства                                                                  " + boss);
                 str.ParagraphFormat.Alignment = alignCenter;
 
                 if (SaveAsDoc(@"\Приказы о командировках\" + source[0].DecreeDate.Value.Year + @"\", reportname))
                     word.Visible = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // MessageBox.Show("Документ уже открыт!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                document.Close(ref falseObj, ref  missingObj, ref missingObj);
-                word.Quit(ref missingObj, ref  missingObj, ref missingObj);
+                MessageBox.Show("Помилка: " + ex.Message, "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                document.Close(ref falseObj, ref missingObj, ref missingObj);
+                word.Quit(ref missingObj, ref missingObj, ref missingObj);
                 document = null;
                 word = null;
             }

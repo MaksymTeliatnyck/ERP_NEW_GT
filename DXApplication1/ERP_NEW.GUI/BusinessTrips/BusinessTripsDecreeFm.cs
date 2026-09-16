@@ -215,7 +215,7 @@ namespace ERP_NEW.GUI.BusinessTrips
 
         private void showDecreeBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (businessTripsBS.Count > 0)
+             if (businessTripsBS.Count > 0)
             {
                 reportService = Program.kernel.Get<IReportService>();
 
