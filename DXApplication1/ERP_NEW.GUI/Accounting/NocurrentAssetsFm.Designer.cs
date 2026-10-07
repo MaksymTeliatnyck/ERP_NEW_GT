@@ -63,6 +63,8 @@
             this.gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn10 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMonth1)).BeginInit();
@@ -78,6 +80,7 @@
             this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.noCurrentAssetsMaterialsGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.noCurrentAssetsMaterialsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // splashScreenManager1
@@ -208,6 +211,7 @@
             this.transferMaterialBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("transferMaterialBtn.LargeGlyph")));
             this.transferMaterialBtn.Name = "transferMaterialBtn";
             this.transferMaterialBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.transferMaterialBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.transferMaterialBtn_ItemClick);
             // 
             // storehouseMaterialBtn
             // 
@@ -217,6 +221,7 @@
             this.storehouseMaterialBtn.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("storehouseMaterialBtn.LargeGlyph")));
             this.storehouseMaterialBtn.Name = "storehouseMaterialBtn";
             this.storehouseMaterialBtn.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.storehouseMaterialBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.storehouseMaterialBtn_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -390,6 +395,8 @@
             this.noCurrentAssetsMaterialsGrid.MainView = this.noCurrentAssetsMaterialsGridView;
             this.noCurrentAssetsMaterialsGrid.MenuManager = this.ribbonControl1;
             this.noCurrentAssetsMaterialsGrid.Name = "noCurrentAssetsMaterialsGrid";
+            this.noCurrentAssetsMaterialsGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemCheckEdit1});
             this.noCurrentAssetsMaterialsGrid.Size = new System.Drawing.Size(1113, 201);
             this.noCurrentAssetsMaterialsGrid.TabIndex = 0;
             this.noCurrentAssetsMaterialsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -402,7 +409,8 @@
             this.gridColumn7,
             this.gridColumn8,
             this.gridColumn9,
-            this.gridColumn10});
+            this.gridColumn10,
+            this.gridColumn11});
             this.noCurrentAssetsMaterialsGridView.GridControl = this.noCurrentAssetsMaterialsGrid;
             this.noCurrentAssetsMaterialsGridView.Name = "noCurrentAssetsMaterialsGridView";
             this.noCurrentAssetsMaterialsGridView.OptionsView.ShowGroupPanel = false;
@@ -419,6 +427,7 @@
             this.gridColumn6.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 0;
+            this.gridColumn6.Width = 182;
             // 
             // gridColumn7
             // 
@@ -432,6 +441,7 @@
             this.gridColumn7.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 1;
+            this.gridColumn7.Width = 182;
             // 
             // gridColumn8
             // 
@@ -445,6 +455,7 @@
             this.gridColumn8.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 2;
+            this.gridColumn8.Width = 182;
             // 
             // gridColumn9
             // 
@@ -458,11 +469,14 @@
             this.gridColumn9.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn9.Visible = true;
             this.gridColumn9.VisibleIndex = 3;
+            this.gridColumn9.Width = 182;
             // 
             // gridColumn10
             // 
             this.gridColumn10.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.gridColumn10.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn10.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn10.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridColumn10.Caption = "Дата отримання";
             this.gridColumn10.FieldName = "BeginDate";
             this.gridColumn10.Name = "gridColumn10";
@@ -471,6 +485,26 @@
             this.gridColumn10.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 4;
+            this.gridColumn10.Width = 328;
+            // 
+            // gridColumn11
+            // 
+            this.gridColumn11.AppearanceHeader.Image = global::ERP_NEW.GUI.Accounting.Resources.checkbox2_16x16;
+            this.gridColumn11.AppearanceHeader.Options.UseImage = true;
+            this.gridColumn11.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gridColumn11.Caption = " ";
+            this.gridColumn11.ColumnEdit = this.repositoryItemCheckEdit1;
+            this.gridColumn11.FieldName = "Selected";
+            this.gridColumn11.Image = global::ERP_NEW.GUI.Accounting.Resources.checkbox2_16x16;
+            this.gridColumn11.Name = "gridColumn11";
+            this.gridColumn11.Visible = true;
+            this.gridColumn11.VisibleIndex = 5;
+            this.gridColumn11.Width = 39;
+            // 
+            // repositoryItemCheckEdit1
+            // 
+            this.repositoryItemCheckEdit1.AutoHeight = false;
+            this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
             // 
             // splashScreenManager
             // 
@@ -502,6 +536,7 @@
             this.groupControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.noCurrentAssetsMaterialsGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.noCurrentAssetsMaterialsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -543,5 +578,7 @@
         private DevExpress.XtraBars.BarButtonItem transferMaterialBtn;
         private DevExpress.XtraBars.BarButtonItem storehouseMaterialBtn;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn11;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
     }
 }

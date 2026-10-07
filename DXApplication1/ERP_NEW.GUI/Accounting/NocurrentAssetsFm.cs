@@ -22,6 +22,9 @@ namespace ERP_NEW.GUI.Accounting
 
         private BindingSource noCurrentAssetsBS = new BindingSource();
         private BindingSource noCurrentAssetsMaterialsBS = new BindingSource();
+
+        private List<NocurrentAsetsMaterialDTO> noCurrentAssetsMaterialsList = new List<NocurrentAsetsMaterialDTO>();
+
         private UserTasksDTO userTasksDTO;
 
         public NocurrentAssetsFm(UserTasksDTO userTasksDTO)
@@ -155,6 +158,47 @@ namespace ERP_NEW.GUI.Accounting
             storeHouseService = Program.kernel.Get<IStoreHouseService>();
             noCurrentAssetsMaterialsBS.DataSource = storeHouseService.GetNocurrentsAssetsMaterialDetailById(nocurrentAssetId);
             noCurrentAssetsMaterialsGrid.DataSource = noCurrentAssetsMaterialsBS;
+        }
+
+        private void transferMaterialBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            noCurrentAssetsMaterialsGridView.CloseEditor();
+            noCurrentAssetsMaterialsGridView.UpdateCurrentRow();
+            noCurrentAssetsMaterialsList = ((List<NocurrentAsetsMaterialDTO>)noCurrentAssetsMaterialsBS.DataSource).Where(s => s.Selected).ToList();
+
+            if (noCurrentAssetsMaterialsList.Count() == 0)
+            {
+                MessageBox.Show("Відсутні матеріали для переміщення", "Переміщення", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (NocurrentAssetsTransferFm nocurrentAssetsTransferFm = new NocurrentAssetsTransferFm(Utils.Operation.Add,((NocurrentAssetsDTO)noCurrentAssetsBS.Current), noCurrentAssetsMaterialsList))
+            {
+                if (nocurrentAssetsTransferFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    //var returnModel = nocurrentAssetsMaterialSelectFm.Return();
+                    //noCurrentAssetsGridView.BeginDataUpdate();
+
+                    //LoadDataNocurrentAssets(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
+
+                    //noCurrentAssetsGridView.EndDataUpdate();
+
+                    //int rowHandle = noCurrentAssetsGridView.LocateByValue("Id", returnModel.NocurrentAsetsId);
+
+                    //noCurrentAssetsGridView.FocusedRowHandle = rowHandle;
+
+
+                    //var returnModel = nocurrentAssetsMaterialSelectFm.Return();
+
+                    //dkppCodeEdit.EditValue = returnModel.CodeDKPP;
+                    //((CalcWithBuyersSpecDTO)Item).DkppId = returnModel.Id;
+                }
+            }
+        }
+
+        private void storehouseMaterialBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
         }
     }
 }

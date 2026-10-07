@@ -16,6 +16,7 @@ namespace ERP_NEW.DAL.Entities.QueryModels
         public DateTime? OrderDate { get; set; }
         public string ReceiptNum { get; set; }
         public decimal? RemainsQuantity { get; set; }
+        public decimal? RemainsSum { get; set; }
         public decimal? UnitPrice { get; set; }
         public string DebitNum { get; set; }
         public string Correction { get; set; }

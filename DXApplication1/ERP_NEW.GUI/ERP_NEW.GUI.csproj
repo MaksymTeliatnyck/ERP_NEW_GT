@@ -246,6 +246,7 @@
     <Reference Include="DevExpress.XtraVerticalGrid.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.XtraWizard.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -264,7 +265,7 @@
     </Reference>
     <Reference Include="ERP_NEW.DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ERP_NEW.DAL\bin\Release\ERP_NEW.DAL.dll</HintPath>
+      <HintPath>..\..\ERP_NEW.DAL\bin\Debug\ERP_NEW.DAL.dll</HintPath>
     </Reference>
     <Reference Include="FirebirdSql.Data.FirebirdClient, Version=5.7.0.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FirebirdSql.Data.FirebirdClient.5.7.0\lib\net40-client\FirebirdSql.Data.FirebirdClient.dll</HintPath>
@@ -702,6 +703,12 @@
     </Compile>
     <Compile Include="Accounting\NocurrentAssetsMaterialSelectFm.Designer.cs">
       <DependentUpon>NocurrentAssetsMaterialSelectFm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Accounting\NocurrentAssetsTransferFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Accounting\NocurrentAssetsTransferFm.Designer.cs">
+      <DependentUpon>NocurrentAssetsTransferFm.cs</DependentUpon>
     </Compile>
     <Compile Include="Accounting\ReportsFm.cs">
       <SubType>Form</SubType>
@@ -2036,6 +2043,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\NocurrentAssetsMaterialSelectFm.resx">
       <DependentUpon>NocurrentAssetsMaterialSelectFm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Accounting\NocurrentAssetsTransferFm.resx">
+      <DependentUpon>NocurrentAssetsTransferFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\ReportsFm.resx">
       <DependentUpon>ReportsFm.cs</DependentUpon>

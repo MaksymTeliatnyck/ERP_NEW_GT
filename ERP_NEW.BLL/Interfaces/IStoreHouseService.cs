@@ -230,7 +230,7 @@ namespace ERP_NEW.BLL.Interfaces
         bool NocurrentAssetsDelete(int id);
 
         int NocurrentAssetsMaterialCreate(NocurrentAsetsMaterialDTO acDTO);
-        void NocurrentAssetsUpdate(NocurrentAsetsMaterialDTO acDTO);
+        void NocurrentAssetsMaterialUpdate(NocurrentAsetsMaterialDTO acDTO);
         bool NocurrentAssetsMaterialDelete(int id);
 
         void Dispose();

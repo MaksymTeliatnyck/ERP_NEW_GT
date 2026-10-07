@@ -116,7 +116,8 @@ namespace ERP_NEW.GUI.Accounting
                                         NomenclatureId = ((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).NomenclatureId,
                                          Percentage = null,
                                           Quantity = quantityEdit.Value,
-                                           ReceiptId = ((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).ReceiptId,
+                                           Price = (decimal)((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).UnitPrice* quantityEdit.Value,
+                                            ReceiptId = ((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).ReceiptId,
                                             Status = 1
 
 

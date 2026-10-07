@@ -16,6 +16,7 @@ namespace ERP_NEW.DAL.Entities.Models
         public int NomenclatureId { get; set; }
         public int ReceiptId { get; set; }
         public decimal Quantity { get; set; }
+        public decimal Price { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? Percentage { get; set; }
