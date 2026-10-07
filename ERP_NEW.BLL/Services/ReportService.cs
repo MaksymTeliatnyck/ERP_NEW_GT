@@ -17918,6 +17918,9 @@ namespace ERP_NEW.BLL.Services
             Сells["K" + startWith].Interior.Color = System.Drawing.Color.Green;
             Сells["K" + startWith].Font.Size = fontSize;
 
+
+            Сells["A" + 8 + ":K" + startWith].AutoFilter();
+
             PrintSignatures(Сells, startWith + 3);
 
             try
