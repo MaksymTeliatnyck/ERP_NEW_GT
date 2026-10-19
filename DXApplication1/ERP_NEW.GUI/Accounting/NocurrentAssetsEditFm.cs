@@ -55,7 +55,7 @@ namespace ERP_NEW.GUI.Accounting
             docDateEdit.DataBindings.Add("EditValue", nocurrentAssetsBS, "DocDate");
 
             employeesService = Program.kernel.Get<IEmployeesService>();
-            employeesList = employeesService.GetEmployeesWorkingAll().ToList();
+            employeesList = employeesService.GetEmployeesWorking().ToList();
 
 
             employeeEdit.DataBindings.Add("EditValue", nocurrentAssetsBS, "EmployeeId");

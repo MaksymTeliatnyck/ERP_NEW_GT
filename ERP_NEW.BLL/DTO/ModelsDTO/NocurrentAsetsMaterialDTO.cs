@@ -17,9 +17,11 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
         public int ReceiptId { get; set; }
         public string ReceiptNum { get; set; }
         public decimal Quantity { get; set; }
+        public decimal Price { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int?  Percentage { get; set; }
         public int Status { get; set; }
+        public bool Selected { get; set; }
     }
 }

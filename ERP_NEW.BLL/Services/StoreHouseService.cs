@@ -2356,7 +2356,7 @@ namespace ERP_NEW.BLL.Services
             return (int)createAC.Id;
         }
 
-        public void NocurrentAssetsUpdate(NocurrentAsetsMaterialDTO acDTO)
+        public void NocurrentAssetsMaterialUpdate(NocurrentAsetsMaterialDTO acDTO)
         {
             var updateAC = nocurrentAsetsMaterial.GetAll().SingleOrDefault(c => c.Id == acDTO.Id);
             nocurrentAsetsMaterial.Update((mapper.Map<NocurrentAsetsMaterialDTO, NocurrentAsetsMaterial>(acDTO, updateAC)));
