@@ -15734,6 +15734,9 @@ namespace ERP_NEW.BLL.Services
                 sumPrice = Math.Round(newMaterialsList.Where(r => r.Flag < 2).Select(s => s.FixedPrice).Sum(), 2);
                 float percentUsefullMonth = (100 / (Convert.ToInt16(model.UsefulMonth) / 12));
 
+
+                cells["Q12"].Value = model.InventoryNumber;
+                cells["S12"].Value = model.BeginRecordDate;
                 cells["M32"].Value = model.InventoryName.ToString() + "   ";
                 cells["O27"].Value = model.InventoryNumber;
                 cells["D27"].Value = model.BalanceAccountNum;
@@ -15792,7 +15795,7 @@ namespace ERP_NEW.BLL.Services
             int rows = 100;
             int cols = 30;
             DateTime dt = DateTime.Now;
-
+            ///////////////////////
             cells[0, 0, rows, cols].Replace("{currYear}", dt.Year.ToString(), LookAt.Part, SearchOrder.ByRows, false);
             cells[0, 0, rows, cols].Replace("{currInventoryName}", model.InventoryName.ToString(), LookAt.Part, SearchOrder.ByRows, false);
             cells[0, 0, rows, cols].Replace("{currInventoryNumber}", model.InventoryNumber.ToString(), LookAt.Part, SearchOrder.ByRows, false);
@@ -15933,6 +15936,9 @@ namespace ERP_NEW.BLL.Services
             var Сells = Worksheet.Cells;
             IRange cells = Worksheet.Cells;
 
+            cells["G14"].Value = model.InventoryNumber;
+            cells["H14"].Value = model.EndRecordDate;
+
             if (materialsListSource.Count > 0)
             {
                 for (int i = 0; i < materialsListSource.Count; i++)
@@ -15969,7 +15975,12 @@ namespace ERP_NEW.BLL.Services
                         cells["K" + materialRows].Value = item.TotalPrice;
                         cells["M" + materialRows].Value = model.InventoryNumber;
                         materialRows++;
-                    };                    
+                    };
+
+                    cells["H" + (26+ newMaterialsList.Count)].Value = model.EndRecordDate;
+                    cells["M" + (26 + newMaterialsList.Count)].Value = model.EndRecordDate;
+                    cells["L" + (34 + newMaterialsList.Count)].Value = model.EndRecordDate;
+
                 }
                 else
                 {
