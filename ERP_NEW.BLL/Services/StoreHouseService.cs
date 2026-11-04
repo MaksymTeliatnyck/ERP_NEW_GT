@@ -1518,7 +1518,8 @@ namespace ERP_NEW.BLL.Services
                                      Percentage = nam.Percentage,
                                       ReceiptId = nam.ReceiptId,
                                        ReceiptNum = ord.RECEIPT_NUM,
-                                        NocurrentAsetsId = nam.NocurrentAsetsId
+                                        NocurrentAsetsId = nam.NocurrentAsetsId,
+                                         Price = nam.Price
                              //UnitPrice = rec.UNIT_PRICE,
                             
 

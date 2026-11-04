@@ -176,8 +176,8 @@ namespace ERP_NEW.GUI.Accounting
             {
                 if (nocurrentAssetsTransferFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    //var returnModel = nocurrentAssetsMaterialSelectFm.Return();
-                    //noCurrentAssetsGridView.BeginDataUpdate();
+                    var returnModel = nocurrentAssetsMaterialSelectFm.Return();
+                    noCurrentAssetsGridView.BeginDataUpdate();
 
                     //LoadDataNocurrentAssets(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
 

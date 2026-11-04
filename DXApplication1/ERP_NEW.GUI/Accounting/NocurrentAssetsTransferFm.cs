@@ -24,6 +24,7 @@ namespace ERP_NEW.GUI.Accounting
         //private BindingSource employeesBS = new BindingSource();
         //private BindingSource responsiblePersonBS = new BindingSource();
         public NocurrentAssetsDTO previewAsetsMaterialCard = new NocurrentAssetsDTO();
+        public NocurrentAssetsDTO nextAsetsMaterialCard = new NocurrentAssetsDTO();
         public List<NocurrentAsetsMaterialDTO> asetsMaterials = new List<NocurrentAsetsMaterialDTO>();
 
 
@@ -100,9 +101,6 @@ namespace ERP_NEW.GUI.Accounting
                     MessageBox.Show("При збереженні виникла помилка. " + ex.Message, "Збереження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-
-
-
         }
 
         private bool SaveItems()
@@ -131,6 +129,7 @@ namespace ERP_NEW.GUI.Accounting
 
                 storeHouseService.NocurrentAssetsMaterialCreate(createMaterial);
 
+
                 item.Status = 2;
                 item.EndDate = ((DateTime?)dateTransferEdit.EditValue).Value.AddDays(-1);
 
@@ -139,6 +138,11 @@ namespace ERP_NEW.GUI.Accounting
             }
 
             return true;
+        }
+
+        private int Return()
+        {
+            return asetsMaterialCard;
         }
 
         private void dxValidationProvider_ValidationFailed(object sender, DevExpress.XtraEditors.DXErrorProvider.ValidationFailedEventArgs e)
