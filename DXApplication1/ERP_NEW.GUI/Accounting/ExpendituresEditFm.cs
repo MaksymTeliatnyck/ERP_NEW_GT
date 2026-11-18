@@ -365,7 +365,7 @@ namespace ERP_NEW.GUI.Accounting
 
                 if (((ExpedinturesAccountantDTO)Item).CustomerOrderId == null && ((ExpedinturesAccountantDTO)Item).EmployeeId == null)
                 {
-                    MessageBox.Show("Выдсутній номер заказу та не вказано людину на яку проводиться списання!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Відсутній номер заказу та не вказано людину на яку проводиться списання!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
 

@@ -36,6 +36,7 @@ namespace ERP_NEW.GUI.Accounting
         private UserTasksDTO userTasksDTO;
         private DateTime beginDate;
         private DateTime endDate;
+        public List<ExpenditureInfoDTO> expenditureInfoSelectedList = new List<ExpenditureInfoDTO>();
 
         private LoggerInfo loger = new LoggerInfo();
 
@@ -457,7 +458,69 @@ namespace ERP_NEW.GUI.Accounting
 
         private void selectedExpeBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            periodService = Program.kernel.Get<IPeriodService>();
+            storeHouseService = Program.kernel.Get<IStoreHouseService>();
 
+            expenditureInfoSelectedList = ((List<ExpenditureInfoDTO>)expendituresBS.DataSource).Where(s => s.Selected).ToList();
+
+            if (expenditureInfoSelectedList.Count > 0)
+            {
+
+                foreach (var item in expenditureInfoSelectedList)
+                {
+
+                    if (!periodService.CheckPeriodAccess((DateTime)item.RealExpDate))
+                    {
+                        MessageBox.Show("Період закрит або не існує!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+
+                    if (customerOrdersService.CheckCustomerOrderEnable((int?)item.CustomerOrderId))
+                    {
+                        MessageBox.Show("Заказ знаходиться на складі!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+
+                    if (item.CreditAccountId == null)
+                        if (MessageBox.Show("Відсутній номер рахунку списання, продовжити?", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                            return false;
+
+                    if (((ExpedinturesAccountantDTO)Item).CustomerOrderId == null && ((ExpedinturesAccountantDTO)Item).EmployeeId == null)
+                    {
+                        MessageBox.Show("Відсутній номер заказу та не вказано людину на яку проводиться списання!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                }
+
+                //using (BankPaymentsImportContractorEditFm bankPaymentsImportContractorEditFm = new BankPaymentsImportContractorEditFm())
+                //{
+                //    if (bankPaymentsImportContractorEditFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                //    {
+                //        importPaymentsGridView.PostEditor();
+
+                //        importPaymentsGridView.BeginDataUpdate();
+
+                //        ContractorsDTO contractor = bankPaymentsImportContractorEditFm.Return();
+                //        var updatePaymentList = bankPaymentList.Where(s => s.Check);
+                //        foreach (var item in updatePaymentList)
+                //        {
+                //            item.Contractor_Id = contractor.Id;
+                //            item.PartnerName = contractor.Name;
+                //            item.PartnerSrn = contractor.Srn;
+
+
+                //        }
+
+
+                //        bankPaymentBS.DataSource = bankPaymentList;
+                //        importPaymentsGrid.DataSource = bankPaymentBS;
+
+
+                //        //LoadDataByPeriod(_beginDate, _endDate);
+                //        importPaymentsGridView.EndDataUpdate();
+                //    }
+                //}
+            }
         }
     }
 }
