@@ -24,12 +24,20 @@ namespace ERP_NEW.GUI.Accounting
         private BindingSource noCurrentAssetsMaterialsBS = new BindingSource();
 
         private List<NocurrentAsetsMaterialDTO> noCurrentAssetsMaterialsList = new List<NocurrentAsetsMaterialDTO>();
-
         private UserTasksDTO userTasksDTO;
+        private DateTime beginDate, endDate;
+
 
         public NocurrentAssetsFm(UserTasksDTO userTasksDTO)
         {
             InitializeComponent();
+
+            monthEdit.EditValue = DateTime.Now.Month;
+            yearEdit.EditValue = DateTime.Now;
+
+            beginDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
+
             LoadDataNocurrentAssets();
             this.userTasksDTO = userTasksDTO;
             AuthorizatedUserAccess();
@@ -118,7 +126,7 @@ namespace ERP_NEW.GUI.Accounting
 
         private void addMaterialBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            using (NocurrentAssetsMaterialSelectFm nocurrentAssetsMaterialSelectFm = new NocurrentAssetsMaterialSelectFm(((NocurrentAssetsDTO)noCurrentAssetsBS.Current)))
+            using (NocurrentAssetsMaterialSelectFm nocurrentAssetsMaterialSelectFm = new NocurrentAssetsMaterialSelectFm(((NocurrentAssetsDTO)noCurrentAssetsBS.Current), beginDate, endDate))
             {
                 if (nocurrentAssetsMaterialSelectFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -171,34 +179,52 @@ namespace ERP_NEW.GUI.Accounting
                 MessageBox.Show("Відсутні матеріали для переміщення", "Переміщення", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            
             using (NocurrentAssetsTransferFm nocurrentAssetsTransferFm = new NocurrentAssetsTransferFm(Utils.Operation.Add,((NocurrentAssetsDTO)noCurrentAssetsBS.Current), noCurrentAssetsMaterialsList))
             {
                 if (nocurrentAssetsTransferFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    var returnModel = nocurrentAssetsMaterialSelectFm.Return();
+                    var returnModel = nocurrentAssetsTransferFm.Return();
                     noCurrentAssetsGridView.BeginDataUpdate();
 
-                    //LoadDataNocurrentAssets(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
+                    LoadDataNocurrentAssets(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
 
-                    //noCurrentAssetsGridView.EndDataUpdate();
+                    noCurrentAssetsGridView.EndDataUpdate();
 
-                    //int rowHandle = noCurrentAssetsGridView.LocateByValue("Id", returnModel.NocurrentAsetsId);
+                    int rowHandle = noCurrentAssetsGridView.LocateByValue("Id", returnModel.Id);
 
-                    //noCurrentAssetsGridView.FocusedRowHandle = rowHandle;
-
-
-                    //var returnModel = nocurrentAssetsMaterialSelectFm.Return();
-
-                    //dkppCodeEdit.EditValue = returnModel.CodeDKPP;
-                    //((CalcWithBuyersSpecDTO)Item).DkppId = returnModel.Id;
+                    noCurrentAssetsGridView.FocusedRowHandle = rowHandle;
                 }
             }
         }
 
         private void storehouseMaterialBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            noCurrentAssetsMaterialsGridView.CloseEditor();
+            noCurrentAssetsMaterialsGridView.UpdateCurrentRow();
+            noCurrentAssetsMaterialsList = ((List<NocurrentAsetsMaterialDTO>)noCurrentAssetsMaterialsBS.DataSource).Where(s => s.Selected).ToList();
 
+            if (noCurrentAssetsMaterialsList.Count() == 0)
+            {
+                MessageBox.Show("Відсутні матеріали для переміщення", "Переміщення", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int rowHandle = ((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id;
+
+            using (NocurrentAssetsTransferStorehouseFm nocurrentAssetsTransferFm = new NocurrentAssetsTransferStorehouseFm(Utils.Operation.Add, ((NocurrentAssetsDTO)noCurrentAssetsBS.Current), noCurrentAssetsMaterialsList))
+            {
+                if (nocurrentAssetsTransferFm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    noCurrentAssetsGridView.BeginDataUpdate();
+
+                    LoadDataNocurrentAssets(((NocurrentAssetsDTO)noCurrentAssetsBS.Current).Id);
+
+                    noCurrentAssetsGridView.EndDataUpdate();
+
+                    noCurrentAssetsGridView.FocusedRowHandle = rowHandle;
+                }
+            }
         }
     }
 }

@@ -24,22 +24,22 @@ namespace ERP_NEW.GUI.Accounting
         private NocurrentAssetsDTO nocurrentAssets;
         public NocurrentAsetsMaterialDTO nocurrentAssetsMaterial;
 
-        public NocurrentAssetsMaterialSelectFm(NocurrentAssetsDTO nocurrentAssets)
+        public NocurrentAssetsMaterialSelectFm(NocurrentAssetsDTO nocurrentAssets, DateTime startDate, DateTime endDate)
         {
             InitializeComponent();
-            LoadDataNocurrentAssetsMaterials();
+            LoadDataNocurrentAssetsMaterials(startDate, endDate);
             this.nocurrentAssets = nocurrentAssets;
 
              
 
         }
 
-        private void LoadDataNocurrentAssetsMaterials()
+        private void LoadDataNocurrentAssetsMaterials(DateTime startDate, DateTime endDate)
         {
             splashScreenManager.ShowWaitForm();
 
             storeHouseService = Program.kernel.Get<IStoreHouseService>();
-            noCurrentAssetsMaterialsBS.DataSource = storeHouseService.GetNocurrentAssetsRemainsMaterial();
+            noCurrentAssetsMaterialsBS.DataSource = storeHouseService.GetNocurrentAssetsRemainsMaterial(startDate, endDate);
             noCurrentAssetsMaterialsGrid.DataSource = noCurrentAssetsMaterialsBS;
 
             splashScreenManager.CloseWaitForm();
@@ -78,6 +78,10 @@ namespace ERP_NEW.GUI.Accounting
                 return;
             }
 
+
+
+
+
             if (MessageBox.Show("Перемістити "+ ((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).NomenclatureName +
                 " в кількості "+ quantityEdit.Value + " на картку працівника " + nocurrentAssets.EmployeeFullName + " ?",
                 "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -106,21 +110,19 @@ namespace ERP_NEW.GUI.Accounting
 
             storeHouseService = Program.kernel.Get<IStoreHouseService>();
 
-
             nocurrentAssetsMaterial = new NocurrentAsetsMaterialDTO()
                                 {
                                     ParentId = null,
-                                     BeginDate = (DateTime)dateEdit.EditValue,
+                                     BeginDate = ((DateTime)dateEdit.EditValue).AddDays(1 - ((DateTime)dateEdit.EditValue).Day),
                                       EndDate = null,
                                        NocurrentAsetsId = nocurrentAssets.Id,
                                         NomenclatureId = ((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).NomenclatureId,
                                          Percentage = null,
+                                          ReceiptDate = ((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).OrderDate,
                                           Quantity = quantityEdit.Value,
                                            Price = (decimal)((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).UnitPrice* quantityEdit.Value,
                                             ReceiptId = ((NocurrentAssetsMaterialJournalDTO)noCurrentAssetsMaterialsBS.Current).ReceiptId,
                                             Status = 1
-
-
             };
 
             storeHouseService.NocurrentAssetsMaterialCreate(nocurrentAssetsMaterial);

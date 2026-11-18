@@ -129,9 +129,10 @@ namespace ERP_NEW.BLL.Interfaces
         IEnumerable<NocurrentAsetsMaterialDTO> GetNocurrentsAssetsMaterialDetailById(int nocurrentAssetsId);
         IEnumerable<NocurrentAssetsDTO> GetNoCurrentAssetsDetail();
         //IEnumerable<NocurrentAsetsMaterialDTO> GetNoCurrentAssetsDetail();
-        IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial();
+        IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial(DateTime startDate, DateTime endDate);
 
-        
+
+
 
         int AccountClothesCreate(AccountClothesDTO accountClothesDTO);
         void AccountClothesUpdate(AccountClothesDTO accountClothesDTO);

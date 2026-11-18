@@ -1575,10 +1575,27 @@ namespace ERP_NEW.BLL.Services
           }
 
 
-        public IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial()
+        public IEnumerable<NocurrentAssetsMaterialJournalDTO> GetNocurrentAssetsRemainsMaterial(DateTime startDate, DateTime endDate)
         {
-            string procName = @"select * from ""GetNocurrentRamainsMaterial""";
-            return mapper.Map<IEnumerable<NocurrentAssetsMaterialJournal>, List<NocurrentAssetsMaterialJournalDTO>>(nocurrentAsetsMaterialJournal.SQLExecuteProc(procName));
+            //FbParameter[] Parameters =
+            //{
+            //    new FbParameter("BeginDate", startDate),
+            //    new FbParameter("EndDate", endDate),
+            //};
+
+            //string procName = @"select * from ""GetInvoicesForFixedAssets""(@BeginDate, @EndDate)";
+
+            //return mapper.Map<IEnumerable<InvoicesFixedAssetsInfo>, List<InvoicesFixedAssetsInfoDTO>>(invoicesFixedAssetsInfo.SQLExecuteProc(procName, Parameters));
+
+
+            FbParameter[] Parameters =
+            {
+                new FbParameter("BeginDate", startDate),
+                new FbParameter("EndDate", endDate),
+            };
+
+            string procName = @"select * from ""GetNocurrentRamainsMaterial""(@BeginDate, @EndDate)";
+            return mapper.Map<IEnumerable<NocurrentAssetsMaterialJournal>, List<NocurrentAssetsMaterialJournalDTO>>(nocurrentAsetsMaterialJournal.SQLExecuteProc(procName, Parameters));
         }
 
 

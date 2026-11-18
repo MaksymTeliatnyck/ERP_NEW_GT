@@ -26,6 +26,7 @@ namespace ERP_NEW.GUI.Accounting
         public NocurrentAssetsDTO previewAsetsMaterialCard = new NocurrentAssetsDTO();
         public NocurrentAssetsDTO nextAsetsMaterialCard = new NocurrentAssetsDTO();
         public List<NocurrentAsetsMaterialDTO> asetsMaterials = new List<NocurrentAsetsMaterialDTO>();
+        
 
 
         public NocurrentAssetsTransferFm(Utils.Operation operation, NocurrentAssetsDTO asetsMaterialCard, List<NocurrentAsetsMaterialDTO> asetsMaterials)
@@ -86,6 +87,30 @@ namespace ERP_NEW.GUI.Accounting
                     $"{index + 1}. {x.NomenclatureName} — кількість: {x.Quantity}")
             );
 
+            var invalidMaterialsMonth = asetsMaterials
+                .Where(x => x.BeginDate.HasValue && ((x.BeginDate.Value.Month == ((DateTime?)dateTransferEdit.EditValue).Value.Month &&
+             x.BeginDate.Value.Year == ((DateTime?)dateTransferEdit.EditValue).Value.Year)
+            )).ToList();
+
+            var invalidMaterials = asetsMaterials
+                .Where(x => x.BeginDate.HasValue && (x.BeginDate.Value.Date > ((DateTime?)dateTransferEdit.EditValue).Value.Date)).ToList();
+
+
+            if (invalidMaterialsMonth.Any())
+            {
+                MessageBox.Show("Неможливо перемістити один з матеріалів, матеріал не можна перемістити двічі за місяць", "Переміщення", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            if (invalidMaterials.Any())
+            {
+                MessageBox.Show("Неможливо перемістити один з матеріалів, дата переміщення менша за попередню дату переміщення", "Переміщення", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+
             if (MessageBox.Show("Перемістити наступні матеріали:\n"+ message + "\n На картку номер "+ docNumberTranferEdit.Text + " та відповідальну особу "+ employeeTransferEdit.EditValue+"?", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
@@ -140,9 +165,9 @@ namespace ERP_NEW.GUI.Accounting
             return true;
         }
 
-        private int Return()
+        public NocurrentAssetsDTO Return()
         {
-            return asetsMaterialCard;
+            return nextAsetsMaterialCard;
         }
 
         private void dxValidationProvider_ValidationFailed(object sender, DevExpress.XtraEditors.DXErrorProvider.ValidationFailedEventArgs e)
@@ -161,6 +186,12 @@ namespace ERP_NEW.GUI.Accounting
         private void dateTransferEdit_EditValueChanged(object sender, EventArgs e)
         {
             dxValidationProvider.Validate((Control)sender);
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

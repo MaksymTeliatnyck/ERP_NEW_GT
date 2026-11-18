@@ -66,6 +66,8 @@
             this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ERP_NEW.GUI.WaitForm1), true, true);
+            this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMonth1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -404,16 +406,23 @@
             // 
             // noCurrentAssetsMaterialsGridView
             // 
+            this.noCurrentAssetsMaterialsGridView.ColumnPanelRowHeight = 30;
             this.noCurrentAssetsMaterialsGridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn6,
             this.gridColumn7,
             this.gridColumn8,
             this.gridColumn9,
             this.gridColumn10,
-            this.gridColumn11});
+            this.gridColumn12,
+            this.gridColumn11,
+            this.gridColumn13});
             this.noCurrentAssetsMaterialsGridView.GridControl = this.noCurrentAssetsMaterialsGrid;
             this.noCurrentAssetsMaterialsGridView.Name = "noCurrentAssetsMaterialsGridView";
+            this.noCurrentAssetsMaterialsGridView.OptionsPrint.AllowMultilineHeaders = true;
+            this.noCurrentAssetsMaterialsGridView.OptionsView.BestFitMaxRowCount = 2;
+            this.noCurrentAssetsMaterialsGridView.OptionsView.RowAutoHeight = true;
             this.noCurrentAssetsMaterialsGridView.OptionsView.ShowGroupPanel = false;
+            this.noCurrentAssetsMaterialsGridView.RowHeight = 5;
             // 
             // gridColumn6
             // 
@@ -427,7 +436,7 @@
             this.gridColumn6.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 0;
-            this.gridColumn6.Width = 182;
+            this.gridColumn6.Width = 170;
             // 
             // gridColumn7
             // 
@@ -441,7 +450,7 @@
             this.gridColumn7.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 1;
-            this.gridColumn7.Width = 182;
+            this.gridColumn7.Width = 170;
             // 
             // gridColumn8
             // 
@@ -455,7 +464,7 @@
             this.gridColumn8.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 2;
-            this.gridColumn8.Width = 182;
+            this.gridColumn8.Width = 170;
             // 
             // gridColumn9
             // 
@@ -468,8 +477,8 @@
             this.gridColumn9.OptionsColumn.AllowFocus = false;
             this.gridColumn9.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn9.Visible = true;
-            this.gridColumn9.VisibleIndex = 3;
-            this.gridColumn9.Width = 182;
+            this.gridColumn9.VisibleIndex = 5;
+            this.gridColumn9.Width = 170;
             // 
             // gridColumn10
             // 
@@ -485,7 +494,7 @@
             this.gridColumn10.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 4;
-            this.gridColumn10.Width = 328;
+            this.gridColumn10.Width = 167;
             // 
             // gridColumn11
             // 
@@ -498,8 +507,8 @@
             this.gridColumn11.Image = global::ERP_NEW.GUI.Accounting.Resources.checkbox2_16x16;
             this.gridColumn11.Name = "gridColumn11";
             this.gridColumn11.Visible = true;
-            this.gridColumn11.VisibleIndex = 5;
-            this.gridColumn11.Width = 39;
+            this.gridColumn11.VisibleIndex = 7;
+            this.gridColumn11.Width = 45;
             // 
             // repositoryItemCheckEdit1
             // 
@@ -509,6 +518,35 @@
             // splashScreenManager
             // 
             this.splashScreenManager.ClosingDelay = 500;
+            // 
+            // gridColumn12
+            // 
+            this.gridColumn12.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn12.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn12.AppearanceHeader.Options.UseTextOptions = true;
+            this.gridColumn12.AppearanceHeader.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            this.gridColumn12.Caption = "Дата списання/переміщення";
+            this.gridColumn12.Name = "gridColumn12";
+            this.gridColumn12.OptionsColumn.AllowEdit = false;
+            this.gridColumn12.OptionsColumn.AllowFocus = false;
+            this.gridColumn12.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
+            this.gridColumn12.Visible = true;
+            this.gridColumn12.VisibleIndex = 6;
+            this.gridColumn12.Width = 205;
+            // 
+            // gridColumn13
+            // 
+            this.gridColumn13.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gridColumn13.AppearanceHeader.Options.UseFont = true;
+            this.gridColumn13.Caption = "Дата надходження";
+            this.gridColumn13.FieldName = "ReceiptDate";
+            this.gridColumn13.Name = "gridColumn13";
+            this.gridColumn13.OptionsColumn.AllowEdit = false;
+            this.gridColumn13.OptionsColumn.AllowFocus = false;
+            this.gridColumn13.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
+            this.gridColumn13.Visible = true;
+            this.gridColumn13.VisibleIndex = 3;
+            this.gridColumn13.Width = 146;
             // 
             // NocurrentAssetsFm
             // 
@@ -580,5 +618,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn11;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn12;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn13;
     }
 }
