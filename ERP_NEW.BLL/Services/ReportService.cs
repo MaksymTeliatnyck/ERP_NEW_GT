@@ -17445,24 +17445,24 @@ namespace ERP_NEW.BLL.Services
                 cells["B" + (currentRow + 19) + ":D" + (currentRow + 19)].Merge();
                 cells["F" + (currentRow + 19) + ":H" + (currentRow + 19)].Merge();
                 cells["J" + (currentRow + 19) + ":L" + (currentRow + 19)].Merge();
-                cells["B" + (currentRow + 19) + ":D" + (currentRow + 19)].Value = "(посада, підпис)";
-                cells["F" + (currentRow + 19) + ":H" + (currentRow + 19)].Value = "(посада, підпис)";
-                cells["J" + (currentRow + 19) + ":L" + (currentRow + 19)].Value = "(посада, підпис)";
+                cells["B" + (currentRow + 19) + ":D" + (currentRow + 19)].Value = "(посада)";
+                cells["F" + (currentRow + 19) + ":H" + (currentRow + 19)].Value = "(підпис)";
+                cells["J" + (currentRow + 19) + ":L" + (currentRow + 19)].Value = "(П.І.Б)";
                 cells["B" + (currentRow + 19) + ":D" + (currentRow + 19)].HorizontalAlignment = HAlign.Center;
                 cells["F" + (currentRow + 19) + ":H" + (currentRow + 19)].HorizontalAlignment = HAlign.Center;
                 cells["J" + (currentRow + 19) + ":L" + (currentRow + 19)].HorizontalAlignment = HAlign.Center;
-                cells["B" + (currentRow + 20) + ":D" + (currentRow + 20)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
-                cells["F" + (currentRow + 20) + ":H" + (currentRow + 20)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
-                cells["J" + (currentRow + 20) + ":L" + (currentRow + 20)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
-                cells["B" + (currentRow + 21) + ":D" + (currentRow + 21)].Merge();
-                cells["F" + (currentRow + 21) + ":H" + (currentRow + 21)].Merge();
-                cells["J" + (currentRow + 21) + ":L" + (currentRow + 21)].Merge();
-                cells["B" + (currentRow + 21) + ":D" + (currentRow + 21)].Value = "(прізв., ім'я, по батькові)";
-                cells["F" + (currentRow + 21) + ":H" + (currentRow + 21)].Value = "(прізв., ім'я, по батькові)";
-                cells["J" + (currentRow + 21) + ":L" + (currentRow + 21)].Value = "(прізв., ім'я, по батькові)";
-                cells["B" + (currentRow + 21) + ":D" + (currentRow + 21)].HorizontalAlignment = HAlign.Center;
-                cells["F" + (currentRow + 21) + ":H" + (currentRow + 21)].HorizontalAlignment = HAlign.Center;
-                cells["J" + (currentRow + 21) + ":L" + (currentRow + 21)].HorizontalAlignment = HAlign.Center;
+                //cells["B" + (currentRow + 20) + ":D" + (currentRow + 20)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
+                //cells["F" + (currentRow + 20) + ":H" + (currentRow + 20)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
+                //cells["J" + (currentRow + 20) + ":L" + (currentRow + 20)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
+                //cells["B" + (currentRow + 21) + ":D" + (currentRow + 21)].Merge();
+                //cells["F" + (currentRow + 21) + ":H" + (currentRow + 21)].Merge();
+                //cells["J" + (currentRow + 21) + ":L" + (currentRow + 21)].Merge();
+                //cells["B" + (currentRow + 21) + ":D" + (currentRow + 21)].Value = "(прізв., ім'я, по батькові)";
+                //cells["F" + (currentRow + 21) + ":H" + (currentRow + 21)].Value = "(прізв., ім'я, по батькові)";
+                //cells["J" + (currentRow + 21) + ":L" + (currentRow + 21)].Value = "(прізв., ім'я, по батькові)";
+                //cells["B" + (currentRow + 21) + ":D" + (currentRow + 21)].HorizontalAlignment = HAlign.Center;
+                //cells["F" + (currentRow + 21) + ":H" + (currentRow + 21)].HorizontalAlignment = HAlign.Center;
+                //cells["J" + (currentRow + 21) + ":L" + (currentRow + 21)].HorizontalAlignment = HAlign.Center;
                 cells["A" + (currentRow + 23)].Value = "На підставі (розпорядження) від '____'  ____________20___р.";
                 cells["A" + (currentRow + 25)].Value = "Виконано знімання фактичних залишків";
 
@@ -17609,7 +17609,7 @@ namespace ERP_NEW.BLL.Services
                                                        " у зв'язку з чим претензій до інвентариційної комісії не маю (не маємо). Цінності, перелічені в описі, знаходяться на моєму (нашому) відповідальному зберіганні.\n" +
                                                        "Особа(и), відповідальна(і) за збереження основних засобів:";
                 cells["A" + (currentRow + 21)].Value = " '____'_____________20___р.";
-                cells["A" + (currentRow + 23) + ":L" + (currentRow + 23)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
+                //cells["A" + (currentRow + 23) + ":L" + (currentRow + 23)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;
 
                 cells["A" + (currentRow + 25)].Value = "Вказані у даному описі дані перевірив";
                 cells["G" + (currentRow + 25) + ":H" + (currentRow + 25)].Borders[BordersIndex.EdgeBottom].LineStyle = LineStyle.Continous;

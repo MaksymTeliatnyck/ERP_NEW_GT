@@ -47,6 +47,7 @@ namespace ERP_NEW.BLL.DTO.SelectedDTO
         public int? UserId { get; set; }
         public string UserName { get; set; }
         public bool ExpenditureType { get; set; }
+        public bool Selected { get; set; }
         public DateTime? ExpenditureCheckDate { get; set; }
         public DateTime? RealExpDate { get; set; }
     }

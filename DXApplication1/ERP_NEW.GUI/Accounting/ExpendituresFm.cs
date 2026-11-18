@@ -31,6 +31,7 @@ namespace ERP_NEW.GUI.Accounting
         private IPeriodService periodService;
         private IFixedAssetsOrderService fixedAssetsOrderService;
         private ICustomerOrdersService customerOrdersService;
+        private IAccountsService accountsService;
 
         private UserTasksDTO userTasksDTO;
         private DateTime beginDate;
@@ -53,6 +54,9 @@ namespace ERP_NEW.GUI.Accounting
             this.beginDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             this.endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
 
+
+            
+
             LoadExpendituresjournalByPeriod(beginDate, endDate);
             AuthorizatedUserAccess();
         }
@@ -73,9 +77,15 @@ namespace ERP_NEW.GUI.Accounting
             splashScreenManager.ShowWaitForm();
             storeHouseService = Program.kernel.Get<IStoreHouseService>();
             periodService = Program.kernel.Get<IPeriodService>();
+            accountsService = Program.kernel.Get<IAccountsService>();
+
+            repositoryItemGridLookUpEdit1.DataSource = accountsService.GetAccounts();
+            repositoryItemGridLookUpEdit1.ValueMember = "Id";
+            repositoryItemGridLookUpEdit1.DisplayMember = "Num";
+            repositoryItemGridLookUpEdit1.NullText = null;
 
             expendituresBS.DataSource = storeHouseService.GetExpenditureJournalByPeriod(beginDate, endDate);
-            expendituresGrid.DataSource = expendituresBS;
+            Сп.DataSource = expendituresBS;
             SetPeriodBtnImage();
 
             splashScreenManager.CloseWaitForm();
@@ -363,7 +373,7 @@ namespace ERP_NEW.GUI.Accounting
 
             try
             {
-                expendituresGrid.ExportToXls(exportFilePath, optionXls);
+                Сп.ExportToXls(exportFilePath, optionXls);
 
                 if (File.Exists(exportFilePath))
                 {
@@ -438,6 +448,16 @@ namespace ERP_NEW.GUI.Accounting
           
            ExpenditureByOrdersFm expenditureByOrdersFm = new ExpenditureByOrdersFm();
             expenditureByOrdersFm.Show();
+        }
+
+        private void accountExpEdit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void selectedExpeBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
         }
     }
 }

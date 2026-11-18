@@ -88,7 +88,6 @@
             DevExpress.XtraEditors.TileItemElement tileItemElement54 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement55 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement56 = new DevExpress.XtraEditors.TileItemElement();
-            DevExpress.XtraEditors.TileItemElement tileItemElement65 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement66 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement58 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement59 = new DevExpress.XtraEditors.TileItemElement();
@@ -97,6 +96,7 @@
             DevExpress.XtraEditors.TileItemElement tileItemElement62 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement63 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement64 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement65 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement96 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement67 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement68 = new DevExpress.XtraEditors.TileItemElement();
@@ -193,7 +193,6 @@
             this.weldAttestationPersonItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.controlCheckJournalItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.storeHouseCategory = new DevExpress.XtraBars.Navigation.TileNavCategory();
-            this.noCurrentAssetsItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.receiptOrdersItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.invoiceRequirementItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.accountClothesItem = new DevExpress.XtraBars.Navigation.TileNavItem();
@@ -201,6 +200,7 @@
             this.storeHouseRemainsItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.toolActsItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.storehouseTTNItem = new DevExpress.XtraBars.Navigation.TileNavItem();
+            this.noCurrentAssetsItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.classifiersCategory = new DevExpress.XtraBars.Navigation.TileNavCategory();
             this.employeesInfoItem = new DevExpress.XtraBars.Navigation.TileNavItem();
             this.contractorsItem = new DevExpress.XtraBars.Navigation.TileNavItem();
@@ -1633,29 +1633,6 @@
             this.storeHouseCategory.AppearanceSelected.Options.UseBackColor = true;
             this.storeHouseCategory.Caption = "Складський облік";
             this.storeHouseCategory.Glyph = ((System.Drawing.Image)(resources.GetObject("storeHouseCategory.Glyph")));
-            // 
-            // noCurrentAssetsItem
-            // 
-            this.noCurrentAssetsItem.Caption = "Необоротні метаріали";
-            this.noCurrentAssetsItem.Name = "noCurrentAssetsItem";
-            this.noCurrentAssetsItem.OptionsDropDown.BackColor = System.Drawing.Color.Empty;
-            this.noCurrentAssetsItem.OwnerCollection = this.storeHouseCategory.Items;
-            // 
-            // tileBarItem1
-            // 
-            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.Options.UseBackColor = true;
-            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.Options.UseFont = true;
-            this.noCurrentAssetsItem.Tile.DropDownOptions.BeakColor = System.Drawing.Color.Empty;
-            tileItemElement65.Image = ((System.Drawing.Image)(resources.GetObject("tileItemElement65.Image")));
-            tileItemElement65.ImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.TopLeft;
-            tileItemElement65.ImageToTextAlignment = DevExpress.XtraEditors.TileControlImageToTextAlignment.Left;
-            tileItemElement65.Text = "Необоротні метаріали";
-            tileItemElement65.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.TopRight;
-            this.noCurrentAssetsItem.Tile.Elements.Add(tileItemElement65);
-            this.noCurrentAssetsItem.Tile.ItemSize = DevExpress.XtraBars.Navigation.TileBarItemSize.Default;
-            this.noCurrentAssetsItem.Tile.Name = "tileBarItem1";
             this.storeHouseCategory.Items.AddRange(new DevExpress.XtraBars.Navigation.TileNavItem[] {
             this.receiptOrdersItem,
             this.invoiceRequirementItem,
@@ -1826,6 +1803,29 @@
             this.storehouseTTNItem.Tile.Elements.Add(tileItemElement64);
             this.storehouseTTNItem.Tile.ItemSize = DevExpress.XtraBars.Navigation.TileBarItemSize.Default;
             this.storehouseTTNItem.Tile.Name = "tileBarItem1";
+            // 
+            // noCurrentAssetsItem
+            // 
+            this.noCurrentAssetsItem.Caption = "Необоротні метаріали";
+            this.noCurrentAssetsItem.Name = "noCurrentAssetsItem";
+            this.noCurrentAssetsItem.OptionsDropDown.BackColor = System.Drawing.Color.Empty;
+            this.noCurrentAssetsItem.OwnerCollection = this.storeHouseCategory.Items;
+            // 
+            // 
+            // 
+            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.Options.UseBackColor = true;
+            this.noCurrentAssetsItem.Tile.AppearanceItem.Normal.Options.UseFont = true;
+            this.noCurrentAssetsItem.Tile.DropDownOptions.BeakColor = System.Drawing.Color.Empty;
+            tileItemElement65.Image = ((System.Drawing.Image)(resources.GetObject("tileItemElement65.Image")));
+            tileItemElement65.ImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.TopLeft;
+            tileItemElement65.ImageToTextAlignment = DevExpress.XtraEditors.TileControlImageToTextAlignment.Left;
+            tileItemElement65.Text = "Необоротні метаріали";
+            tileItemElement65.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.TopRight;
+            this.noCurrentAssetsItem.Tile.Elements.Add(tileItemElement65);
+            this.noCurrentAssetsItem.Tile.ItemSize = DevExpress.XtraBars.Navigation.TileBarItemSize.Default;
+            this.noCurrentAssetsItem.Tile.Name = "tileBarItem1";
             // 
             // classifiersCategory
             // 
