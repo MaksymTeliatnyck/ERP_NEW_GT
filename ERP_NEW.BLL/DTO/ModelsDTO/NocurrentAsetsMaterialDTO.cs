@@ -20,6 +20,7 @@ namespace ERP_NEW.BLL.DTO.ModelsDTO
         public decimal Price { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public DateTime? ReceiptDate { get; set; }
         public int?  Percentage { get; set; }
         public int Status { get; set; }
         public bool Selected { get; set; }

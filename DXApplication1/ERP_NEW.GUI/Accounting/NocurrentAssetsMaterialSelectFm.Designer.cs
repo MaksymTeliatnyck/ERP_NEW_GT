@@ -69,6 +69,7 @@
             this.remainsQuantityCol});
             this.noCurrentAssetsMaterialsGridView.GridControl = this.noCurrentAssetsMaterialsGrid;
             this.noCurrentAssetsMaterialsGridView.Name = "noCurrentAssetsMaterialsGridView";
+            this.noCurrentAssetsMaterialsGridView.OptionsView.ShowAutoFilterRow = true;
             this.noCurrentAssetsMaterialsGridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.noCurrentAssetsMaterialsGridView_FocusedRowChanged);
             // 
             // nomenclatureNameCol

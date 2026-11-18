@@ -19,6 +19,7 @@ namespace ERP_NEW.DAL.Entities.Models
         public decimal Price { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public DateTime? ReceiptDate { get; set; }
         public int? Percentage { get; set; }
         public int Status { get; set; }
     }

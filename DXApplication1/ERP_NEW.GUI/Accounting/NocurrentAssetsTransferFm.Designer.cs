@@ -60,6 +60,7 @@
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.dxValidationProvider = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
             this.validateLbl = new DevExpress.XtraEditors.LabelControl();
+            this.cancelBtn = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.groupControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.employeeEdit.Properties)).BeginInit();
@@ -287,7 +288,7 @@
             // 
             // transferBtn
             // 
-            this.transferBtn.Location = new System.Drawing.Point(645, 433);
+            this.transferBtn.Location = new System.Drawing.Point(547, 433);
             this.transferBtn.Name = "transferBtn";
             this.transferBtn.Size = new System.Drawing.Size(101, 23);
             this.transferBtn.TabIndex = 6;
@@ -297,7 +298,7 @@
             // dateTransferEdit
             // 
             this.dateTransferEdit.EditValue = null;
-            this.dateTransferEdit.Location = new System.Drawing.Point(442, 435);
+            this.dateTransferEdit.Location = new System.Drawing.Point(344, 435);
             this.dateTransferEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTransferEdit.MaximumSize = new System.Drawing.Size(206, 0);
             this.dateTransferEdit.MinimumSize = new System.Drawing.Size(197, 0);
@@ -317,7 +318,7 @@
             // 
             // labelControl11
             // 
-            this.labelControl11.Location = new System.Drawing.Point(335, 438);
+            this.labelControl11.Location = new System.Drawing.Point(237, 438);
             this.labelControl11.Name = "labelControl11";
             this.labelControl11.Size = new System.Drawing.Size(98, 13);
             this.labelControl11.TabIndex = 50;
@@ -407,11 +408,22 @@
             this.validateLbl.TabIndex = 52;
             this.validateLbl.Text = "*Для збереження, заповніть всі обов\'язкові поля";
             // 
+            // cancelBtn
+            // 
+            this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelBtn.Location = new System.Drawing.Point(654, 433);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(92, 23);
+            this.cancelBtn.TabIndex = 53;
+            this.cancelBtn.Text = "Відміна";
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
+            // 
             // NocurrentAssetsTransferFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(758, 467);
+            this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.validateLbl);
             this.Controls.Add(this.noCurrentAssetsMaterialsGrid);
             this.Controls.Add(this.labelControl11);
@@ -481,5 +493,6 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
         private DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider dxValidationProvider;
         private DevExpress.XtraEditors.LabelControl validateLbl;
+        private DevExpress.XtraEditors.SimpleButton cancelBtn;
     }
 }
